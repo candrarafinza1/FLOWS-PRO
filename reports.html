@@ -1,0 +1,5065 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>FLOWS-PRO | Reports</title>
+
+
+<!-- =====================================================
+     FAVICON
+===================================================== -->
+
+<link
+rel="icon"
+type="image/jpeg"
+href="LOGO.JPG">
+
+
+<!-- =====================================================
+     FONT AWESOME
+===================================================== -->
+
+<link
+rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+
+<!-- =====================================================
+     SUPABASE
+===================================================== -->
+
+<script
+src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
+</script>
+
+
+<!-- =====================================================
+     SHEETJS
+     Untuk export Excel
+===================================================== -->
+
+<script
+src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js">
+</script>
+
+
+<!-- =====================================================
+     JSPDF
+     Untuk export PDF
+===================================================== -->
+
+<script
+src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js">
+</script>
+
+
+<!-- =====================================================
+     AUTOTABLE
+     Untuk tabel PDF
+===================================================== -->
+
+<script
+src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js">
+</script>
+
+
+<style>
+
+/* =====================================================
+   RESET
+===================================================== */
+
+*{
+
+    margin:0;
+
+    padding:0;
+
+    box-sizing:border-box;
+
+    font-family:'Segoe UI',sans-serif;
+
+}
+
+
+body{
+
+    background:#edf3f8;
+
+    overflow-x:hidden;
+
+}
+
+
+/* =====================================================
+   SIDEBAR
+===================================================== */
+
+.sidebar{
+
+    position:fixed;
+
+    left:0;
+
+    top:0;
+
+    width:270px;
+
+    height:100vh;
+
+    background:
+    linear-gradient(
+        180deg,
+        #071b2f,
+        #0d2b45,
+        #12395c
+    );
+
+    padding:22px 18px;
+
+    color:white;
+
+    overflow-y:auto;
+
+    z-index:1000;
+
+}
+
+
+/* =====================================================
+   LOGO
+===================================================== */
+
+.logo{
+
+    display:flex;
+
+    align-items:center;
+
+    padding-left:10px;
+
+    margin-bottom:30px;
+
+}
+
+
+.logo img{
+
+    width:200px;
+
+    height:auto;
+
+    display:block;
+
+    object-fit:contain;
+
+}
+
+
+/* =====================================================
+   MENU
+===================================================== */
+
+.menu-item{
+
+    padding:16px 18px;
+
+    border-radius:16px;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:14px;
+
+    margin-bottom:12px;
+
+    cursor:pointer;
+
+    transition:0.3s;
+
+    font-weight:600;
+
+    text-decoration:none;
+
+    color:white;
+
+}
+
+
+.menu-item:hover{
+
+    background:
+    linear-gradient(
+        90deg,
+        #00c6ff,
+        #0072ff
+    );
+
+    transform:translateX(4px);
+
+}
+
+
+.menu-item.active{
+
+    background:
+    linear-gradient(
+        90deg,
+        #00c6ff,
+        #0072ff
+    );
+
+}
+
+
+/* =====================================================
+   MAIN
+===================================================== */
+
+.main{
+
+    margin-left:270px;
+
+    min-height:100vh;
+
+}
+
+
+/* =====================================================
+   NAVBAR
+===================================================== */
+
+.navbar{
+
+    height:85px;
+
+    background:white;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:0 35px;
+
+    box-shadow:
+    0 2px 10px
+    rgba(0,0,0,0.06);
+
+}
+
+
+.nav-title{
+
+    font-size:24px;
+
+    font-weight:800;
+
+    color:#12395c;
+
+}
+
+
+/* =====================================================
+   PROFILE
+===================================================== */
+
+.profile{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    padding:8px 14px;
+
+    border-radius:14px;
+
+    background:#f5f9ff;
+
+}
+
+
+.profile img{
+
+    width:50px;
+
+    height:50px;
+
+    border-radius:50%;
+
+    object-fit:cover;
+
+}
+
+
+.profile h4{
+
+    color:#12395c;
+
+    font-size:15px;
+
+}
+
+
+.profile p{
+
+    color:#888;
+
+    font-size:12px;
+
+}
+
+
+/* =====================================================
+   CONTENT
+===================================================== */
+
+.content{
+
+    padding:28px;
+
+}
+
+
+/* =====================================================
+   CARD
+===================================================== */
+
+.card{
+
+    background:white;
+
+    padding:24px;
+
+    border-radius:22px;
+
+    margin-bottom:20px;
+
+    box-shadow:
+    0 5px 20px
+    rgba(0,0,0,0.05);
+
+}
+
+
+.card-title{
+
+    font-size:20px;
+
+    font-weight:700;
+
+    margin-bottom:20px;
+
+    color:#12395c;
+
+}
+
+
+/* =====================================================
+   FILTER GRID
+===================================================== */
+
+.filter-grid{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(4,1fr);
+
+    gap:20px;
+
+}
+
+
+.filter-item{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:8px;
+
+}
+
+
+.filter-item label{
+
+    font-size:13px;
+
+    font-weight:700;
+
+    color:#555;
+
+}
+
+
+input,
+select{
+
+    width:100%;
+
+    padding:14px;
+
+    border-radius:12px;
+
+    border:1px solid #dce3ea;
+
+    outline:none;
+
+    background:white;
+
+    font-size:14px;
+
+}
+
+
+input:focus,
+select:focus{
+
+    border-color:#0072ff;
+
+    box-shadow:
+    0 0 0 3px
+    rgba(0,114,255,0.08);
+
+}
+
+
+/* =====================================================
+   BUTTON
+===================================================== */
+
+button{
+
+    padding:14px 20px;
+
+    border:none;
+
+    border-radius:12px;
+
+    background:
+    linear-gradient(
+        90deg,
+        #00c6ff,
+        #0072ff
+    );
+
+    color:white;
+
+    font-weight:700;
+
+    cursor:pointer;
+
+    transition:0.3s;
+
+}
+
+
+button:hover{
+
+    transform:translateY(-2px);
+
+    box-shadow:
+    0 5px 15px
+    rgba(0,114,255,0.2);
+
+}
+
+
+button:disabled{
+
+    opacity:0.6;
+
+    cursor:not-allowed;
+
+    transform:none;
+
+}
+
+
+/* =====================================================
+   SECONDARY BUTTON
+===================================================== */
+
+.btn-secondary{
+
+    background:#eef3f8;
+
+    color:#12395c;
+
+}
+
+
+.btn-secondary:hover{
+
+    background:#dfe8f1;
+
+}
+
+
+/* =====================================================
+   EXPORT BUTTON
+===================================================== */
+
+.export-buttons{
+
+    display:flex;
+
+    gap:12px;
+
+    margin-top:20px;
+
+    flex-wrap:wrap;
+
+}
+
+
+.btn-csv{
+
+    background:
+    linear-gradient(
+        90deg,
+        #16a085,
+        #27ae60
+    );
+
+}
+
+
+.btn-excel{
+
+    background:
+    linear-gradient(
+        90deg,
+        #168f5b,
+        #21a366
+    );
+
+}
+
+
+.btn-pdf{
+
+    background:
+    linear-gradient(
+        90deg,
+        #e74c3c,
+        #c0392b
+    );
+
+}
+
+
+/* =====================================================
+   TABLE WRAPPER
+===================================================== */
+
+.table-wrapper{
+
+    width:100%;
+
+    overflow-x:auto;
+
+}
+
+
+/* =====================================================
+   TABLE
+===================================================== */
+
+table{
+
+    width:100%;
+
+    border-collapse:collapse;
+
+    min-width:900px;
+
+}
+
+
+th,
+td{
+
+    padding:14px;
+
+    text-align:left;
+
+    border-bottom:
+    1px solid #eee;
+
+    white-space:nowrap;
+
+}
+
+
+th{
+
+    background:#f8fbff;
+
+    color:#12395c;
+
+    font-size:13px;
+
+}
+
+
+td{
+
+    font-size:13px;
+
+    color:#444;
+
+}
+
+
+tbody tr:hover{
+
+    background:#f8fbff;
+
+}
+
+
+/* =====================================================
+   STATUS
+===================================================== */
+
+.safe{
+
+    color:#27ae60;
+
+    font-weight:bold;
+
+}
+
+
+.warning{
+
+    color:#e67e22;
+
+    font-weight:bold;
+
+}
+
+
+.danger{
+
+    color:#e74c3c;
+
+    font-weight:bold;
+
+}
+
+
+.status-label{
+
+    display:inline-block;
+
+    padding:5px 10px;
+
+    border-radius:20px;
+
+    font-size:11px;
+
+    font-weight:800;
+
+}
+
+
+.status-aman{
+
+    background:#e8fff1;
+
+    color:#27ae60;
+
+}
+
+
+.status-siaga{
+
+    background:#fff8df;
+
+    color:#d89b00;
+
+}
+
+
+.status-waspada{
+
+    background:#fff0df;
+
+    color:#e67e22;
+
+}
+
+
+.status-bahaya{
+
+    background:#ffe9e9;
+
+    color:#e74c3c;
+
+}
+
+
+.status-unknown{
+
+    background:#eeeeee;
+
+    color:#777;
+
+}
+
+
+/* =====================================================
+   PAGINATION
+===================================================== */
+
+.pagination{
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    gap:8px;
+
+    margin-top:20px;
+
+    flex-wrap:wrap;
+
+}
+
+
+.page-btn{
+
+    min-width:42px;
+
+    height:42px;
+
+    padding:0 12px;
+
+    border-radius:10px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    background:white;
+
+    border:
+    1px solid #e1e7ed;
+
+    cursor:pointer;
+
+    font-weight:bold;
+
+    color:#12395c;
+
+}
+
+
+.page-btn:hover{
+
+    background:#edf5ff;
+
+}
+
+
+.page-btn.active{
+
+    background:#0072ff;
+
+    color:white;
+
+    border-color:#0072ff;
+
+}
+
+
+.page-btn.disabled{
+
+    opacity:0.4;
+
+    cursor:not-allowed;
+
+}
+
+
+/* =====================================================
+   SUMMARY
+===================================================== */
+
+.summary-grid{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(4,1fr);
+
+    gap:15px;
+
+    margin-bottom:20px;
+
+}
+
+
+.summary-box{
+
+    background:#f8fbff;
+
+    padding:18px;
+
+    border-radius:16px;
+
+    border:
+    1px solid #edf2f7;
+
+}
+
+
+.summary-label{
+
+    color:#777;
+
+    font-size:13px;
+
+    margin-bottom:8px;
+
+}
+
+
+.summary-value{
+
+    color:#12395c;
+
+    font-size:25px;
+
+    font-weight:800;
+
+}
+
+
+/* =====================================================
+   CONNECTION
+===================================================== */
+
+.live-badge{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    padding:12px 18px;
+
+    border-radius:40px;
+
+    background:#e8fff1;
+
+    color:#27ae60;
+
+    font-weight:700;
+
+    margin-bottom:20px;
+
+}
+
+
+.live-dot{
+
+    width:10px;
+
+    height:10px;
+
+    background:#27ae60;
+
+    border-radius:50%;
+
+    animation:blink 1s infinite;
+
+}
+
+
+.live-badge.offline{
+
+    background:#fff0f0;
+
+    color:#e74c3c;
+
+}
+
+
+.live-badge.offline .live-dot{
+
+    background:#e74c3c;
+
+    animation:none;
+
+}
+
+
+@keyframes blink{
+
+    0%{
+
+        opacity:1;
+
+    }
+
+    50%{
+
+        opacity:0.2;
+
+    }
+
+    100%{
+
+        opacity:1;
+
+    }
+
+}
+
+
+/* =====================================================
+   EMPTY DATA
+===================================================== */
+
+.empty-data{
+
+    text-align:center;
+
+    padding:50px;
+
+    color:#888;
+
+}
+
+
+.empty-data i{
+
+    font-size:30px;
+
+    margin-bottom:12px;
+
+}
+
+
+/* =====================================================
+   INFO
+===================================================== */
+
+.info-box{
+
+    padding:16px;
+
+    background:#f5f9ff;
+
+    border-radius:14px;
+
+    color:#666;
+
+    line-height:1.6;
+
+    font-size:13px;
+
+}
+
+
+.info-box strong{
+
+    color:#12395c;
+
+}
+
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media(max-width:1200px){
+
+    .filter-grid{
+
+        grid-template-columns:
+        repeat(2,1fr);
+
+    }
+
+
+    .summary-grid{
+
+        grid-template-columns:
+        repeat(2,1fr);
+
+    }
+
+}
+
+
+@media(max-width:1000px){
+
+    .sidebar{
+
+        width:90px;
+
+    }
+
+
+    .sidebar span{
+
+        display:none;
+
+    }
+
+
+    .logo{
+
+        justify-content:center;
+
+        padding-left:0;
+
+    }
+
+
+    .logo img{
+
+        width:55px;
+
+    }
+
+
+    .main{
+
+        margin-left:90px;
+
+    }
+
+}
+
+
+@media(max-width:700px){
+
+    .navbar{
+
+        padding:0 15px;
+
+    }
+
+
+    .nav-title{
+
+        font-size:18px;
+
+    }
+
+
+    .profile div{
+
+        display:none;
+
+    }
+
+
+    .content{
+
+        padding:15px;
+
+    }
+
+
+    .filter-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+
+    .summary-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+}
+
+
+/* =====================================================
+   END CSS
+===================================================== */
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     SIDEBAR
+===================================================== -->
+
+<div class="sidebar">
+
+
+    <div class="logo">
+
+        <img
+        src="FLOWS-PRO-preview 1.png"
+        alt="FLOWS-PRO">
+
+    </div>
+
+
+    <a
+    class="menu-item"
+    href="dashboard.html">
+
+        <i class="fa-solid fa-chart-line"></i>
+
+        <span>Dashboard</span>
+
+    </a>
+
+
+    <a
+    class="menu-item"
+    href="live_sensor.html">
+
+        <i class="fa-solid fa-microchip"></i>
+
+        <span>Live Sensor</span>
+
+    </a>
+
+
+    <a
+    class="menu-item"
+    href="peta_banjir.html">
+
+        <i class="fa-solid fa-map-location-dot"></i>
+
+        <span>Peta Banjir</span>
+
+    </a>
+
+
+    <a
+    class="menu-item"
+    href="weather.html">
+
+        <i class="fa-solid fa-cloud-rain"></i>
+
+        <span>Weather</span>
+
+    </a>
+
+
+    <a
+    class="menu-item active"
+    href="reports.html">
+
+        <i class="fa-solid fa-file"></i>
+
+        <span>Reports</span>
+
+    </a>
+
+
+    <a
+    class="menu-item"
+    href="settings.html">
+
+        <i class="fa-solid fa-gear"></i>
+
+        <span>Settings</span>
+
+    </a>
+
+
+</div>
+
+
+<!-- =====================================================
+     MAIN
+===================================================== -->
+
+<div class="main">
+
+
+    <!-- =================================================
+         NAVBAR
+    ================================================== -->
+
+    <div class="navbar">
+
+
+        <div class="nav-title">
+
+            Laporan & Riwayat Data
+
+        </div>
+
+
+        <div class="profile">
+
+            <img
+            id="userPhoto"
+            src="https://i.pravatar.cc/150?img=12"
+            alt="Profile">
+
+
+            <div>
+
+                <h4 id="userName">
+
+                    Loading...
+
+                </h4>
+
+
+                <p>
+
+                    Operator
+
+                </p>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+<!-- =====================================================
+     PART 2 DIMULAI DI SINI
+===================================================== -->
+<!-- =====================================================
+     PART 2 — FILTER, RINGKASAN & TABEL DATA
+===================================================== -->
+
+
+<div class="content">
+
+
+    <!-- =================================================
+         STATUS KONEKSI
+    ================================================== -->
+
+    <div
+    class="live-badge"
+    id="connectionStatus">
+
+        <div
+        class="live-dot"
+        id="connectionDot">
+        </div>
+
+        <span id="connectionText">
+
+            Menghubungkan ke Supabase...
+
+        </span>
+
+    </div>
+
+
+
+    <!-- =================================================
+         RINGKASAN DATA
+    ================================================== -->
+
+    <div class="summary-grid">
+
+
+        <!-- TOTAL DATA -->
+
+        <div class="summary-box">
+
+            <div class="summary-label">
+
+                Total Data
+
+            </div>
+
+            <div
+            class="summary-value"
+            id="totalData">
+
+                0
+
+            </div>
+
+        </div>
+
+
+        <!-- AMAN -->
+
+        <div class="summary-box">
+
+            <div class="summary-label">
+
+                Data AMAN
+
+            </div>
+
+            <div
+            class="summary-value safe"
+            id="totalAman">
+
+                0
+
+            </div>
+
+        </div>
+
+
+        <!-- WASPADA -->
+
+        <div class="summary-box">
+
+            <div class="summary-label">
+
+                Data WASPADA
+
+            </div>
+
+            <div
+            class="summary-value warning"
+            id="totalWaspada">
+
+                0
+
+            </div>
+
+        </div>
+
+
+        <!-- BAHAYA -->
+
+        <div class="summary-box">
+
+            <div class="summary-label">
+
+                Data BAHAYA
+
+            </div>
+
+            <div
+            class="summary-value danger"
+            id="totalBahaya">
+
+                0
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- =================================================
+         FILTER LAPORAN
+    ================================================== -->
+
+    <div class="card">
+
+
+        <div class="card-title">
+
+            <i class="fa-solid fa-filter"></i>
+
+            Filter Laporan
+
+        </div>
+
+
+        <div class="filter-grid">
+
+
+            <!-- =========================================
+                 TANGGAL AWAL
+            ========================================== -->
+
+            <div class="filter-item">
+
+                <label
+                for="tanggalAwal">
+
+                    Tanggal Awal
+
+                </label>
+
+
+                <input
+                type="date"
+                id="tanggalAwal">
+
+            </div>
+
+
+
+            <!-- =========================================
+                 TANGGAL AKHIR
+            ========================================== -->
+
+            <div class="filter-item">
+
+                <label
+                for="tanggalAkhir">
+
+                    Tanggal Akhir
+
+                </label>
+
+
+                <input
+                type="date"
+                id="tanggalAkhir">
+
+            </div>
+
+
+
+            <!-- =========================================
+                 STATUS
+            ========================================== -->
+
+            <div class="filter-item">
+
+                <label
+                for="statusFilter">
+
+                    Status Wilayah
+
+                </label>
+
+
+                <select
+                id="statusFilter">
+
+                    <option value="SEMUA">
+
+                        Semua Status
+
+                    </option>
+
+
+                    <option value="AMAN">
+
+                        AMAN
+
+                    </option>
+
+
+                    <option value="WASPADA">
+
+                        WASPADA
+
+                    </option>
+
+
+                    <option value="BAHAYA">
+
+                        BAHAYA
+
+                    </option>
+
+
+                    <option value="UNKNOWN">
+
+                        UNKNOWN
+
+                    </option>
+
+                </select>
+
+            </div>
+
+
+
+            <!-- =========================================
+                 TOMBOL FILTER
+            ========================================== -->
+
+            <div
+            class="filter-item"
+            style="justify-content:end;">
+
+                <button
+                id="filterButton"
+                onclick="applyFilter()">
+
+                    <i
+                    class="fa-solid fa-filter">
+                    </i>
+
+                    Filter Data
+
+                </button>
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =============================================
+             TOMBOL RESET
+        ============================================== -->
+
+        <div
+        style="
+        display:flex;
+        justify-content:flex-end;
+        margin-top:15px;
+        ">
+
+            <button
+            class="btn-secondary"
+            onclick="resetFilter()">
+
+                <i
+                class="fa-solid fa-rotate-left">
+                </i>
+
+                Reset Filter
+
+            </button>
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- =================================================
+         INFORMASI FILTER
+    ================================================== -->
+
+    <div class="card">
+
+
+        <div class="info-box">
+
+            <strong>
+                Informasi:
+            </strong>
+
+            <br>
+
+            Data yang ditampilkan berasal langsung
+            dari tabel <strong>data_air</strong>
+            pada Supabase FLOWS-PRO.
+
+            <br>
+
+            Gunakan filter tanggal dan status untuk
+            mempersempit hasil pengukuran.
+
+            <br>
+
+            <span id="filterInfo">
+
+                Menampilkan data terbaru.
+
+            </span>
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- =================================================
+         TABEL RIWAYAT
+    ================================================== -->
+
+    <div class="card">
+
+
+        <div
+        style="
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        gap:15px;
+        margin-bottom:20px;
+        flex-wrap:wrap;
+        ">
+
+
+            <div class="card-title"
+            style="margin-bottom:0;">
+
+                <i
+                class="fa-solid fa-database">
+                </i>
+
+                Riwayat Monitoring Banjir
+
+            </div>
+
+
+            <div
+            style="
+            font-size:13px;
+            color:#777;
+            ">
+
+                Data:
+
+                <strong
+                id="displayedData">
+
+                    0
+
+                </strong>
+
+                baris
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =============================================
+             TABLE WRAPPER
+        ============================================== -->
+
+        <div class="table-wrapper">
+
+
+            <table>
+
+
+                <thead>
+
+                    <tr>
+
+
+                        <th>
+
+                            ID
+
+                        </th>
+
+
+                        <th>
+
+                            Lokasi
+
+                        </th>
+
+
+                        <th>
+
+                            Tinggi Air
+
+                        </th>
+
+
+                        <th>
+
+                            Water Level
+
+                        </th>
+
+
+                        <th>
+
+                            Status
+
+                        </th>
+
+
+                        <th>
+
+                            Latitude
+
+                        </th>
+
+
+                        <th>
+
+                            Longitude
+
+                        </th>
+
+
+                        <th>
+
+                            Waktu Pengukuran
+
+                        </th>
+
+
+                    </tr>
+
+                </thead>
+
+
+
+                <tbody
+                id="reportTableBody">
+
+
+                    <tr>
+
+                        <td
+                        colspan="8"
+                        class="empty-data">
+
+
+                            <i
+                            class="fa-solid fa-spinner fa-spin">
+                            </i>
+
+
+                            <br>
+
+
+                            Mengambil data
+                            dari Supabase...
+
+
+                        </td>
+
+                    </tr>
+
+
+                </tbody>
+
+
+            </table>
+
+
+        </div>
+
+
+
+        <!-- =============================================
+             PAGINATION
+        ============================================== -->
+
+        <div
+        class="pagination"
+        id="pagination">
+
+
+        </div>
+
+
+
+        <!-- =============================================
+             EXPORT
+        ============================================== -->
+
+        <div class="export-buttons">
+
+
+            <button
+            class="btn-csv"
+            onclick="exportCSV()">
+
+                <i
+                class="fa-solid fa-file-csv">
+                </i>
+
+                Download CSV
+
+            </button>
+
+
+
+            <button
+            class="btn-excel"
+            onclick="exportExcel()">
+
+                <i
+                class="fa-solid fa-file-excel">
+                </i>
+
+                Download Excel
+
+            </button>
+
+
+
+            <button
+            class="btn-pdf"
+            onclick="exportPDF()">
+
+                <i
+                class="fa-solid fa-file-pdf">
+                </i>
+
+                Download PDF
+
+            </button>
+
+
+        </div>
+
+
+
+    </div>
+
+
+
+    <!-- =================================================
+         KETERANGAN EXPORT
+    ================================================== -->
+
+    <div class="card">
+
+
+        <div class="info-box">
+
+
+            <strong>
+
+                <i
+                class="fa-solid fa-circle-info">
+                </i>
+
+                Keterangan Download Data
+
+            </strong>
+
+
+            <br><br>
+
+
+            <b>CSV</b>
+
+            digunakan untuk mendapatkan
+            data pengukuran dalam format tabel
+            yang ringan dan dapat dibuka menggunakan
+            Microsoft Excel.
+
+
+            <br><br>
+
+
+            <b>Excel</b>
+
+            digunakan untuk mendapatkan
+            data pengukuran dalam format
+            Microsoft Excel (.xlsx).
+
+
+            <br><br>
+
+
+            <b>PDF</b>
+
+            digunakan untuk membuat laporan
+            hasil pengukuran dalam format
+            dokumen PDF.
+
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
+<!-- =====================================================
+     AKHIR PART 2
+
+     PART 3 = JAVASCRIPT SUPABASE
+===================================================== -->
+<!-- =====================================================
+     PART 3 — JAVASCRIPT SUPABASE, FILTER & PAGINATION
+===================================================== -->
+
+<script>
+
+/* =====================================================
+   KONFIGURASI SUPABASE
+===================================================== */
+
+const SUPABASE_URL =
+    'https://hceblnmngnnexxtkeiev.supabase.co';
+
+const SUPABASE_ANON_KEY =
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJxZXF1bmJqZXh4dGtlaWV2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU5OTc5MDQsImV4cCI6MjA5MTU3MzkwNH0.jRFevO_3qqjUpL3nNtYKqH-vExMabcnNzDYbThpJdjs';
+
+
+/*
+ * CATATAN:
+ * Jika kode ANON KEY Anda berbeda dari yang
+ * sekarang digunakan di halaman lain,
+ * gunakan ANON KEY yang sama dengan
+ * dashboard / live_sensor / peta_banjir.
+ */
+
+
+/* =====================================================
+   CLIENT SUPABASE
+===================================================== */
+
+const supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_ANON_KEY
+    );
+
+
+/* =====================================================
+   VARIABEL DATA
+===================================================== */
+
+
+/*
+ * Semua data asli yang berhasil
+ * diambil dari Supabase.
+ */
+
+let allReportData = [];
+
+
+/*
+ * Data setelah filter.
+ */
+
+let filteredReportData = [];
+
+
+/*
+ * Data yang sedang ditampilkan
+ * pada halaman aktif.
+ */
+
+let currentPageData = [];
+
+
+/*
+ * Jumlah data per halaman.
+ */
+
+const rowsPerPage = 10;
+
+
+/*
+ * Halaman aktif.
+ */
+
+let currentPage = 1;
+
+
+/* =====================================================
+   CACHE
+===================================================== */
+
+const REPORT_CACHE_KEY =
+    'flowspro_reports_cache';
+
+
+/* =====================================================
+   USER LOGIN
+===================================================== */
+
+function loadUserProfile(){
+
+    try{
+
+        const loginData =
+            JSON.parse(
+                localStorage.getItem(
+                    'userLogin'
+                )
+            );
+
+
+        if(
+            loginData &&
+            loginData.nama
+        ){
+
+            const userName =
+                document.getElementById(
+                    'userName'
+                );
+
+
+            if(userName){
+
+                userName.innerText =
+                    loginData.nama;
+
+            }
+
+        }
+
+    }
+
+    catch(error){
+
+        console.log(
+            'Data login tidak tersedia.'
+        );
+
+    }
+
+
+    /* ================================================
+       FOTO PROFILE
+    ================================================= */
+
+    const savedAvatar =
+        localStorage.getItem(
+            'flowspro_avatar'
+        );
+
+
+    if(savedAvatar){
+
+        const userPhoto =
+            document.getElementById(
+                'userPhoto'
+            );
+
+
+        if(userPhoto){
+
+            userPhoto.src =
+                savedAvatar;
+
+        }
+
+    }
+
+}
+
+
+loadUserProfile();
+
+
+/* =====================================================
+   STATUS KONEKSI
+===================================================== */
+
+function setConnectionStatus(
+    online,
+    fromCache = false
+){
+
+    const badge =
+        document.getElementById(
+            'connectionStatus'
+        );
+
+
+    const dot =
+        document.getElementById(
+            'connectionDot'
+        );
+
+
+    const text =
+        document.getElementById(
+            'connectionText'
+        );
+
+
+    if(!badge || !dot || !text){
+
+        return;
+
+    }
+
+
+    if(online){
+
+        badge.classList.remove(
+            'offline'
+        );
+
+
+        dot.style.background =
+            '#27ae60';
+
+
+        text.innerText =
+            'FLOWS-PRO ONLINE — SUPABASE TERHUBUNG';
+
+    }
+
+    else{
+
+        badge.classList.add(
+            'offline'
+        );
+
+
+        dot.style.background =
+            '#e74c3c';
+
+
+        if(fromCache){
+
+            text.innerText =
+                'OFFLINE — MENAMPILKAN DATA TERAKHIR';
+
+        }
+
+        else{
+
+            text.innerText =
+                'SUPABASE TIDAK DAPAT DIAKSES';
+
+        }
+
+    }
+
+}
+
+
+/* =====================================================
+   FORMAT TANGGAL
+===================================================== */
+
+function formatDateTime(
+    value
+){
+
+    if(!value){
+
+        return '--';
+
+    }
+
+
+    const date =
+        new Date(
+            value
+        );
+
+
+    if(
+        isNaN(
+            date.getTime()
+        )
+    ){
+
+        return '--';
+
+    }
+
+
+    return date.toLocaleString(
+        'id-ID',
+        {
+
+            day:'2-digit',
+
+            month:'2-digit',
+
+            year:'numeric',
+
+            hour:'2-digit',
+
+            minute:'2-digit',
+
+            second:'2-digit'
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   FORMAT TANGGAL UNTUK FILE
+===================================================== */
+
+function formatDateFile(
+    value
+){
+
+    if(!value){
+
+        return '';
+
+    }
+
+
+    const date =
+        new Date(
+            value
+        );
+
+
+    if(
+        isNaN(
+            date.getTime()
+        )
+    ){
+
+        return '';
+
+    }
+
+
+    const year =
+        date.getFullYear();
+
+
+    const month =
+        String(
+            date.getMonth() + 1
+        ).padStart(
+            2,
+            '0'
+        );
+
+
+    const day =
+        String(
+            date.getDate()
+        ).padStart(
+            2,
+            '0'
+        );
+
+
+    return (
+        year +
+        '-' +
+        month +
+        '-' +
+        day
+    );
+
+}
+
+
+/* =====================================================
+   STATUS CLASS
+===================================================== */
+
+function getStatusClass(
+    status
+){
+
+    const value =
+        String(
+            status || ''
+        ).toUpperCase();
+
+
+    if(
+        value === 'AMAN'
+    ){
+
+        return 'status-aman';
+
+    }
+
+
+    if(
+        value === 'SIAGA'
+    ){
+
+        return 'status-siaga';
+
+    }
+
+
+    if(
+        value === 'WASPADA'
+    ){
+
+        return 'status-waspada';
+
+    }
+
+
+    if(
+        value === 'BAHAYA'
+    ){
+
+        return 'status-bahaya';
+
+    }
+
+
+    return 'status-unknown';
+
+}
+
+
+/* =====================================================
+   SIMPAN CACHE
+===================================================== */
+
+function saveReportCache(
+    data
+){
+
+    if(
+        !Array.isArray(data) ||
+        data.length === 0
+    ){
+
+        return;
+
+    }
+
+
+    try{
+
+        localStorage.setItem(
+            REPORT_CACHE_KEY,
+            JSON.stringify(
+                data
+            )
+        );
+
+
+        console.log(
+            'Cache laporan berhasil disimpan.'
+        );
+
+    }
+
+    catch(error){
+
+        console.error(
+            'Gagal menyimpan cache:',
+            error
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   BACA CACHE
+===================================================== */
+
+function getReportCache(){
+
+    try{
+
+        const cache =
+            localStorage.getItem(
+                REPORT_CACHE_KEY
+            );
+
+
+        if(!cache){
+
+            return null;
+
+        }
+
+
+        const data =
+            JSON.parse(
+                cache
+            );
+
+
+        if(
+            !Array.isArray(data) ||
+            data.length === 0
+        ){
+
+            return null;
+
+        }
+
+
+        return data;
+
+    }
+
+    catch(error){
+
+        console.error(
+            'Gagal membaca cache:',
+            error
+        );
+
+
+        return null;
+
+    }
+
+}
+
+
+/* =====================================================
+   LOAD DATA SUPABASE
+===================================================== */
+
+async function loadReports(){
+
+    console.log(
+        'Mengambil data laporan dari Supabase...'
+    );
+
+
+    try{
+
+        /*
+         * Kita mengambil data berdasarkan ID
+         * dari yang terbaru.
+         *
+         * LIMIT 1000 agar halaman tetap ringan.
+         */
+
+        const {
+            data,
+            error
+        } =
+            await supabaseClient
+
+            .from('data_air')
+
+            .select('*')
+
+            .order(
+                'id',
+                {
+                    ascending:false
+                }
+            )
+
+            .limit(
+                1000
+            );
+
+
+        /* =============================================
+           ERROR SUPABASE
+        ============================================== */
+
+        if(error){
+
+            console.error(
+                'Supabase Error:',
+                error
+            );
+
+
+            useCachedReports();
+
+            return;
+
+        }
+
+
+        /* =============================================
+           DATA KOSONG
+        ============================================== */
+
+        if(
+            !data ||
+            data.length === 0
+        ){
+
+            console.log(
+                'Supabase tidak mengembalikan data.'
+            );
+
+
+            useCachedReports();
+
+            return;
+
+        }
+
+
+        /* =============================================
+           DATA ASLI
+        ============================================== */
+
+        console.log(
+            'Data asli Supabase:',
+            data
+        );
+
+
+        allReportData =
+            data;
+
+
+        /*
+         * Simpan data asli ke cache.
+         */
+
+        saveReportCache(
+            data
+        );
+
+
+        /*
+         * Terapkan filter.
+         */
+
+        filteredReportData =
+            [...allReportData];
+
+
+        currentPage =
+            1;
+
+
+        /*
+         * Tampilkan.
+         */
+
+        updateReportDisplay();
+
+
+        /*
+         * Status ONLINE.
+         */
+
+        setConnectionStatus(
+            true
+        );
+
+    }
+
+    catch(error){
+
+        console.error(
+            'Koneksi Supabase gagal:',
+            error
+        );
+
+
+        useCachedReports();
+
+    }
+
+}
+
+
+/* =====================================================
+   GUNAKAN CACHE
+===================================================== */
+
+function useCachedReports(){
+
+    const cache =
+        getReportCache();
+
+
+    if(
+        cache &&
+        cache.length > 0
+    ){
+
+        console.log(
+            'Menampilkan data laporan terakhir.'
+        );
+
+
+        allReportData =
+            cache;
+
+
+        filteredReportData =
+            [...allReportData];
+
+
+        currentPage =
+            1;
+
+
+        updateReportDisplay();
+
+
+        setConnectionStatus(
+            false,
+            true
+        );
+
+
+        return;
+
+    }
+
+
+    allReportData =
+        [];
+
+
+    filteredReportData =
+        [];
+
+
+    currentPage =
+        1;
+
+
+    updateReportDisplay();
+
+
+    setConnectionStatus(
+        false,
+        false
+    );
+
+}
+
+
+/* =====================================================
+   UPDATE DISPLAY
+===================================================== */
+
+function updateReportDisplay(){
+
+    /*
+     * Hitung statistik berdasarkan
+     * DATA HASIL FILTER.
+     */
+
+    updateSummary(
+        filteredReportData
+    );
+
+
+    /*
+     * Tampilkan tabel halaman aktif.
+     */
+
+    renderTable();
+
+
+    /*
+     * Pagination.
+     */
+
+    renderPagination();
+
+
+    /*
+     * Informasi filter.
+     */
+
+    updateFilterInfo();
+
+}
+
+
+/* =====================================================
+   UPDATE RINGKASAN
+===================================================== */
+
+function updateSummary(
+    data
+){
+
+    let total =
+        data.length;
+
+
+    let aman =
+        0;
+
+
+    let waspada =
+        0;
+
+
+    let bahaya =
+        0;
+
+
+    data.forEach(
+        function(item){
+
+            const status =
+                String(
+                    item.status ||
+                    ''
+                ).toUpperCase();
+
+
+            if(
+                status === 'AMAN'
+            ){
+
+                aman++;
+
+            }
+
+
+            else if(
+                status === 'WASPADA' ||
+                status === 'SIAGA'
+            ){
+
+                waspada++;
+
+            }
+
+
+            else if(
+                status === 'BAHAYA'
+            ){
+
+                bahaya++;
+
+            }
+
+        }
+    );
+
+
+    document.getElementById(
+        'totalData'
+    ).innerText =
+        total;
+
+
+    document.getElementById(
+        'totalAman'
+    ).innerText =
+        aman;
+
+
+    document.getElementById(
+        'totalWaspada'
+    ).innerText =
+        waspada;
+
+
+    document.getElementById(
+        'totalBahaya'
+    ).innerText =
+        bahaya;
+
+}
+
+
+/* =====================================================
+   RENDER TABLE
+===================================================== */
+
+function renderTable(){
+
+    const tbody =
+        document.getElementById(
+            'reportTableBody'
+        );
+
+
+    if(!tbody){
+
+        return;
+
+    }
+
+
+    tbody.innerHTML =
+        '';
+
+
+    if(
+        filteredReportData.length === 0
+    ){
+
+        tbody.innerHTML = `
+
+            <tr>
+
+                <td
+                colspan="8"
+                class="empty-data">
+
+                    <i
+                    class="fa-solid fa-database">
+                    </i>
+
+                    <br><br>
+
+                    Tidak ada data
+                    pengukuran.
+
+                </td>
+
+            </tr>
+
+        `;
+
+
+        document.getElementById(
+            'displayedData'
+        ).innerText =
+            0;
+
+
+        return;
+
+    }
+
+
+    /*
+     * Tentukan index awal dan akhir.
+     */
+
+    const startIndex =
+        (
+            currentPage - 1
+        )
+        *
+        rowsPerPage;
+
+
+    const endIndex =
+        Math.min(
+            startIndex +
+            rowsPerPage,
+            filteredReportData.length
+        );
+
+
+    currentPageData =
+        filteredReportData.slice(
+            startIndex,
+            endIndex
+        );
+
+
+    /*
+     * Tampilkan setiap data.
+     */
+
+    currentPageData.forEach(
+        function(item){
+
+            const row =
+                document.createElement(
+                    'tr'
+                );
+
+
+            const status =
+                String(
+                    item.status ||
+                    'UNKNOWN'
+                ).toUpperCase();
+
+
+            const tinggiAir =
+                item.tinggi_air !== null &&
+                item.tinggi_air !== undefined
+                ?
+                item.tinggi_air + ' cm'
+                :
+                '--';
+
+
+            const lokasi =
+                item.lokasi !== null &&
+                item.lokasi !== undefined &&
+                String(item.lokasi).trim() !== ''
+                ?
+                item.lokasi
+                :
+                '--';
+
+
+            const waterLevel =
+                item.water_level !== null &&
+                item.water_level !== undefined
+                ?
+                item.water_level
+                :
+                '--';
+
+
+            const latitude =
+                Number(
+                    item.latitude
+                );
+
+
+            const longitude =
+                Number(
+                    item.longitude
+                );
+
+
+            const latText =
+                Number.isFinite(latitude)
+                ?
+                latitude.toFixed(6)
+                :
+                '--';
+
+
+            const lngText =
+                Number.isFinite(longitude)
+                ?
+                longitude.toFixed(6)
+                :
+                '--';
+
+
+            row.innerHTML = `
+
+                <td>
+
+                    ${item.id ?? '--'}
+
+                </td>
+
+
+                <td>
+
+                    ${escapeHTML(lokasi)}
+
+                </td>
+
+
+                <td>
+
+                    <strong>
+
+                        ${tinggiAir}
+
+                    </strong>
+
+                </td>
+
+
+                <td>
+
+                    ${escapeHTML(waterLevel)}
+
+                </td>
+
+
+                <td>
+
+                    <span
+                    class="status-label
+                    ${getStatusClass(status)}">
+
+                        ${escapeHTML(status)}
+
+                    </span>
+
+                </td>
+
+
+                <td>
+
+                    ${latText}
+
+                </td>
+
+
+                <td>
+
+                    ${lngText}
+
+                </td>
+
+
+                <td>
+
+                    ${formatDateTime(
+                        item.created_at
+                    )}
+
+                </td>
+
+            `;
+
+
+            tbody.appendChild(
+                row
+            );
+
+        }
+    );
+
+
+    document.getElementById(
+        'displayedData'
+    ).innerText =
+        currentPageData.length;
+
+}
+
+
+/* =====================================================
+   ESCAPE HTML
+===================================================== */
+
+function escapeHTML(
+    value
+){
+
+    const div =
+        document.createElement(
+            'div'
+        );
+
+
+    div.textContent =
+        value ?? '';
+
+
+    return div.innerHTML;
+
+}
+
+
+/* =====================================================
+   PAGINATION
+===================================================== */
+
+function renderPagination(){
+
+    const container =
+        document.getElementById(
+            'pagination'
+        );
+
+
+    if(!container){
+
+        return;
+
+    }
+
+
+    container.innerHTML =
+        '';
+
+
+    const totalPages =
+        Math.ceil(
+            filteredReportData.length /
+            rowsPerPage
+        );
+
+
+    if(
+        totalPages <= 1
+    ){
+
+        return;
+
+    }
+
+
+    /*
+     * Tombol Previous.
+     */
+
+    const prev =
+        document.createElement(
+            'div'
+        );
+
+
+    prev.className =
+        'page-btn';
+
+
+    if(
+        currentPage === 1
+    ){
+
+        prev.classList.add(
+            'disabled'
+        );
+
+    }
+
+
+    prev.innerHTML =
+        '<i class="fa-solid fa-chevron-left"></i>';
+
+
+    prev.onclick =
+        function(){
+
+            if(
+                currentPage > 1
+            ){
+
+                currentPage--;
+
+                renderTable();
+
+                renderPagination();
+
+            }
+
+        };
+
+
+    container.appendChild(
+        prev
+    );
+
+
+    /*
+     * Nomor halaman.
+     */
+
+    for(
+        let page = 1;
+        page <= totalPages;
+        page++
+    ){
+
+        /*
+         * Jangan menampilkan terlalu banyak
+         * tombol halaman.
+         */
+
+        if(
+            totalPages > 10 &&
+            page > 3 &&
+            page < totalPages - 2 &&
+            Math.abs(
+                page -
+                currentPage
+            ) > 1
+        ){
+
+            if(
+                page === 4
+            ){
+
+                const dots =
+                    document.createElement(
+                        'div'
+                    );
+
+
+                dots.className =
+                    'page-btn';
+
+
+                dots.innerText =
+                    '...';
+
+
+                dots.style.cursor =
+                    'default';
+
+
+                container.appendChild(
+                    dots
+                );
+
+            }
+
+
+            continue;
+
+        }
+
+
+        const button =
+            document.createElement(
+                'div'
+            );
+
+
+        button.className =
+            'page-btn';
+
+
+        if(
+            page === currentPage
+        ){
+
+            button.classList.add(
+                'active'
+            );
+
+        }
+
+
+        button.innerText =
+            page;
+
+
+        button.onclick =
+            function(){
+
+                currentPage =
+                    page;
+
+
+                renderTable();
+
+                renderPagination();
+
+            };
+
+
+        container.appendChild(
+            button
+        );
+
+    }
+
+
+    /*
+     * Tombol Next.
+     */
+
+    const next =
+        document.createElement(
+            'div'
+        );
+
+
+    next.className =
+        'page-btn';
+
+
+    if(
+        currentPage === totalPages
+    ){
+
+        next.classList.add(
+            'disabled'
+        );
+
+    }
+
+
+    next.innerHTML =
+        '<i class="fa-solid fa-chevron-right"></i>';
+
+
+    next.onclick =
+        function(){
+
+            if(
+                currentPage <
+                totalPages
+            ){
+
+                currentPage++;
+
+                renderTable();
+
+                renderPagination();
+
+            }
+
+        };
+
+
+    container.appendChild(
+        next
+    );
+
+}
+
+
+/* =====================================================
+   FILTER DATA
+===================================================== */
+
+function applyFilter(){
+
+    const tanggalAwal =
+        document.getElementById(
+            'tanggalAwal'
+        ).value;
+
+
+    const tanggalAkhir =
+        document.getElementById(
+            'tanggalAkhir'
+        ).value;
+
+
+    const status =
+        document.getElementById(
+            'statusFilter'
+        ).value;
+
+
+    /*
+     * Validasi tanggal.
+     */
+
+    if(
+        tanggalAwal &&
+        tanggalAkhir &&
+        tanggalAwal >
+        tanggalAkhir
+    ){
+
+        alert(
+            'Tanggal awal tidak boleh lebih besar dari tanggal akhir.'
+        );
+
+
+        return;
+
+    }
+
+
+    filteredReportData =
+        allReportData.filter(
+            function(item){
+
+                /*
+                 * =====================================
+                 * FILTER TANGGAL
+                 * ===================================
+                 */
+
+                if(
+                    tanggalAwal ||
+                    tanggalAkhir
+                ){
+
+                    if(
+                        !item.created_at
+                    ){
+
+                        return false;
+
+                    }
+
+
+                    const itemDate =
+                        new Date(
+                            item.created_at
+                        );
+
+
+                    /*
+                     * Awal hari.
+                     */
+
+                    if(
+                        tanggalAwal
+                    ){
+
+                        const start =
+                            new Date(
+                                tanggalAwal +
+                                'T00:00:00'
+                            );
+
+
+                        if(
+                            itemDate <
+                            start
+                        ){
+
+                            return false;
+
+                        }
+
+                    }
+
+
+                    /*
+                     * Akhir hari.
+                     */
+
+                    if(
+                        tanggalAkhir
+                    ){
+
+                        const end =
+                            new Date(
+                                tanggalAkhir +
+                                'T23:59:59'
+                            );
+
+
+                        if(
+                            itemDate >
+                            end
+                        ){
+
+                            return false;
+
+                        }
+
+                    }
+
+                }
+
+
+                /*
+                 * =====================================
+                 * FILTER STATUS
+                 * ===================================
+                 */
+
+                if(
+                    status !==
+                    'SEMUA'
+                ){
+
+                    const itemStatus =
+                        String(
+                            item.status ||
+                            'UNKNOWN'
+                        ).toUpperCase();
+
+
+                    if(
+                        itemStatus !==
+                        status
+                    ){
+
+                        return false;
+
+                    }
+
+                }
+
+
+                return true;
+
+            }
+        );
+
+
+    currentPage =
+        1;
+
+
+    updateReportDisplay();
+
+}
+
+
+/* =====================================================
+   RESET FILTER
+===================================================== */
+
+function resetFilter(){
+
+    document.getElementById(
+        'tanggalAwal'
+    ).value =
+        '';
+
+
+    document.getElementById(
+        'tanggalAkhir'
+    ).value =
+        '';
+
+
+    document.getElementById(
+        'statusFilter'
+    ).value =
+        'SEMUA';
+
+
+    filteredReportData =
+        [...allReportData];
+
+
+    currentPage =
+        1;
+
+
+    updateReportDisplay();
+
+}
+
+
+/* =====================================================
+   INFORMASI FILTER
+===================================================== */
+
+function updateFilterInfo(){
+
+    const info =
+        document.getElementById(
+            'filterInfo'
+        );
+
+
+    if(!info){
+
+        return;
+
+    }
+
+
+    const tanggalAwal =
+        document.getElementById(
+            'tanggalAwal'
+        ).value;
+
+
+    const tanggalAkhir =
+        document.getElementById(
+            'tanggalAkhir'
+        ).value;
+
+
+    const status =
+        document.getElementById(
+            'statusFilter'
+        ).value;
+
+
+    let text =
+        'Menampilkan ' +
+        filteredReportData.length +
+        ' data.';
+
+
+    if(
+        tanggalAwal
+    ){
+
+        text +=
+            ' Mulai ' +
+            tanggalAwal +
+            '.';
+
+    }
+
+
+    if(
+        tanggalAkhir
+    ){
+
+        text +=
+            ' Sampai ' +
+            tanggalAkhir +
+            '.';
+
+    }
+
+
+    if(
+        status !==
+        'SEMUA'
+    ){
+
+        text +=
+            ' Status: ' +
+            status +
+            '.';
+
+    }
+
+
+    info.innerText =
+        text;
+
+}
+
+
+/* =====================================================
+   LOAD DATA PERTAMA
+===================================================== */
+
+const initialCache =
+    getReportCache();
+
+
+if(
+    initialCache &&
+    initialCache.length > 0
+){
+
+    allReportData =
+        initialCache;
+
+
+    filteredReportData =
+        [...allReportData];
+
+
+    updateReportDisplay();
+
+
+    setConnectionStatus(
+        false,
+        true
+    );
+
+}
+
+
+/* =====================================================
+   AMBIL DATA TERBARU
+===================================================== */
+
+loadReports();
+
+
+/* =====================================================
+   REFRESH OTOMATIS
+===================================================== */
+
+
+/*
+ * Setiap 30 detik.
+ *
+ * Reports tidak perlu mengambil data
+ * setiap 5 detik seperti Live Sensor.
+ */
+
+setInterval(
+    loadReports,
+    30000
+);
+
+
+/* =====================================================
+   KETIKA INTERNET KEMBALI
+===================================================== */
+
+window.addEventListener(
+    'online',
+    function(){
+
+        console.log(
+            'Internet kembali.'
+        );
+
+
+        loadReports();
+
+    }
+);
+
+
+/* =====================================================
+   KETIKA INTERNET PUTUS
+===================================================== */
+
+window.addEventListener(
+    'offline',
+    function(){
+
+        console.log(
+            'Internet terputus.'
+        );
+
+
+        useCachedReports();
+
+    }
+);
+
+
+/* =====================================================
+   PART 3 SELESAI
+===================================================== */
+<!-- =====================================================
+     PART 4 — EXPORT CSV, EXCEL & PDF
+===================================================== -->
+
+<script>
+
+/* =====================================================
+   AMBIL SEMUA DATA SUPABASE
+===================================================== */
+
+/*
+ * Reports yang ditampilkan di halaman dibatasi 1000 data.
+ *
+ * Tetapi untuk DOWNLOAD kita mengambil seluruh data
+ * dari Supabase secara bertahap.
+ *
+ * Ini berguna karena ID data Anda sudah mencapai
+ * ribuan record.
+ */
+
+async function getAllDataForExport(){
+
+    const allData = [];
+
+    const batchSize = 1000;
+
+    let from = 0;
+
+    let finished = false;
+
+
+    try{
+
+        while(!finished){
+
+            console.log(
+                'Mengambil data export:',
+                from,
+                '-',
+                from + batchSize - 1
+            );
+
+
+            const {
+                data,
+                error
+            } =
+                await supabaseClient
+
+                .from('data_air')
+
+                .select('*')
+
+                .order(
+                    'id',
+                    {
+                        ascending:false
+                    }
+                )
+
+                .range(
+                    from,
+                    from + batchSize - 1
+                );
+
+
+            if(error){
+
+                throw error;
+
+            }
+
+
+            if(
+                !data ||
+                data.length === 0
+            ){
+
+                finished = true;
+
+                break;
+
+            }
+
+
+            allData.push(
+                ...data
+            );
+
+
+            /*
+             * Jika jumlah data kurang dari
+             * batchSize berarti sudah sampai
+             * data terakhir.
+             */
+
+            if(
+                data.length < batchSize
+            ){
+
+                finished = true;
+
+            }
+
+
+            else{
+
+                from += batchSize;
+
+            }
+
+        }
+
+
+        console.log(
+            'Total data untuk export:',
+            allData.length
+        );
+
+
+        return allData;
+
+    }
+
+    catch(error){
+
+        console.error(
+            'Gagal mengambil seluruh data:',
+            error
+        );
+
+
+        throw error;
+
+    }
+
+}
+
+
+/* =====================================================
+   TERAPKAN FILTER KE DATA EXPORT
+===================================================== */
+
+function filterExportData(
+    data
+){
+
+    const tanggalAwal =
+        document.getElementById(
+            'tanggalAwal'
+        ).value;
+
+
+    const tanggalAkhir =
+        document.getElementById(
+            'tanggalAkhir'
+        ).value;
+
+
+    const status =
+        document.getElementById(
+            'statusFilter'
+        ).value;
+
+
+    return data.filter(
+        function(item){
+
+            /*
+             * =========================================
+             * FILTER TANGGAL AWAL
+             * =========================================
+             */
+
+            if(
+                tanggalAwal
+            ){
+
+                if(
+                    !item.created_at
+                ){
+
+                    return false;
+
+                }
+
+
+                const itemDate =
+                    new Date(
+                        item.created_at
+                    );
+
+
+                const startDate =
+                    new Date(
+                        tanggalAwal +
+                        'T00:00:00'
+                    );
+
+
+                if(
+                    itemDate <
+                    startDate
+                ){
+
+                    return false;
+
+                }
+
+            }
+
+
+            /*
+             * =========================================
+             * FILTER TANGGAL AKHIR
+             * =========================================
+             */
+
+            if(
+                tanggalAkhir
+            ){
+
+                if(
+                    !item.created_at
+                ){
+
+                    return false;
+
+                }
+
+
+                const itemDate =
+                    new Date(
+                        item.created_at
+                    );
+
+
+                const endDate =
+                    new Date(
+                        tanggalAkhir +
+                        'T23:59:59'
+                    );
+
+
+                if(
+                    itemDate >
+                    endDate
+                ){
+
+                    return false;
+
+                }
+
+            }
+
+
+            /*
+             * =========================================
+             * FILTER STATUS
+             * =========================================
+             */
+
+            if(
+                status &&
+                status !==
+                'SEMUA'
+            ){
+
+                const itemStatus =
+                    String(
+                        item.status ||
+                        'UNKNOWN'
+                    ).toUpperCase();
+
+
+                if(
+                    itemStatus !==
+                    status
+                ){
+
+                    return false;
+
+                }
+
+            }
+
+
+            return true;
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   BUAT NAMA FILE
+===================================================== */
+
+function getExportFileName(
+    extension
+){
+
+    const tanggalAwal =
+        document.getElementById(
+            'tanggalAwal'
+        ).value;
+
+
+    const tanggalAkhir =
+        document.getElementById(
+            'tanggalAkhir'
+        ).value;
+
+
+    let name =
+        'FLOWS-PRO_Data_Pengukuran';
+
+
+    if(
+        tanggalAwal &&
+        tanggalAkhir
+    ){
+
+        name +=
+            '_' +
+            tanggalAwal +
+            '_sampai_' +
+            tanggalAkhir;
+
+    }
+
+    else if(
+        tanggalAwal
+    ){
+
+        name +=
+            '_mulai_' +
+            tanggalAwal;
+
+    }
+
+    else if(
+        tanggalAkhir
+    ){
+
+        name +=
+            '_sampai_' +
+            tanggalAkhir;
+
+    }
+
+
+    return (
+        name +
+        extension
+    );
+
+}
+
+
+/* =====================================================
+   FORMAT DATA EXPORT
+===================================================== */
+
+function prepareExportData(
+    data
+){
+
+    return data.map(
+        function(item){
+
+            const latitude =
+                Number(
+                    item.latitude
+                );
+
+
+            const longitude =
+                Number(
+                    item.longitude
+                );
+
+
+            return {
+
+                'ID':
+                    item.id ?? '',
+
+
+                'Lokasi':
+                    item.lokasi ?? '',
+
+
+                'Tinggi Air (cm)':
+                    item.tinggi_air ?? '',
+
+
+                'Water Level':
+                    item.water_level ?? '',
+
+
+                'Status':
+                    item.status ?? '',
+
+
+                'Latitude':
+                    Number.isFinite(
+                        latitude
+                    )
+                    ?
+                    latitude
+                    :
+                    '',
+
+
+                'Longitude':
+                    Number.isFinite(
+                        longitude
+                    )
+                    ?
+                    longitude
+                    :
+                    '',
+
+
+                'Waktu Pengukuran':
+                    formatDateTime(
+                        item.created_at
+                    )
+
+            };
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   TOMBOL LOADING
+===================================================== */
+
+function setExportButtonLoading(
+    loading
+){
+
+    const buttons =
+        document.querySelectorAll(
+            '.export-buttons button'
+        );
+
+
+    buttons.forEach(
+        function(button){
+
+            button.disabled =
+                loading;
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   DOWNLOAD CSV
+===================================================== */
+
+async function exportCSV(){
+
+    try{
+
+        setExportButtonLoading(
+            true
+        );
+
+
+        /*
+         * Ambil semua data.
+         */
+
+        const allData =
+            await getAllDataForExport();
+
+
+        /*
+         * Terapkan filter.
+         */
+
+        const exportData =
+            filterExportData(
+                allData
+            );
+
+
+        if(
+            exportData.length === 0
+        ){
+
+            alert(
+                'Tidak ada data yang sesuai dengan filter.'
+            );
+
+
+            return;
+
+        }
+
+
+        /*
+         * Header CSV.
+         */
+
+        const headers = [
+
+            'ID',
+
+            'Lokasi',
+
+            'Tinggi Air (cm)',
+
+            'Water Level',
+
+            'Status',
+
+            'Latitude',
+
+            'Longitude',
+
+            'Waktu Pengukuran'
+
+        ];
+
+
+        /*
+         * Escape CSV.
+         */
+
+        function csvEscape(
+            value
+        ){
+
+            const text =
+                String(
+                    value ??
+                    ''
+                );
+
+
+            return '"' +
+                text
+                .replace(
+                    /"/g,
+                    '""'
+                ) +
+                '"';
+
+        }
+
+
+        /*
+         * Buat baris.
+         */
+
+        const rows =
+            exportData.map(
+                function(item){
+
+                    return [
+
+                        item.id,
+
+                        item.lokasi,
+
+                        item.tinggi_air,
+
+                        item.water_level,
+
+                        item.status,
+
+                        item.latitude,
+
+                        item.longitude,
+
+                        item.created_at
+
+                    ]
+                    .map(
+                        csvEscape
+                    )
+                    .join(',');
+
+                }
+            );
+
+
+        /*
+         * Gabungkan CSV.
+         */
+
+        const csvContent =
+            '\uFEFF' +
+            headers
+            .map(
+                csvEscape
+            )
+            .join(',') +
+            '\n' +
+            rows.join('\n');
+
+
+        /*
+         * Buat file.
+         */
+
+        const blob =
+            new Blob(
+                [
+                    csvContent
+                ],
+                {
+                    type:
+                    'text/csv;charset=utf-8;'
+                }
+            );
+
+
+        const url =
+            URL.createObjectURL(
+                blob
+            );
+
+
+        const link =
+            document.createElement(
+                'a'
+            );
+
+
+        link.href =
+            url;
+
+
+        link.download =
+            getExportFileName(
+                '.csv'
+            );
+
+
+        document.body.appendChild(
+            link
+        );
+
+
+        link.click();
+
+
+        document.body.removeChild(
+            link
+        );
+
+
+        URL.revokeObjectURL(
+            url
+        );
+
+
+        alert(
+            'Download CSV berhasil.\n\n' +
+            'Jumlah data: ' +
+            exportData.length
+        );
+
+    }
+
+    catch(error){
+
+        console.error(
+            error
+        );
+
+
+        alert(
+            'Gagal membuat CSV.\n\n' +
+            error.message
+        );
+
+    }
+
+    finally{
+
+        setExportButtonLoading(
+            false
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   DOWNLOAD EXCEL
+===================================================== */
+
+async function exportExcel(){
+
+    try{
+
+        setExportButtonLoading(
+            true
+        );
+
+
+        /*
+         * Ambil seluruh data.
+         */
+
+        const allData =
+            await getAllDataForExport();
+
+
+        /*
+         * Terapkan filter.
+         */
+
+        const exportData =
+            filterExportData(
+                allData
+            );
+
+
+        if(
+            exportData.length === 0
+        ){
+
+            alert(
+                'Tidak ada data yang sesuai dengan filter.'
+            );
+
+
+            return;
+
+        }
+
+
+        /*
+         * Format data.
+         */
+
+        const worksheetData =
+            prepareExportData(
+                exportData
+            );
+
+
+        /*
+         * Buat worksheet.
+         */
+
+        const worksheet =
+            XLSX.utils.json_to_sheet(
+                worksheetData
+            );
+
+
+        /*
+         * Lebar kolom.
+         */
+
+        worksheet['!cols'] = [
+
+            {
+                wch:10
+            },
+
+            {
+                wch:25
+            },
+
+            {
+                wch:18
+            },
+
+            {
+                wch:18
+            },
+
+            {
+                wch:15
+            },
+
+            {
+                wch:15
+            },
+
+            {
+                wch:15
+            },
+
+            {
+                wch:25
+            }
+
+        ];
+
+
+        /*
+         * Buat workbook.
+         */
+
+        const workbook =
+            XLSX.utils.book_new();
+
+
+        /*
+         * Masukkan worksheet.
+         */
+
+        XLSX.utils.book_append_sheet(
+            workbook,
+            worksheet,
+            'Data Pengukuran'
+        );
+
+
+        /*
+         * Tambahkan sheet ringkasan.
+         */
+
+        const summaryData = [
+
+            {
+                'Keterangan':
+                    'Sistem',
+
+                'Nilai':
+                    'FLOWS-PRO'
+
+            },
+
+            {
+                'Keterangan':
+                    'Total Data',
+
+                'Nilai':
+                    exportData.length
+
+            },
+
+            {
+                'Keterangan':
+                    'Tanggal Awal',
+
+                'Nilai':
+                    document.getElementById(
+                        'tanggalAwal'
+                    ).value ||
+                    'Semua'
+
+            },
+
+            {
+                'Keterangan':
+                    'Tanggal Akhir',
+
+                'Nilai':
+                    document.getElementById(
+                        'tanggalAkhir'
+                    ).value ||
+                    'Semua'
+
+            },
+
+            {
+                'Keterangan':
+                    'Status',
+
+                'Nilai':
+                    document.getElementById(
+                        'statusFilter'
+                    ).value
+
+            },
+
+            {
+                'Keterangan':
+                    'Dibuat',
+
+                'Nilai':
+                    new Date()
+                    .toLocaleString(
+                        'id-ID'
+                    )
+
+            }
+
+        ];
+
+
+        const summarySheet =
+            XLSX.utils.json_to_sheet(
+                summaryData
+            );
+
+
+        summarySheet['!cols'] = [
+
+            {
+                wch:20
+            },
+
+            {
+                wch:35
+            }
+
+        ];
+
+
+        XLSX.utils.book_append_sheet(
+            workbook,
+            summarySheet,
+            'Ringkasan'
+        );
+
+
+        /*
+         * Download.
+         */
+
+        XLSX.writeFile(
+            workbook,
+            getExportFileName(
+                '.xlsx'
+            )
+        );
+
+
+        alert(
+            'Download Excel berhasil.\n\n' +
+            'Jumlah data: ' +
+            exportData.length
+        );
+
+    }
+
+    catch(error){
+
+        console.error(
+            error
+        );
+
+
+        alert(
+            'Gagal membuat Excel.\n\n' +
+            error.message
+        );
+
+    }
+
+    finally{
+
+        setExportButtonLoading(
+            false
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   DOWNLOAD PDF
+===================================================== */
+
+async function exportPDF(){
+
+    try{
+
+        setExportButtonLoading(
+            true
+        );
+
+
+        /*
+         * Ambil semua data.
+         */
+
+        const allData =
+            await getAllDataForExport();
+
+
+        /*
+         * Terapkan filter.
+         */
+
+        const exportData =
+            filterExportData(
+                allData
+            );
+
+
+        if(
+            exportData.length === 0
+        ){
+
+            alert(
+                'Tidak ada data yang sesuai dengan filter.'
+            );
+
+
+            return;
+
+        }
+
+
+        /*
+         * Pastikan jsPDF tersedia.
+         */
+
+        if(
+            !window.jspdf ||
+            !window.jspdf.jsPDF
+        ){
+
+            throw new Error(
+                'Library PDF belum berhasil dimuat.'
+            );
+
+        }
+
+
+        const {
+            jsPDF
+        } =
+            window.jspdf;
+
+
+        /*
+         * Buat dokumen landscape.
+         *
+         * Landscape dipakai karena tabel
+         * mempunyai banyak kolom.
+         */
+
+        const doc =
+            new jsPDF(
+                'landscape',
+                'mm',
+                'a4'
+            );
+
+
+        /*
+         * Judul.
+         */
+
+        doc.setFontSize(
+            18
+        );
+
+
+        doc.text(
+            'FLOWS-PRO',
+            14,
+            15
+        );
+
+
+        doc.setFontSize(
+            13
+        );
+
+
+        doc.text(
+            'Laporan Data Pengukuran Air',
+            14,
+            23
+        );
+
+
+        /*
+         * Informasi laporan.
+         */
+
+        doc.setFontSize(
+            9
+        );
+
+
+        const tanggalAwal =
+            document.getElementById(
+                'tanggalAwal'
+            ).value ||
+            'Semua';
+
+
+        const tanggalAkhir =
+            document.getElementById(
+                'tanggalAkhir'
+            ).value ||
+            'Semua';
+
+
+        const status =
+            document.getElementById(
+                'statusFilter'
+            ).value;
+
+
+        doc.text(
+            'Tanggal Awal: ' +
+            tanggalAwal,
+            14,
+            31
+        );
+
+
+        doc.text(
+            'Tanggal Akhir: ' +
+            tanggalAkhir,
+            80,
+            31
+        );
+
+
+        doc.text(
+            'Status: ' +
+            status,
+            160,
+            31
+        );
+
+
+        doc.text(
+            'Jumlah Data: ' +
+            exportData.length,
+            220,
+            31
+        );
+
+
+        /*
+         * Header tabel.
+         */
+
+        const tableHead = [[
+
+            'ID',
+
+            'Lokasi',
+
+            'Tinggi Air',
+
+            'Water Level',
+
+            'Status',
+
+            'Latitude',
+
+            'Longitude',
+
+            'Waktu'
+
+        ]];
+
+
+        /*
+         * Isi tabel.
+         */
+
+        const tableBody =
+            exportData.map(
+                function(item){
+
+                    return [
+
+                        item.id,
+
+                        item.lokasi,
+
+                        item.tinggi_air,
+
+                        item.water_level,
+
+                        item.status,
+
+                        item.latitude,
+
+                        item.longitude,
+
+                        item.created_at
+
+                    ];
+
+                }
+            );
+
+
+        /*
+         * Buat tabel PDF.
+         */
+
+        doc.autoTable({
+
+            head:
+                tableHead,
+
+            body:
+                tableBody,
+
+            startY:
+                38,
+
+            theme:
+                'grid',
+
+            styles:{
+
+                fontSize:
+                    7,
+
+                cellPadding:
+                    2
+
+            },
+
+            headStyles:{
+
+                fontSize:
+                    7,
+
+                fontStyle:
+                    'bold'
+
+            },
+
+            columnStyles:{
+
+                0:{
+                    cellWidth:15
+                },
+
+                1:{
+                    cellWidth:35
+                },
+
+                2:{
+                    cellWidth:25
+                },
+
+                3:{
+                    cellWidth:25
+                },
+
+                4:{
+                    cellWidth:22
+                },
+
+                5:{
+                    cellWidth:25
+                },
+
+                6:{
+                    cellWidth:25
+                },
+
+                7:{
+                    cellWidth:45
+                }
+
+            },
+
+            didDrawPage:
+                function(data){
+
+                    /*
+                     * Nomor halaman.
+                     */
+
+                    const pageCount =
+                        doc.internal
+                        .getNumberOfPages();
+
+
+                    doc.setFontSize(
+                        8
+                    );
+
+
+                    doc.text(
+                        'Halaman ' +
+                        data.pageNumber +
+                        ' / ' +
+                        pageCount,
+
+                        doc.internal
+                        .pageSize
+                        .getWidth() -
+                        35,
+
+                        doc.internal
+                        .pageSize
+                        .getHeight() -
+                        8
+                    );
+
+
+                    /*
+                     * Sumber data.
+                     */
+
+                    doc.text(
+                        'FLOWS-PRO - Data pengukuran dari Supabase',
+
+                        14,
+
+                        doc.internal
+                        .pageSize
+                        .getHeight() -
+                        8
+                    );
+
+                }
+
+        });
+
+
+        /*
+         * Simpan PDF.
+         */
+
+        doc.save(
+            getExportFileName(
+                '.pdf'
+            )
+        );
+
+
+        alert(
+            'Download PDF berhasil.\n\n' +
+            'Jumlah data: ' +
+            exportData.length
+        );
+
+    }
+
+    catch(error){
+
+        console.error(
+            error
+        );
+
+
+        alert(
+            'Gagal membuat PDF.\n\n' +
+            error.message
+        );
+
+    }
+
+    finally{
+
+        setExportButtonLoading(
+            false
+        );
+
+    }
+
+}
+

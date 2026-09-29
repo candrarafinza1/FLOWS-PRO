@@ -1,0 +1,3304 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>FLOWS-PRO | Peta Banjir</title>
+
+
+<!-- =====================================================
+     FAVICON
+===================================================== -->
+
+<link
+rel="icon"
+type="image/jpeg"
+href="LOGO.JPG">
+
+
+<!-- =====================================================
+     FONT AWESOME
+===================================================== -->
+
+<link
+rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+
+<!-- =====================================================
+     LEAFLET CSS
+===================================================== -->
+
+<link
+rel="stylesheet"
+href="https://unpkg.com/leaflet/dist/leaflet.css">
+
+
+<!-- =====================================================
+     SUPABASE
+===================================================== -->
+
+<script
+src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
+</script>
+
+
+<!-- =====================================================
+     LEAFLET JS
+===================================================== -->
+
+<script
+src="https://unpkg.com/leaflet/dist/leaflet.js">
+</script>
+
+
+<style>
+
+/* =====================================================
+   RESET
+===================================================== */
+
+*{
+
+    margin:0;
+
+    padding:0;
+
+    box-sizing:border-box;
+
+    font-family:'Segoe UI',sans-serif;
+
+}
+
+
+body{
+
+    background:#edf3f8;
+
+    overflow-x:hidden;
+
+}
+
+
+/* =====================================================
+   SIDEBAR
+===================================================== */
+
+.sidebar{
+
+    position:fixed;
+
+    left:0;
+
+    top:0;
+
+    width:270px;
+
+    height:100vh;
+
+    background:
+    linear-gradient(
+        180deg,
+        #071b2f,
+        #0d2b45,
+        #12395c
+    );
+
+    padding:22px 18px;
+
+    color:white;
+
+    overflow-y:auto;
+
+    z-index:1000;
+
+}
+
+
+/* =====================================================
+   LOGO
+===================================================== */
+
+.logo{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:flex-start;
+
+    padding-left:10px;
+
+    margin-bottom:30px;
+
+}
+
+
+.logo img{
+
+    width:200px;
+
+    height:auto;
+
+    display:block;
+
+    object-fit:contain;
+
+}
+
+
+/* =====================================================
+   MENU
+===================================================== */
+
+.menu-item{
+
+    padding:16px 18px;
+
+    border-radius:16px;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:14px;
+
+    margin-bottom:12px;
+
+    cursor:pointer;
+
+    transition:0.3s;
+
+    font-weight:600;
+
+    text-decoration:none;
+
+    color:white;
+
+    width:100%;
+
+}
+
+
+.menu-item i{
+
+    width:22px;
+
+    text-align:center;
+
+    font-size:18px;
+
+}
+
+
+.menu-item:hover{
+
+    background:
+    linear-gradient(
+        90deg,
+        #00c6ff,
+        #0072ff
+    );
+
+    transform:translateX(4px);
+
+}
+
+
+.menu-item.active{
+
+    background:
+    linear-gradient(
+        90deg,
+        #00c6ff,
+        #0072ff
+    );
+
+}
+
+
+/* =====================================================
+   MAIN
+===================================================== */
+
+.main{
+
+    margin-left:270px;
+
+    min-height:100vh;
+
+}
+
+
+/* =====================================================
+   NAVBAR
+===================================================== */
+
+.navbar{
+
+    height:85px;
+
+    background:white;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:0 35px;
+
+    box-shadow:
+    0 2px 10px
+    rgba(0,0,0,0.06);
+
+}
+
+
+.nav-title{
+
+    font-size:24px;
+
+    font-weight:800;
+
+    color:#12395c;
+
+}
+
+
+/* =====================================================
+   PROFILE
+===================================================== */
+
+.profile{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    padding:8px 14px;
+
+    border-radius:14px;
+
+    background:#f5f9ff;
+
+}
+
+
+.profile img{
+
+    width:50px;
+
+    height:50px;
+
+    border-radius:50%;
+
+    object-fit:cover;
+
+}
+
+
+.profile h4{
+
+    color:#12395c;
+
+    font-size:15px;
+
+}
+
+
+.profile p{
+
+    font-size:12px;
+
+    color:#888;
+
+}
+
+
+/* =====================================================
+   CONTENT
+===================================================== */
+
+.content{
+
+    padding:28px;
+
+}
+
+
+/* =====================================================
+   GRID
+===================================================== */
+
+.grid{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(3,1fr);
+
+    gap:20px;
+
+}
+
+
+/* =====================================================
+   CARD
+===================================================== */
+
+.card{
+
+    background:white;
+
+    padding:24px;
+
+    border-radius:22px;
+
+    margin-bottom:20px;
+
+    box-shadow:
+    0 5px 20px
+    rgba(0,0,0,0.05);
+
+}
+
+
+.card-title{
+
+    font-size:18px;
+
+    font-weight:700;
+
+    margin-bottom:16px;
+
+    color:#12395c;
+
+}
+
+
+/* =====================================================
+   BIG NUMBER
+===================================================== */
+
+.big{
+
+    font-size:42px;
+
+    font-weight:800;
+
+}
+
+
+/* =====================================================
+   STATUS
+===================================================== */
+
+.safe{
+
+    color:#27ae60;
+
+}
+
+
+.warning{
+
+    color:#f1c40f;
+
+}
+
+
+.danger{
+
+    color:#e74c3c;
+
+}
+
+
+/* =====================================================
+   LIVE BADGE
+===================================================== */
+
+.live-badge{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    padding:12px 18px;
+
+    border-radius:40px;
+
+    background:#e8fff1;
+
+    color:#27ae60;
+
+    font-weight:700;
+
+    margin-bottom:20px;
+
+}
+
+
+.live-dot{
+
+    width:10px;
+
+    height:10px;
+
+    background:#27ae60;
+
+    border-radius:50%;
+
+    animation:blink 1s infinite;
+
+}
+
+
+.live-badge.offline{
+
+    background:#fff0f0;
+
+    color:#e74c3c;
+
+}
+
+
+.live-badge.offline .live-dot{
+
+    background:#e74c3c;
+
+    animation:none;
+
+}
+
+
+@keyframes blink{
+
+    0%{
+        opacity:1;
+    }
+
+    50%{
+        opacity:0.2;
+    }
+
+    100%{
+        opacity:1;
+    }
+
+}
+
+
+/* =====================================================
+   PETA
+===================================================== */
+
+#floodMap{
+
+    width:100%;
+
+    height:650px;
+
+    border-radius:20px;
+
+    overflow:hidden;
+
+}
+
+
+.leaflet-container{
+
+    z-index:1;
+
+}
+
+
+/* =====================================================
+   LEGEND
+===================================================== */
+
+.legend{
+
+    display:flex;
+
+    gap:25px;
+
+    margin-top:18px;
+
+    flex-wrap:wrap;
+
+}
+
+
+.legend-item{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:9px;
+
+    font-weight:600;
+
+}
+
+
+.legend-color{
+
+    width:18px;
+
+    height:18px;
+
+    border-radius:50%;
+
+    border:2px solid white;
+
+    box-shadow:
+    0 1px 4px
+    rgba(0,0,0,0.3);
+
+}
+
+
+.legend-green{
+
+    background:#27ae60;
+
+}
+
+
+.legend-yellow{
+
+    background:#f1c40f;
+
+}
+
+
+.legend-orange{
+
+    background:#e67e22;
+
+}
+
+
+.legend-red{
+
+    background:#e74c3c;
+
+}
+
+
+/* =====================================================
+   INFO MAP
+===================================================== */
+
+.map-info{
+
+    margin-top:18px;
+
+    padding:15px;
+
+    background:#f8fbff;
+
+    border-radius:14px;
+
+    color:#555;
+
+    line-height:1.6;
+
+}
+
+
+.map-info strong{
+
+    color:#12395c;
+
+}
+
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media(max-width:1000px){
+
+    .grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+
+    .sidebar{
+
+        width:90px;
+
+    }
+
+
+    .sidebar span{
+
+        display:none;
+
+    }
+
+
+    .logo{
+
+        justify-content:center;
+
+        padding-left:0;
+
+    }
+
+
+    .logo img{
+
+        width:55px;
+
+    }
+
+
+    .main{
+
+        margin-left:90px;
+
+    }
+
+}
+
+
+@media(max-width:600px){
+
+    .navbar{
+
+        padding:0 15px;
+
+    }
+
+
+    .nav-title{
+
+        font-size:18px;
+
+    }
+
+
+    .profile div{
+
+        display:none;
+
+    }
+
+
+    .content{
+
+        padding:15px;
+
+    }
+
+
+    #floodMap{
+
+        height:500px;
+
+    }
+
+}
+
+
+/* =====================================================
+   END CSS
+===================================================== */
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     SIDEBAR
+===================================================== -->
+
+<div class="sidebar">
+
+
+    <div class="logo">
+
+        <img
+        src="FLOWS-PRO-preview 1.png"
+        alt="FLOWS-PRO">
+
+    </div>
+
+
+    <a
+    class="menu-item"
+    href="dashboard.html">
+
+        <i class="fa-solid fa-chart-line"></i>
+
+        <span>Dashboard</span>
+
+    </a>
+
+
+    <a
+    class="menu-item"
+    href="live_sensor.html">
+
+        <i class="fa-solid fa-microchip"></i>
+
+        <span>Live Sensor</span>
+
+    </a>
+
+
+    <a
+    class="menu-item active"
+    href="peta_banjir.html">
+
+        <i class="fa-solid fa-map-location-dot"></i>
+
+        <span>Peta Banjir</span>
+
+    </a>
+
+
+    <a
+    class="menu-item"
+    href="weather.html">
+
+        <i class="fa-solid fa-cloud-rain"></i>
+
+        <span>Weather</span>
+
+    </a>
+
+
+    <a
+    class="menu-item"
+    href="reports.html">
+
+        <i class="fa-solid fa-file"></i>
+
+        <span>Reports</span>
+
+    </a>
+
+
+    <a
+    class="menu-item"
+    href="settings.html">
+
+        <i class="fa-solid fa-gear"></i>
+
+        <span>Settings</span>
+
+    </a>
+
+
+</div>
+
+
+<!-- =====================================================
+     MAIN
+===================================================== -->
+
+<div class="main">
+
+
+    <!-- =================================================
+         NAVBAR
+    ================================================== -->
+
+    <div class="navbar">
+
+
+        <div class="nav-title">
+
+            Peta Monitoring Banjir
+
+        </div>
+
+
+        <div class="profile">
+
+            <img
+            id="userPhoto"
+            src="https://i.pravatar.cc/150?img=12"
+            alt="Profile">
+
+
+            <div>
+
+                <h4 id="userName">
+                    Loading...
+                </h4>
+
+                <p>
+                    Operator
+                </p>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+<!-- =====================================================
+     PART 2 DIMULAI DI SINI
+===================================================== -->
+<!-- =====================================================
+     CONTENT PETA BANJIR
+===================================================== -->
+
+<div class="content">
+
+
+    <!-- =================================================
+         STATUS KONEKSI
+    ================================================== -->
+
+    <div
+    class="live-badge"
+    id="connectionStatus">
+
+        <div
+        class="live-dot"
+        id="connectionDot">
+        </div>
+
+        <span id="connectionText">
+            Memeriksa koneksi Supabase...
+        </span>
+
+    </div>
+
+
+    <!-- =================================================
+         RINGKASAN STATUS SENSOR
+    ================================================== -->
+
+    <div class="grid">
+
+
+        <!-- =============================================
+             ZONA AMAN
+        ============================================== -->
+
+        <div class="card">
+
+            <div class="card-title">
+
+                <i
+                class="fa-solid fa-circle-check safe">
+                </i>
+
+                Zona Aman
+
+            </div>
+
+
+            <div
+            class="big safe"
+            id="countAman">
+
+                0
+
+            </div>
+
+
+            <div class="map-info">
+
+                Sensor dengan status
+                <strong>AMAN</strong>.
+
+            </div>
+
+        </div>
+
+
+        <!-- =============================================
+             ZONA SIAGA / WASPADA
+        ============================================== -->
+
+        <div class="card">
+
+            <div class="card-title">
+
+                <i
+                class="fa-solid fa-triangle-exclamation warning">
+                </i>
+
+                Zona Waspada
+
+            </div>
+
+
+            <div
+            class="big warning"
+            id="countWaspada">
+
+                0
+
+            </div>
+
+
+            <div class="map-info">
+
+                Sensor dengan kondisi
+                <strong>SIAGA atau WASPADA</strong>.
+
+            </div>
+
+        </div>
+
+
+        <!-- =============================================
+             ZONA BAHAYA
+        ============================================== -->
+
+        <div class="card">
+
+            <div class="card-title">
+
+                <i
+                class="fa-solid fa-circle-exclamation danger">
+                </i>
+
+                Zona Bahaya
+
+            </div>
+
+
+            <div
+            class="big danger"
+            id="countBahaya">
+
+                0
+
+            </div>
+
+
+            <div class="map-info">
+
+                Sensor dengan status
+                <strong>BAHAYA</strong>.
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+    <!-- =================================================
+         PETA
+    ================================================== -->
+
+    <div class="card">
+
+
+        <div class="card-title">
+
+            <i
+            class="fa-solid fa-map-location-dot">
+            </i>
+
+            Peta Monitoring Sensor FLOWS-PRO
+
+        </div>
+
+
+        <!-- PETA LEAFLET -->
+
+        <div
+        id="floodMap">
+        </div>
+
+
+        <!-- =================================================
+             LEGENDA
+        ================================================== -->
+
+        <div class="legend">
+
+
+            <div class="legend-item">
+
+                <div
+                class="legend-color legend-green">
+                </div>
+
+                Aman
+
+            </div>
+
+
+            <div class="legend-item">
+
+                <div
+                class="legend-color legend-yellow">
+                </div>
+
+                Siaga
+
+            </div>
+
+
+            <div class="legend-item">
+
+                <div
+                class="legend-color legend-orange">
+                </div>
+
+                Waspada
+
+            </div>
+
+
+            <div class="legend-item">
+
+                <div
+                class="legend-color legend-red">
+                </div>
+
+                Bahaya
+
+            </div>
+
+
+        </div>
+
+
+        <!-- =================================================
+             KETERANGAN PETA
+        ================================================== -->
+
+        <div class="map-info">
+
+            <strong>
+                Keterangan:
+            </strong>
+
+            Titik pada peta menunjukkan lokasi
+            sensor berdasarkan koordinat
+            <strong>latitude</strong> dan
+            <strong>longitude</strong> yang diterima
+            dari perangkat FLOWS-PRO.
+
+            <br><br>
+
+            Posisi sensor tidak dibuat secara acak.
+            Apabila koordinat GPS belum tersedia,
+            sensor tidak akan ditempatkan secara
+            sembarangan pada peta.
+
+        </div>
+
+
+    </div>
+
+
+    <!-- =================================================
+         DETAIL SENSOR TERBARU
+    ================================================== -->
+
+    <div class="card">
+
+
+        <div class="card-title">
+
+            <i
+            class="fa-solid fa-satellite-dish">
+            </i>
+
+            Data Sensor Terbaru
+
+        </div>
+
+
+        <div class="table-wrapper">
+
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            ID
+                        </th>
+
+                        <th>
+                            Lokasi
+                        </th>
+
+                        <th>
+                            Tinggi Air
+                        </th>
+
+                        <th>
+                            Water Level
+                        </th>
+
+                        <th>
+                            Status
+                        </th>
+
+                        <th>
+                            Latitude
+                        </th>
+
+                        <th>
+                            Longitude
+                        </th>
+
+                        <th>
+                            Waktu
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody
+                id="mapSensorTable">
+
+
+                    <tr>
+
+                        <td
+                        colspan="8"
+                        class="empty-data">
+
+                            <i
+                            class="fa-solid fa-spinner">
+                            </i>
+
+                            <br>
+
+                            Mengambil data sensor...
+
+                        </td>
+
+                    </tr>
+
+
+                </tbody>
+
+            </table>
+
+
+        </div>
+
+
+    </div>
+
+
+    <!-- =================================================
+         INFORMASI SENSOR TERAKHIR
+    ================================================== -->
+
+    <div class="card">
+
+
+        <div class="card-title">
+
+            <i
+            class="fa-solid fa-circle-info">
+            </i>
+
+            Informasi Sensor Terakhir
+
+        </div>
+
+
+        <div class="grid">
+
+
+            <!-- =========================================
+                 ID
+            ========================================== -->
+
+            <div class="sensor-info">
+
+                <i
+                class="fa-solid fa-fingerprint">
+                </i>
+
+                <div>
+
+                    <strong>
+                        ID Data
+                    </strong>
+
+                    <p
+                    id="latestId"
+                    class="gps-text">
+
+                        --
+
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- =========================================
+                 LOKASI
+            ========================================== -->
+
+            <div class="sensor-info">
+
+                <i
+                class="fa-solid fa-location-dot">
+                </i>
+
+                <div>
+
+                    <strong>
+                        Lokasi
+                    </strong>
+
+                    <p
+                    id="latestLokasi"
+                    class="gps-text">
+
+                        --
+
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- =========================================
+                 TINGGI AIR
+            ========================================== -->
+
+            <div class="sensor-info">
+
+                <i
+                class="fa-solid fa-water">
+                </i>
+
+                <div>
+
+                    <strong>
+                        Tinggi Air
+                    </strong>
+
+                    <p
+                    id="latestTinggiAir"
+                    class="gps-text">
+
+                        --
+
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- =========================================
+                 STATUS
+            ========================================== -->
+
+            <div class="sensor-info">
+
+                <i
+                class="fa-solid fa-shield-halved">
+                </i>
+
+                <div>
+
+                    <strong>
+                        Status
+                    </strong>
+
+                    <p
+                    id="latestStatus"
+                    class="gps-text">
+
+                        --
+
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- =========================================
+                 WATER LEVEL
+            ========================================== -->
+
+            <div class="sensor-info">
+
+                <i
+                class="fa-solid fa-bars-staggered">
+                </i>
+
+                <div>
+
+                    <strong>
+                        Water Level
+                    </strong>
+
+                    <p
+                    id="latestWaterLevel"
+                    class="gps-text">
+
+                        --
+
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- =========================================
+                 WAKTU
+            ========================================== -->
+
+            <div class="sensor-info">
+
+                <i
+                class="fa-solid fa-clock">
+                </i>
+
+                <div>
+
+                    <strong>
+                        Waktu Pengukuran
+                    </strong>
+
+                    <p
+                    id="latestTime"
+                    class="gps-text">
+
+                        --
+
+                    </p>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+    <!-- =================================================
+         STATUS GPS
+    ================================================== -->
+
+    <div class="card">
+
+
+        <div class="card-title">
+
+            <i
+            class="fa-solid fa-satellite">
+            </i>
+
+            Informasi GPS
+
+        </div>
+
+
+        <div class="grid">
+
+
+            <div class="sensor-info">
+
+                <i
+                class="fa-solid fa-compass">
+                </i>
+
+                <div>
+
+                    <strong>
+                        Latitude
+                    </strong>
+
+                    <p
+                    id="latestLatitude"
+                    class="gps-text">
+
+                        --
+
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="sensor-info">
+
+                <i
+                class="fa-solid fa-compass">
+                </i>
+
+                <div>
+
+                    <strong>
+                        Longitude
+                    </strong>
+
+                    <p
+                    id="latestLongitude"
+                    class="gps-text">
+
+                        --
+
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="sensor-info">
+
+                <i
+                class="fa-solid fa-satellite-dish">
+                </i>
+
+                <div>
+
+                    <strong>
+                        Status GPS
+                    </strong>
+
+                    <p
+                    id="latestGPSStatus"
+                    class="gps-text">
+
+                        Menunggu...
+
+                    </p>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+    <!-- =================================================
+         STATUS SISTEM
+    ================================================== -->
+
+    <div class="card">
+
+
+        <div class="card-title">
+
+            <i
+            class="fa-solid fa-server">
+            </i>
+
+            Status Sistem Peta
+
+        </div>
+
+
+        <div class="table-wrapper">
+
+            <table>
+
+                <tbody>
+
+
+                    <tr>
+
+                        <td>
+                            Koneksi Internet
+                        </td>
+
+                        <td
+                        id="internetStatus">
+
+                            Memeriksa...
+
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>
+                            Database Supabase
+                        </td>
+
+                        <td
+                        id="databaseStatus">
+
+                            Memeriksa...
+
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>
+                            Jumlah Sensor
+                        </td>
+
+                        <td
+                        id="totalSensor">
+
+                            0
+
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>
+                            Data Peta Terakhir
+                        </td>
+
+                        <td
+                        id="lastMapUpdate">
+
+                            --
+
+                        </td>
+
+                    </tr>
+
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
+<!-- =====================================================
+     AKHIR PART 2
+     
+     PART 3 = JAVASCRIPT PETA + SUPABASE
+===================================================== -->
+<!-- =====================================================
+     PART 3 — JAVASCRIPT PETA BANJIR
+===================================================== -->
+
+<script>
+
+/* =====================================================
+   KONFIGURASI SUPABASE
+===================================================== */
+
+const SUPABASE_URL =
+    'https://hceblnmngnnexxtkeiev.supabase.co';
+
+const SUPABASE_ANON_KEY =
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhjZWJsbW1uZ25uZXh4dGtlaWV2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU5OTc5MDQsImV4cCI6MjA5MTU3MzkwNH0.jRFevO_3qqjUpL3nNtYKqH-vExMabcnNzDYbThpJdjs';
+
+
+/* =====================================================
+   CLIENT SUPABASE
+===================================================== */
+
+const supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_ANON_KEY
+    );
+
+
+/* =====================================================
+   CACHE
+===================================================== */
+
+const MAP_CACHE_KEY =
+    'flowspro_flood_map_data';
+
+
+/* =====================================================
+   PETA
+===================================================== */
+
+const floodMap =
+    L.map('floodMap');
+
+
+/*
+ * Posisi awal peta.
+ * Ini hanya posisi awal tampilan,
+ * BUKAN posisi sensor.
+ */
+
+floodMap.setView(
+    [-2.5489, 118.0149],
+    5
+);
+
+
+/* =====================================================
+   TILE OPENSTREETMAP
+===================================================== */
+
+L.tileLayer(
+    'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+    {
+        maxZoom:19,
+
+        attribution:
+        '&copy; OpenStreetMap contributors'
+    }
+).addTo(
+    floodMap
+);
+
+
+/* =====================================================
+   GROUP MARKER
+===================================================== */
+
+let markerLayer =
+    L.layerGroup().addTo(
+        floodMap
+    );
+
+
+/* =====================================================
+   PROFILE USER
+===================================================== */
+
+function loadUserProfile() {
+
+    try {
+
+        const loginData =
+            JSON.parse(
+                localStorage.getItem(
+                    'userLogin'
+                )
+            );
+
+
+        if (
+            loginData &&
+            loginData.nama
+        ) {
+
+            const userName =
+                document.getElementById(
+                    'userName'
+                );
+
+
+            if (userName) {
+
+                userName.innerText =
+                    loginData.nama;
+
+            }
+
+        }
+
+    }
+
+    catch(error) {
+
+        console.log(
+            'Data user tidak tersedia.'
+        );
+
+    }
+
+
+    /* ================================================
+       FOTO PROFILE
+    ================================================= */
+
+    const savedAvatar =
+        localStorage.getItem(
+            'flowspro_avatar'
+        );
+
+
+    if (savedAvatar) {
+
+        const userPhoto =
+            document.getElementById(
+                'userPhoto'
+            );
+
+
+        if (userPhoto) {
+
+            userPhoto.src =
+                savedAvatar;
+
+        }
+
+    }
+
+}
+
+
+loadUserProfile();
+
+
+/* =====================================================
+   FORMAT WAKTU
+===================================================== */
+
+function formatWaktu(
+    timestamp
+) {
+
+    if (!timestamp) {
+
+        return '--';
+
+    }
+
+
+    const waktu =
+        new Date(
+            timestamp
+        );
+
+
+    if (
+        isNaN(
+            waktu.getTime()
+        )
+    ) {
+
+        return '--';
+
+    }
+
+
+    return waktu.toLocaleString(
+        'id-ID',
+        {
+            day:'2-digit',
+            month:'2-digit',
+            year:'numeric',
+            hour:'2-digit',
+            minute:'2-digit',
+            second:'2-digit'
+        }
+    );
+
+}
+
+
+/* =====================================================
+   WARNA MARKER BERDASARKAN STATUS
+===================================================== */
+
+function getMarkerColor(
+    status
+) {
+
+    const value =
+        String(
+            status || ''
+        ).toUpperCase();
+
+
+    if (
+        value === 'AMAN'
+    ) {
+
+        return '#27ae60';
+
+    }
+
+
+    if (
+        value === 'SIAGA'
+    ) {
+
+        return '#f1c40f';
+
+    }
+
+
+    if (
+        value === 'WASPADA'
+    ) {
+
+        return '#e67e22';
+
+    }
+
+
+    if (
+        value === 'BAHAYA'
+    ) {
+
+        return '#e74c3c';
+
+    }
+
+
+    return '#777';
+
+}
+
+
+/* =====================================================
+   STATUS CLASS
+===================================================== */
+
+function getStatusClass(
+    status
+) {
+
+    const value =
+        String(
+            status || ''
+        ).toUpperCase();
+
+
+    if (
+        value === 'AMAN'
+    ) {
+
+        return 'safe';
+
+    }
+
+
+    if (
+        value === 'SIAGA' ||
+        value === 'WASPADA'
+    ) {
+
+        return 'warning';
+
+    }
+
+
+    if (
+        value === 'BAHAYA'
+    ) {
+
+        return 'danger';
+
+    }
+
+
+    return '';
+
+}
+
+
+/* =====================================================
+   UPDATE STATUS KONEKSI
+===================================================== */
+
+function updateConnection(
+    online,
+    cache = false
+) {
+
+    const badge =
+        document.getElementById(
+            'connectionStatus'
+        );
+
+
+    const dot =
+        document.getElementById(
+            'connectionDot'
+        );
+
+
+    const text =
+        document.getElementById(
+            'connectionText'
+        );
+
+
+    const internet =
+        document.getElementById(
+            'internetStatus'
+        );
+
+
+    const database =
+        document.getElementById(
+            'databaseStatus'
+        );
+
+
+    if (online) {
+
+        if (badge) {
+
+            badge.classList.remove(
+                'offline'
+            );
+
+        }
+
+
+        if (dot) {
+
+            dot.style.background =
+                '#27ae60';
+
+        }
+
+
+        if (text) {
+
+            text.innerText =
+                'FLOWS-PRO ONLINE';
+
+        }
+
+
+        if (internet) {
+
+            internet.innerHTML =
+                '<span class="safe">● Online</span>';
+
+        }
+
+
+        if (database) {
+
+            database.innerHTML =
+                '<span class="safe">● Terhubung</span>';
+
+        }
+
+    }
+
+    else {
+
+        if (badge) {
+
+            badge.classList.add(
+                'offline'
+            );
+
+        }
+
+
+        if (dot) {
+
+            dot.style.background =
+                '#e74c3c';
+
+        }
+
+
+        if (text) {
+
+            if (cache) {
+
+                text.innerText =
+                    'FLOWS-PRO OFFLINE — DATA TERAKHIR';
+
+            }
+
+            else {
+
+                text.innerText =
+                    'FLOWS-PRO OFFLINE';
+
+            }
+
+        }
+
+
+        if (internet) {
+
+            internet.innerHTML =
+                '<span class="danger">● Offline</span>';
+
+        }
+
+
+        if (database) {
+
+            database.innerHTML =
+                '<span class="danger">● Tidak terhubung</span>';
+
+        }
+
+    }
+
+}
+
+
+/* =====================================================
+   SIMPAN CACHE
+===================================================== */
+
+function simpanCache(
+    data
+) {
+
+    if (
+        !data ||
+        data.length === 0
+    ) {
+
+        return;
+
+    }
+
+
+    try {
+
+        localStorage.setItem(
+            MAP_CACHE_KEY,
+            JSON.stringify(data)
+        );
+
+
+        console.log(
+            'Data peta disimpan ke cache.'
+        );
+
+    }
+
+    catch(error) {
+
+        console.error(
+            'Gagal menyimpan cache:',
+            error
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   AMBIL CACHE
+===================================================== */
+
+function ambilCache() {
+
+    try {
+
+        const cache =
+            localStorage.getItem(
+                MAP_CACHE_KEY
+            );
+
+
+        if (!cache) {
+
+            return null;
+
+        }
+
+
+        const data =
+            JSON.parse(
+                cache
+            );
+
+
+        if (
+            !Array.isArray(data) ||
+            data.length === 0
+        ) {
+
+            return null;
+
+        }
+
+
+        return data;
+
+    }
+
+    catch(error) {
+
+        console.error(
+            'Gagal membaca cache:',
+            error
+        );
+
+        return null;
+
+    }
+
+}
+
+
+/* =====================================================
+   VALIDASI KOORDINAT
+===================================================== */
+
+function koordinatValid(
+    latitude,
+    longitude
+) {
+
+    const lat =
+        Number(
+            latitude
+        );
+
+
+    const lng =
+        Number(
+            longitude
+        );
+
+
+    /*
+     * 0,0 dianggap tidak valid
+     * karena Wemos mengirim 0 jika GPS
+     * belum mendapatkan koordinat.
+     */
+
+    if (
+        !Number.isFinite(lat) ||
+        !Number.isFinite(lng)
+    ) {
+
+        return false;
+
+    }
+
+
+    if (
+        lat === 0 &&
+        lng === 0
+    ) {
+
+        return false;
+
+    }
+
+
+    if (
+        lat < -90 ||
+        lat > 90
+    ) {
+
+        return false;
+
+    }
+
+
+    if (
+        lng < -180 ||
+        lng > 180
+    ) {
+
+        return false;
+
+    }
+
+
+    return true;
+
+}
+
+
+/* =====================================================
+   BUAT POPUP SENSOR
+===================================================== */
+
+function buatPopup(
+    item
+) {
+
+    const tinggi =
+        Number(
+            item.tinggi_air
+        );
+
+
+    const tinggiText =
+        Number.isFinite(
+            tinggi
+        )
+        ?
+        tinggi + ' cm'
+        :
+        '--';
+
+
+    const lokasi =
+        (
+            item.lokasi !== null &&
+            item.lokasi !== undefined &&
+            String(item.lokasi).trim() !== ''
+        )
+        ?
+        item.lokasi
+        :
+        'Lokasi belum tersedia';
+
+
+    const status =
+        String(
+            item.status ||
+            'UNKNOWN'
+        ).toUpperCase();
+
+
+    const latitude =
+        Number(
+            item.latitude
+        );
+
+
+    const longitude =
+        Number(
+            item.longitude
+        );
+
+
+    const latitudeText =
+        Number.isFinite(latitude)
+        ?
+        latitude.toFixed(6)
+        :
+        '--';
+
+
+    const longitudeText =
+        Number.isFinite(longitude)
+        ?
+        longitude.toFixed(6)
+        :
+        '--';
+
+
+    return `
+
+        <div
+        style="
+        min-width:220px;
+        line-height:1.7;
+        ">
+
+            <strong>
+                FLOWS-PRO SENSOR
+            </strong>
+
+            <hr>
+
+            <b>ID:</b>
+            ${item.id ?? '--'}
+
+            <br>
+
+            <b>Lokasi:</b>
+            ${lokasi}
+
+            <br>
+
+            <b>Tinggi Air:</b>
+            ${tinggiText}
+
+            <br>
+
+            <b>Water Level:</b>
+            ${item.water_level || '--'}
+
+            <br>
+
+            <b>Status:</b>
+            <span
+            style="
+            color:${getMarkerColor(status)};
+            font-weight:bold;
+            ">
+
+                ${status}
+
+            </span>
+
+            <br>
+
+            <b>Latitude:</b>
+            ${latitudeText}
+
+            <br>
+
+            <b>Longitude:</b>
+            ${longitudeText}
+
+            <br>
+
+            <b>Pengukuran:</b>
+            ${formatWaktu(item.created_at)}
+
+        </div>
+
+    `;
+
+}
+
+
+/* =====================================================
+   TAMPILKAN MARKER
+===================================================== */
+
+function tampilkanMarker(
+    data
+) {
+
+    /*
+     * Hapus marker lama terlebih dahulu.
+     */
+
+    markerLayer.clearLayers();
+
+
+    /*
+     * Menyimpan koordinat valid
+     * untuk menentukan posisi peta.
+     */
+
+    const validPoints = [];
+
+
+    data.forEach(
+        function(item) {
+
+            const latitude =
+                Number(
+                    item.latitude
+                );
+
+
+            const longitude =
+                Number(
+                    item.longitude
+                );
+
+
+            /*
+             * Jangan tampilkan marker
+             * jika GPS belum valid.
+             */
+
+            if (
+                !koordinatValid(
+                    latitude,
+                    longitude
+                )
+            ) {
+
+                return;
+
+            }
+
+
+            validPoints.push(
+                [
+                    latitude,
+                    longitude
+                ]
+            );
+
+
+            const status =
+                String(
+                    item.status ||
+                    'UNKNOWN'
+                ).toUpperCase();
+
+
+            const color =
+                getMarkerColor(
+                    status
+                );
+
+
+            /*
+             * Marker lingkaran.
+             */
+
+            const marker =
+                L.circleMarker(
+                    [
+                        latitude,
+                        longitude
+                    ],
+                    {
+
+                        radius:11,
+
+                        fillColor:color,
+
+                        color:'#ffffff',
+
+                        weight:3,
+
+                        fillOpacity:0.9
+
+                    }
+                );
+
+
+            marker
+                .addTo(markerLayer)
+                .bindPopup(
+                    buatPopup(item)
+                );
+
+        }
+    );
+
+
+    /*
+     * Jika ada koordinat valid,
+     * peta menyesuaikan lokasi sensor.
+     */
+
+    if (
+        validPoints.length === 1
+    ) {
+
+        floodMap.setView(
+            validPoints[0],
+            15
+        );
+
+    }
+
+
+    else if (
+        validPoints.length > 1
+    ) {
+
+        floodMap.fitBounds(
+            validPoints,
+            {
+                padding:[40,40]
+            }
+        );
+
+    }
+
+
+    console.log(
+        'Marker valid:',
+        validPoints.length
+    );
+
+}
+
+
+/* =====================================================
+   HITUNG STATUS
+===================================================== */
+
+function hitungStatus(
+    data
+) {
+
+    let aman = 0;
+
+    let waspada = 0;
+
+    let bahaya = 0;
+
+
+    data.forEach(
+        function(item) {
+
+            const status =
+                String(
+                    item.status ||
+                    ''
+                ).toUpperCase();
+
+
+            if (
+                status === 'AMAN'
+            ) {
+
+                aman++;
+
+            }
+
+
+            else if (
+                status === 'SIAGA' ||
+                status === 'WASPADA'
+            ) {
+
+                waspada++;
+
+            }
+
+
+            else if (
+                status === 'BAHAYA'
+            ) {
+
+                bahaya++;
+
+            }
+
+        }
+    );
+
+
+    document.getElementById(
+        'countAman'
+    ).innerText =
+        aman;
+
+
+    document.getElementById(
+        'countWaspada'
+    ).innerText =
+        waspada;
+
+
+    document.getElementById(
+        'countBahaya'
+    ).innerText =
+        bahaya;
+
+
+    document.getElementById(
+        'totalSensor'
+    ).innerText =
+        data.length;
+
+}
+
+
+/* =====================================================
+   TABEL SENSOR
+===================================================== */
+
+function tampilkanTabel(
+    data
+) {
+
+    const table =
+        document.getElementById(
+            'mapSensorTable'
+        );
+
+
+    if (!table) {
+
+        return;
+
+    }
+
+
+    table.innerHTML =
+        '';
+
+
+    if (
+        !data ||
+        data.length === 0
+    ) {
+
+        table.innerHTML = `
+
+            <tr>
+
+                <td
+                colspan="8"
+                class="empty-data">
+
+                    Tidak ada data sensor.
+
+                </td>
+
+            </tr>
+
+        `;
+
+        return;
+
+    }
+
+
+    data.forEach(
+        function(item) {
+
+            const row =
+                document.createElement(
+                    'tr'
+                );
+
+
+            const tinggi =
+                Number(
+                    item.tinggi_air
+                );
+
+
+            const tinggiText =
+                Number.isFinite(
+                    tinggi
+                )
+                ?
+                tinggi + ' cm'
+                :
+                '--';
+
+
+            const lokasi =
+                (
+                    item.lokasi !== null &&
+                    item.lokasi !== undefined &&
+                    String(item.lokasi).trim() !== ''
+                )
+                ?
+                item.lokasi
+                :
+                '--';
+
+
+            const latitude =
+                Number(
+                    item.latitude
+                );
+
+
+            const longitude =
+                Number(
+                    item.longitude
+                );
+
+
+            const latitudeText =
+                Number.isFinite(
+                    latitude
+                )
+                ?
+                latitude.toFixed(6)
+                :
+                '--';
+
+
+            const longitudeText =
+                Number.isFinite(
+                    longitude
+                )
+                ?
+                longitude.toFixed(6)
+                :
+                '--';
+
+
+            const status =
+                String(
+                    item.status ||
+                    'UNKNOWN'
+                ).toUpperCase();
+
+
+            row.innerHTML = `
+
+                <td>
+                    ${item.id ?? '--'}
+                </td>
+
+                <td>
+                    ${lokasi}
+                </td>
+
+                <td>
+                    ${tinggiText}
+                </td>
+
+                <td>
+                    ${item.water_level || '--'}
+                </td>
+
+                <td>
+
+                    <span
+                    class="status-label ${getStatusClass(status)}">
+
+                        ${status}
+
+                    </span>
+
+                </td>
+
+                <td>
+                    ${latitudeText}
+                </td>
+
+                <td>
+                    ${longitudeText}
+                </td>
+
+                <td>
+                    ${formatWaktu(item.created_at)}
+                </td>
+
+            `;
+
+
+            table.appendChild(
+                row
+            );
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   INFORMASI SENSOR TERBARU
+===================================================== */
+
+function tampilkanDetail(
+    item
+) {
+
+    if (!item) {
+
+        return;
+
+    }
+
+
+    const tinggi =
+        Number(
+            item.tinggi_air
+        );
+
+
+    /* ID */
+
+    document.getElementById(
+        'latestId'
+    ).innerText =
+        item.id ?? '--';
+
+
+    /* LOKASI */
+
+    document.getElementById(
+        'latestLokasi'
+    ).innerText =
+        (
+            item.lokasi !== null &&
+            item.lokasi !== undefined &&
+            String(item.lokasi).trim() !== ''
+        )
+        ?
+        item.lokasi
+        :
+        'Lokasi belum tersedia';
+
+
+    /* TINGGI AIR */
+
+    document.getElementById(
+        'latestTinggiAir'
+    ).innerText =
+        Number.isFinite(tinggi)
+        ?
+        tinggi + ' cm'
+        :
+        '--';
+
+
+    /* STATUS */
+
+    const status =
+        String(
+            item.status ||
+            'UNKNOWN'
+        ).toUpperCase();
+
+
+    document.getElementById(
+        'latestStatus'
+    ).innerHTML = `
+
+        <span
+        class="${getStatusClass(status)}">
+
+            ${status}
+
+        </span>
+
+    `;
+
+
+    /* WATER LEVEL */
+
+    document.getElementById(
+        'latestWaterLevel'
+    ).innerText =
+        item.water_level ||
+        '--';
+
+
+    /* WAKTU */
+
+    document.getElementById(
+        'latestTime'
+    ).innerText =
+        formatWaktu(
+            item.created_at
+        );
+
+
+    /* LATITUDE */
+
+    const latitude =
+        Number(
+            item.latitude
+        );
+
+
+    document.getElementById(
+        'latestLatitude'
+    ).innerText =
+        Number.isFinite(latitude)
+        ?
+        latitude.toFixed(6)
+        :
+        '--';
+
+
+    /* LONGITUDE */
+
+    const longitude =
+        Number(
+            item.longitude
+        );
+
+
+    document.getElementById(
+        'latestLongitude'
+    ).innerText =
+        Number.isFinite(longitude)
+        ?
+        longitude.toFixed(6)
+        :
+        '--';
+
+
+    /* GPS STATUS */
+
+    const gpsStatus =
+        document.getElementById(
+            'latestGPSStatus'
+        );
+
+
+    if (
+        koordinatValid(
+            latitude,
+            longitude
+        )
+    ) {
+
+        gpsStatus.innerHTML =
+            '<span class="safe">● GPS Aktif</span>';
+
+    }
+
+    else {
+
+        gpsStatus.innerHTML =
+            '<span class="warning">● Koordinat belum tersedia</span>';
+
+    }
+
+
+    /* WAKTU PETA */
+
+    document.getElementById(
+        'lastMapUpdate'
+    ).innerText =
+        formatWaktu(
+            item.created_at
+        );
+
+}
+
+
+/* =====================================================
+   LOAD DATA SUPABASE
+===================================================== */
+
+async function loadFloodMap() {
+
+    console.log(
+        'Mengambil data peta dari Supabase...'
+    );
+
+
+    try {
+
+        const {
+            data,
+            error
+        } =
+            await supabaseClient
+
+            .from('data_air')
+
+            .select(
+                '*'
+            )
+
+            .order(
+                'id',
+                {
+                    ascending:false
+                }
+            )
+
+            .limit(
+                50
+            );
+
+
+        /* ==============================================
+           ERROR
+        ============================================== */
+
+        if (error) {
+
+            console.error(
+                'Supabase Error:',
+                error
+            );
+
+
+            gunakanCachePeta();
+
+            return;
+
+        }
+
+
+        /* ==============================================
+           DATA KOSONG
+        ============================================== */
+
+        if (
+            !data ||
+            data.length === 0
+        ) {
+
+            console.log(
+                'Tidak ada data dari Supabase.'
+            );
+
+
+            gunakanCachePeta();
+
+            return;
+
+        }
+
+
+        /* ==============================================
+           DATA BERHASIL
+        ============================================== */
+
+        console.log(
+            'Data asli Supabase:',
+            data
+        );
+
+
+        /*
+         * Simpan data asli.
+         */
+
+        simpanCache(
+            data
+        );
+
+
+        /*
+         * Tampilkan.
+         */
+
+        tampilkanSemuaData(
+            data
+        );
+
+
+        /*
+         * ONLINE.
+         */
+
+        updateConnection(
+            true,
+            false
+        );
+
+    }
+
+
+    catch(error) {
+
+        console.error(
+            'Kesalahan koneksi:',
+            error
+        );
+
+
+        gunakanCachePeta();
+
+    }
+
+}
+
+
+/* =====================================================
+   TAMPILKAN SEMUA DATA
+===================================================== */
+
+function tampilkanSemuaData(
+    data
+) {
+
+    if (
+        !data ||
+        data.length === 0
+    ) {
+
+        return;
+
+    }
+
+
+    /*
+     * Marker.
+     */
+
+    tampilkanMarker(
+        data
+    );
+
+
+    /*
+     * Statistik.
+     */
+
+    hitungStatus(
+        data
+    );
+
+
+    /*
+     * Tabel.
+     */
+
+    tampilkanTabel(
+        data
+    );
+
+
+    /*
+     * Detail terbaru.
+     */
+
+    tampilkanDetail(
+        data[0]
+    );
+
+}
+
+
+/* =====================================================
+   CACHE SAAT OFFLINE
+===================================================== */
+
+function gunakanCachePeta() {
+
+    const cache =
+        ambilCache();
+
+
+    if (
+        cache &&
+        cache.length > 0
+    ) {
+
+        console.log(
+            'Supabase offline.'
+        );
+
+
+        console.log(
+            'Menampilkan data peta terakhir.'
+        );
+
+
+        tampilkanSemuaData(
+            cache
+        );
+
+
+        updateConnection(
+            false,
+            true
+        );
+
+
+        return;
+
+    }
+
+
+    updateConnection(
+        false,
+        false
+    );
+
+}
+
+
+/* =====================================================
+   DATA CACHE SAAT HALAMAN DIBUKA
+===================================================== */
+
+const cacheAwal =
+    ambilCache();
+
+
+if (
+    cacheAwal &&
+    cacheAwal.length > 0
+) {
+
+    tampilkanSemuaData(
+        cacheAwal
+    );
+
+
+    updateConnection(
+        false,
+        true
+    );
+
+}
+
+
+/* =====================================================
+   LOAD PERTAMA
+===================================================== */
+
+loadFloodMap();
+
+
+/* =====================================================
+   REFRESH SETIAP 5 DETIK
+===================================================== */
+
+setInterval(
+    loadFloodMap,
+    5000
+);
+
+
+/* =====================================================
+   INTERNET KEMBALI
+===================================================== */
+
+window.addEventListener(
+    'online',
+    function() {
+
+        console.log(
+            'Internet kembali online.'
+        );
+
+
+        loadFloodMap();
+
+    }
+);
+
+
+/* =====================================================
+   INTERNET TERPUTUS
+===================================================== */
+
+window.addEventListener(
+    'offline',
+    function() {
+
+        console.log(
+            'Internet terputus.'
+        );
+
+
+        gunakanCachePeta();
+
+    }
+);
+
+
+/* =====================================================
+   PART 3 SELESAI
+===================================================== */
+</script>
+
+</body>
+
+</html>
