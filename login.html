@@ -1,0 +1,4889 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>
+    FLOWS-PRO | Login
+</title>
+
+
+<!-- =====================================================
+     FAVICON
+===================================================== -->
+
+<link
+    rel="icon"
+    type="image/png"
+    href="LOGO removebg-preview.png"
+>
+
+
+<!-- =====================================================
+     FONT AWESOME
+===================================================== -->
+
+<link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+>
+
+
+<!-- =====================================================
+     SUPABASE
+===================================================== -->
+
+<script
+    src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+></script>
+
+
+<style>
+
+/* =====================================================
+   RESET
+===================================================== */
+
+*{
+
+    margin:0;
+
+    padding:0;
+
+    box-sizing:border-box;
+
+    font-family:
+        'Segoe UI',
+        Arial,
+        sans-serif;
+
+}
+
+
+/* =====================================================
+   BODY
+===================================================== */
+
+body{
+
+    min-height:100vh;
+
+    background:#061727;
+
+    color:white;
+
+}
+
+
+/* =====================================================
+   LOGIN PAGE
+===================================================== */
+
+.login-page{
+
+    min-height:100vh;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    position:relative;
+
+    padding:30px 20px;
+
+    overflow:hidden;
+
+}
+
+
+/* =====================================================
+   BACKGROUND
+===================================================== */
+
+.login-page::before{
+
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    background:
+
+        linear-gradient(
+            120deg,
+            rgba(3,18,32,.94),
+            rgba(5,38,65,.78)
+        ),
+
+        url(
+            'Desain tanpa judul (1).png'
+        )
+        center/
+        cover
+        no-repeat;
+
+}
+
+
+/* =====================================================
+   BACKGROUND EFFECT
+===================================================== */
+
+.login-page::after{
+
+    content:"";
+
+    position:absolute;
+
+    width:500px;
+
+    height:500px;
+
+    border-radius:50%;
+
+    background:
+        rgba(
+            0,
+            198,
+            255,
+            .08
+        );
+
+    filter:blur(20px);
+
+    right:-230px;
+
+    bottom:-230px;
+
+}
+
+
+/* =====================================================
+   LOGIN CARD
+===================================================== */
+
+.login-card{
+
+    position:relative;
+
+    z-index:2;
+
+    width:
+        min(
+            450px,
+            100%
+        );
+
+    padding:42px;
+
+    border-radius:28px;
+
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            .075
+        );
+
+    border:
+        1px solid
+        rgba(
+            255,
+            255,
+            255,
+            .13
+        );
+
+    backdrop-filter:
+        blur(22px);
+
+    box-shadow:
+        0 30px 80px
+        rgba(
+            0,
+            0,
+            0,
+            .50
+        );
+
+    animation:
+        cardAppear
+        .7s
+        ease;
+
+}
+
+
+@keyframes cardAppear{
+
+    from{
+
+        opacity:0;
+
+        transform:
+            translateY(30px)
+            scale(.97);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:
+            translateY(0)
+            scale(1);
+
+    }
+
+}
+
+
+/* =====================================================
+   LOGO
+===================================================== */
+
+.logo{
+
+    width:210px;
+
+    max-height:80px;
+
+    object-fit:contain;
+
+    display:block;
+
+    margin:
+        0 auto
+        28px;
+
+}
+
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+.login-header{
+
+    text-align:center;
+
+    margin-bottom:30px;
+
+}
+
+
+.login-header h1{
+
+    font-size:29px;
+
+    font-weight:800;
+
+    margin-bottom:10px;
+
+}
+
+
+.login-header p{
+
+    color:
+        rgba(
+            255,
+            255,
+            255,
+            .55
+        );
+
+    font-size:13px;
+
+    line-height:1.7;
+
+}
+
+
+/* =====================================================
+   MESSAGE
+===================================================== */
+
+.form-message{
+
+    display:none;
+
+    padding:14px 15px;
+
+    border-radius:12px;
+
+    margin-bottom:18px;
+
+    font-size:12px;
+
+    line-height:1.6;
+
+}
+
+
+.form-message.show{
+
+    display:block;
+
+}
+
+
+.form-message.error{
+
+    color:#ffaaa2;
+
+    background:
+        rgba(
+            231,
+            76,
+            60,
+            .12
+        );
+
+    border:
+        1px solid
+        rgba(
+            231,
+            76,
+            60,
+            .25
+        );
+
+}
+
+
+.form-message.success{
+
+    color:#7af0a8;
+
+    background:
+        rgba(
+            39,
+            174,
+            96,
+            .12
+        );
+
+    border:
+        1px solid
+        rgba(
+            39,
+            174,
+            96,
+            .25
+        );
+
+}
+
+
+/* =====================================================
+   FORM GROUP
+===================================================== */
+
+.form-group{
+
+    margin-bottom:20px;
+
+}
+
+
+.form-label-row{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:9px;
+
+}
+
+
+label{
+
+    font-size:13px;
+
+    font-weight:600;
+
+    color:
+        rgba(
+            255,
+            255,
+            255,
+            .82
+        );
+
+}
+
+
+/* =====================================================
+   INPUT WRAPPER
+===================================================== */
+
+.input-wrapper{
+
+    position:relative;
+
+}
+
+
+/* =====================================================
+   INPUT ICON
+===================================================== */
+
+.input-icon{
+
+    position:absolute;
+
+    left:15px;
+
+    top:50%;
+
+    transform:
+        translateY(-50%);
+
+    color:
+        rgba(
+            255,
+            255,
+            255,
+            .35
+        );
+
+    pointer-events:none;
+
+}
+
+
+/* =====================================================
+   INPUT
+===================================================== */
+
+input{
+
+    width:100%;
+
+    height:53px;
+
+    padding:
+        0 45px;
+
+    border-radius:13px;
+
+    border:
+        1px solid
+        rgba(
+            255,
+            255,
+            255,
+            .13
+        );
+
+    outline:none;
+
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            .055
+        );
+
+    color:white;
+
+    font-size:14px;
+
+    transition:.25s;
+
+}
+
+
+input::placeholder{
+
+    color:
+        rgba(
+            255,
+            255,
+            255,
+            .27
+        );
+
+}
+
+
+input:focus{
+
+    border-color:
+        #00c6ff;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(
+            0,
+            198,
+            255,
+            .08
+        );
+
+}
+
+
+/* =====================================================
+   PASSWORD TOGGLE
+===================================================== */
+
+.password-toggle{
+
+    position:absolute;
+
+    right:10px;
+
+    top:50%;
+
+    transform:
+        translateY(-50%);
+
+    width:35px;
+
+    height:35px;
+
+    border:none;
+
+    background:none;
+
+    color:
+        rgba(
+            255,
+            255,
+            255,
+            .40
+        );
+
+    cursor:pointer;
+
+    border-radius:8px;
+
+}
+
+
+.password-toggle:hover{
+
+    color:#00c6ff;
+
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            .05
+        );
+
+}
+
+
+/* =====================================================
+   FORGOT PASSWORD
+===================================================== */
+
+.forgot-link{
+
+    border:none;
+
+    background:none;
+
+    color:#00c6ff;
+
+    font-size:12px;
+
+    cursor:pointer;
+
+    padding:0;
+
+}
+
+
+.forgot-link:hover{
+
+    text-decoration:underline;
+
+}
+
+
+/* =====================================================
+   REMEMBER
+===================================================== */
+
+.remember-row{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:9px;
+
+    margin-bottom:22px;
+
+}
+
+
+.remember-row input{
+
+    width:16px;
+
+    height:16px;
+
+    padding:0;
+
+    accent-color:#0072ff;
+
+    cursor:pointer;
+
+}
+
+
+.remember-row label{
+
+    cursor:pointer;
+
+    color:
+        rgba(
+            255,
+            255,
+            255,
+            .52
+        );
+
+    font-size:12px;
+
+    font-weight:400;
+
+}
+
+
+/* =====================================================
+   LOGIN BUTTON
+===================================================== */
+
+.login-button{
+
+    width:100%;
+
+    height:54px;
+
+    border:none;
+
+    border-radius:14px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #00c6ff,
+            #0072ff
+        );
+
+    color:white;
+
+    font-size:14px;
+
+    font-weight:800;
+
+    cursor:pointer;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:10px;
+
+    transition:.25s;
+
+}
+
+
+.login-button:hover{
+
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        0 12px 30px
+        rgba(
+            0,
+            114,
+            255,
+            .28
+        );
+
+}
+
+
+.login-button:disabled{
+
+    opacity:.60;
+
+    cursor:not-allowed;
+
+    transform:none;
+
+}
+
+
+/* =====================================================
+   LOADING SPINNER
+===================================================== */
+
+.loading-spinner{
+
+    width:18px;
+
+    height:18px;
+
+    border:
+        2px solid
+        rgba(
+            255,
+            255,
+            255,
+            .35
+        );
+
+    border-top-color:white;
+
+    border-radius:50%;
+
+    animation:
+        spin
+        .7s
+        linear
+        infinite;
+
+}
+
+
+@keyframes spin{
+
+    to{
+
+        transform:
+            rotate(360deg);
+
+    }
+
+}
+
+
+/* =====================================================
+   REGISTER
+===================================================== */
+
+.register-area{
+
+    text-align:center;
+
+    margin-top:25px;
+
+    padding-top:22px;
+
+    border-top:
+        1px solid
+        rgba(
+            255,
+            255,
+            255,
+            .08
+        );
+
+}
+
+
+.register-area p{
+
+    color:
+        rgba(
+            255,
+            255,
+            255,
+            .45
+        );
+
+    font-size:12px;
+
+}
+
+
+.register-area a{
+
+    color:#00c6ff;
+
+    text-decoration:none;
+
+    font-weight:700;
+
+}
+
+
+.register-area a:hover{
+
+    text-decoration:underline;
+
+}
+
+
+/* =====================================================
+   FOOTER
+===================================================== */
+
+.login-footer{
+
+    position:relative;
+
+    z-index:2;
+
+    text-align:center;
+
+    margin-top:20px;
+
+    color:
+        rgba(
+            255,
+            255,
+            255,
+            .30
+        );
+
+    font-size:10px;
+
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media(max-width:500px){
+
+    .login-card{
+
+        padding:
+            34px 24px;
+
+        border-radius:22px;
+
+    }
+
+
+    .logo{
+
+        width:175px;
+
+    }
+
+
+    .login-header h1{
+
+        font-size:25px;
+
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     LOGIN PAGE
+===================================================== -->
+
+<div class="login-page">
+
+
+    <div>
+
+
+        <!-- =============================================
+             LOGIN CARD
+        ============================================== -->
+
+        <div class="login-card">
+
+
+            <!-- =========================================
+                 LOGO
+            ========================================== -->
+
+            <img
+                src="FLOWS-PRO-preview 1.png"
+                alt="FLOWS-PRO"
+                class="logo"
+            >
+
+
+            <!-- =========================================
+                 HEADER
+            ========================================== -->
+
+            <div class="login-header">
+
+                <h1>
+                    Selamat Datang
+                </h1>
+
+                <p>
+
+                    Masuk ke sistem monitoring
+                    banjir FLOWS-PRO untuk
+                    memantau kondisi secara
+                    real-time.
+
+                </p>
+
+            </div>
+
+
+            <!-- =========================================
+                 MESSAGE
+            ========================================== -->
+
+            <div
+                id="formMessage"
+                class="form-message"
+            ></div>
+
+
+            <!-- =========================================
+                 LOGIN FORM
+            ========================================== -->
+
+            <form
+                id="loginForm"
+                autocomplete="on"
+            >
+
+
+                <!-- =====================================
+                     EMAIL
+                ====================================== -->
+
+                <div class="form-group">
+
+                    <div class="form-label-row">
+
+                        <label
+                            for="email"
+                        >
+
+                            Email
+
+                        </label>
+
+                    </div>
+
+
+                    <div class="input-wrapper">
+
+                        <i
+                            class="fa-solid
+                            fa-envelope
+                            input-icon"
+                        ></i>
+
+
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            placeholder="Masukkan email Anda"
+                            autocomplete="email"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- =====================================
+                     PASSWORD
+                ====================================== -->
+
+                <div class="form-group">
+
+                    <div class="form-label-row">
+
+                        <label
+                            for="password"
+                        >
+
+                            Password
+
+                        </label>
+
+
+                        <button
+                            type="button"
+                            class="forgot-link"
+                            id="forgotPassword"
+                        >
+
+                            Lupa password?
+
+                        </button>
+
+                    </div>
+
+
+                    <div class="input-wrapper">
+
+                        <i
+                            class="fa-solid
+                            fa-lock
+                            input-icon"
+                        ></i>
+
+
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            placeholder="Masukkan password Anda"
+                            autocomplete="current-password"
+                            minlength="6"
+                            required
+                        >
+
+
+                        <button
+                            type="button"
+                            class="password-toggle"
+                            id="togglePassword"
+                            aria-label="Tampilkan password"
+                        >
+
+                            <i
+                                class="fa-solid fa-eye"
+                            ></i>
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =====================================
+                     REMEMBER ME
+                ====================================== -->
+
+                <div class="remember-row">
+
+                    <input
+                        type="checkbox"
+                        id="rememberMe"
+                    >
+
+
+                    <label
+                        for="rememberMe"
+                    >
+
+                        Ingat email saya
+
+                    </label>
+
+                </div>
+
+
+                <!-- =====================================
+                     LOGIN BUTTON
+                ====================================== -->
+
+                <button
+                    type="submit"
+                    class="login-button"
+                    id="loginButton"
+                >
+
+                    <i
+                        class="fa-solid
+                        fa-right-to-bracket"
+                    ></i>
+
+                    <span
+                        id="loginButtonText"
+                    >
+
+                        Masuk ke Sistem
+
+                    </span>
+
+                </button>
+
+
+            </form>
+
+
+            <!-- =========================================
+                 REGISTER
+            ========================================== -->
+
+            <div class="register-area">
+
+                <p>
+
+                    Belum mempunyai akun?
+
+                    <a
+                        href="register.html"
+                    >
+
+                        Buat akun baru
+
+                    </a>
+
+                </p>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- =============================================
+             FOOTER
+        ============================================== -->
+
+        <div class="login-footer">
+
+            FLOWS-PRO © 2026 —
+            Flood Level Observation &
+            Warning System Professional
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
+<!-- =====================================================
+     PART 1 JAVASCRIPT
+===================================================== -->
+
+<script>
+
+/* =====================================================
+   SUPABASE CONFIG
+===================================================== */
+
+const SUPABASE_URL =
+    'https://hceblnmngnnexxtkeiev.supabase.co';
+
+
+/*
+   GANTI BARIS DI BAWAH DENGAN
+   ANON/PUBLISHABLE KEY SUPABASE KAMU.
+
+   JANGAN menggunakan service_role key.
+*/
+
+const SUPABASE_ANON_KEY =
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhjZWJsbm1uZ25uZXh4dGtlaWV2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU5OTc5MDQsImV4cCI6MjA5MTU3MzkwNH0.jRFevO_3qqjUpL3nNtYKqH-vExMabcnNzDYbThpJdjs';
+
+
+/* =====================================================
+   CREATE SUPABASE CLIENT
+===================================================== */
+
+const supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_ANON_KEY
+    );
+
+
+/* =====================================================
+   ELEMENT
+===================================================== */
+
+const loginForm =
+    document.getElementById(
+        'loginForm'
+    );
+
+
+const emailInput =
+    document.getElementById(
+        'email'
+    );
+
+
+const passwordInput =
+    document.getElementById(
+        'password'
+    );
+
+
+const loginButton =
+    document.getElementById(
+        'loginButton'
+    );
+
+
+const togglePassword =
+    document.getElementById(
+        'togglePassword'
+    );
+
+
+const formMessage =
+    document.getElementById(
+        'formMessage'
+    );
+
+
+const rememberMe =
+    document.getElementById(
+        'rememberMe'
+    );
+
+
+/* =====================================================
+   MESSAGE FUNCTION
+===================================================== */
+
+function showMessage(
+    message,
+    type = 'error'
+){
+
+    formMessage.innerHTML =
+        message;
+
+    formMessage.className =
+        'form-message show ' +
+        type;
+
+}
+
+
+/* =====================================================
+   CLEAR MESSAGE
+===================================================== */
+
+function clearMessage(){
+
+    formMessage.innerHTML =
+        '';
+
+    formMessage.className =
+        'form-message';
+
+}
+
+
+/* =====================================================
+   PASSWORD TOGGLE
+===================================================== */
+
+togglePassword.addEventListener(
+    'click',
+    function(){
+
+        const icon =
+            this.querySelector(
+                'i'
+            );
+
+
+        if(
+            passwordInput.type ===
+            'password'
+        ){
+
+            passwordInput.type =
+                'text';
+
+            icon.className =
+                'fa-solid fa-eye-slash';
+
+            this.setAttribute(
+                'aria-label',
+                'Sembunyikan password'
+            );
+
+        }else{
+
+            passwordInput.type =
+                'password';
+
+            icon.className =
+                'fa-solid fa-eye';
+
+            this.setAttribute(
+                'aria-label',
+                'Tampilkan password'
+            );
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   REMEMBER EMAIL
+===================================================== */
+
+const savedEmail =
+    localStorage.getItem(
+        'flowspro_login_email'
+    );
+
+
+if(savedEmail){
+
+    emailInput.value =
+        savedEmail;
+
+    rememberMe.checked =
+        true;
+
+}
+
+
+/* =====================================================
+   EMAIL VALIDATION
+===================================================== */
+
+function isValidEmail(
+    email
+){
+
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+        .test(email);
+
+}
+
+
+/* =====================================================
+   LOGIN LOADING
+===================================================== */
+
+function setLoginLoading(
+    loading
+){
+
+    if(loading){
+
+        loginButton.disabled =
+            true;
+
+        loginButton.innerHTML = `
+
+            <div
+                class="loading-spinner"
+            ></div>
+
+            <span>
+                Memverifikasi...
+            </span>
+
+        `;
+
+    }else{
+
+        loginButton.disabled =
+            false;
+
+        loginButton.innerHTML = `
+
+            <i
+                class="fa-solid
+                fa-right-to-bracket"
+            ></i>
+
+            <span>
+                Masuk ke Sistem
+            </span>
+
+        `;
+
+    }
+
+}
+
+
+/* =====================================================
+   LOGIN PROCESS
+===================================================== */
+
+loginForm.addEventListener(
+    'submit',
+    async function(event){
+
+        event.preventDefault();
+
+
+        clearMessage();
+
+
+        const email =
+            emailInput.value
+                .trim()
+                .toLowerCase();
+
+
+        const password =
+            passwordInput.value;
+
+
+        /* =============================================
+           VALIDATE EMAIL
+        ============================================== */
+
+        if(!email){
+
+            showMessage(
+                '<i class="fa-solid fa-circle-exclamation"></i> ' +
+                'Email wajib diisi.',
+                'error'
+            );
+
+            emailInput.focus();
+
+            return;
+
+        }
+
+
+        if(
+            !isValidEmail(email)
+        ){
+
+            showMessage(
+                '<i class="fa-solid fa-circle-exclamation"></i> ' +
+                'Format email belum benar.',
+                'error'
+            );
+
+            emailInput.focus();
+
+            return;
+
+        }
+
+
+        /* =============================================
+           VALIDATE PASSWORD
+        ============================================== */
+
+        if(!password){
+
+            showMessage(
+                '<i class="fa-solid fa-circle-exclamation"></i> ' +
+                'Password wajib diisi.',
+                'error'
+            );
+
+            passwordInput.focus();
+
+            return;
+
+        }
+
+
+        if(
+            password.length < 6
+        ){
+
+            showMessage(
+                '<i class="fa-solid fa-circle-exclamation"></i> ' +
+                'Password minimal 6 karakter.',
+                'error'
+            );
+
+            passwordInput.focus();
+
+            return;
+
+        }
+
+
+        /* =============================================
+           REMEMBER EMAIL
+        ============================================== */
+
+        if(
+            rememberMe.checked
+        ){
+
+            localStorage.setItem(
+                'flowspro_login_email',
+                email
+            );
+
+        }else{
+
+            localStorage.removeItem(
+                'flowspro_login_email'
+            );
+
+        }
+
+
+        /* =============================================
+           LOADING
+        ============================================== */
+
+        setLoginLoading(true);
+
+
+        try{
+
+
+            /* =========================================
+               SUPABASE LOGIN
+            ========================================== */
+
+            const {
+                data,
+                error
+            } =
+                await supabaseClient
+                    .auth
+                    .signInWithPassword({
+
+                        email:
+                            email,
+
+                        password:
+                            password
+
+                    });
+
+
+            /* =========================================
+               LOGIN ERROR
+            ========================================== */
+
+            if(error){
+
+                console.error(
+                    'Supabase Login Error:',
+                    error
+                );
+
+
+                let message =
+                    'Email atau password tidak sesuai.';
+
+
+                if(
+                    error.message
+                        .toLowerCase()
+                        .includes(
+                            'email not confirmed'
+                        )
+                ){
+
+                    message =
+                        'Email akun belum dikonfirmasi. ' +
+                        'Silakan cek inbox email Anda.';
+
+                }
+
+
+                showMessage(
+                    '<i class="fa-solid fa-circle-exclamation"></i> ' +
+                    message,
+                    'error'
+                );
+
+
+                setLoginLoading(false);
+
+                return;
+
+            }
+
+
+            /* =========================================
+               LOGIN BERHASIL
+            ========================================== */
+
+            if(
+                data &&
+                data.user
+            ){
+
+                const user =
+                    data.user;
+
+
+                /*
+                   Simpan data dasar user
+                   untuk digunakan halaman
+                   dashboard.
+
+                   Authentication tetap
+                   dikelola oleh Supabase.
+                */
+
+                localStorage.setItem(
+                    'flowspro_user_id',
+                    user.id || ''
+                );
+
+
+                localStorage.setItem(
+                    'flowspro_user_email',
+                    user.email || ''
+                );
+
+
+                /*
+                   Untuk kompatibilitas
+                   dengan halaman lama.
+                */
+
+                localStorage.setItem(
+                    'userLogin',
+                    JSON.stringify({
+
+                        nama:
+                            user.user_metadata?.nama
+                            ||
+                            user.email
+                            ||
+                            'Operator',
+
+                        email:
+                            user.email || '',
+
+                        id:
+                            user.id || ''
+
+                    })
+                );
+
+
+                showMessage(
+                    '<i class="fa-solid fa-circle-check"></i> ' +
+                    'Login berhasil. Membuka dashboard...',
+                    'success'
+                );
+
+
+                setTimeout(
+                    function(){
+
+                        window.location.href =
+                            'dashboard.html';
+
+                    },
+                    800
+                );
+
+            }
+
+
+        }catch(error){
+
+            console.error(
+                'Unexpected Login Error:',
+                error
+            );
+
+
+            showMessage(
+                '<i class="fa-solid fa-triangle-exclamation"></i> ' +
+                'Tidak dapat terhubung ke server. ' +
+                'Periksa koneksi internet Anda.',
+                'error'
+            );
+
+
+            setLoginLoading(false);
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   ENTER KEY
+===================================================== */
+
+passwordInput.addEventListener(
+    'keydown',
+    function(event){
+
+        if(
+            event.key ===
+            'Enter'
+        ){
+
+            loginForm.requestSubmit();
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   CEK SESSION
+===================================================== */
+
+async function checkSession(){
+
+    try{
+
+        const {
+            data
+        } =
+            await supabaseClient
+                .auth
+                .getSession();
+
+
+        if(
+            data &&
+            data.session
+        ){
+
+            /*
+               User masih mempunyai
+               session aktif.
+
+               Langsung ke dashboard.
+            */
+
+            console.log(
+                'Session aktif:',
+                data.session.user.email
+            );
+
+        }
+
+    }catch(error){
+
+        console.error(
+            'Session check error:',
+            error
+        );
+
+    }
+
+}
+
+
+checkSession();
+
+
+/* =====================================================
+   AUTH STATE
+===================================================== */
+
+supabaseClient
+    .auth
+    .onAuthStateChange(
+        function(
+            event,
+            session
+        ){
+
+            console.log(
+                'Auth event:',
+                event
+            );
+
+        }
+    );
+
+</script>
+
+
+</body>
+
+</html>
+<!-- =====================================================
+     PART 2
+     MODAL LUPA PASSWORD
+===================================================== -->
+
+<div
+    id="forgotModal"
+    class="forgot-modal"
+>
+
+    <div class="forgot-box">
+
+        <!-- TOMBOL CLOSE -->
+
+        <button
+            type="button"
+            class="forgot-close"
+            id="closeForgotModal"
+            aria-label="Tutup"
+        >
+
+            <i class="fa-solid fa-xmark"></i>
+
+        </button>
+
+
+        <!-- ICON -->
+
+        <div class="forgot-icon">
+
+            <i class="fa-solid fa-key"></i>
+
+        </div>
+
+
+        <!-- HEADER -->
+
+        <div class="forgot-header">
+
+            <h2>
+                Lupa Password?
+            </h2>
+
+            <p>
+
+                Tidak perlu khawatir. Masukkan
+                email yang terdaftar pada akun
+                FLOWS-PRO untuk mendapatkan
+                link pemulihan password.
+
+            </p>
+
+        </div>
+
+
+        <!-- PESAN -->
+
+        <div
+            id="forgotMessage"
+            class="forgot-message"
+        ></div>
+
+
+        <!-- FORM FORGOT PASSWORD -->
+
+        <form
+            id="forgotForm"
+            autocomplete="on"
+        >
+
+            <div class="forgot-form-group">
+
+                <label
+                    for="forgotEmail"
+                >
+
+                    Email Akun
+
+                </label>
+
+
+                <div class="forgot-input-wrapper">
+
+                    <i
+                        class="fa-solid fa-envelope"
+                    ></i>
+
+
+                    <input
+                        type="email"
+                        id="forgotEmail"
+                        name="forgotEmail"
+                        placeholder="Masukkan email akun"
+                        autocomplete="email"
+                        required
+                    >
+
+                </div>
+
+            </div>
+
+
+            <!-- BUTTON -->
+
+            <button
+                type="submit"
+                class="forgot-submit"
+                id="forgotSubmit"
+            >
+
+                <i
+                    class="fa-solid fa-paper-plane"
+                ></i>
+
+                <span>
+                    Kirim Link Reset
+                </span>
+
+            </button>
+
+        </form>
+
+
+        <!-- BACK -->
+
+        <div class="forgot-back">
+
+            <button
+                type="button"
+                id="backToLogin"
+            >
+
+                <i
+                    class="fa-solid fa-arrow-left"
+                ></i>
+
+                Kembali ke Login
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+/* =====================================================
+   PART 2
+   FORGOT PASSWORD MODAL
+===================================================== */
+
+
+/* =====================================================
+   MODAL CONTAINER
+===================================================== */
+
+.forgot-modal{
+
+    position:fixed;
+
+    inset:0;
+
+    width:100%;
+
+    height:100%;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    padding:20px;
+
+    background:
+        rgba(
+            0,
+            7,
+            16,
+            .82
+        );
+
+    backdrop-filter:
+        blur(10px);
+
+    z-index:5000;
+
+    opacity:0;
+
+    visibility:hidden;
+
+    pointer-events:none;
+
+    transition:
+        opacity .3s ease,
+        visibility .3s ease;
+
+}
+
+
+/* =====================================================
+   MODAL ACTIVE
+===================================================== */
+
+.forgot-modal.show{
+
+    opacity:1;
+
+    visibility:visible;
+
+    pointer-events:auto;
+
+}
+
+
+/* =====================================================
+   FORGOT BOX
+===================================================== */
+
+.forgot-box{
+
+    position:relative;
+
+    width:
+        min(
+            450px,
+            100%
+        );
+
+    padding:42px;
+
+    border-radius:26px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(
+                8,
+                36,
+                59,
+                .98
+            ),
+            rgba(
+                3,
+                21,
+                36,
+                .98
+            )
+        );
+
+    border:
+        1px solid
+        rgba(
+            255,
+            255,
+            255,
+            .13
+        );
+
+    box-shadow:
+        0 30px 80px
+        rgba(
+            0,
+            0,
+            0,
+            .60
+        );
+
+    transform:
+        translateY(25px)
+        scale(.96);
+
+    transition:
+        transform .3s ease;
+
+}
+
+
+/* =====================================================
+   BOX ACTIVE
+===================================================== */
+
+.forgot-modal.show
+.forgot-box{
+
+    transform:
+        translateY(0)
+        scale(1);
+
+}
+
+
+/* =====================================================
+   CLOSE BUTTON
+===================================================== */
+
+.forgot-close{
+
+    position:absolute;
+
+    top:17px;
+
+    right:17px;
+
+    width:38px;
+
+    height:38px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    border:none;
+
+    border-radius:10px;
+
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            .06
+        );
+
+    color:
+        rgba(
+            255,
+            255,
+            255,
+            .65
+        );
+
+    font-size:16px;
+
+    cursor:pointer;
+
+    transition:.2s;
+
+}
+
+
+.forgot-close:hover{
+
+    color:white;
+
+    background:
+        rgba(
+            231,
+            76,
+            60,
+            .20
+        );
+
+}
+
+
+/* =====================================================
+   FORGOT ICON
+===================================================== */
+
+.forgot-icon{
+
+    width:68px;
+
+    height:68px;
+
+    margin:
+        0 auto
+        20px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    border-radius:19px;
+
+    background:
+        rgba(
+            0,
+            198,
+            255,
+            .10
+        );
+
+    border:
+        1px solid
+        rgba(
+            0,
+            198,
+            255,
+            .16
+        );
+
+    color:#00c6ff;
+
+    font-size:26px;
+
+}
+
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+.forgot-header{
+
+    text-align:center;
+
+    margin-bottom:27px;
+
+}
+
+
+.forgot-header h2{
+
+    font-size:27px;
+
+    font-weight:800;
+
+    margin-bottom:10px;
+
+    color:white;
+
+}
+
+
+.forgot-header p{
+
+    color:
+        rgba(
+            255,
+            255,
+            255,
+            .52
+        );
+
+    font-size:13px;
+
+    line-height:1.7;
+
+}
+
+
+/* =====================================================
+   MESSAGE
+===================================================== */
+
+.forgot-message{
+
+    display:none;
+
+    padding:14px 15px;
+
+    margin-bottom:18px;
+
+    border-radius:12px;
+
+    font-size:12px;
+
+    line-height:1.6;
+
+}
+
+
+.forgot-message.show{
+
+    display:block;
+
+}
+
+
+/* =====================================================
+   ERROR MESSAGE
+===================================================== */
+
+.forgot-message.error{
+
+    color:#ffaaa2;
+
+    background:
+        rgba(
+            231,
+            76,
+            60,
+            .10
+        );
+
+    border:
+        1px solid
+        rgba(
+            231,
+            76,
+            60,
+            .22
+        );
+
+}
+
+
+/* =====================================================
+   SUCCESS MESSAGE
+===================================================== */
+
+.forgot-message.success{
+
+    color:#7af0a8;
+
+    background:
+        rgba(
+            39,
+            174,
+            96,
+            .10
+        );
+
+    border:
+        1px solid
+        rgba(
+            39,
+            174,
+            96,
+            .22
+        );
+
+}
+
+
+/* =====================================================
+   FORM GROUP
+===================================================== */
+
+.forgot-form-group{
+
+    margin-bottom:20px;
+
+}
+
+
+/* =====================================================
+   LABEL
+===================================================== */
+
+.forgot-form-group label{
+
+    display:block;
+
+    margin-bottom:9px;
+
+    font-size:13px;
+
+    font-weight:600;
+
+    color:
+        rgba(
+            255,
+            255,
+            255,
+            .82
+        );
+
+}
+
+
+/* =====================================================
+   INPUT WRAPPER
+===================================================== */
+
+.forgot-input-wrapper{
+
+    position:relative;
+
+}
+
+
+/* =====================================================
+   INPUT ICON
+===================================================== */
+
+.forgot-input-wrapper i{
+
+    position:absolute;
+
+    left:15px;
+
+    top:50%;
+
+    transform:
+        translateY(-50%);
+
+    color:
+        rgba(
+            255,
+            255,
+            255,
+            .35
+        );
+
+    pointer-events:none;
+
+}
+
+
+/* =====================================================
+   INPUT
+===================================================== */
+
+.forgot-input-wrapper input{
+
+    width:100%;
+
+    height:53px;
+
+    padding:
+        0 18px
+        0 45px;
+
+    border-radius:13px;
+
+    border:
+        1px solid
+        rgba(
+            255,
+            255,
+            255,
+            .13
+        );
+
+    outline:none;
+
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            .055
+        );
+
+    color:white;
+
+    font-size:14px;
+
+    transition:.25s;
+
+}
+
+
+.forgot-input-wrapper input::placeholder{
+
+    color:
+        rgba(
+            255,
+            255,
+            255,
+            .27
+        );
+
+}
+
+
+.forgot-input-wrapper input:focus{
+
+    border-color:
+        #00c6ff;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(
+            0,
+            198,
+            255,
+            .08
+        );
+
+}
+
+
+/* =====================================================
+   SUBMIT BUTTON
+===================================================== */
+
+.forgot-submit{
+
+    width:100%;
+
+    height:54px;
+
+    border:none;
+
+    border-radius:14px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #00c6ff,
+            #0072ff
+        );
+
+    color:white;
+
+    font-size:14px;
+
+    font-weight:800;
+
+    cursor:pointer;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:10px;
+
+    transition:.25s;
+
+}
+
+
+.forgot-submit:hover{
+
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        0 12px 30px
+        rgba(
+            0,
+            114,
+            255,
+            .28
+        );
+
+}
+
+
+.forgot-submit:disabled{
+
+    opacity:.60;
+
+    cursor:not-allowed;
+
+    transform:none;
+
+    box-shadow:none;
+
+}
+
+
+/* =====================================================
+   BACK TO LOGIN
+===================================================== */
+
+.forgot-back{
+
+    margin-top:22px;
+
+    text-align:center;
+
+}
+
+
+.forgot-back button{
+
+    border:none;
+
+    background:none;
+
+    color:
+        rgba(
+            255,
+            255,
+            255,
+            .50
+        );
+
+    font-size:12px;
+
+    cursor:pointer;
+
+    transition:.2s;
+
+}
+
+
+.forgot-back button:hover{
+
+    color:#00c6ff;
+
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media(max-width:500px){
+
+    .forgot-modal{
+
+        padding:15px;
+
+    }
+
+
+    .forgot-box{
+
+        padding:
+            36px 24px;
+
+        border-radius:22px;
+
+    }
+
+
+    .forgot-header h2{
+
+        font-size:24px;
+
+    }
+
+
+    .forgot-header p{
+
+        font-size:12px;
+
+    }
+
+}
+/* =====================================================
+   PART 3
+   FORGOT PASSWORD
+===================================================== */
+
+
+/* =====================================================
+   ELEMENT MODAL
+===================================================== */
+
+const forgotPasswordButton =
+    document.getElementById(
+        'forgotPassword'
+    );
+
+const forgotModal =
+    document.getElementById(
+        'forgotModal'
+    );
+
+const closeForgotModal =
+    document.getElementById(
+        'closeForgotModal'
+    );
+
+const backToLogin =
+    document.getElementById(
+        'backToLogin'
+    );
+
+const forgotForm =
+    document.getElementById(
+        'forgotForm'
+    );
+
+const forgotEmail =
+    document.getElementById(
+        'forgotEmail'
+    );
+
+const forgotSubmit =
+    document.getElementById(
+        'forgotSubmit'
+    );
+
+const forgotMessage =
+    document.getElementById(
+        'forgotMessage'
+    );
+
+
+/* =====================================================
+   BUKA MODAL LUPA PASSWORD
+===================================================== */
+
+forgotPasswordButton.addEventListener(
+    'click',
+    function(){
+
+        clearForgotMessage();
+
+        /*
+         * Kalau email di halaman login
+         * sudah diisi, otomatis salin
+         * ke form lupa password.
+         */
+
+        const loginEmail =
+            emailInput.value.trim();
+
+
+        if(loginEmail){
+
+            forgotEmail.value =
+                loginEmail;
+
+        }
+
+
+        forgotModal.classList.add(
+            'show'
+        );
+
+
+        setTimeout(
+            function(){
+
+                forgotEmail.focus();
+
+            },
+            250
+        );
+
+    }
+);
+
+
+/* =====================================================
+   TUTUP MODAL
+===================================================== */
+
+function closeForgotModalFunction(){
+
+    forgotModal.classList.remove(
+        'show'
+    );
+
+}
+
+
+closeForgotModal.addEventListener(
+    'click',
+    closeForgotModalFunction
+);
+
+
+backToLogin.addEventListener(
+    'click',
+    closeForgotModalFunction
+);
+
+
+/* =====================================================
+   KLIK AREA LUAR MODAL
+===================================================== */
+
+forgotModal.addEventListener(
+    'click',
+    function(event){
+
+        if(
+            event.target ===
+            forgotModal
+        ){
+
+            closeForgotModalFunction();
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   TOMBOL ESC
+===================================================== */
+
+document.addEventListener(
+    'keydown',
+    function(event){
+
+        if(
+            event.key ===
+            'Escape'
+        ){
+
+            if(
+                forgotModal.classList
+                    .contains('show')
+            ){
+
+                closeForgotModalFunction();
+
+            }
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   PESAN LUPA PASSWORD
+===================================================== */
+
+function showForgotMessage(
+    text,
+    type
+){
+
+    forgotMessage.innerHTML =
+        text;
+
+    forgotMessage.className =
+        'forgot-message show ' +
+        type;
+
+}
+
+
+function clearForgotMessage(){
+
+    forgotMessage.innerHTML =
+        '';
+
+    forgotMessage.className =
+        'forgot-message';
+
+}
+
+
+/* =====================================================
+   VALIDASI EMAIL
+===================================================== */
+
+function isValidForgotEmail(
+    email
+){
+
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+        .test(email);
+
+}
+
+
+/* =====================================================
+   LOADING BUTTON
+===================================================== */
+
+function setForgotLoading(
+    loading
+){
+
+    if(loading){
+
+        forgotSubmit.disabled =
+            true;
+
+        forgotSubmit.innerHTML = `
+
+            <div
+                class="loading-spinner"
+            ></div>
+
+            <span>
+                Mengirim link...
+            </span>
+
+        `;
+
+    }else{
+
+        forgotSubmit.disabled =
+            false;
+
+        forgotSubmit.innerHTML = `
+
+            <i
+                class="fa-solid
+                fa-paper-plane"
+            ></i>
+
+            <span>
+                Kirim Link Reset
+            </span>
+
+        `;
+
+    }
+
+}
+
+
+/* =====================================================
+   KIRIM EMAIL RESET PASSWORD
+===================================================== */
+
+forgotForm.addEventListener(
+    'submit',
+    async function(event){
+
+        event.preventDefault();
+
+
+        clearForgotMessage();
+
+
+        /*
+         * Ambil email
+         */
+
+        const email =
+            forgotEmail.value
+                .trim()
+                .toLowerCase();
+
+
+        /* =============================================
+           VALIDASI EMAIL KOSONG
+        ============================================== */
+
+        if(!email){
+
+            showForgotMessage(
+                '<i class="fa-solid fa-circle-exclamation"></i> ' +
+                'Email wajib diisi.',
+                'error'
+            );
+
+            forgotEmail.focus();
+
+            return;
+
+        }
+
+
+        /* =============================================
+           VALIDASI FORMAT EMAIL
+        ============================================== */
+
+        if(
+            !isValidForgotEmail(email)
+        ){
+
+            showForgotMessage(
+                '<i class="fa-solid fa-circle-exclamation"></i> ' +
+                'Format email belum benar.',
+                'error'
+            );
+
+            forgotEmail.focus();
+
+            return;
+
+        }
+
+
+        /*
+         * Masukkan email juga ke
+         * halaman login.
+         */
+
+        emailInput.value =
+            email;
+
+
+        /* =============================================
+           LOADING
+        ============================================== */
+
+        setForgotLoading(true);
+
+
+        try{
+
+
+            /* =========================================
+               TENTUKAN URL RESET
+            ========================================== */
+
+            const resetURL =
+                window.location.origin +
+                '/reset-password.html';
+
+
+            console.log(
+                'Password reset URL:',
+                resetURL
+            );
+
+
+            /* =========================================
+               KIRIM EMAIL SUPABASE
+            ========================================== */
+
+            const {
+                error
+            } =
+                await supabaseClient
+                    .auth
+                    .resetPasswordForEmail(
+                        email,
+                        {
+                            redirectTo:
+                                resetURL
+                        }
+                    );
+
+
+            /* =========================================
+               CEK ERROR
+            ========================================== */
+
+            if(error){
+
+                console.error(
+                    'Supabase Reset Error:',
+                    error
+                );
+
+
+                showForgotMessage(
+                    '<i class="fa-solid fa-circle-exclamation"></i> ' +
+                    'Email reset password gagal dikirim. ' +
+                    'Silakan coba kembali.',
+                    'error'
+                );
+
+
+                setForgotLoading(false);
+
+                return;
+
+            }
+
+
+            /* =========================================
+               BERHASIL
+            ========================================== */
+
+            showForgotMessage(
+                '<i class="fa-solid fa-circle-check"></i> ' +
+                '<strong>Link reset password telah dikirim.</strong><br><br>' +
+                'Silakan periksa inbox email Anda. ' +
+                'Jika tidak ditemukan, periksa folder Spam atau Junk.',
+                'success'
+            );
+
+
+            /*
+             * Hentikan loading.
+             */
+
+            setForgotLoading(false);
+
+
+            /*
+             * Nonaktifkan tombol sementara
+             * untuk mencegah pengiriman
+             * berulang kali.
+             */
+
+            forgotSubmit.disabled =
+                true;
+
+
+            /*
+             * Setelah email berhasil dikirim,
+             * modal tetap terbuka agar user
+             * dapat membaca instruksi.
+             */
+
+
+        }catch(error){
+
+            console.error(
+                'Unexpected Reset Error:',
+                error
+            );
+
+
+            showForgotMessage(
+                '<i class="fa-solid fa-triangle-exclamation"></i> ' +
+                'Terjadi kesalahan koneksi ke server. ' +
+                'Periksa koneksi internet Anda.',
+                'error'
+            );
+
+
+            setForgotLoading(false);
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   ENTER DI FORM EMAIL
+===================================================== */
+
+forgotEmail.addEventListener(
+    'keydown',
+    function(event){
+
+        if(
+            event.key ===
+            'Enter'
+        ){
+
+            forgotForm.requestSubmit();
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   RESET TOMBOL SAAT MODAL DIBUKA LAGI
+===================================================== */
+
+forgotPasswordButton.addEventListener(
+    'click',
+    function(){
+
+        /*
+         * Kalau sebelumnya tombol
+         * sudah disabled setelah email
+         * dikirim, aktifkan kembali
+         * ketika modal dibuka ulang.
+         */
+
+        forgotSubmit.disabled =
+            false;
+
+    }
+);
+
+
+/* =====================================================
+   PART 3 SELESAI
+===================================================== */
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>
+    FLOWS-PRO | Reset Password
+</title>
+
+
+<!-- =====================================================
+     FAVICON
+===================================================== -->
+
+<link
+    rel="icon"
+    type="image/png"
+    href="LOGO removebg-preview.png"
+>
+
+
+<!-- =====================================================
+     FONT AWESOME
+===================================================== -->
+
+<link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+>
+
+
+<!-- =====================================================
+     SUPABASE
+===================================================== -->
+
+<script
+    src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+></script>
+
+
+<style>
+
+/* =====================================================
+   RESET
+===================================================== */
+
+*{
+
+    margin:0;
+
+    padding:0;
+
+    box-sizing:border-box;
+
+    font-family:
+        'Segoe UI',
+        Arial,
+        sans-serif;
+
+}
+
+
+/* =====================================================
+   BODY
+===================================================== */
+
+body{
+
+    min-height:100vh;
+
+    background:#061727;
+
+    color:white;
+
+}
+
+
+/* =====================================================
+   PAGE
+===================================================== */
+
+.reset-page{
+
+    min-height:100vh;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    padding:30px 20px;
+
+    position:relative;
+
+    overflow:hidden;
+
+}
+
+
+/* =====================================================
+   BACKGROUND
+===================================================== */
+
+.reset-page::before{
+
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    background:
+
+        linear-gradient(
+            120deg,
+            rgba(3,18,32,.95),
+            rgba(5,38,65,.80)
+        ),
+
+        url(
+            'Desain tanpa judul (1).png'
+        )
+        center/
+        cover
+        no-repeat;
+
+}
+
+
+/* =====================================================
+   LIGHT EFFECT
+===================================================== */
+
+.reset-page::after{
+
+    content:"";
+
+    position:absolute;
+
+    width:550px;
+
+    height:550px;
+
+    border-radius:50%;
+
+    background:
+        rgba(
+            0,
+            198,
+            255,
+            .08
+        );
+
+    filter:blur(25px);
+
+    right:-260px;
+
+    bottom:-260px;
+
+}
+
+
+/* =====================================================
+   CARD
+===================================================== */
+
+.reset-card{
+
+    position:relative;
+
+    z-index:2;
+
+    width:
+        min(
+            470px,
+            100%
+        );
+
+    padding:42px;
+
+    border-radius:28px;
+
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            .075
+        );
+
+    border:
+        1px solid
+        rgba(
+            255,
+            255,
+            255,
+            .13
+        );
+
+    backdrop-filter:
+        blur(22px);
+
+    box-shadow:
+        0 30px 80px
+        rgba(
+            0,
+            0,
+            0,
+            .55
+        );
+
+    animation:
+        appear
+        .6s
+        ease;
+
+}
+
+
+@keyframes appear{
+
+    from{
+
+        opacity:0;
+
+        transform:
+            translateY(25px)
+            scale(.97);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:
+            translateY(0)
+            scale(1);
+
+    }
+
+}
+
+
+/* =====================================================
+   LOGO
+===================================================== */
+
+.logo{
+
+    display:block;
+
+    width:210px;
+
+    max-height:80px;
+
+    object-fit:contain;
+
+    margin:
+        0 auto
+        28px;
+
+}
+
+
+/* =====================================================
+   ICON
+===================================================== */
+
+.reset-icon{
+
+    width:68px;
+
+    height:68px;
+
+    margin:
+        0 auto
+        20px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    border-radius:19px;
+
+    background:
+        rgba(
+            0,
+            198,
+            255,
+            .10
+        );
+
+    border:
+        1px solid
+        rgba(
+            0,
+            198,
+            255,
+            .15
+        );
+
+    color:#00c6ff;
+
+    font-size:27px;
+
+}
+
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+.reset-header{
+
+    text-align:center;
+
+    margin-bottom:28px;
+
+}
+
+
+.reset-header h1{
+
+    font-size:28px;
+
+    font-weight:800;
+
+    margin-bottom:10px;
+
+}
+
+
+.reset-header p{
+
+    color:
+        rgba(
+            255,
+            255,
+            255,
+            .53
+        );
+
+    font-size:13px;
+
+    line-height:1.7;
+
+}
+
+
+/* =====================================================
+   MESSAGE
+===================================================== */
+
+.message{
+
+    display:none;
+
+    padding:14px 15px;
+
+    margin-bottom:18px;
+
+    border-radius:12px;
+
+    font-size:12px;
+
+    line-height:1.6;
+
+}
+
+
+.message.show{
+
+    display:block;
+
+}
+
+
+.message.error{
+
+    color:#ffaaa2;
+
+    background:
+        rgba(
+            231,
+            76,
+            60,
+            .11
+        );
+
+    border:
+        1px solid
+        rgba(
+            231,
+            76,
+            60,
+            .22
+        );
+
+}
+
+
+.message.success{
+
+    color:#7af0a8;
+
+    background:
+        rgba(
+            39,
+            174,
+            96,
+            .11
+        );
+
+    border:
+        1px solid
+        rgba(
+            39,
+            174,
+            96,
+            .22
+        );
+
+}
+
+
+/* =====================================================
+   FORM GROUP
+===================================================== */
+
+.form-group{
+
+    margin-bottom:20px;
+
+}
+
+
+.form-group label{
+
+    display:block;
+
+    margin-bottom:9px;
+
+    font-size:13px;
+
+    font-weight:600;
+
+    color:
+        rgba(
+            255,
+            255,
+            255,
+            .82
+        );
+
+}
+
+
+/* =====================================================
+   INPUT WRAPPER
+===================================================== */
+
+.input-wrapper{
+
+    position:relative;
+
+}
+
+
+/* =====================================================
+   INPUT ICON
+===================================================== */
+
+.input-icon{
+
+    position:absolute;
+
+    left:15px;
+
+    top:50%;
+
+    transform:
+        translateY(-50%);
+
+    color:
+        rgba(
+            255,
+            255,
+            255,
+            .35
+        );
+
+    pointer-events:none;
+
+}
+
+
+/* =====================================================
+   INPUT
+===================================================== */
+
+.input-wrapper input{
+
+    width:100%;
+
+    height:53px;
+
+    padding:
+        0 48px
+        0 45px;
+
+    border-radius:13px;
+
+    border:
+        1px solid
+        rgba(
+            255,
+            255,
+            255,
+            .13
+        );
+
+    outline:none;
+
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            .055
+        );
+
+    color:white;
+
+    font-size:14px;
+
+    transition:.25s;
+
+}
+
+
+.input-wrapper input::placeholder{
+
+    color:
+        rgba(
+            255,
+            255,
+            255,
+            .27
+        );
+
+}
+
+
+.input-wrapper input:focus{
+
+    border-color:
+        #00c6ff;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(
+            0,
+            198,
+            255,
+            .08
+        );
+
+}
+
+
+/* =====================================================
+   PASSWORD TOGGLE
+===================================================== */
+
+.password-toggle{
+
+    position:absolute;
+
+    right:10px;
+
+    top:50%;
+
+    transform:
+        translateY(-50%);
+
+    width:35px;
+
+    height:35px;
+
+    border:none;
+
+    background:none;
+
+    color:
+        rgba(
+            255,
+            255,
+            255,
+            .40
+        );
+
+    cursor:pointer;
+
+    border-radius:8px;
+
+}
+
+
+.password-toggle:hover{
+
+    color:#00c6ff;
+
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            .05
+        );
+
+}
+
+
+/* =====================================================
+   PASSWORD INFO
+===================================================== */
+
+.password-info{
+
+    margin-top:8px;
+
+    color:
+        rgba(
+            255,
+            255,
+            255,
+            .35
+        );
+
+    font-size:11px;
+
+}
+
+
+/* =====================================================
+   BUTTON
+===================================================== */
+
+.update-button{
+
+    width:100%;
+
+    height:54px;
+
+    border:none;
+
+    border-radius:14px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #00c6ff,
+            #0072ff
+        );
+
+    color:white;
+
+    font-size:14px;
+
+    font-weight:800;
+
+    cursor:pointer;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:10px;
+
+    transition:.25s;
+
+}
+
+
+.update-button:hover{
+
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        0 12px 30px
+        rgba(
+            0,
+            114,
+            255,
+            .25
+        );
+
+}
+
+
+.update-button:disabled{
+
+    opacity:.60;
+
+    cursor:not-allowed;
+
+    transform:none;
+
+}
+
+
+/* =====================================================
+   SPINNER
+===================================================== */
+
+.spinner{
+
+    width:18px;
+
+    height:18px;
+
+    border:
+        2px solid
+        rgba(
+            255,
+            255,
+            255,
+            .35
+        );
+
+    border-top-color:white;
+
+    border-radius:50%;
+
+    animation:
+        spin
+        .7s
+        linear
+        infinite;
+
+}
+
+
+@keyframes spin{
+
+    to{
+
+        transform:
+            rotate(360deg);
+
+    }
+
+}
+
+
+/* =====================================================
+   BACK LOGIN
+===================================================== */
+
+.back-login{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:8px;
+
+    margin-top:24px;
+
+    color:
+        rgba(
+            255,
+            255,
+            255,
+            .50
+        );
+
+    font-size:12px;
+
+    text-decoration:none;
+
+    transition:.2s;
+
+}
+
+
+.back-login:hover{
+
+    color:#00c6ff;
+
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media(max-width:500px){
+
+    .reset-card{
+
+        padding:
+            35px 24px;
+
+        border-radius:22px;
+
+    }
+
+
+    .logo{
+
+        width:175px;
+
+    }
+
+
+    .reset-header h1{
+
+        font-size:25px;
+
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     RESET PASSWORD PAGE
+===================================================== -->
+
+<div class="reset-page">
+
+
+    <div class="reset-card">
+
+
+        <!-- =============================================
+             LOGO
+        ============================================== -->
+
+        <img
+            src="FLOWS-PRO-preview 1.png"
+            alt="FLOWS-PRO"
+            class="logo"
+        >
+
+
+        <!-- =============================================
+             ICON
+        ============================================== -->
+
+        <div class="reset-icon">
+
+            <i
+                class="fa-solid fa-key"
+            ></i>
+
+        </div>
+
+
+        <!-- =============================================
+             HEADER
+        ============================================== -->
+
+        <div class="reset-header">
+
+            <h1>
+                Buat Password Baru
+            </h1>
+
+            <p>
+
+                Buat password baru untuk
+                mengamankan akun FLOWS-PRO Anda.
+
+            </p>
+
+        </div>
+
+
+        <!-- =============================================
+             MESSAGE
+        ============================================== -->
+
+        <div
+            id="message"
+            class="message"
+        ></div>
+
+
+        <!-- =============================================
+             FORM
+        ============================================== -->
+
+        <form
+            id="resetForm"
+        >
+
+
+            <!-- =========================================
+                 PASSWORD BARU
+            ========================================== -->
+
+            <div class="form-group">
+
+                <label
+                    for="newPassword"
+                >
+
+                    Password Baru
+
+                </label>
+
+
+                <div class="input-wrapper">
+
+                    <i
+                        class="fa-solid
+                        fa-lock
+                        input-icon"
+                    ></i>
+
+
+                    <input
+                        type="password"
+                        id="newPassword"
+                        placeholder="Masukkan password baru"
+                        autocomplete="new-password"
+                        minlength="6"
+                        required
+                    >
+
+
+                    <button
+                        type="button"
+                        class="password-toggle"
+                        id="toggleNewPassword"
+                        aria-label="Tampilkan password"
+                    >
+
+                        <i
+                            class="fa-solid fa-eye"
+                        ></i>
+
+                    </button>
+
+                </div>
+
+
+                <div class="password-info">
+
+                    Minimal 6 karakter.
+
+                </div>
+
+            </div>
+
+
+            <!-- =========================================
+                 KONFIRMASI PASSWORD
+            ========================================== -->
+
+            <div class="form-group">
+
+                <label
+                    for="confirmPassword"
+                >
+
+                    Konfirmasi Password
+
+                </label>
+
+
+                <div class="input-wrapper">
+
+                    <i
+                        class="fa-solid
+                        fa-lock
+                        input-icon"
+                    ></i>
+
+
+                    <input
+                        type="password"
+                        id="confirmPassword"
+                        placeholder="Ulangi password baru"
+                        autocomplete="new-password"
+                        minlength="6"
+                        required
+                    >
+
+
+                    <button
+                        type="button"
+                        class="password-toggle"
+                        id="toggleConfirmPassword"
+                        aria-label="Tampilkan password"
+                    >
+
+                        <i
+                            class="fa-solid fa-eye"
+                        ></i>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- =========================================
+                 UPDATE BUTTON
+            ========================================== -->
+
+            <button
+                type="submit"
+                class="update-button"
+                id="updateButton"
+            >
+
+                <i
+                    class="fa-solid fa-shield-halved"
+                ></i>
+
+                <span>
+                    Simpan Password Baru
+                </span>
+
+            </button>
+
+
+        </form>
+
+
+        <!-- =============================================
+             BACK LOGIN
+        ============================================== -->
+
+        <a
+            href="login.html"
+            class="back-login"
+        >
+
+            <i
+                class="fa-solid fa-arrow-left"
+            ></i>
+
+            Kembali ke Login
+
+        </a>
+
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     JAVASCRIPT
+===================================================== -->
+
+<script>
+
+
+/* =====================================================
+   SUPABASE CONFIG
+===================================================== */
+
+const SUPABASE_URL =
+    'https://nydapuhnswrbgbjkaxqa.supabase.co';
+
+
+const SUPABASE_ANON_KEY =
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im55ZGFwdWhuc3dyYmdiamtheHFhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA0MzI2NTEsImV4cCI6MjEwNjAwODY1MX0.hJG7hUTuRic3sJmCWDONNyL5Qay-vfdu2vLAMG6FzfI';
+
+
+/* =====================================================
+   CREATE SUPABASE CLIENT
+===================================================== */
+
+const supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_ANON_KEY
+    );
+
+
+/* =====================================================
+   ELEMENT
+===================================================== */
+
+const resetForm =
+    document.getElementById(
+        'resetForm'
+    );
+
+
+const newPassword =
+    document.getElementById(
+        'newPassword'
+    );
+
+
+const confirmPassword =
+    document.getElementById(
+        'confirmPassword'
+    );
+
+
+const updateButton =
+    document.getElementById(
+        'updateButton'
+    );
+
+
+const message =
+    document.getElementById(
+        'message'
+    );
+
+
+/* =====================================================
+   MESSAGE
+===================================================== */
+
+function showMessage(
+    text,
+    type
+){
+
+    message.innerHTML =
+        text;
+
+    message.className =
+        'message show ' +
+        type;
+
+}
+
+
+function clearMessage(){
+
+    message.innerHTML =
+        '';
+
+    message.className =
+        'message';
+
+}
+
+
+/* =====================================================
+   PASSWORD TOGGLE
+===================================================== */
+
+function setupPasswordToggle(
+    buttonId,
+    input
+){
+
+    const button =
+        document.getElementById(
+            buttonId
+        );
+
+
+    button.addEventListener(
+        'click',
+        function(){
+
+            const icon =
+                button.querySelector(
+                    'i'
+                );
+
+
+            if(
+                input.type ===
+                'password'
+            ){
+
+                input.type =
+                    'text';
+
+                icon.className =
+                    'fa-solid fa-eye';
+
+            }else{
+
+                input.type =
+                    'password';
+
+                icon.className =
+                    'fa-solid fa-eye';
+
+            }
+
+        }
+    );
+
+}
+
+
+setupPasswordToggle(
+    'toggleNewPassword',
+    newPassword
+);
+
+
+setupPasswordToggle(
+    'toggleConfirmPassword',
+    confirmPassword
+);
+
+
+/* =====================================================
+   AUTH STATE
+===================================================== */
+
+let recoveryReady =
+    false;
+
+
+supabaseClient
+    .auth
+    .onAuthStateChange(
+        async function(
+            event,
+            session
+        ){
+
+            console.log(
+                'Auth Event:',
+                event
+            );
+
+
+            /* =========================================
+               PASSWORD RECOVERY
+            ========================================== */
+
+            if(
+                event ===
+                'PASSWORD_RECOVERY'
+            ){
+
+                recoveryReady =
+                    true;
+
+                showMessage(
+                    '<i class="fa-solid fa-circle-check"></i> ' +
+                    'Link pemulihan berhasil diverifikasi. ' +
+                    'Silakan buat password baru.',
+                    'success'
+                );
+
+            }
+
+
+            /* =========================================
+               SIGNED IN DARI RECOVERY
+            ========================================== */
+
+            if(
+                event ===
+                'SIGNED_IN' &&
+                session
+            ){
+
+                /*
+                   Supabase dapat membuat session
+                   ketika user membuka link recovery.
+                */
+
+                console.log(
+                    'Recovery session aktif.'
+                );
+
+            }
+
+        }
+    );
+
+
+/* =====================================================
+   CEK SESSION
+===================================================== */
+
+async function checkRecoverySession(){
+
+    try{
+
+        const {
+            data,
+            error
+        } =
+            await supabaseClient
+                .auth
+                .getSession();
+
+
+        if(error){
+
+            console.error(
+                error
+            );
+
+            return;
+
+        }
+
+
+        /*
+           Jika session sudah ada,
+           halaman siap digunakan.
+        */
+
+        if(
+            data &&
+            data.session
+        ){
+
+            recoveryReady =
+                true;
+
+            return;
+
+        }
+
+
+        /*
+           Jangan langsung menganggap
+           gagal karena event recovery
+           dapat diproses sesudah halaman
+           dimuat.
+        */
+
+        setTimeout(
+            async function(){
+
+                const {
+                    data:
+                        secondCheck
+                } =
+                    await supabaseClient
+                        .auth
+                        .getSession();
+
+
+                if(
+                    secondCheck &&
+                    secondCheck.session
+                ){
+
+                    recoveryReady =
+                        true;
+
+                }
+
+            },
+            800
+        );
+
+
+    }catch(error){
+
+        console.error(
+            'Session error:',
+            error
+        );
+
+    }
+
+}
+
+
+checkRecoverySession();
+
+
+/* =====================================================
+   UPDATE PASSWORD
+===================================================== */
+
+resetForm.addEventListener(
+    'submit',
+    async function(event){
+
+        event.preventDefault();
+
+
+        clearMessage();
+
+
+        const password =
+            newPassword.value;
+
+
+        const confirmation =
+            confirmPassword.value;
+
+
+        /* =============================================
+           PASSWORD MINIMUM
+        ============================================== */
+
+        if(
+            password.length < 6
+        ){
+
+            showMessage(
+                '<i class="fa-solid fa-circle-exclamation"></i> ' +
+                'Password minimal 6 karakter.',
+                'error'
+            );
+
+            newPassword.focus();
+
+            return;
+
+        }
+
+
+        /* =============================================
+           PASSWORD MATCH
+        ============================================== */
+
+        if(
+            password !==
+            confirmation
+        ){
+
+            showMessage(
+                '<i class="fa-solid fa-circle-exclamation"></i> ' +
+                'Password dan konfirmasi password tidak sama.',
+                'error'
+            );
+
+            confirmPassword.focus();
+
+            return;
+
+        }
+
+
+        /* =============================================
+           LOADING
+        ============================================== */
+
+        updateButton.disabled =
+            true;
+
+
+        updateButton.innerHTML = `
+
+            <div
+                class="spinner"
+            ></div>
+
+            <span>
+                Menyimpan password...
+            </span>
+
+        `;
+
+
+        try{
+
+
+            /* =========================================
+               CEK SESSION TERLEBIH DAHULU
+            ========================================== */
+
+            const {
+                data:
+                    sessionData
+            } =
+                await supabaseClient
+                    .auth
+                    .getSession();
+
+
+            if(
+                !sessionData ||
+                !sessionData.session
+            ){
+
+                showMessage(
+                    '<i class="fa-solid fa-triangle-exclamation"></i> ' +
+                    'Link reset password tidak valid atau sudah kedaluwarsa. ' +
+                    'Silakan minta link reset password baru dari halaman login.',
+                    'error'
+                );
+
+
+                updateButton.disabled =
+                    false;
+
+
+                updateButton.innerHTML = `
+
+                    <i
+                        class="fa-solid
+                        fa-shield-halved"
+                    ></i>
+
+                    <span>
+                        Simpan Password Baru
+                    </span>
+
+                `;
+
+                return;
+
+            }
+
+
+            /* =========================================
+               UPDATE PASSWORD SUPABASE
+            ========================================== */
+
+            const {
+                error
+            } =
+                await supabaseClient
+                    .auth
+                    .updateUser({
+
+                        password:
+                            password
+
+                    });
+
+
+            /* =========================================
+               UPDATE ERROR
+            ========================================== */
+
+            if(error){
+
+                console.error(
+                    'Update Password Error:',
+                    error
+                );
+
+
+                showMessage(
+                    '<i class="fa-solid fa-circle-exclamation"></i> ' +
+                    'Password gagal diperbarui. ' +
+                    'Silakan coba kembali.',
+                    'error'
+                );
+
+
+                updateButton.disabled =
+                    false;
+
+
+                updateButton.innerHTML = `
+
+                    <i
+                        class="fa-solid
+                        fa-shield-halved"
+                    ></i>
+
+                    <span>
+                        Simpan Password Baru
+                    </span>
+
+                `;
+
+                return;
+
+            }
+
+
+            /* =========================================
+               SUCCESS
+            ========================================== */
+
+            showMessage(
+                '<i class="fa-solid fa-circle-check"></i> ' +
+                '<strong>Password berhasil diperbarui.</strong><br><br>' +
+                'Anda akan diarahkan ke halaman login.',
+                'success'
+            );
+
+
+            updateButton.innerHTML = `
+
+                <i
+                    class="fa-solid fa-check"
+                ></i>
+
+                <span>
+                    Password Berhasil Diubah
+                </span>
+
+            `;
+
+
+            /*
+               Logout session recovery
+               setelah password berhasil
+               diubah.
+            */
+
+            setTimeout(
+                async function(){
+
+                    await supabaseClient
+                        .auth
+                        .signOut();
+
+
+                    window.location.href =
+                        'login.html';
+
+                },
+                1800
+            );
+
+
+        }catch(error){
+
+            console.error(
+                'Reset Password Error:',
+                error
+            );
+
+
+            showMessage(
+                '<i class="fa-solid fa-triangle-exclamation"></i> ' +
+                'Terjadi kesalahan saat memperbarui password. ' +
+                'Silakan coba kembali.',
+                'error'
+            );
+
+
+            updateButton.disabled =
+                false;
+
+
+            updateButton.innerHTML = `
+
+                <i
+                    class="fa-solid
+                    fa-shield-halved"
+                ></i>
+
+                <span>
+                    Simpan Password Baru
+                </span>
+
+            `;
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   ENTER KEY
+===================================================== */
+
+confirmPassword.addEventListener(
+    'keydown',
+    function(event){
+
+        if(
+            event.key ===
+            'Enter'
+        ){
+
+            resetForm.requestSubmit();
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   PART 4 SELESAI
+===================================================== */
+
+</script>
+
+</body>
+
+</html>
