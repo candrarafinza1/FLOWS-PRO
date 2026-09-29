@@ -2,52 +2,1635 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>FLOWS-PRO</title>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>FLOWS-PRO | Flood Level Observation and Warning System</title>
+
+    <meta name="description"
+          content="FLOWS-PRO adalah sistem monitoring dan peringatan dini banjir berbasis IoT.">
 
     <style>
-        body {
+
+        * {
             margin: 0;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-family: Arial, sans-serif;
-            background: #0f172a;
-            color: white;
-            text-align: center;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #07111f;
+            color: #ffffff;
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
         }
 
         .container {
-            padding: 40px;
+            width: 90%;
+            max-width: 1200px;
+            margin: auto;
         }
 
-        h1 {
-            font-size: 48px;
-            margin-bottom: 10px;
+
+        /* =========================
+           NAVBAR
+        ========================= */
+
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+
+            background: rgba(7, 17, 31, 0.94);
+
+            backdrop-filter: blur(12px);
+
+            border-bottom:
+                1px solid rgba(255,255,255,0.08);
         }
 
-        p {
+        .nav-inner {
+            min-height: 72px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 20px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+
+            gap: 12px;
+
+            font-size: 20px;
+            font-weight: 800;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+
+            border-radius: 12px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #1597e5,
+                    #21d4fd
+                );
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-weight: bold;
+
+            color: #03111f;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+
+            gap: 28px;
+        }
+
+        .nav-links a {
             color: #cbd5e1;
-            font-size: 18px;
+
+            font-size: 14px;
+
+            transition: 0.3s;
         }
+
+        .nav-links a:hover {
+            color: #21d4fd;
+        }
+
+        .nav-buttons {
+            display: flex;
+
+            gap: 10px;
+        }
+
+
+        /* =========================
+           BUTTON
+        ========================= */
+
+        .btn {
+            display: inline-flex;
+
+            align-items: center;
+            justify-content: center;
+
+            padding: 11px 20px;
+
+            border-radius: 10px;
+
+            font-weight: 700;
+
+            font-size: 14px;
+
+            transition: 0.3s;
+
+            border: none;
+
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background:
+                linear-gradient(
+                    135deg,
+                    #1597e5,
+                    #21d4fd
+                );
+
+            color: #03111f;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 10px 30px
+                rgba(33,212,253,0.25);
+        }
+
+        .btn-outline {
+            border:
+                1px solid
+                rgba(255,255,255,0.2);
+
+            color: white;
+
+            background: transparent;
+        }
+
+        .btn-outline:hover {
+            background:
+                rgba(255,255,255,0.08);
+        }
+
+
+        /* =========================
+           HERO
+        ========================= */
+
+        .hero {
+            min-height: 650px;
+
+            display: flex;
+
+            align-items: center;
+
+            position: relative;
+
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: "";
+
+            position: absolute;
+
+            width: 600px;
+            height: 600px;
+
+            background: #087ea4;
+
+            opacity: 0.12;
+
+            filter: blur(120px);
+
+            border-radius: 50%;
+
+            top: -180px;
+            right: -150px;
+        }
+
+        .hero-content {
+            position: relative;
+
+            z-index: 2;
+
+            max-width: 780px;
+        }
+
+        .badge {
+            display: inline-block;
+
+            padding: 8px 14px;
+
+            border:
+                1px solid
+                rgba(33,212,253,0.3);
+
+            background:
+                rgba(33,212,253,0.08);
+
+            color: #21d4fd;
+
+            border-radius: 50px;
+
+            font-size: 13px;
+
+            font-weight: 700;
+
+            margin-bottom: 22px;
+        }
+
+        .hero h1 {
+            font-size:
+                clamp(42px, 7vw, 78px);
+
+            line-height: 1.05;
+
+            margin-bottom: 20px;
+
+            letter-spacing: -2px;
+        }
+
+        .hero h1 span {
+            color: #21d4fd;
+        }
+
+        .hero p {
+            color: #a9b8ca;
+
+            font-size: 19px;
+
+            max-width: 700px;
+
+            margin-bottom: 30px;
+        }
+
+        .hero-buttons {
+            display: flex;
+
+            gap: 14px;
+
+            flex-wrap: wrap;
+        }
+
+        .hero-status {
+            margin-top: 45px;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            color: #a9b8ca;
+
+            font-size: 14px;
+        }
+
+        .status-dot {
+            width: 10px;
+            height: 10px;
+
+            border-radius: 50%;
+
+            background: #35d07f;
+
+            box-shadow:
+                0 0 15px #35d07f;
+        }
+
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 800px) {
+
+            .nav-links {
+                display: none;
+            }
+
+            .nav-inner {
+                min-height: 65px;
+            }
+
+            .hero {
+                min-height: 600px;
+            }
+
+            .hero h1 {
+                font-size: 48px;
+            }
+
+            .hero p {
+                font-size: 16px;
+            }
+
+            .nav-buttons .btn-outline {
+                display: none;
+            }
+        }
+
     </style>
 </head>
 
+
 <body>
 
-    <div class="container">
-        <h1>FLOWS-PRO</h1>
 
-        <p>
-            IoT Flood Level Observation and Warning System
-        </p>
+    <!-- =========================
+         NAVBAR
+    ========================= -->
 
-        <p>
-            System Online
-        </p>
-    </div>
+    <nav>
+
+        <div class="container nav-inner">
+
+
+            <a href="index.html"
+               class="logo">
+
+                <div class="logo-icon">
+                    F
+                </div>
+
+                <span>
+                    FLOWS-PRO
+                </span>
+
+            </a>
+
+
+            <div class="nav-links">
+
+                <a href="#tentang">
+                    Tentang
+                </a>
+
+                <a href="#fitur">
+                    Fitur
+                </a>
+
+                <a href="#cara-kerja">
+                    Cara Kerja
+                </a>
+
+            </div>
+
+
+            <div class="nav-buttons">
+
+                <a href="login.html"
+                   class="btn btn-outline">
+
+                    Login
+
+                </a>
+
+
+                <a href="register.html"
+                   class="btn btn-primary">
+
+                    Daftar
+
+                </a>
+
+            </div>
+
+
+        </div>
+
+    </nav>
+
+
+
+    <!-- =========================
+         HERO
+    ========================= -->
+
+    <section class="hero">
+
+        <div class="container">
+
+
+            <div class="hero-content">
+
+
+                <div class="badge">
+
+                    IoT Flood Monitoring
+                    & Early Warning System
+
+                </div>
+
+
+                <h1>
+
+                    Pantau Air.<br>
+
+                    <span>
+                        Waspada Lebih Dini.
+                    </span>
+
+                </h1>
+
+
+                <p>
+
+                    FLOWS-PRO adalah sistem pemantauan
+                    tinggi muka air berbasis Internet of
+                    Things yang dirancang untuk membantu
+                    monitoring kondisi banjir secara
+                    real-time dan memberikan peringatan dini.
+
+                </p>
+
+
+                <div class="hero-buttons">
+
+
+                    <a href="login.html"
+                       class="btn btn-primary">
+
+                        Mulai Monitoring
+
+                    </a>
+
+
+                    <a href="#tentang"
+                       class="btn btn-outline">
+
+                        Pelajari FLOWS-PRO
+
+                    </a>
+
+
+                </div>
+
+
+                <div class="hero-status">
+
+                    <span class="status-dot"></span>
+
+                    Sistem Monitoring Online
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+    </section>
+
 
 </body>
+
 </html>
+<!-- =========================
+     PART 2 — TENTANG & FITUR
+========================= -->
+
+<section id="tentang"
+         style="
+            padding: 100px 0;
+            background: #0a1626;
+         ">
+
+    <div class="container">
+
+        <!-- TENTANG -->
+        <div class="about-content">
+
+            <div class="badge">
+                TENTANG FLOWS-PRO
+            </div>
+
+            <h2>
+                Sistem Pemantauan Banjir
+                Berbasis IoT
+            </h2>
+
+            <p>
+                FLOWS-PRO mengintegrasikan sensor
+                ketinggian air, mikrokontroler,
+                konektivitas internet, database cloud,
+                dan dashboard monitoring untuk membantu
+                memperoleh informasi kondisi air secara
+                cepat dan terintegrasi.
+            </p>
+
+        </div>
+
+
+        <!-- FITUR -->
+        <div id="fitur"
+             class="features-grid">
+
+
+            <!-- FITUR 1 -->
+            <div class="feature-card">
+
+                <div class="feature-icon">
+                    📡
+                </div>
+
+                <h3>
+                    Monitoring Real-Time
+                </h3>
+
+                <p>
+                    Memantau kondisi tinggi air dari
+                    sensor secara berkala dan
+                    menampilkan informasi pada sistem
+                    monitoring.
+                </p>
+
+            </div>
+
+
+            <!-- FITUR 2 -->
+            <div class="feature-card">
+
+                <div class="feature-icon">
+                    ⚠️
+                </div>
+
+                <h3>
+                    Peringatan Dini
+                </h3>
+
+                <p>
+                    Sistem menggunakan kategori kondisi
+                    air seperti AMAN, SIAGA, WASPADA,
+                    dan BANJIR berdasarkan ambang batas
+                    yang telah ditentukan.
+                </p>
+
+            </div>
+
+
+            <!-- FITUR 3 -->
+            <div class="feature-card">
+
+                <div class="feature-icon">
+                    🗺️
+                </div>
+
+                <h3>
+                    Peta Banjir
+                </h3>
+
+                <p>
+                    Menyediakan informasi lokasi
+                    pemantauan untuk membantu melihat
+                    kondisi wilayah yang dipantau.
+                </p>
+
+            </div>
+
+
+            <!-- FITUR 4 -->
+            <div class="feature-card">
+
+                <div class="feature-icon">
+                    📊
+                </div>
+
+                <h3>
+                    Data & Riwayat
+                </h3>
+
+                <p>
+                    Data pengukuran tersimpan sehingga
+                    dapat digunakan untuk melihat
+                    histori dan membuat laporan
+                    pemantauan.
+                </p>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     STYLE PART 2
+========================= -->
+
+<style>
+
+    .about-content {
+        max-width: 750px;
+    }
+
+
+    .about-content h2 {
+        font-size: 42px;
+
+        line-height: 1.2;
+
+        margin-bottom: 20px;
+    }
+
+
+    .about-content p {
+        color: #a9b8ca;
+
+        font-size: 17px;
+
+        line-height: 1.8;
+    }
+
+
+    .features-grid {
+
+        display: grid;
+
+        grid-template-columns:
+            repeat(
+                auto-fit,
+                minmax(240px, 1fr)
+            );
+
+        gap: 20px;
+
+        margin-top: 50px;
+    }
+
+
+    .feature-card {
+
+        background: #101f33;
+
+        border:
+            1px solid
+            rgba(255,255,255,0.08);
+
+        border-radius: 18px;
+
+        padding: 28px;
+
+        transition: 0.3s;
+    }
+
+
+    .feature-card:hover {
+
+        transform:
+            translateY(-5px);
+
+        border-color:
+            rgba(33,212,253,0.35);
+
+        box-shadow:
+            0 15px 35px
+            rgba(0,0,0,0.15);
+    }
+
+
+    .feature-icon {
+
+        font-size: 32px;
+
+        margin-bottom: 18px;
+    }
+
+
+    .feature-card h3 {
+
+        font-size: 20px;
+
+        margin-bottom: 10px;
+    }
+
+
+    .feature-card p {
+
+        color: #9fb0c3;
+
+        font-size: 14px;
+
+        line-height: 1.7;
+    }
+
+
+    @media (max-width: 600px) {
+
+        .about-content h2 {
+
+            font-size: 32px;
+        }
+
+        .about-content p {
+
+            font-size: 15px;
+        }
+
+    }
+
+</style>
+<!-- =========================
+     PART 3 — CARA KERJA
+========================= -->
+
+<section id="cara-kerja"
+         style="
+            padding: 100px 0;
+            background: #07111f;
+         ">
+
+    <div class="container">
+
+        <!-- JUDUL -->
+        <div class="how-header">
+
+            <div class="badge">
+                CARA KERJA FLOWS-PRO
+            </div>
+
+            <h2>
+                Dari Sensor Menjadi
+                Informasi
+            </h2>
+
+            <p>
+                FLOWS-PRO menghubungkan perangkat sensor
+                dengan sistem digital untuk membantu
+                memantau kondisi tinggi air secara
+                terintegrasi.
+            </p>
+
+        </div>
+
+
+        <!-- ALUR SISTEM -->
+        <div class="flow-container">
+
+
+            <!-- STEP 1 -->
+            <div class="flow-card">
+
+                <div class="flow-number">
+                    01
+                </div>
+
+                <div class="flow-icon">
+                    📡
+                </div>
+
+                <h3>
+                    Sensor Air
+                </h3>
+
+                <p>
+                    Sensor ultrasonik mengukur jarak
+                    antara sensor dan permukaan air.
+                </p>
+
+            </div>
+
+
+            <div class="flow-arrow">
+                →
+            </div>
+
+
+            <!-- STEP 2 -->
+            <div class="flow-card">
+
+                <div class="flow-number">
+                    02
+                </div>
+
+                <div class="flow-icon">
+                    ⚙️
+                </div>
+
+                <h3>
+                    Wemos / ESP8266
+                </h3>
+
+                <p>
+                    Mikrokontroler memproses hasil
+                    pengukuran dan menentukan kondisi
+                    tinggi air.
+                </p>
+
+            </div>
+
+
+            <div class="flow-arrow">
+                →
+            </div>
+
+
+            <!-- STEP 3 -->
+            <div class="flow-card">
+
+                <div class="flow-number">
+                    03
+                </div>
+
+                <div class="flow-icon">
+                    ☁️
+                </div>
+
+                <h3>
+                    Cloud Database
+                </h3>
+
+                <p>
+                    Data sensor dikirim melalui internet
+                    dan disimpan pada database untuk
+                    kebutuhan monitoring dan histori.
+                </p>
+
+            </div>
+
+
+            <div class="flow-arrow">
+                →
+            </div>
+
+
+            <!-- STEP 4 -->
+            <div class="flow-card">
+
+                <div class="flow-number">
+                    04
+                </div>
+
+                <div class="flow-icon">
+                    📊
+                </div>
+
+                <h3>
+                    Dashboard
+                </h3>
+
+                <p>
+                    Informasi kondisi air ditampilkan
+                    melalui website FLOWS-PRO sehingga
+                    dapat dipantau dengan mudah.
+                </p>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- KETERANGAN -->
+        <div class="flow-info">
+
+            <div class="flow-info-icon">
+                💧
+            </div>
+
+            <div>
+
+                <h3>
+                    Pengukuran Tinggi Air
+                </h3>
+
+                <p>
+                    Tinggi air dihitung berdasarkan
+                    kedalaman lokasi pemantauan dikurangi
+                    jarak sensor terhadap permukaan air.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     STYLE PART 3
+========================= -->
+
+<style>
+
+    .how-header {
+
+        text-align: center;
+
+        max-width: 750px;
+
+        margin:
+            0 auto 60px;
+    }
+
+
+    .how-header h2 {
+
+        font-size: 42px;
+
+        line-height: 1.2;
+
+        margin-bottom: 18px;
+    }
+
+
+    .how-header p {
+
+        color: #a9b8ca;
+
+        font-size: 17px;
+
+        line-height: 1.8;
+    }
+
+
+    .flow-container {
+
+        display: flex;
+
+        align-items: stretch;
+
+        justify-content: center;
+
+        gap: 14px;
+    }
+
+
+    .flow-card {
+
+        flex: 1;
+
+        max-width: 260px;
+
+        background: #101f33;
+
+        border:
+            1px solid
+            rgba(255,255,255,0.08);
+
+        border-radius: 18px;
+
+        padding: 28px;
+
+        transition: 0.3s;
+    }
+
+
+    .flow-card:hover {
+
+        transform:
+            translateY(-6px);
+
+        border-color:
+            rgba(33,212,253,0.35);
+
+        box-shadow:
+            0 15px 35px
+            rgba(0,0,0,0.18);
+    }
+
+
+    .flow-number {
+
+        color: #21d4fd;
+
+        font-size: 13px;
+
+        font-weight: 800;
+
+        margin-bottom: 12px;
+    }
+
+
+    .flow-icon {
+
+        font-size: 35px;
+
+        margin-bottom: 18px;
+    }
+
+
+    .flow-card h3 {
+
+        font-size: 19px;
+
+        margin-bottom: 10px;
+    }
+
+
+    .flow-card p {
+
+        color: #9fb0c3;
+
+        font-size: 14px;
+
+        line-height: 1.7;
+    }
+
+
+    .flow-arrow {
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        color: #21d4fd;
+
+        font-size: 28px;
+
+        font-weight: bold;
+    }
+
+
+    /* INFO */
+
+    .flow-info {
+
+        margin:
+            55px auto 0;
+
+        max-width: 850px;
+
+        display: flex;
+
+        align-items: center;
+
+        gap: 20px;
+
+        padding: 25px 30px;
+
+        background:
+            rgba(33,212,253,0.06);
+
+        border:
+            1px solid
+            rgba(33,212,253,0.15);
+
+        border-radius: 18px;
+    }
+
+
+    .flow-info-icon {
+
+        font-size: 38px;
+
+        flex-shrink: 0;
+    }
+
+
+    .flow-info h3 {
+
+        margin-bottom: 6px;
+
+        font-size: 19px;
+    }
+
+
+    .flow-info p {
+
+        color: #9fb0c3;
+
+        font-size: 14px;
+
+        line-height: 1.7;
+    }
+
+
+    /* MOBILE */
+
+    @media (max-width: 900px) {
+
+        .flow-container {
+
+            flex-direction: column;
+
+            align-items: center;
+        }
+
+
+        .flow-card {
+
+            width: 100%;
+
+            max-width: 600px;
+        }
+
+
+        .flow-arrow {
+
+            transform:
+                rotate(90deg);
+        }
+
+    }
+
+
+    @media (max-width: 600px) {
+
+        .how-header h2 {
+
+            font-size: 32px;
+        }
+
+
+        .how-header p {
+
+            font-size: 15px;
+        }
+
+
+        .flow-info {
+
+            align-items: flex-start;
+
+            padding: 22px;
+        }
+
+    }
+
+</style>
+<!-- =========================
+     PART 4 — CTA & FOOTER
+========================= -->
+
+<section id="mulai"
+         style="
+            padding: 90px 0;
+            background: #0a1626;
+         ">
+
+    <div class="container">
+
+        <div class="cta-box">
+
+            <div class="cta-content">
+
+                <div class="badge">
+                    FLOWS-PRO
+                </div>
+
+                <h2>
+                    Siap Memantau
+                    Kondisi Air?
+                </h2>
+
+                <p>
+                    Akses sistem FLOWS-PRO untuk melihat
+                    kondisi sensor, data tinggi air,
+                    histori pengukuran, dan informasi
+                    pemantauan lainnya.
+                </p>
+
+                <div class="cta-buttons">
+
+                    <a href="login.html"
+                       class="btn btn-primary">
+
+                        Masuk ke Sistem
+
+                    </a>
+
+                    <a href="register.html"
+                       class="btn btn-outline">
+
+                        Buat Akun
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     FOOTER
+========================= -->
+
+<footer class="footer">
+
+    <div class="container footer-container">
+
+
+        <!-- BRAND -->
+
+        <div class="footer-brand">
+
+            <a href="index.html"
+               class="logo">
+
+                <div class="logo-icon">
+                    F
+                </div>
+
+                <span>
+                    FLOWS-PRO
+                </span>
+
+            </a>
+
+            <p>
+                Flood Level Observation and
+                Warning System.
+            </p>
+
+            <p class="footer-small">
+                Sistem pemantauan tinggi air
+                berbasis Internet of Things.
+            </p>
+
+        </div>
+
+
+        <!-- NAVIGASI -->
+
+        <div class="footer-column">
+
+            <h4>
+                Navigasi
+            </h4>
+
+            <a href="#tentang">
+                Tentang
+            </a>
+
+            <a href="#fitur">
+                Fitur
+            </a>
+
+            <a href="#cara-kerja">
+                Cara Kerja
+            </a>
+
+        </div>
+
+
+        <!-- SISTEM -->
+
+        <div class="footer-column">
+
+            <h4>
+                Sistem
+            </h4>
+
+            <a href="login.html">
+                Login
+            </a>
+
+            <a href="register.html">
+                Register
+            </a>
+
+            <a href="dashboard.html">
+                Dashboard
+            </a>
+
+        </div>
+
+
+        <!-- STATUS -->
+
+        <div class="footer-column">
+
+            <h4>
+                Status Sistem
+            </h4>
+
+            <div class="footer-status">
+
+                <span class="status-dot"></span>
+
+                Sistem Online
+
+            </div>
+
+            <p class="footer-small">
+                FLOWS-PRO © 2026
+            </p>
+
+        </div>
+
+
+    </div>
+
+
+    <!-- COPYRIGHT -->
+
+    <div class="footer-bottom">
+
+        <div class="container">
+
+            <p>
+                © 2026 FLOWS-PRO.
+                All rights reserved.
+            </p>
+
+        </div>
+
+    </div>
+
+</footer>
+
+
+<!-- =========================
+     STYLE PART 4
+========================= -->
+
+<style>
+
+    /* =====================
+       CTA
+    ===================== */
+
+    .cta-box {
+
+        position: relative;
+
+        overflow: hidden;
+
+        max-width: 950px;
+
+        margin: auto;
+
+        padding: 60px 40px;
+
+        text-align: center;
+
+        border-radius: 26px;
+
+        background:
+            linear-gradient(
+                135deg,
+                rgba(21,151,229,0.14),
+                rgba(33,212,253,0.04)
+            );
+
+        border:
+            1px solid
+            rgba(33,212,253,0.18);
+    }
+
+
+    .cta-box::before {
+
+        content: "";
+
+        position: absolute;
+
+        width: 300px;
+        height: 300px;
+
+        background: #1597e5;
+
+        opacity: 0.08;
+
+        filter: blur(90px);
+
+        border-radius: 50%;
+
+        top: -150px;
+        right: -100px;
+    }
+
+
+    .cta-content {
+
+        position: relative;
+
+        z-index: 2;
+    }
+
+
+    .cta-content h2 {
+
+        font-size: 42px;
+
+        line-height: 1.2;
+
+        margin-bottom: 18px;
+    }
+
+
+    .cta-content p {
+
+        max-width: 650px;
+
+        margin:
+            0 auto 30px;
+
+        color: #a9b8ca;
+
+        font-size: 16px;
+
+        line-height: 1.8;
+    }
+
+
+    .cta-buttons {
+
+        display: flex;
+
+        justify-content: center;
+
+        gap: 12px;
+
+        flex-wrap: wrap;
+    }
+
+
+    /* =====================
+       FOOTER
+    ===================== */
+
+    .footer {
+
+        background: #07111f;
+
+        border-top:
+            1px solid
+            rgba(255,255,255,0.08);
+    }
+
+
+    .footer-container {
+
+        display: grid;
+
+        grid-template-columns:
+            2fr 1fr 1fr 1fr;
+
+        gap: 50px;
+
+        padding:
+            60px 0;
+    }
+
+
+    .footer-brand p {
+
+        color: #9fb0c3;
+
+        font-size: 14px;
+
+        margin-top: 15px;
+
+        max-width: 300px;
+    }
+
+
+    .footer-small {
+
+        color: #718198 !important;
+
+        font-size: 12px !important;
+
+        line-height: 1.6;
+    }
+
+
+    .footer-column {
+
+        display: flex;
+
+        flex-direction: column;
+
+        gap: 12px;
+    }
+
+
+    .footer-column h4 {
+
+        color: #ffffff;
+
+        margin-bottom: 8px;
+
+        font-size: 15px;
+    }
+
+
+    .footer-column a {
+
+        color: #8fa1b5;
+
+        font-size: 13px;
+
+        transition: 0.3s;
+    }
+
+
+    .footer-column a:hover {
+
+        color: #21d4fd;
+    }
+
+
+    .footer-status {
+
+        display: flex;
+
+        align-items: center;
+
+        gap: 9px;
+
+        color: #9fb0c3;
+
+        font-size: 13px;
+    }
+
+
+    .footer-bottom {
+
+        border-top:
+            1px solid
+            rgba(255,255,255,0.06);
+
+        padding: 20px 0;
+    }
+
+
+    .footer-bottom p {
+
+        color: #627287;
+
+        font-size: 12px;
+
+        text-align: center;
+    }
+
+
+    /* =====================
+       MOBILE
+    ===================== */
+
+    @media (max-width: 800px) {
+
+        .footer-container {
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap: 35px;
+        }
+
+    }
+
+
+    @media (max-width: 550px) {
+
+        .cta-box {
+
+            padding:
+                45px 22px;
+        }
+
+
+        .cta-content h2 {
+
+            font-size: 32px;
+        }
+
+
+        .cta-content p {
+
+            font-size: 14px;
+        }
+
+
+        .footer-container {
+
+            grid-template-columns: 1fr;
+
+            gap: 30px;
+        }
+
+    }
+
+</style>
