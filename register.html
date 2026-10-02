@@ -2,1328 +2,500 @@
 <html lang="id">
 
 <head>
-
-<meta charset="UTF-8">
-
-<meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
->
-
-<title>
-    FLOWS-PRO | Registrasi
-</title>
-
-<link
-    rel="icon"
-    type="image/png"
-    href="LOGO removebg-preview.png"
->
-
-<!-- FONT AWESOME -->
-
-<link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
->
-
-
-<style>
-
-/* =====================================================
-   FLOWS-PRO
-   REGISTER PAGE
-   PART 1
-===================================================== */
-
-
-/* =====================================================
-   RESET
-===================================================== */
-
-*{
-
-    margin:0;
-
-    padding:0;
-
-    box-sizing:border-box;
-
-    font-family:
-        'Segoe UI',
-        Arial,
-        sans-serif;
-
-}
-
-
-/* =====================================================
-   BODY
-===================================================== */
-
-body{
-
-    min-height:100vh;
-
-    color:white;
-
-    background:#061727;
-
-}
-
-
-/* =====================================================
-   PAGE
-===================================================== */
-
-.register-page{
-
-    min-height:100vh;
-
-    width:100%;
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:center;
-
-    position:relative;
-
-    padding:30px 20px;
-
-    overflow-y:auto;
-
-    overflow-x:hidden;
-
-}
-
-
-/* =====================================================
-   BACKGROUND
-===================================================== */
-
-.register-page::before{
-
-    content:"";
-
-    position:absolute;
-
-    inset:0;
-
-    background:
-
-        linear-gradient(
-            120deg,
-            rgba(3,18,32,.94),
-            rgba(5,38,65,.82)
-        ),
-
-        url(
-            'Desain tanpa judul (1).png'
-        )
-        center/
-        cover
-        no-repeat;
-
-    z-index:0;
-
-}
-
-
-/* =====================================================
-   BACKGROUND GLOW
-===================================================== */
-
-.register-page::after{
-
-    content:"";
-
-    position:absolute;
-
-    width:520px;
-
-    height:520px;
-
-    border-radius:50%;
-
-    background:
-        rgba(
-            0,
-            198,
-            255,
-            .08
-        );
-
-    filter:blur(35px);
-
-    left:-260px;
-
-    bottom:-260px;
-
-    z-index:0;
-
-}
-
-
-/* =====================================================
-   REGISTER WRAPPER
-===================================================== */
-
-.register-wrapper{
-
-    position:relative;
-
-    z-index:2;
-
-    width:
-        min(
-            100%,
-            520px
-        );
-
-}
-
-
-/* =====================================================
-   REGISTER CARD
-===================================================== */
-
-.register-card{
-
-    width:100%;
-
-    padding:38px;
-
-    border-radius:28px;
-
-    background:
-        rgba(
-            255,
-            255,
-            255,
-            .075
-        );
-
-    border:
-        1px solid
-        rgba(
-            255,
-            255,
-            255,
-            .14
-        );
-
-    backdrop-filter:
-        blur(22px);
-
-    -webkit-backdrop-filter:
-        blur(22px);
-
-    box-shadow:
-        0 30px 80px
-        rgba(
-            0,
-            0,
-            0,
-            .55
-        );
-
-    animation:
-        registerAppear
-        .7s
-        ease;
-
-}
-
-
-@keyframes registerAppear{
-
-    from{
-
-        opacity:0;
-
-        transform:
-            translateY(30px)
-            scale(.97);
-
-    }
-
-    to{
-
-        opacity:1;
-
-        transform:
-            translateY(0)
-            scale(1);
-
-    }
-
-}
-
-
-/* =====================================================
-   LOGO
-===================================================== */
-
-.logo{
-
-    width:205px;
-
-    max-height:78px;
-
-    object-fit:contain;
-
-    display:block;
-
-    margin:
-        0 auto
-        20px;
-
-}
-
-
-/* =====================================================
-   HEADER
-===================================================== */
-
-.register-header{
-
-    text-align:center;
-
-    margin-bottom:25px;
-
-}
-
-
-.register-header h1{
-
-    font-size:28px;
-
-    font-weight:800;
-
-    margin-bottom:9px;
-
-}
-
-
-.register-header p{
-
-    color:
-        rgba(
-            255,
-            255,
-            255,
-            .55
-        );
-
-    font-size:13px;
-
-    line-height:1.7;
-
-}
-
-
-/* =====================================================
-   SECURITY BADGE
-===================================================== */
-
-.security-badge{
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:center;
-
-    gap:8px;
-
-    width:max-content;
-
-    max-width:100%;
-
-    margin:
-        0 auto
-        22px;
-
-    padding:
-        8px 13px;
-
-    border-radius:30px;
-
-    background:
-        rgba(
-            39,
-            174,
-            96,
-            .08
-        );
-
-    border:
-        1px solid
-        rgba(
-            39,
-            174,
-            96,
-            .16
-        );
-
-    color:
-        rgba(
-            255,
-            255,
-            255,
-            .55
-        );
-
-    font-size:10px;
-
-}
-
-
-.security-badge i{
-
-    color:#27ae60;
-
-}
-
-
-/* =====================================================
-   MESSAGE
-===================================================== */
-
-.form-message{
-
-    display:none;
-
-    padding:
-        13px
-        15px;
-
-    border-radius:12px;
-
-    margin-bottom:18px;
-
-    font-size:12px;
-
-    line-height:1.6;
-
-}
-
-
-.form-message.show{
-
-    display:block;
-
-}
-
-
-.form-message.error{
-
-    color:#ffaaa2;
-
-    background:
-        rgba(
-            231,
-            76,
-            60,
-            .11
-        );
-
-    border:
-        1px solid
-        rgba(
-            231,
-            76,
-            60,
-            .22
-        );
-
-}
-
-
-.form-message.success{
-
-    color:#7af0a8;
-
-    background:
-        rgba(
-            39,
-            174,
-            96,
-            .11
-        );
-
-    border:
-        1px solid
-        rgba(
-            39,
-            174,
-            96,
-            .22
-        );
-
-}
-
-
-/* =====================================================
-   FORM GROUP
-===================================================== */
-
-.form-group{
-
-    margin-bottom:17px;
-
-}
-
-
-.form-group label{
-
-    display:block;
-
-    margin-bottom:8px;
-
-    font-size:13px;
-
-    font-weight:600;
-
-    color:
-        rgba(
-            255,
-            255,
-            255,
-            .82
-        );
-
-}
-
-
-/* =====================================================
-   INPUT WRAPPER
-===================================================== */
-
-.input-wrapper{
-
-    position:relative;
-
-}
-
-
-/* =====================================================
-   INPUT ICON
-===================================================== */
-
-.input-icon{
-
-    position:absolute;
-
-    left:15px;
-
-    top:50%;
-
-    transform:
-        translateY(-50%);
-
-    color:
-        rgba(
-            255,
-            255,
-            255,
-            .35
-        );
-
-    pointer-events:none;
-
-    z-index:2;
-
-}
-
-
-/* =====================================================
-   INPUT
-===================================================== */
-
-.input-wrapper input{
-
-    width:100%;
-
-    height:51px;
-
-    padding:
-        0 45px;
-
-    border-radius:13px;
-
-    border:
-        1px solid
-        rgba(
-            255,
-            255,
-            255,
-            .13
-        );
-
-    outline:none;
-
-    background:
-        rgba(
-            255,
-            255,
-            255,
-            .055
-        );
-
-    color:white;
-
-    font-size:14px;
-
-    transition:.25s;
-
-}
-
-
-.input-wrapper input::placeholder{
-
-    color:
-        rgba(
-            255,
-            255,
-            255,
-            .27
-        );
-
-}
-
-
-.input-wrapper input:focus{
-
-    border-color:
-        #00c6ff;
-
-    box-shadow:
-        0 0 0 3px
-        rgba(
-            0,
-            198,
-            255,
-            .08
-        );
-
-}
-
-
-/* =====================================================
-   DATE INPUT
-===================================================== */
-
-input[type="date"]{
-
-    color-scheme:dark;
-
-}
-
-
-input[type="date"]::-webkit-calendar-picker-indicator{
-
-    opacity:.65;
-
-    cursor:pointer;
-
-}
-
-
-/* =====================================================
-   PASSWORD TOGGLE
-===================================================== */
-
-.password-toggle{
-
-    position:absolute;
-
-    right:8px;
-
-    top:50%;
-
-    transform:
-        translateY(-50%);
-
-    width:36px;
-
-    height:36px;
-
-    border:none;
-
-    border-radius:8px;
-
-    background:transparent;
-
-    color:
-        rgba(
-            255,
-            255,
-            255,
-            .38
-        );
-
-    cursor:pointer;
-
-    transition:.2s;
-
-}
-
-
-.password-toggle:hover{
-
-    color:#00c6ff;
-
-    background:
-        rgba(
-            255,
-            255,
-            255,
-            .05
-        );
-
-}
-
-
-/* =====================================================
-   PASSWORD STRENGTH
-===================================================== */
-
-.password-strength{
-
-    margin-top:8px;
-
-}
-
-
-.strength-bar{
-
-    display:flex;
-
-    gap:5px;
-
-    margin-bottom:5px;
-
-}
-
-
-.strength-segment{
-
-    height:4px;
-
-    flex:1;
-
-    border-radius:10px;
-
-    background:
-        rgba(
-            255,
-            255,
-            255,
-            .10
-        );
-
-    transition:.25s;
-
-}
-
-
-.strength-text{
-
-    font-size:10px;
-
-    color:
-        rgba(
-            255,
-            255,
-            255,
-            .35
-        );
-
-}
-
-
-/* =====================================================
-   TERMS
-===================================================== */
-
-.terms{
-
-    display:flex;
-
-    align-items:flex-start;
-
-    gap:9px;
-
-    margin:
-        18px 0
-        20px;
-
-}
-
-
-.terms input{
-
-    width:16px;
-
-    height:16px;
-
-    min-width:16px;
-
-    margin-top:2px;
-
-    accent-color:#0072ff;
-
-    cursor:pointer;
-
-}
-
-
-.terms label{
-
-    margin:0;
-
-    font-size:11px;
-
-    line-height:1.6;
-
-    color:
-        rgba(
-            255,
-            255,
-            255,
-            .47
-        );
-
-    font-weight:400;
-
-}
-
-
-.terms a{
-
-    color:#00c6ff;
-
-    text-decoration:none;
-
-}
-
-
-.terms a:hover{
-
-    text-decoration:underline;
-
-}
-
-
-/* =====================================================
-   REGISTER BUTTON
-===================================================== */
-
-.register-button{
-
-    width:100%;
-
-    height:53px;
-
-    border:none;
-
-    border-radius:14px;
-
-    background:
-        linear-gradient(
-            90deg,
-            #00c6ff,
-            #0072ff
-        );
-
-    color:white;
-
-    font-size:14px;
-
-    font-weight:800;
-
-    cursor:pointer;
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:center;
-
-    gap:10px;
-
-    transition:.25s;
-
-}
-
-
-.register-button:hover{
-
-    transform:
-        translateY(-2px);
-
-    box-shadow:
-        0 12px 30px
-        rgba(
-            0,
-            114,
-            255,
-            .28
-        );
-
-}
-
-
-.register-button:disabled{
-
-    opacity:.60;
-
-    cursor:not-allowed;
-
-    transform:none;
-
-    box-shadow:none;
-
-}
-
-
-/* =====================================================
-   DIVIDER
-===================================================== */
-
-.divider{
-
-    display:flex;
-
-    align-items:center;
-
-    gap:12px;
-
-    margin:
-        24px 0;
-
-    color:
-        rgba(
-            255,
-            255,
-            255,
-            .30
-        );
-
-    font-size:10px;
-
-}
-
-
-.divider::before,
-.divider::after{
-
-    content:"";
-
-    flex:1;
-
-    height:1px;
-
-    background:
-        rgba(
-            255,
-            255,
-            255,
-            .10
-        );
-
-}
-
-
-/* =====================================================
-   GOOGLE BUTTON
-===================================================== */
-
-.google-button{
-
-    width:100%;
-
-    height:51px;
-
-    border-radius:13px;
-
-    border:
-        1px solid
-        rgba(
-            255,
-            255,
-            255,
-            .14
-        );
-
-    background:
-        rgba(
-            255,
-            255,
-            255,
-            .08
-        );
-
-    color:white;
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:center;
-
-    gap:12px;
-
-    font-size:13px;
-
-    font-weight:700;
-
-    cursor:pointer;
-
-    transition:.25s;
-
-}
-
-
-.google-button:hover{
-
-    background:
-        rgba(
-            255,
-            255,
-            255,
-            .13
-        );
-
-    transform:
-        translateY(-2px);
-
-}
-
-
-.google-button:disabled{
-
-    opacity:.55;
-
-    cursor:not-allowed;
-
-    transform:none;
-
-}
-
-
-/* =====================================================
-   GOOGLE ICON
-===================================================== */
-
-.google-icon{
-
-    width:20px;
-
-    height:20px;
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:center;
-
-    font-weight:900;
-
-    font-size:17px;
-
-}
-
-
-/* =====================================================
-   LOGIN AREA
-===================================================== */
-
-.login-area{
-
-    text-align:center;
-
-    margin-top:22px;
-
-    padding-top:20px;
-
-    border-top:
-        1px solid
-        rgba(
-            255,
-            255,
-            255,
-            .08
-        );
-
-}
-
-
-.login-area p{
-
-    font-size:12px;
-
-    color:
-        rgba(
-            255,
-            255,
-            255,
-            .45
-        );
-
-}
-
-
-.login-area a{
-
-    color:#00c6ff;
-
-    font-weight:700;
-
-    text-decoration:none;
-
-}
-
-
-.login-area a:hover{
-
-    text-decoration:underline;
-
-}
-
-
-/* =====================================================
-   FOOTER
-===================================================== */
-
-.register-footer{
-
-    text-align:center;
-
-    margin-top:16px;
-
-    color:
-        rgba(
-            255,
-            255,
-            255,
-            .25
-        );
-
-    font-size:9px;
-
-    line-height:1.6;
-
-}
-
-
-/* =====================================================
-   SPINNER
-===================================================== */
-
-.spinner{
-
-    width:18px;
-
-    height:18px;
-
-    border:
-        2px solid
-        rgba(
-            255,
-            255,
-            255,
-            .30
-        );
-
-    border-top-color:white;
-
-    border-radius:50%;
-
-    animation:
-        spin
-        .7s
-        linear
-        infinite;
-
-}
-
-
-@keyframes spin{
-
-    to{
-
-        transform:
-            rotate(360deg);
-
-    }
-
-}
-
-
-/* =====================================================
-   MOBILE
-===================================================== */
-
-@media(max-width:550px){
-
-    .register-page{
-
-        align-items:flex-start;
-
-        padding:
-            20px 14px;
-
-    }
-
-
-    .register-card{
-
-        padding:
-            30px 22px;
-
-        border-radius:22px;
-
-    }
-
-
-    .logo{
-
-        width:175px;
-
-    }
-
-
-    .register-header h1{
-
-        font-size:24px;
-
-    }
-
-
-    .register-header p{
-
-        font-size:12px;
-
-    }
-
-}
-
-
-</style>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Daftar Akun | FLOWS-PRO</title>
+
+    <meta name="description" content="Daftar akun FLOWS-PRO untuk mengakses sistem pemantauan ketinggian air dan peringatan banjir.">
+
+    <link rel="icon" href="LOGO_FLOWS-PRO-removebg-preview.png">
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1e40af;
+            --secondary: #0ea5e9;
+            --cyan: #38bdf8;
+            --dark: #0f172a;
+            --text: #334155;
+            --muted: #64748b;
+            --light: #f8fafc;
+            --border: #e2e8f0;
+            --white: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            min-height: 100vh;
+            font-family: 'Inter', sans-serif;
+            color: var(--dark);
+
+            background:
+                radial-gradient(
+                    circle at 10% 10%,
+                    rgba(56, 189, 248, 0.12),
+                    transparent 35%
+                ),
+                linear-gradient(
+                    135deg,
+                    #eff6ff 0%,
+                    #f8fafc 55%,
+                    #e0f2fe 100%
+                );
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 30px 20px;
+            overflow-x: hidden;
+        }
+
+        /* BACKGROUND DECORATION */
+
+        .background-circle {
+            position: fixed;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: -1;
+            filter: blur(2px);
+        }
+
+        .circle-one {
+            width: 300px;
+            height: 300px;
+            background: rgba(59, 130, 246, 0.07);
+            top: -100px;
+            right: -80px;
+        }
+
+        .circle-two {
+            width: 220px;
+            height: 220px;
+            background: rgba(14, 165, 233, 0.08);
+            bottom: -80px;
+            left: -60px;
+        }
+
+        /* MAIN CONTAINER */
+
+        .register-container {
+            width: 100%;
+            max-width: 1050px;
+            min-height: 650px;
+
+            display: grid;
+            grid-template-columns: 0.95fr 1.05fr;
+
+            background: var(--white);
+            border: 1px solid rgba(219, 234, 254, 0.9);
+            border-radius: 24px;
+            overflow: hidden;
+
+            box-shadow:
+                0 20px 60px rgba(30, 64, 175, 0.09),
+                0 4px 15px rgba(15, 23, 42, 0.03);
+
+            animation: fadeUp 0.7s ease both;
+        }
+
+        /* LEFT PANEL */
+
+        .register-info {
+            position: relative;
+            overflow: hidden;
+
+            padding: 48px 42px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #123b79 0%,
+                    #1d5ca8 55%,
+                    #147db5 100%
+                );
+
+            color: var(--white);
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .register-info::before {
+            content: "";
+            position: absolute;
+            width: 360px;
+            height: 360px;
+            border: 1px solid rgba(255,255,255,0.10);
+            border-radius: 50%;
+            right: -180px;
+            bottom: -150px;
+        }
+
+        .register-info::after {
+            content: "";
+            position: absolute;
+            width: 260px;
+            height: 260px;
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 50%;
+            right: -130px;
+            bottom: -100px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 45px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .brand img {
+            width: 55px;
+            height: 55px;
+            object-fit: contain;
+            background: white;
+            border-radius: 13px;
+            padding: 5px;
+        }
+
+        .brand-name {
+            font-size: 20px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+
+        .brand-name span {
+            color: #7dd3fc;
+        }
+
+        .brand-tagline {
+            display: block;
+            font-size: 10px;
+            color: #bfdbfe;
+            font-weight: 500;
+            margin-top: 4px;
+            letter-spacing: 0.5px;
+        }
+
+        .info-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .info-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+
+            padding: 8px 13px;
+            border-radius: 30px;
+
+            background: rgba(255,255,255,0.12);
+            border: 1px solid rgba(255,255,255,0.15);
+
+            font-size: 11px;
+            font-weight: 600;
+            color: #dbeafe;
+
+            margin-bottom: 22px;
+        }
+
+        .info-label i {
+            color: #7dd3fc;
+        }
+
+        .register-info h1 {
+            font-size: 34px;
+            line-height: 1.25;
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin-bottom: 18px;
+        }
+
+        .register-info h1 span {
+            color: #7dd3fc;
+        }
+
+        .register-info p {
+            color: #dbeafe;
+            font-size: 13px;
+            line-height: 1.9;
+            max-width: 390px;
+        }
+
+        .info-features {
+            margin-top: 32px;
+            display: flex;
+            flex-direction: column;
+            gap: 17px;
+        }
+
+        .info-feature {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            font-size: 12px;
+            color: #eff6ff;
+        }
+
+        .feature-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 11px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: rgba(255,255,255,0.13);
+            color: #7dd3fc;
+            font-size: 14px;
+        }
+
+        /* RIGHT PANEL */
+
+        .register-panel {
+            padding: 42px 52px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .top-link {
+            text-align: right;
+            font-size: 12px;
+            color: var(--muted);
+            margin-bottom: 28px;
+        }
+
+        .top-link a {
+            color: var(--primary);
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .top-link a:hover {
+            text-decoration: underline;
+        }
+
+        .register-heading {
+            margin-bottom: 27px;
+        }
+
+        .register-heading h2 {
+            font-size: 27px;
+            font-weight: 800;
+            letter-spacing: -0.7px;
+            margin-bottom: 9px;
+        }
+
+        .register-heading p {
+            color: var(--muted);
+            font-size: 12px;
+            line-height: 1.7;
+        }
+
+        /* ANIMATION */
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(18px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 850px) {
+            .register-container {
+                max-width: 560px;
+                grid-template-columns: 1fr;
+            }
+
+            .register-info {
+                padding: 35px 32px;
+            }
+
+            .brand {
+                margin-bottom: 28px;
+            }
+
+            .register-info h1 {
+                font-size: 28px;
+            }
+
+            .info-features {
+                margin-top: 22px;
+            }
+
+            .register-panel {
+                padding: 35px 32px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 15px 10px;
+            }
+
+            .register-container {
+                border-radius: 18px;
+            }
+
+            .register-info {
+                padding: 28px 23px;
+            }
+
+            .register-panel {
+                padding: 30px 23px;
+            }
+
+            .register-info h1 {
+                font-size: 25px;
+            }
+
+            .register-heading h2 {
+                font-size: 24px;
+            }
+        }
+    </style>
 </head>
-
 
 <body>
 
+    <div class="background-circle circle-one"></div>
+    <div class="background-circle circle-two"></div>
 
-<!-- =====================================================
-     REGISTER PAGE
-===================================================== -->
+    <main class="register-container">
 
-<div class="register-page">
+        <section class="register-info">
 
+            <div class="brand">
 
-    <div class="register-wrapper">
+                <img
+                    src="LOGO_FLOWS-PRO-removebg-preview.png"
+                    alt="Logo FLOWS-PRO"
+                >
 
+                <div>
+                    <div class="brand-name">
+                        FLOWS<span>-PRO</span>
+                    </div>
 
-        <!-- =================================================
-             REGISTER CARD
-        ================================================== -->
+                    <span class="brand-tagline">
+                        FLOOD LEVEL OBSERVATION SYSTEM
+                    </span>
+                </div>
 
-        <div class="register-card">
+            </div>
 
+            <div class="info-content">
 
-            <!-- =============================================
-                 LOGO
-            ============================================== -->
-
-            <img
-                src="FLOWS-PRO-preview 1.png"
-                alt="FLOWS-PRO"
-                class="logo"
-            >
-
-
-            <!-- =============================================
-                 HEADER
-            ============================================== -->
-
-            <div class="register-header">
+                <div class="info-label">
+                    <i class="fa-solid fa-water"></i>
+                    SMART FLOOD MONITORING
+                </div>
 
                 <h1>
-                    Buat Akun FLOWS-PRO
+                    Pantau Air.<br>
+                    <span>Siaga Lebih Awal.</span>
                 </h1>
 
                 <p>
-                    Daftarkan akun untuk mengakses
-                    sistem monitoring banjir
-                    FLOWS-PRO secara aman.
+                    Bergabung dengan FLOWS-PRO untuk mengakses
+                    informasi ketinggian air, riwayat pemantauan,
+                    dan status peringatan banjir dalam satu platform.
+                </p>
+
+                <div class="info-features">
+
+                    <div class="info-feature">
+                        <div class="feature-icon">
+                            <i class="fa-solid fa-satellite-dish"></i>
+                        </div>
+                        <span>Pemantauan sensor secara real-time</span>
+                    </div>
+
+                    <div class="info-feature">
+                        <div class="feature-icon">
+                            <i class="fa-solid fa-chart-line"></i>
+                        </div>
+                        <span>Riwayat dan visualisasi data air</span>
+                    </div>
+
+                    <div class="info-feature">
+                        <div class="feature-icon">
+                            <i class="fa-solid fa-bell"></i>
+                        </div>
+                        <span>Informasi status peringatan banjir</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <section class="register-panel">
+                        <!-- TOP NAVIGATION -->
+
+            <div class="top-link">
+                Sudah punya akun?
+                <a href="login.html">Masuk di sini</a>
+            </div>
+
+
+            <!-- REGISTER HEADING -->
+
+            <div class="register-heading">
+
+                <h2>Buat Akun Baru</h2>
+
+                <p>
+                    Lengkapi informasi berikut untuk mulai menggunakan
+                    platform FLOWS-PRO.
                 </p>
 
             </div>
 
 
-            <!-- =============================================
-                 SECURITY
-            ============================================== -->
+            <!-- REGISTER FORM -->
 
-            <div class="security-badge">
+            <form id="registerForm">
 
-                <i
-                    class="fa-solid
-                    fa-shield-halved">
-                </i>
-
-                Sistem autentikasi aman
-
-            </div>
-
-
-            <!-- =============================================
-                 MESSAGE
-            ============================================== -->
-
-            <div
-                id="formMessage"
-                class="form-message"
-            ></div>
-
-
-            <!-- =============================================
-                 REGISTER FORM
-            ============================================== -->
-
-            <form
-                id="registerForm"
-                autocomplete="on"
-                novalidate
-            >
-
-
-                <!-- =========================================
-                     NAMA
-                ========================================== -->
+                <!-- NAMA LENGKAP -->
 
                 <div class="form-group">
 
                     <label for="nama">
-
                         Nama Lengkap
-
                     </label>
 
                     <div class="input-wrapper">
 
-                        <i
-                            class="fa-solid
-                            fa-user
-                            input-icon">
-                        </i>
+                        <i class="fa-solid fa-user"></i>
 
                         <input
                             type="text"
@@ -1331,8 +503,8 @@ input[type="date"]::-webkit-calendar-picker-indicator{
                             name="nama"
                             placeholder="Masukkan nama lengkap"
                             autocomplete="name"
-                            maxlength="100"
                             required
+                            minlength="3"
                         >
 
                     </div>
@@ -1340,33 +512,24 @@ input[type="date"]::-webkit-calendar-picker-indicator{
                 </div>
 
 
-                <!-- =========================================
-                     EMAIL
-                ========================================== -->
+                <!-- EMAIL -->
 
                 <div class="form-group">
 
                     <label for="email">
-
-                        Email
-
+                        Alamat Email
                     </label>
 
                     <div class="input-wrapper">
 
-                        <i
-                            class="fa-solid
-                            fa-envelope
-                            input-icon">
-                        </i>
+                        <i class="fa-solid fa-envelope"></i>
 
                         <input
                             type="email"
                             id="email"
                             name="email"
-                            placeholder="Masukkan email aktif"
+                            placeholder="nama@email.com"
                             autocomplete="email"
-                            maxlength="150"
                             required
                         >
 
@@ -1375,30 +538,23 @@ input[type="date"]::-webkit-calendar-picker-indicator{
                 </div>
 
 
-                <!-- =========================================
-                     TANGGAL LAHIR
-                ========================================== -->
+                <!-- TANGGAL LAHIR -->
 
                 <div class="form-group">
 
                     <label for="tanggalLahir">
-
                         Tanggal Lahir
-
                     </label>
 
                     <div class="input-wrapper">
 
-                        <i
-                            class="fa-solid
-                            fa-calendar
-                            input-icon">
-                        </i>
+                        <i class="fa-solid fa-calendar"></i>
 
                         <input
                             type="date"
                             id="tanggalLahir"
                             name="tanggalLahir"
+                            autocomplete="bday"
                         >
 
                     </div>
@@ -1406,32 +562,24 @@ input[type="date"]::-webkit-calendar-picker-indicator{
                 </div>
 
 
-                <!-- =========================================
-                     LOKASI
-                ========================================== -->
+                <!-- LOKASI -->
 
                 <div class="form-group">
 
                     <label for="lokasi">
-
-                        Lokasi Tempat Tinggal
-
+                        Lokasi / Domisili
                     </label>
 
                     <div class="input-wrapper">
 
-                        <i
-                            class="fa-solid
-                            fa-location-dot
-                            input-icon">
-                        </i>
+                        <i class="fa-solid fa-location-dot"></i>
 
                         <input
                             type="text"
                             id="lokasi"
                             name="lokasi"
-                            placeholder="Contoh: Dumai Timur"
-                            maxlength="150"
+                            placeholder="Contoh: Dumai, Riau"
+                            autocomplete="address-level2"
                         >
 
                     </div>
@@ -1439,1982 +587,478 @@ input[type="date"]::-webkit-calendar-picker-indicator{
                 </div>
 
 
-                <!-- =========================================
-                     PASSWORD
-                ========================================== -->
+                <!-- PASSWORD -->
 
                 <div class="form-group">
 
                     <label for="password">
-
-                        Password
-
+                        Kata Sandi
                     </label>
 
                     <div class="input-wrapper">
 
-                        <i
-                            class="fa-solid
-                            fa-lock
-                            input-icon">
-                        </i>
+                        <i class="fa-solid fa-lock"></i>
 
                         <input
                             type="password"
                             id="password"
                             name="password"
-                            placeholder="Buat password"
+                            placeholder="Minimal 8 karakter"
                             autocomplete="new-password"
-                            minlength="6"
-                            maxlength="100"
+                            minlength="8"
                             required
                         >
 
                         <button
                             type="button"
-                            class="password-toggle"
                             id="togglePassword"
-                            aria-label="Tampilkan password"
+                            aria-label="Tampilkan kata sandi"
+                            style="
+                                position:absolute;
+                                right:14px;
+                                top:50%;
+                                transform:translateY(-50%);
+                                border:none;
+                                background:transparent;
+                                color:#94a3b8;
+                                cursor:pointer;
+                                padding:5px;
+                            "
                         >
-
-                            <i
-                                class="fa-solid
-                                fa-eye">
-                            </i>
-
+                            <i class="fa-solid fa-eye"></i>
                         </button>
-
-                    </div>
-
-
-                    <!-- PASSWORD STRENGTH -->
-
-                    <div class="password-strength">
-
-                        <div class="strength-bar">
-
-                            <div
-                                class="strength-segment"
-                                id="strength1">
-                            </div>
-
-                            <div
-                                class="strength-segment"
-                                id="strength2">
-                            </div>
-
-                            <div
-                                class="strength-segment"
-                                id="strength3">
-                            </div>
-
-                            <div
-                                class="strength-segment"
-                                id="strength4">
-                            </div>
-
-                        </div>
-
-                        <div
-                            class="strength-text"
-                            id="strengthText"
-                        >
-
-                            Minimal 6 karakter
-
-                        </div>
 
                     </div>
 
                 </div>
 
 
-                <!-- =========================================
-                     CONFIRM PASSWORD
-                ========================================== -->
+                <!-- CONFIRM PASSWORD -->
 
                 <div class="form-group">
 
                     <label for="confirmPassword">
-
-                        Konfirmasi Password
-
+                        Konfirmasi Kata Sandi
                     </label>
 
                     <div class="input-wrapper">
 
-                        <i
-                            class="fa-solid
-                            fa-lock
-                            input-icon">
-                        </i>
+                        <i class="fa-solid fa-shield-halved"></i>
 
                         <input
                             type="password"
                             id="confirmPassword"
                             name="confirmPassword"
-                            placeholder="Ulangi password"
+                            placeholder="Ulangi kata sandi"
                             autocomplete="new-password"
-                            minlength="6"
-                            maxlength="100"
+                            minlength="8"
                             required
                         >
-
-                        <button
-                            type="button"
-                            class="password-toggle"
-                            id="toggleConfirmPassword"
-                            aria-label="Tampilkan konfirmasi password"
-                        >
-
-                            <i
-                                class="fa-solid
-                                fa-eye">
-                            </i>
-
-                        </button>
 
                     </div>
 
                 </div>
 
 
-                <!-- =========================================
-                     TERMS
-                ========================================== -->
+                <!-- TERMS -->
 
-                <div class="terms">
+                <div style="
+                    display:flex;
+                    align-items:flex-start;
+                    gap:10px;
+                    margin:18px 0;
+                    font-size:11px;
+                    color:#64748b;
+                    line-height:1.7;
+                ">
 
                     <input
                         type="checkbox"
                         id="agreeTerms"
                         required
+                        style="
+                            margin-top:3px;
+                            accent-color:#2563eb;
+                        "
                     >
 
                     <label for="agreeTerms">
-
-                        Saya menyetujui penggunaan akun
-                        FLOWS-PRO untuk mengakses sistem
-                        monitoring dan memahami bahwa data
-                        akun digunakan untuk autentikasi.
-
-                        <a
-                            href="#"
-                            onclick="
-                                event.preventDefault();
-                                alert(
-                                    'Ketentuan penggunaan FLOWS-PRO.'
-                                );
-                            "
-                        >
-                            Pelajari lebih lanjut
-                        </a>
-
+                        Saya menyetujui penggunaan akun FLOWS-PRO
+                        sesuai ketentuan layanan dan kebijakan privasi.
                     </label>
 
                 </div>
 
 
-                <!-- =========================================
-                     REGISTER BUTTON
-                ========================================== -->
+                <!-- REGISTER BUTTON -->
 
                 <button
                     type="submit"
                     class="register-button"
                     id="registerButton"
                 >
-
-                    <i
-                        class="fa-solid
-                        fa-user-plus">
-                    </i>
-
-                    <span>
-                        Buat Akun
-                    </span>
-
+                    <i class="fa-solid fa-user-plus"></i>
+                    Buat Akun
                 </button>
-
 
             </form>
 
 
-            <!-- =============================================
-                 DIVIDER
-            ============================================== -->
+            <!-- DIVIDER -->
 
             <div class="divider">
-
-                ATAU
-
+                ATAU DAFTAR DENGAN
             </div>
 
 
-            <!-- =============================================
-                 GOOGLE
-            ============================================== -->
+            <!-- GOOGLE REGISTER -->
 
             <button
                 type="button"
                 class="google-button"
                 id="googleRegisterButton"
             >
-
-                <span class="google-icon">
-
-                    <i
-                        class="fa-brands
-                        fa-google">
-                    </i>
-
-                </span>
-
-                Daftar dengan Google
-
+                <i class="fa-brands fa-google"></i>
+                Lanjutkan dengan Google
             </button>
 
 
-            <!-- =============================================
-                 LOGIN
-            ============================================== -->
-
-            <div class="login-area">
-
-                <p>
-
-                    Sudah mempunyai akun?
-
-                    <a href="login.html">
-
-                        Masuk ke FLOWS-PRO
-
-                    </a>
-
-                </p>
-
-            </div>
-
-
-        </div>
-
-
-        <!-- =================================================
-             FOOTER
-        ================================================== -->
-
-        <div class="register-footer">
-
-            FLOWS-PRO © 2026
-
-            <br>
-
-            Flood Level Observation &
-            Warning System Professional
-
-        </div>
-
-
-    </div>
-
-</div>
-
-
-<!-- =====================================================
-     SUPABASE CLIENT
-     
-     PART 2 AKAN MELANJUTKAN JAVASCRIPT
-===================================================== -->
-
-<script
-    src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
-</script>
-
-
-<!-- =====================================================
-     PART 1 SELESAI
-===================================================== -->
-
-</body>
-
-</html>
-<!-- =====================================================
-     FLOWS-PRO
-     REGISTER PAGE
-     PART 2
-     
-     Fungsi:
-     - Konfigurasi Supabase
-     - Membuat Supabase Client
-     - Mengambil elemen HTML
-     - Fungsi pesan
-     - Normalisasi data
-     - Validasi email
-     - Validasi nama
-     - Validasi tanggal lahir
-     - Validasi lokasi
-     - Validasi password
-     - Password strength
-     - Toggle password
-     - Loading state
-===================================================== -->
-
-<script>
-
-/* =====================================================
-   1. SUPABASE CONFIGURATION
-===================================================== */
-
-/*
- * URL PROJECT SUPABASE
- */
-
-const SUPABASE_URL =
-    'https://nydapuhnswrbgbjkaxqa.supabase.co';
-
-const SUPABASE_ANON_KEY =
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im55ZGFwdWhuc3dyYmdiamtheHFhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA0MzI2NTEsImV4cCI6MjEwNjAwODY1MX0.hJG7hUTuRic3sJmCWDONNyL5Qay-vfdu2vLAMG6FzfI';
-
-
-/* =====================================================
-   2. CEK SUPABASE LIBRARY
-===================================================== */
-
-if(
-    typeof window.supabase === 'undefined'
-){
-
-    console.error(
-        'Supabase JS belum berhasil dimuat.'
-    );
-
-}
-
-
-/* =====================================================
-   3. CREATE SUPABASE CLIENT
-===================================================== */
-
-const supabaseClient =
-    window.supabase.createClient(
-        SUPABASE_URL,
-        SUPABASE_ANON_KEY
-    );
-
-
-/* =====================================================
-   4. GET HTML ELEMENT
-===================================================== */
-
-const registerForm =
-    document.getElementById(
-        'registerForm'
-    );
-
-
-const namaInput =
-    document.getElementById(
-        'nama'
-    );
-
-
-const emailInput =
-    document.getElementById(
-        'email'
-    );
-
-
-const tanggalLahirInput =
-    document.getElementById(
-        'tanggalLahir'
-    );
-
-
-const lokasiInput =
-    document.getElementById(
-        'lokasi'
-    );
-
-
-const passwordInput =
-    document.getElementById(
-        'password'
-    );
-
-
-const confirmPasswordInput =
-    document.getElementById(
-        'confirmPassword'
-    );
-
-
-const agreeTerms =
-    document.getElementById(
-        'agreeTerms'
-    );
-
-
-const registerButton =
-    document.getElementById(
-        'registerButton'
-    );
-
-
-const googleRegisterButton =
-    document.getElementById(
-        'googleRegisterButton'
-    );
-
-
-const formMessage =
-    document.getElementById(
-        'formMessage'
-    );
-
-
-const togglePassword =
-    document.getElementById(
-        'togglePassword'
-    );
-
-
-const toggleConfirmPassword =
-    document.getElementById(
-        'toggleConfirmPassword'
-    );
-
-
-/* =====================================================
-   5. CHECK ELEMENT
-===================================================== */
-
-if(!registerForm){
-
-    console.error(
-        'ERROR: registerForm tidak ditemukan.'
-    );
-
-}
-
-
-if(!namaInput){
-
-    console.error(
-        'ERROR: input nama tidak ditemukan.'
-    );
-
-}
-
-
-if(!emailInput){
-
-    console.error(
-        'ERROR: input email tidak ditemukan.'
-    );
-
-}
-
-
-if(!passwordInput){
-
-    console.error(
-        'ERROR: input password tidak ditemukan.'
-    );
-
-}
-
-
-/* =====================================================
-   6. SHOW MESSAGE
-===================================================== */
-
-function showMessage(
-    message,
-    type = 'error'
-){
-
-    if(!formMessage){
-
-        return;
-
-    }
-
-
-    formMessage.innerHTML =
-        message;
-
-
-    formMessage.className =
-        'form-message show ' +
-        type;
-
-
-    /*
-     * Scroll ke pesan
-     */
-
-    formMessage.scrollIntoView({
-
-        behavior:'smooth',
-
-        block:'nearest'
-
-    });
-
-}
-
-
-/* =====================================================
-   7. CLEAR MESSAGE
-===================================================== */
-
-function clearMessage(){
-
-    if(!formMessage){
-
-        return;
-
-    }
-
-
-    formMessage.innerHTML =
-        '';
-
-
-    formMessage.className =
-        'form-message';
-
-}
-
-
-/* =====================================================
-   8. NORMALIZE TEXT
-===================================================== */
-
-function normalizeText(
-    value
-){
-
-    return String(
-        value || ''
-    )
-    .trim()
-    .replace(
-        /\s+/g,
-        ' '
-    );
-
-}
-
-
-/* =====================================================
-   9. NORMALIZE EMAIL
-===================================================== */
-
-function normalizeEmail(
-    value
-){
-
-    return String(
-        value || ''
-    )
-    .trim()
-    .toLowerCase();
-
-}
-
-
-/* =====================================================
-   10. VALIDATE EMAIL
-===================================================== */
-
-function validateEmail(
-    email
-){
-
-    const pattern =
-        /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
-
-
-    return pattern.test(
-        email
-    );
-
-}
-
-
-/* =====================================================
-   11. VALIDATE NAME
-===================================================== */
-
-function validateName(
-    nama
-){
-
-    if(!nama){
-
-        return false;
-
-    }
-
-
-    if(nama.length < 2){
-
-        return false;
-
-    }
-
-
-    /*
-     * Minimal harus mengandung huruf.
-     */
-
-    if(
-        !/[A-Za-zÀ-ÿ]/.test(
-            nama
-        )
-    ){
-
-        return false;
-
-    }
-
-
-    return true;
-
-}
-
-
-/* =====================================================
-   12. VALIDATE BIRTH DATE
-===================================================== */
-
-function validateBirthDate(
-    tanggal
-){
-
-    /*
-     * Tanggal boleh dikosongkan.
-     */
-
-    if(!tanggal){
-
-        return true;
-
-    }
-
-
-    const date =
-        new Date(
-            tanggal +
-            'T00:00:00'
+            <!-- STATUS MESSAGE -->
+
+            <div
+                class="status-message"
+                id="statusMessage"
+                role="status"
+                aria-live="polite"
+            ></div>
+
+
+            <!-- FOOTER -->
+
+            <p style="
+                text-align:center;
+                font-size:10px;
+                color:#94a3b8;
+                line-height:1.7;
+                margin-top:25px;
+            ">
+                <i class="fa-solid fa-shield-halved"></i>
+                Informasi akun Anda digunakan untuk autentikasi
+                dan pengelolaan akses FLOWS-PRO.
+            </p>
+                <!-- SUPABASE LIBRARY -->
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <script>
+        // ==========================================
+        // KONFIGURASI SUPABASE FLOWS-PRO
+        // ==========================================
+
+        const SUPABASE_URL =
+            "https://nydapuhnswrbgbjkaxqa.supabase.co";
+
+        const SUPABASE_PUBLISHABLE_KEY =
+            "sb_publishable_dypnRnjABFIf6GcshfrTIA_Q0zhuR0L";
+
+        const supabaseClient = window.supabase.createClient(
+            SUPABASE_URL,
+            SUPABASE_PUBLISHABLE_KEY
         );
 
 
-    if(
-        Number.isNaN(
-            date.getTime()
-        )
-    ){
+        // ==========================================
+        // ELEMEN HTML
+        // ==========================================
 
-        return false;
+        const registerForm =
+            document.getElementById("registerForm");
 
-    }
+        const namaInput =
+            document.getElementById("nama");
 
+        const emailInput =
+            document.getElementById("email");
 
-    /*
-     * Tidak boleh tanggal masa depan.
-     */
+        const tanggalLahirInput =
+            document.getElementById("tanggalLahir");
 
-    const today =
-        new Date();
+        const lokasiInput =
+            document.getElementById("lokasi");
 
+        const passwordInput =
+            document.getElementById("password");
 
-    today.setHours(
-        0,
-        0,
-        0,
-        0
-    );
+        const confirmPasswordInput =
+            document.getElementById("confirmPassword");
 
+        const agreeTermsInput =
+            document.getElementById("agreeTerms");
 
-    if(date > today){
+        const registerButton =
+            document.getElementById("registerButton");
 
-        return false;
+        const googleRegisterButton =
+            document.getElementById("googleRegisterButton");
 
-    }
+        const togglePasswordButton =
+            document.getElementById("togglePassword");
 
+        const statusMessage =
+            document.getElementById("statusMessage");
 
-    /*
-     * Batas usia maksimum
-     * 120 tahun.
-     */
 
-    const minimumDate =
-        new Date();
+        // ==========================================
+        // TAMPILKAN PESAN
+        // ==========================================
 
+        function showMessage(message, type = "error") {
 
-    minimumDate.setFullYear(
-        minimumDate.getFullYear() - 120
-    );
+            statusMessage.textContent = message;
 
+            statusMessage.className =
+                "status-message " + type;
 
-    minimumDate.setHours(
-        0,
-        0,
-        0,
-        0
-    );
+            statusMessage.style.display = "block";
+        }
 
 
-    if(date < minimumDate){
+        // ==========================================
+        // TERJEMAHAN ERROR SUPABASE
+        // ==========================================
 
-        return false;
+        function getRegisterErrorMessage(error) {
 
-    }
+            const message = (error.message || "").toLowerCase();
 
-
-    return true;
-
-}
-
-
-/* =====================================================
-   13. VALIDATE LOCATION
-===================================================== */
-
-function validateLocation(
-    lokasi
-){
-
-    /*
-     * Lokasi boleh kosong.
-     *
-     * Kalau diisi minimal 3 karakter.
-     */
-
-    if(!lokasi){
-
-        return true;
-
-    }
-
-
-    return lokasi.length >= 3;
-
-}
-
-
-/* =====================================================
-   14. VALIDATE PASSWORD
-===================================================== */
-
-function validatePassword(
-    password
-){
-
-    if(!password){
-
-        return false;
-
-    }
-
-
-    /*
-     * Supabase minimal 6 karakter
-     * untuk konfigurasi standar.
-     */
-
-    if(password.length < 6){
-
-        return false;
-
-    }
-
-
-    return true;
-
-}
-
-
-/* =====================================================
-   15. PASSWORD STRENGTH
-===================================================== */
-
-function getPasswordStrength(
-    password
-){
-
-    if(!password){
-
-        return 0;
-
-    }
-
-
-    let score = 0;
-
-
-    /*
-     * Panjang
-     */
-
-    if(
-        password.length >= 6
-    ){
-
-        score++;
-
-    }
-
-
-    /*
-     * Panjang 10+
-     */
-
-    if(
-        password.length >= 10
-    ){
-
-        score++;
-
-    }
-
-
-    /*
-     * Huruf besar dan kecil
-     */
-
-    if(
-        /[a-z]/.test(password) &&
-        /[A-Z]/.test(password)
-    ){
-
-        score++;
-
-    }
-
-
-    /*
-     * Angka / simbol
-     */
-
-    if(
-        /[0-9]/.test(password) ||
-        /[^A-Za-z0-9]/.test(password)
-    ){
-
-        score++;
-
-    }
-
-
-    return score;
-
-}
-
-
-/* =====================================================
-   16. UPDATE PASSWORD STRENGTH UI
-===================================================== */
-
-function updatePasswordStrength(){
-
-    const password =
-        passwordInput
-            ? passwordInput.value
-            : '';
-
-
-    const strength =
-        getPasswordStrength(
-            password
-        );
-
-
-    const segments = [
-
-        document.getElementById(
-            'strength1'
-        ),
-
-        document.getElementById(
-            'strength2'
-        ),
-
-        document.getElementById(
-            'strength3'
-        ),
-
-        document.getElementById(
-            'strength4'
-        )
-
-    ];
-
-
-    const strengthText =
-        document.getElementById(
-            'strengthText'
-        );
-
-
-    /*
-     * Reset segment
-     */
-
-    segments.forEach(
-        function(segment){
-
-            if(segment){
-
-                segment.style.background =
-                    'rgba(255,255,255,.10)';
-
+            if (message.includes("already registered")) {
+                return "Email ini sudah terdaftar. Silakan masuk.";
             }
 
-        }
-    );
+            if (message.includes("password")) {
+                return "Kata sandi tidak memenuhi persyaratan.";
+            }
 
+            if (message.includes("email")) {
+                return "Alamat email tidak valid.";
+            }
 
-    if(!password){
+            if (message.includes("rate limit")) {
+                return "Terlalu banyak percobaan. Silakan coba beberapa saat lagi.";
+            }
 
-        if(strengthText){
-
-            strengthText.textContent =
-                'Minimal 6 karakter';
-
-        }
-
-        return;
-
-    }
-
-
-    /*
-     * Text strength
-     */
-
-    let text =
-        'Lemah';
-
-
-    if(strength === 2){
-
-        text =
-            'Sedang';
-
-    }
-
-
-    if(strength === 3){
-
-        text =
-            'Baik';
-
-    }
-
-
-    if(strength >= 4){
-
-        text =
-            'Sangat kuat';
-
-    }
-
-
-    /*
-     * Warna indikator.
-     *
-     * Hanya digunakan untuk indikator
-     * visual password.
-     */
-
-    let indicatorColor =
-        '#e74c3c';
-
-
-    if(strength === 2){
-
-        indicatorColor =
-            '#f39c12';
-
-    }
-
-
-    if(strength === 3){
-
-        indicatorColor =
-            '#3498db';
-
-    }
-
-
-    if(strength >= 4){
-
-        indicatorColor =
-            '#27ae60';
-
-    }
-
-
-    /*
-     * Isi segment
-     */
-
-    for(
-        let i = 0;
-        i < strength;
-        i++
-    ){
-
-        if(segments[i]){
-
-            segments[i].style.background =
-                indicatorColor;
-
+            return error.message ||
+                "Terjadi kesalahan. Silakan coba kembali.";
         }
 
-    }
 
+        // ==========================================
+        // TAMPILKAN / SEMBUNYIKAN PASSWORD
+        // ==========================================
 
-    if(strengthText){
-
-        strengthText.textContent =
-            text;
-
-    }
-
-}
-
-
-/* =====================================================
-   17. TOGGLE PASSWORD
-===================================================== */
-
-function setupPasswordToggle(
-    button,
-    input
-){
-
-    if(
-        !button ||
-        !input
-    ){
-
-        return;
-
-    }
-
-
-    button.addEventListener(
-        'click',
-        function(){
+        togglePasswordButton.addEventListener("click", () => {
 
             const isPassword =
-                input.type ===
-                'password';
+                passwordInput.type === "password";
 
+            passwordInput.type =
+                isPassword ? "text" : "password";
 
-            input.type =
+            togglePasswordButton.innerHTML = isPassword
+                ? '<i class="fa-solid fa-eye-slash"></i>'
+                : '<i class="fa-solid fa-eye"></i>';
+
+            togglePasswordButton.setAttribute(
+                "aria-label",
                 isPassword
-                    ? 'text'
-                    : 'password';
-
-
-            const icon =
-                button.querySelector(
-                    'i'
-                );
-
-
-            if(icon){
-
-                icon.className =
-                    isPassword
-                        ? 'fa-solid fa-eye-slash'
-                        : 'fa-solid fa-eye';
-
-            }
-
-
-            button.setAttribute(
-
-                'aria-label',
-
-                isPassword
-                    ? 'Sembunyikan password'
-                    : 'Tampilkan password'
-
+                    ? "Sembunyikan kata sandi"
+                    : "Tampilkan kata sandi"
             );
-
-        }
-    );
-
-}
-
-
-/* =====================================================
-   18. PASANG PASSWORD TOGGLE
-===================================================== */
-
-setupPasswordToggle(
-
-    togglePassword,
-
-    passwordInput
-
-);
-
-
-setupPasswordToggle(
-
-    toggleConfirmPassword,
-
-    confirmPasswordInput
-
-);
-
-
-/* =====================================================
-   19. PASSWORD INPUT EVENT
-===================================================== */
-
-if(passwordInput){
-
-    passwordInput.addEventListener(
-        'input',
-        function(){
-
-            updatePasswordStrength();
-
-        }
-    );
-
-}
-
-
-/* =====================================================
-   20. EMAIL AUTO LOWERCASE
-===================================================== */
-
-if(emailInput){
-
-    emailInput.addEventListener(
-        'blur',
-        function(){
-
-            emailInput.value =
-                normalizeEmail(
-                    emailInput.value
-                );
-
-        }
-    );
-
-}
-
-
-/* =====================================================
-   21. NAMA NORMALIZATION
-===================================================== */
-
-if(namaInput){
-
-    namaInput.addEventListener(
-        'blur',
-        function(){
-
-            namaInput.value =
-                normalizeText(
-                    namaInput.value
-                );
-
-        }
-    );
-
-}
-
-
-/* =====================================================
-   22. LOKASI NORMALIZATION
-===================================================== */
-
-if(lokasiInput){
-
-    lokasiInput.addEventListener(
-        'blur',
-        function(){
-
-            lokasiInput.value =
-                normalizeText(
-                    lokasiInput.value
-                );
-
-        }
-    );
-
-}
-
-
-/* =====================================================
-   23. INPUT VALIDATION VISUAL
-===================================================== */
-
-function setInputState(
-    input,
-    valid
-){
-
-    if(!input){
-
-        return;
-
-    }
-
-
-    input.classList.remove(
-        'input-valid',
-        'input-invalid'
-    );
-
-
-    /*
-     * Jangan beri border merah
-     * ketika field masih kosong.
-     */
-
-    if(
-        input.value.trim() === ''
-    ){
-
-        return;
-
-    }
-
-
-    if(valid){
-
-        input.classList.add(
-            'input-valid'
-        );
-
-    }else{
-
-        input.classList.add(
-            'input-invalid'
-        );
-
-    }
-
-}
-
-
-/* =====================================================
-   24. EMAIL VALIDATION EVENT
-===================================================== */
-
-if(emailInput){
-
-    emailInput.addEventListener(
-        'input',
-        function(){
-
-            const email =
-                normalizeEmail(
-                    emailInput.value
-                );
-
-
-            setInputState(
-
-                emailInput,
-
-                validateEmail(
-                    email
-                )
-
-            );
-
-        }
-    );
-
-}
-
-
-/* =====================================================
-   25. NAME VALIDATION EVENT
-===================================================== */
-
-if(namaInput){
-
-    namaInput.addEventListener(
-        'input',
-        function(){
-
-            const nama =
-                normalizeText(
-                    namaInput.value
-                );
-
-
-            setInputState(
-
-                namaInput,
-
-                validateName(
-                    nama
-                )
-
-            );
-
-        }
-    );
-
-}
-
-
-/* =====================================================
-   26. LOCATION VALIDATION EVENT
-===================================================== */
-
-if(lokasiInput){
-
-    lokasiInput.addEventListener(
-        'input',
-        function(){
-
-            const lokasi =
-                normalizeText(
-                    lokasiInput.value
-                );
-
-
-            setInputState(
-
-                lokasiInput,
-
-                validateLocation(
-                    lokasi
-                )
-
-            );
-
-        }
-    );
-
-}
-
-
-/* =====================================================
-   27. DATE VALIDATION EVENT
-===================================================== */
-
-if(tanggalLahirInput){
-
-    tanggalLahirInput.addEventListener(
-        'change',
-        function(){
-
-            setInputState(
-
-                tanggalLahirInput,
-
-                validateBirthDate(
-                    tanggalLahirInput.value
-                )
-
-            );
-
-        }
-    );
-
-}
-
-
-/* =====================================================
-   28. PASSWORD VALIDATION EVENT
-===================================================== */
-
-if(passwordInput){
-
-    passwordInput.addEventListener(
-        'blur',
-        function(){
-
-            setInputState(
-
-                passwordInput,
-
-                validatePassword(
-                    passwordInput.value
-                )
-
-            );
-
-        }
-    );
-
-}
-
-
-/* =====================================================
-   29. CONFIRM PASSWORD VALIDATION
-===================================================== */
-
-if(confirmPasswordInput){
-
-    confirmPasswordInput.addEventListener(
-        'input',
-        function(){
-
-            const password =
-                passwordInput
-                    ? passwordInput.value
-                    : '';
-
-
-            const confirmation =
-                confirmPasswordInput.value;
-
-
-            setInputState(
-
-                confirmPasswordInput,
-
-                confirmation.length > 0 &&
-                password === confirmation
-
-            );
-
-        }
-    );
-
-}
-
-
-/* =====================================================
-   30. LOADING REGISTER
-===================================================== */
-
-function setRegisterLoading(
-    loading
-){
-
-    if(!registerButton){
-
-        return;
-
-    }
-
-
-    if(loading){
-
-        registerButton.disabled =
-            true;
-
-
-        registerButton.innerHTML = `
-
-            <span class="spinner"></span>
-
-            <span>
-                Membuat akun...
-            </span>
-
-        `;
-
-    }else{
-
-        registerButton.disabled =
-            false;
-
-
-        registerButton.innerHTML = `
-
-            <i
-                class="fa-solid
-                fa-user-plus">
-            </i>
-
-            <span>
-                Buat Akun
-            </span>
-
-        `;
-
-    }
-
-}
-
-
-/* =====================================================
-   31. LOADING GOOGLE
-===================================================== */
-
-function setGoogleLoading(
-    loading
-){
-
-    if(!googleRegisterButton){
-
-        return;
-
-    }
-
-
-    if(loading){
-
-        googleRegisterButton.disabled =
-            true;
-
-
-        googleRegisterButton.innerHTML = `
-
-            <span class="spinner"></span>
-
-            <span>
-                Menghubungkan Google...
-            </span>
-
-        `;
-
-    }else{
-
-        googleRegisterButton.disabled =
-            false;
-
-
-        googleRegisterButton.innerHTML = `
-
-            <span class="google-icon">
-
-                <i
-                    class="fa-brands
-                    fa-google">
-                </i>
-
-            </span>
-
-            Daftar dengan Google
-
-        `;
-
-    }
-
-}
-
-
-/* =====================================================
-   32. CEK SUPABASE CONFIG
-===================================================== */
-
-function isSupabaseConfigured(){
-
-    if(
-        !SUPABASE_URL ||
-        !SUPABASE_ANON_KEY
-    ){
-
-        return false;
-
-    }
-
-
-    if(
-        SUPABASE_ANON_KEY ===
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhjZWJsbm1uZ25uZXh4dGtlaWV2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU5OTc5MDQsImV4cCI6MjA5MTU3MzkwNH0.jRFevO_3qqjUpL3nNtYKqH-vExMabcnNzDYbThpJdjs'
-    ){
-
-        return false;
-
-    }
-
-
-    return true;
-
-}
-
-
-/* =====================================================
-   33. INITIALIZATION
-===================================================== */
-
-document.addEventListener(
-    'DOMContentLoaded',
-    function(){
-
-        updatePasswordStrength();
-
-    }
-);
-
-
-/* =====================================================
-   PART 2 SELESAI
-===================================================== */
-
-</script>
-// ============================================================
-// PART 3 — REGISTRASI EMAIL & PASSWORD
-// ============================================================
-
-registerForm.addEventListener('submit', async function (event) {
-    event.preventDefault();
-
-    clearMessage();
-
-    // --------------------------------------------------------
-    // 1. Ambil data dari form
-    // --------------------------------------------------------
-
-    const namaValue = normalizeText(namaInput.value);
-    const emailValue = normalizeEmail(emailInput.value);
-    const tanggalLahirValue = tanggalLahirInput.value;
-    const lokasiValue = normalizeText(lokasiInput.value);
-    const passwordValue = passwordInput.value;
-    const confirmPasswordValue = confirmPasswordInput.value;
-
-    // --------------------------------------------------------
-    // 2. Pastikan Supabase sudah dikonfigurasi
-    // --------------------------------------------------------
-
-    if (!isSupabaseConfigured()) {
-        showMessage(
-            'error',
-            'Konfigurasi Supabase belum diisi. Silakan masukkan Anon/Publishable Key terlebih dahulu.'
-        );
-        return;
-    }
-
-    // --------------------------------------------------------
-    // 3. Validasi nama
-    // --------------------------------------------------------
-
-    const nameError = validateName(namaValue);
-
-    if (nameError) {
-        showMessage('error', nameError);
-        namaInput.focus();
-        return;
-    }
-
-    // --------------------------------------------------------
-    // 4. Validasi email
-    // --------------------------------------------------------
-
-    if (!validateEmail(emailValue)) {
-        showMessage(
-            'error',
-            'Format email tidak valid. Silakan masukkan email yang benar.'
-        );
-        emailInput.focus();
-        return;
-    }
-
-    // --------------------------------------------------------
-    // 5. Validasi tanggal lahir
-    // --------------------------------------------------------
-
-    const birthDateError = validateBirthDate(tanggalLahirValue);
-
-    if (birthDateError) {
-        showMessage('error', birthDateError);
-        tanggalLahirInput.focus();
-        return;
-    }
-
-    // --------------------------------------------------------
-    // 6. Validasi lokasi
-    // --------------------------------------------------------
-
-    const locationError = validateLocation(lokasiValue);
-
-    if (locationError) {
-        showMessage('error', locationError);
-        lokasiInput.focus();
-        return;
-    }
-
-    // --------------------------------------------------------
-    // 7. Validasi password
-    // --------------------------------------------------------
-
-    const passwordError = validatePassword(passwordValue);
-
-    if (passwordError) {
-        showMessage('error', passwordError);
-        passwordInput.focus();
-        return;
-    }
-
-    // --------------------------------------------------------
-    // 8. Konfirmasi password
-    // --------------------------------------------------------
-
-    if (passwordValue !== confirmPasswordValue) {
-        showMessage(
-            'error',
-            'Konfirmasi password tidak sama dengan password.'
-        );
-        confirmPasswordInput.focus();
-        return;
-    }
-
-    // --------------------------------------------------------
-    // 9. Persetujuan syarat
-    // --------------------------------------------------------
-
-    if (!agreeTermsInput.checked) {
-        showMessage(
-            'error',
-            'Silakan menyetujui syarat dan ketentuan terlebih dahulu.'
-        );
-        agreeTermsInput.focus();
-        return;
-    }
-
-    // --------------------------------------------------------
-    // 10. Aktifkan loading
-    // --------------------------------------------------------
-
-    setRegisterLoading(true);
-
-    try {
-
-        // ----------------------------------------------------
-        // 11. Daftarkan user ke Supabase Authentication
-        // ----------------------------------------------------
-
-        const { data, error } = await supabaseClient.auth.signUp({
-            email: emailValue,
-            password: passwordValue,
-
-            options: {
-                data: {
-                    nama: namaValue,
-                    role: 'Operator',
-                    tanggal_lahir: tanggalLahirValue || null,
-                    lokasi: lokasiValue || null
-                }
-            }
         });
 
-        // ----------------------------------------------------
-        // 12. Jika Supabase mengembalikan error
-        // ----------------------------------------------------
 
-        if (error) {
-            console.error('Supabase registration error:', error);
+        // ==========================================
+        // REGISTRASI EMAIL DAN PASSWORD
+        // ==========================================
 
-            let errorMessage =
-                'Registrasi gagal. Silakan coba lagi.';
+        registerForm.addEventListener("submit", async (event) => {
 
-            const message = (error.message || '').toLowerCase();
+            event.preventDefault();
 
-            if (
-                message.includes('invalid email') ||
-                message.includes('email address')
-            ) {
-                errorMessage =
-                    'Alamat email tidak valid. Periksa kembali email Anda.';
+            const nama = namaInput.value.trim();
+            const email = emailInput.value.trim();
+            const tanggalLahir = tanggalLahirInput.value;
+            const lokasi = lokasiInput.value.trim();
+
+            const password = passwordInput.value;
+            const confirmPassword = confirmPasswordInput.value;
+
+            if (nama.length < 3) {
+                showMessage("Nama lengkap minimal 3 karakter.");
+                return;
             }
 
-            else if (
-                message.includes('password') &&
-                (
-                    message.includes('weak') ||
-                    message.includes('short')
-                )
-            ) {
-                errorMessage =
-                    'Password terlalu lemah. Gunakan password yang lebih kuat.';
+            if (password.length < 8) {
+                showMessage("Kata sandi minimal 8 karakter.");
+                return;
             }
 
-            else if (
-                message.includes('rate limit') ||
-                message.includes('too many')
-            ) {
-                errorMessage =
-                    'Terlalu banyak percobaan. Silakan tunggu beberapa saat lalu coba lagi.';
+            if (password !== confirmPassword) {
+                showMessage("Konfirmasi kata sandi tidak cocok.");
+                confirmPasswordInput.focus();
+                return;
             }
 
-            else if (
-                message.includes('already registered') ||
-                message.includes('already exists')
-            ) {
-                errorMessage =
-                    'Email tersebut sudah terdaftar. Silakan gunakan email lain atau masuk ke akun Anda.';
+            if (!agreeTermsInput.checked) {
+                showMessage("Silakan setujui ketentuan terlebih dahulu.");
+                return;
             }
 
-            showMessage('error', errorMessage);
-            return;
-        }
+            registerButton.disabled = true;
+            googleRegisterButton.disabled = true;
 
-        // ----------------------------------------------------
-        // 13. Pastikan user berhasil dibuat
-        // ----------------------------------------------------
+            registerButton.innerHTML =
+                '<i class="fa-solid fa-spinner fa-spin"></i> Membuat akun...';
 
-        if (!data || !data.user) {
-            showMessage(
-                'error',
-                'Registrasi belum berhasil dibuat. Silakan coba kembali.'
-            );
-            return;
-        }
+            try {
 
-        console.log('User berhasil dibuat:', data.user);
+                const { data, error } =
+                    await supabaseClient.auth.signUp({
 
-        // ----------------------------------------------------
-        // 14. Jika Supabase langsung memberikan session
-        // ----------------------------------------------------
+                        email: email,
+                        password: password,
 
-        if (data.session) {
+                        options: {
 
-            showMessage(
-                'success',
-                'Registrasi berhasil! Anda akan diarahkan ke dashboard.'
-            );
+                            emailRedirectTo:
+                                `${window.location.origin}/login.html`,
 
-            setTimeout(() => {
-                window.location.href = 'dashboard.html';
-            }, 1500);
+                            data: {
+                                nama: nama,
+                                tanggal_lahir: tanggalLahir || null,
+                                lokasi: lokasi || null
+                            }
 
-            return;
-        }
+                        }
 
-        // ----------------------------------------------------
-        // 15. Jika email confirmation diaktifkan
-        // ----------------------------------------------------
+                    });
 
-        showMessage(
-            'success',
-            'Registrasi berhasil! Silakan cek email Anda untuk melakukan konfirmasi akun.'
-        );
-
-        setTimeout(() => {
-            window.location.href = 'login.html';
-        }, 3000);
-
-    } catch (error) {
-
-        // ----------------------------------------------------
-        // 16. Error tak terduga
-        // ----------------------------------------------------
-
-        console.error('Unexpected registration error:', error);
-
-        showMessage(
-            'error',
-            'Terjadi kesalahan saat proses registrasi. Silakan coba lagi.'
-        );
-
-    } finally {
-
-        // ----------------------------------------------------
-        // 17. Matikan loading
-        // ----------------------------------------------------
-
-        setRegisterLoading(false);
-    }
-});
-
-// ============================================================
-// PART 4 — REGISTRASI DENGAN GOOGLE
-// ============================================================
-
-googleRegisterButton.addEventListener('click', async function () {
-
-    clearMessage();
-
-    // --------------------------------------------------------
-    // 1. Pastikan Supabase sudah dikonfigurasi
-    // --------------------------------------------------------
-
-    if (!isSupabaseConfigured()) {
-        showMessage(
-            'error',
-            'Konfigurasi Supabase belum diisi. Silakan periksa Supabase Anon/Publishable Key.'
-        );
-        return;
-    }
-
-    // --------------------------------------------------------
-    // 2. Aktifkan loading
-    // --------------------------------------------------------
-
-    setGoogleLoading(true);
-
-    try {
-
-        // ----------------------------------------------------
-        // 3. Ambil alamat halaman callback
-        // ----------------------------------------------------
-
-        const redirectUrl =
-            `${window.location.origin}/auth-callback.html`;
-
-        console.log('Google OAuth redirect:', redirectUrl);
-
-        // ----------------------------------------------------
-        // 4. Mulai login / registrasi dengan Google
-        // ----------------------------------------------------
-
-        const { data, error } =
-            await supabaseClient.auth.signInWithOAuth({
-                provider: 'google',
-
-                options: {
-                    redirectTo: redirectUrl
+                if (error) {
+                    throw error;
                 }
-            });
 
-        // ----------------------------------------------------
-        // 5. Tangani error
-        // ----------------------------------------------------
+                if (data.session) {
 
-        if (error) {
+                    showMessage(
+                        "Akun berhasil dibuat! Mengarahkan ke dashboard...",
+                        "success"
+                    );
 
-            console.error(
-                'Google OAuth error:',
-                error
-            );
+                    setTimeout(() => {
+                        window.location.replace("dashboard.html");
+                    }, 1500);
 
-            showMessage(
-                'error',
-                'Pendaftaran dengan Google gagal. Silakan coba lagi.'
-            );
+                } else {
 
-            return;
-        }
+                    showMessage(
+                        "Pendaftaran berhasil! Silakan periksa email Anda untuk verifikasi sebelum login.",
+                        "success"
+                    );
 
-        // ----------------------------------------------------
-        // 6. Supabase akan mengarahkan browser ke Google
-        // ----------------------------------------------------
+                    registerForm.reset();
 
-        console.log(
-            'Google OAuth berhasil dimulai:',
-            data
-        );
+                }
 
-    } catch (error) {
+            } catch (error) {
 
-        console.error(
-            'Unexpected Google OAuth error:',
-            error
-        );
+                console.error("Register Error:", error);
 
-        showMessage(
-            'error',
-            'Tidak dapat terhubung ke Google. Periksa koneksi internet dan konfigurasi OAuth Anda.'
-        );
+                showMessage(getRegisterErrorMessage(error));
 
-    } finally {
+            } finally {
 
-        // ----------------------------------------------------
-        // 7. Matikan loading
-        // ----------------------------------------------------
+                registerButton.disabled = false;
+                googleRegisterButton.disabled = false;
 
-        setGoogleLoading(false);
-    }
-});
+                registerButton.innerHTML =
+                    '<i class="fa-solid fa-user-plus"></i> Buat Akun';
+
+            }
+
+        });
+
+
+        // ==========================================
+        // REGISTRASI / LOGIN GOOGLE
+        // ==========================================
+
+        googleRegisterButton.addEventListener("click", async () => {
+
+            googleRegisterButton.disabled = true;
+
+            googleRegisterButton.innerHTML =
+                '<i class="fa-solid fa-spinner fa-spin"></i> Menghubungkan Google...';
+
+            try {
+
+                const redirectUrl =
+                    `${window.location.origin}/auth-callback.html`;
+
+                const { error } =
+                    await supabaseClient.auth.signInWithOAuth({
+
+                        provider: "google",
+
+                        options: {
+                            redirectTo: redirectUrl
+                        }
+
+                    });
+
+                if (error) {
+                    throw error;
+                }
+
+            } catch (error) {
+
+                console.error("Google Auth Error:", error);
+
+                showMessage(
+                    error.message || "Login Google gagal."
+                );
+
+                googleRegisterButton.disabled = false;
+
+                googleRegisterButton.innerHTML =
+                    '<i class="fa-brands fa-google"></i> Lanjutkan dengan Google';
+
+            }
+
+        });
+
+    </script>
+            </section>
+
+    </main>
+
+    <footer style="
+        position: fixed;
+        bottom: 12px;
+        left: 0;
+        width: 100%;
+        text-align: center;
+        font-size: 10px;
+        color: #94a3b8;
+        pointer-events: none;
+    ">
+        © <span id="registerYear">2026</span> FLOWS-PRO |
+        Flood Level Observation System
+    </footer>
+
+    <script>
+        document.getElementById("registerYear").textContent =
+            new Date().getFullYear();
+    </script>
+
+</body>
+</html>
