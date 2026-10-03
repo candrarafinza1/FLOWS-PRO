@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -33,7 +34,7 @@
         .callback-card {
             width: 100%;
             max-width: 440px;
-            background: rgba(255, 255, 255, 0.92);
+            background: rgba(255, 255, 255, 0.95);
             border: 1px solid #dbeafe;
             border-radius: 24px;
             padding: 40px 30px;
@@ -109,8 +110,7 @@
 <body>
 
     <div class="callback-card">
-
-        <img
+                <img
             src="LOGO_FLOWS-PRO-removebg-preview.png"
             alt="Logo FLOWS-PRO"
             class="logo"
@@ -136,10 +136,7 @@
         <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
     <script>
-        // =====================================
-        // KONFIGURASI SUPABASE FLOWS-PRO
-        // =====================================
-
+        // KONFIGURASI SUPABASE
         const SUPABASE_URL =
             "https://nydapuhnswrbgbjkaxqa.supabase.co";
 
@@ -148,25 +145,24 @@
 
         const supabaseClient = window.supabase.createClient(
             SUPABASE_URL,
-            SUPABASE_PUBLISHABLE_KEY
+            SUPABASE_PUBLISHABLE_KEY,
+            {
+                auth: {
+                    flowType: "pkce",
+                    persistSession: true,
+                    autoRefreshToken: true,
+                    detectSessionInUrl: false
+                }
+            }
         );
 
-
-        // =====================================
         // ELEMEN HALAMAN
-        // =====================================
-
         const titleElement = document.getElementById("title");
         const descriptionElement = document.getElementById("description");
         const statusElement = document.getElementById("statusMessage");
         const loaderElement = document.getElementById("loader");
         const backLink = document.getElementById("backLink");
-
-
-        // =====================================
-        // TAMPILKAN PESAN
-        // =====================================
-
+                // TAMPILKAN STATUS
         function showStatus(message, isError = false) {
             statusElement.textContent = message;
 
@@ -174,22 +170,42 @@
                 statusElement.classList.add("error");
                 loaderElement.style.display = "none";
                 backLink.style.display = "inline-block";
+
                 titleElement.textContent = "Login Gagal";
+
                 descriptionElement.textContent =
                     "Kami tidak dapat menyelesaikan proses login Anda.";
             }
         }
 
-
-        // =====================================
         // PROSES CALLBACK GOOGLE
-        // =====================================
-
         async function handleAuthCallback() {
             try {
                 showStatus("Memverifikasi sesi login...");
 
-                // Ambil sesi autentikasi dari Supabase
+                const url = new URL(window.location.href);
+
+                const code = url.searchParams.get("code");
+
+                const authError =
+                    url.searchParams.get("error_description") ||
+                    url.searchParams.get("error");
+
+                if (authError) {
+                    throw new Error(authError);
+                }
+
+                // Tukar kode OAuth menjadi sesi
+                if (code) {
+                    const { error } =
+                        await supabaseClient.auth.exchangeCodeForSession(code);
+
+                    if (error) {
+                        throw error;
+                    }
+                }
+
+                // Periksa sesi login
                 const {
                     data: { session },
                     error
@@ -199,20 +215,29 @@
                     throw error;
                 }
 
-                // Jika sesi tidak ditemukan
                 if (!session) {
                     throw new Error(
                         "Sesi login tidak ditemukan. Silakan login kembali."
                     );
                 }
 
-                showStatus("Login berhasil! Mengarahkan ke dashboard...");
+                // LOGIN BERHASIL
+                showStatus(
+                    "Login berhasil! Mengarahkan ke dashboard..."
+                );
 
                 titleElement.textContent = "Login Berhasil";
+
                 descriptionElement.textContent =
                     "Selamat datang di sistem pemantauan FLOWS-PRO.";
 
-                // Beri waktu agar pesan terbaca
+                // Bersihkan kode OAuth dari URL
+                window.history.replaceState(
+                    {},
+                    document.title,
+                    window.location.pathname
+                );
+
                 setTimeout(() => {
                     window.location.replace("dashboard.html");
                 }, 1200);
@@ -227,13 +252,8 @@
             }
         }
 
-
-        // =====================================
-        // JALANKAN CALLBACK
-        // =====================================
-
+        // JALANKAN PROSES CALLBACK
         handleAuthCallback();
-
     </script>
     </body>
 </html>
