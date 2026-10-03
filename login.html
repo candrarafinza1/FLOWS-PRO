@@ -1,66 +1,30 @@
+
 <!DOCTYPE html>
 <html lang="id">
-
 <head>
-
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+    <title>Masuk Akun | FLOWS-PRO</title>
 
-    <title>Login | FLOWS-PRO</title>
+    <!-- GOOGLE FONT -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <meta
-        name="description"
-        content="Login ke sistem monitoring FLOWS-PRO"
-    >
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-
-    <!-- =========================================
-         FONT
-    ========================================== -->
-
-    <link
-        rel="preconnect"
-        href="https://fonts.googleapis.com"
-    >
-
-    <link
-        rel="preconnect"
-        href="https://fonts.gstatic.com"
-        crossorigin
-    >
-
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
-        rel="stylesheet"
-    >
-
-
-    <!-- =========================================
-         FONT AWESOME
-    ========================================== -->
-
-    <link
-        rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-    >
-
-
-    <!-- =========================================
-         SUPABASE
-    ========================================== -->
-
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-
-    <!-- =========================================
-         STYLE PART 1
-    ========================================== -->
+    <!-- FONT AWESOME -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
     <style>
+        :root {
+            --primary: #0788ff;
+            --secondary: #00c6f7;
+            --dark: #071b2d;
+            --white: #ffffff;
+            --muted: #aab9c8;
+            --border: rgba(255,255,255,0.13);
+        }
 
         * {
             margin: 0;
@@ -68,2451 +32,591 @@
             box-sizing: border-box;
         }
 
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-
         body {
-
+            font-family: 'Inter', sans-serif;
             min-height: 100vh;
-
-            font-family:
-                "Inter",
-                sans-serif;
+            color: var(--white);
 
             background:
                 linear-gradient(
-                    135deg,
-                    #eaf8ff 0%,
-                    #f7fcff 45%,
-                    #dff5ff 100%
-                );
-
-            color: #082f49;
-
-            overflow-x: hidden;
-
-        }
-
-
-        button,
-        input {
-            font-family: inherit;
-        }
-
-
-        a {
-            text-decoration: none;
-        }
-
-
-        /* =====================================
-           BACKGROUND WATER EFFECT
-        ====================================== */
-
-        .water-background {
-
-            position: fixed;
-
-            inset: 0;
-
-            overflow: hidden;
-
-            pointer-events: none;
-
-            z-index: 0;
-
-        }
-
-
-        .water-circle {
-
-            position: absolute;
-
-            border-radius: 50%;
-
-            border:
-                1px solid
-                rgba(14,165,233,0.10);
-
-        }
-
-
-        .water-circle.one {
-
-            width: 500px;
-            height: 500px;
-
-            right: -220px;
-            top: -180px;
-
-        }
-
-
-        .water-circle.two {
-
-            width: 700px;
-            height: 700px;
-
-            left: -430px;
-            bottom: -400px;
-
-        }
-
-
-        .water-circle.three {
-
-            width: 300px;
-            height: 300px;
-
-            right: 10%;
-            bottom: -180px;
-
-        }
-
-
-        /* =====================================
-           TOP NAVIGATION
-        ====================================== */
-
-        .top-nav {
-
-            position: relative;
-
-            z-index: 10;
-
-            width: 100%;
-
-            padding:
-                22px 6%;
+                    rgba(3,20,37,0.84),
+                    rgba(3,20,37,0.92)
+                ),
+                url('banjir.jpg') center/cover fixed;
 
             display: flex;
-
-            align-items: center;
-
-            justify-content: space-between;
-
-        }
-
-
-        .brand {
-
-            display: flex;
-
-            align-items: center;
-
-            gap: 10px;
-
-            color: #073b5c;
-
-            font-size: 18px;
-
-            font-weight: 800;
-
-        }
-
-
-        .brand img {
-
-            width: 42px;
-            height: 42px;
-
-            object-fit: contain;
-
-        }
-
-
-        .brand span {
-
-            color: #0797d5;
-
-        }
-
-
-        .back-home {
-
-            display: inline-flex;
-
-            align-items: center;
-
-            gap: 8px;
-
-            padding:
-                9px 14px;
-
-            border-radius: 10px;
-
-            color: #075985;
-
-            background:
-                rgba(255,255,255,0.75);
-
-            border:
-                1px solid
-                rgba(14,165,233,0.12);
-
-            font-size: 10px;
-
-            font-weight: 700;
-
-            transition:
-                0.3s ease;
-
-        }
-
-
-        .back-home:hover {
-
-            background: white;
-
-            transform:
-                translateY(-2px);
-
-            box-shadow:
-                0 8px 20px
-                rgba(14,165,233,0.10);
-
-        }
-
-
-        /* =====================================
-           MAIN LOGIN AREA
-        ====================================== */
-
-        .login-wrapper {
-
-            position: relative;
-
-            z-index: 2;
-
-            min-height:
-                calc(100vh - 90px);
-
-            display: flex;
-
-            align-items: center;
-
             justify-content: center;
-
-            padding:
-                35px 20px 60px;
-
+            align-items: center;
+            padding: 30px 16px;
         }
 
+        /* LOGIN CONTAINER */
 
         .login-container {
-
             width: 100%;
+            max-width: 460px;
+            padding: 40px;
 
-            max-width: 1050px;
+            background: rgba(255,255,255,0.105);
+            border: 1px solid var(--border);
+            border-radius: 26px;
 
-            display: grid;
+            backdrop-filter: blur(22px);
+            -webkit-backdrop-filter: blur(22px);
 
-            grid-template-columns:
-                1fr
-                1fr;
+            box-shadow: 0 25px 70px rgba(0,0,0,0.25);
 
-            background:
-                rgba(255,255,255,0.88);
-
-            border:
-                1px solid
-                rgba(255,255,255,0.9);
-
-            border-radius: 28px;
-
-            overflow: hidden;
-
-            box-shadow:
-                0 30px 80px
-                rgba(8,47,73,0.12);
-
-            backdrop-filter:
-                blur(15px);
-
+            animation: fadeUp 0.65s ease both;
         }
 
+        /* ANIMASI */
 
-        /* =====================================
-           LEFT PANEL
-        ====================================== */
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(18px);
+            }
 
-        .login-visual {
-
-            position: relative;
-
-            min-height: 590px;
-
-            padding:
-                50px;
-
-            display: flex;
-
-            flex-direction: column;
-
-            justify-content: center;
-
-            overflow: hidden;
-
-            background:
-                linear-gradient(
-                    145deg,
-                    #0369a1,
-                    #0284c7 50%,
-                    #0ea5e9
-                );
-
-            color: white;
-
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
+        /* HEADER */
 
-        .login-visual::before {
-
-            content: "";
-
-            position: absolute;
-
-            width: 400px;
-            height: 400px;
-
-            border-radius: 50%;
-
-            right: -200px;
-            top: -160px;
-
-            border:
-                1px solid
-                rgba(255,255,255,0.16);
-
-            box-shadow:
-                0 0 0 45px
-                rgba(255,255,255,0.025),
-
-                0 0 0 90px
-                rgba(255,255,255,0.018);
-
-        }
-
-
-        .login-visual::after {
-
-            content: "";
-
-            position: absolute;
-
-            width: 280px;
-            height: 280px;
-
-            border-radius: 50%;
-
-            left: -150px;
-            bottom: -130px;
-
-            border:
-                1px solid
-                rgba(255,255,255,0.12);
-
-        }
-
-
-        .visual-content {
-
-            position: relative;
-
-            z-index: 2;
-
-        }
-
-
-        .visual-badge {
-
-            display: inline-flex;
-
-            align-items: center;
-
-            gap: 7px;
-
-            width: fit-content;
-
-            padding:
-                8px 11px;
-
-            margin-bottom: 25px;
-
-            border-radius: 20px;
-
-            background:
-                rgba(255,255,255,0.12);
-
-            border:
-                1px solid
-                rgba(255,255,255,0.14);
-
-            font-size: 9px;
-
-            font-weight: 700;
-
-            letter-spacing:
-                0.5px;
-
-        }
-
-
-        .visual-badge i {
-
-            color: #b8f1ff;
-
-        }
-
-
-        .visual-title {
-
-            font-size: 38px;
-
-            line-height: 1.15;
-
-            font-weight: 800;
-
-            letter-spacing:
-                -1.5px;
-
-            margin-bottom: 18px;
-
-        }
-
-
-        .visual-title span {
-
-            color: #b9f2ff;
-
-        }
-
-
-        .visual-description {
-
-            max-width: 420px;
-
-            color:
-                rgba(255,255,255,0.78);
-
-            font-size: 12px;
-
-            line-height: 1.8;
-
+        .login-header {
+            text-align: center;
             margin-bottom: 32px;
-
         }
 
-
-        /* =====================================
-           SYSTEM FEATURES
-        ====================================== */
-
-        .visual-features {
-
-            display: grid;
-
-            grid-template-columns:
-                repeat(2, 1fr);
-
-            gap: 10px;
-
-            max-width: 400px;
-
+        .login-logo {
+            width: 155px;
+            max-height: 65px;
+            object-fit: contain;
+            margin-bottom: 22px;
         }
 
-
-        .visual-feature {
-
-            display: flex;
-
-            align-items: center;
-
-            gap: 9px;
-
-            padding:
-                11px;
-
-            border-radius: 10px;
-
-            background:
-                rgba(255,255,255,0.08);
-
-            border:
-                1px solid
-                rgba(255,255,255,0.08);
-
-        }
-
-
-        .visual-feature-icon {
-
-            width: 30px;
-            height: 30px;
-
-            flex-shrink: 0;
-
-            display: flex;
-
-            align-items: center;
-
-            justify-content: center;
-
-            border-radius: 8px;
-
-            background:
-                rgba(255,255,255,0.12);
-
-            color: #c5f5ff;
-
-            font-size: 11px;
-
-        }
-
-
-        .visual-feature-text {
-
-            font-size: 9px;
-
-            color:
-                rgba(255,255,255,0.76);
-
-        }
-
-
-        /* =====================================
-           RIGHT LOGIN PANEL
-        ====================================== */
-
-        .login-panel {
-
-            padding:
-                50px;
-
-            display: flex;
-
-            flex-direction: column;
-
-            justify-content: center;
-
-            background:
-                rgba(255,255,255,0.95);
-
-        }
-
-
-        .login-heading {
-
-            margin-bottom: 30px;
-
-        }
-
-
-        .login-label {
-
-            display: inline-block;
-
-            margin-bottom: 9px;
-
-            color: #0284c7;
-
-            font-size: 9px;
-
-            font-weight: 800;
-
-            letter-spacing:
-                1.2px;
-
-        }
-
-
-        .login-heading h1 {
-
-            color: #082f49;
-
+        .login-header h1 {
             font-size: 28px;
-
-            line-height: 1.2;
-
             font-weight: 800;
-
-            margin-bottom: 9px;
-
+            letter-spacing: -0.5px;
+            margin-bottom: 12px;
         }
 
-
-        .login-heading p {
-
-            color: #64748b;
-
-            font-size: 11px;
-
+        .login-header p {
+            color: var(--muted);
+            font-size: 13px;
             line-height: 1.7;
-
         }
 
+        /* BADGE */
 
-        /* =====================================
-           FORM
-        ====================================== */
+        .security-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+
+            margin-top: 18px;
+            padding: 9px 15px;
+
+            border-radius: 30px;
+            background: rgba(30,190,120,0.12);
+            border: 1px solid rgba(30,190,120,0.2);
+
+            color: #7ee7b0;
+            font-size: 11px;
+        }
+
+        /* FORM */
 
         .form-group {
-
-            margin-bottom: 18px;
-
+            margin-bottom: 20px;
         }
 
-
-        .form-label {
-
+        .form-group label {
             display: block;
+            margin-bottom: 9px;
 
-            margin-bottom: 7px;
-
-            color: #164e63;
-
-            font-size: 10px;
-
-            font-weight: 700;
-
+            color: #e4edf6;
+            font-size: 12px;
+            font-weight: 600;
         }
-
 
         .input-wrapper {
-
             position: relative;
-
         }
 
-
-        .input-icon {
-
+        .input-wrapper > i {
             position: absolute;
-
-            left: 14px;
-
+            left: 16px;
             top: 50%;
+            transform: translateY(-50%);
 
-            transform:
-                translateY(-50%);
-
-            color: #38a9d6;
-
-            font-size: 12px;
-
+            color: #94a5b5;
+            font-size: 14px;
             pointer-events: none;
-
         }
 
-
-        .form-input {
-
+        .form-control {
             width: 100%;
+            height: 52px;
+            padding: 0 16px 0 45px;
 
-            height: 46px;
-
-            padding:
-                0 42px;
-
-            border:
-                1px solid
-                #d8eaf2;
-
-            border-radius: 11px;
+            border: 1px solid var(--border);
+            border-radius: 13px;
 
             outline: none;
+            background: rgba(255,255,255,0.075);
 
-            background: #fafdff;
+            color: var(--white);
+            font-family: inherit;
+            font-size: 13px;
 
-            color: #0f3b56;
-
-            font-size: 11px;
-
-            transition:
-                0.25s ease;
-
+            transition: 0.25s ease;
         }
 
-
-        .form-input::placeholder {
-
-            color: #a5b9c5;
-
+        .form-control::placeholder {
+            color: #8d9ba9;
         }
 
-
-        .form-input:focus {
-
-            border-color:
-                #38bdf8;
-
-            background: white;
-
-            box-shadow:
-                0 0 0 3px
-                rgba(56,189,248,0.10);
-
+        .form-control:focus {
+            border-color: var(--secondary);
+            background: rgba(255,255,255,0.11);
+            box-shadow: 0 0 0 3px rgba(0,198,247,0.09);
         }
-
-
+    </style>
+</head>
         .password-toggle {
-
             position: absolute;
-
-            right: 13px;
-
+            right: 14px;
             top: 50%;
-
-            transform:
-                translateY(-50%);
-
-            border: none;
-
-            background: transparent;
-
-            color: #8ba7b7;
-
+            transform: translateY(-50%);
+            color: #8ba3b8;
             cursor: pointer;
-
-            font-size: 11px;
-
+            transition: color 0.3s ease;
         }
-
 
         .password-toggle:hover {
-
-            color: #0284c7;
-
+            color: var(--primary);
         }
 
-
-        /* =====================================
-           LOGIN OPTIONS
-        ====================================== */
-
-        .login-options {
-
+        .form-options {
             display: flex;
-
-            align-items: center;
-
             justify-content: space-between;
-
+            align-items: center;
             gap: 10px;
-
-            margin:
-                3px 0 20px;
-
+            margin: 5px 0 22px;
+            font-size: 13px;
         }
-
 
         .remember-me {
-
             display: flex;
-
             align-items: center;
-
             gap: 7px;
-
-            color: #64748b;
-
-            font-size: 9px;
-
-            cursor: pointer;
-
+            color: var(--muted);
         }
-
 
         .remember-me input {
-
-            accent-color: #0284c7;
-
-        }
-
-
-        .forgot-password {
-
-            color: #0284c7;
-
-            font-size: 9px;
-
-            font-weight: 700;
-
+            accent-color: var(--primary);
             cursor: pointer;
-
         }
 
-
-        .forgot-password:hover {
-
-            color: #0369a1;
-
+        .forgot-link {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
         }
 
+        .forgot-link:hover {
+            color: var(--secondary);
+        }
 
-        /* =====================================
-           LOGIN BUTTON
-        ====================================== */
-
-        .login-button {
-
+        .btn-login {
             width: 100%;
-
-            height: 46px;
-
+            padding: 14px;
             border: none;
-
-            border-radius: 11px;
-
-            background:
-                linear-gradient(
-                    135deg,
-                    #0284c7,
-                    #0ea5e9
-                );
-
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: white;
-
-            font-size: 11px;
-
-            font-weight: 800;
-
+            font-size: 15px;
+            font-weight: 700;
             cursor: pointer;
-
-            box-shadow:
-                0 10px 25px
-                rgba(2,132,199,0.22);
-
-            transition:
-                0.3s ease;
-
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+            box-shadow: 0 8px 22px rgba(0, 136, 255, 0.25);
         }
 
-
-        .login-button:hover {
-
-            transform:
-                translateY(-2px);
-
-            box-shadow:
-                0 14px 30px
-                rgba(2,132,199,0.28);
-
+        .btn-login:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 28px rgba(0, 136, 255, 0.38);
         }
 
-
-        .login-button:active {
-
-            transform:
-                translateY(0);
-
+        .btn-login:disabled {
+            opacity: 0.65;
+            cursor: not-allowed;
+            transform: none;
         }
-
-
-        .login-button i {
-
-            margin-right: 7px;
-
-        }
-
-
-        /* =====================================
-           DIVIDER
-        ====================================== */
 
         .divider {
-
             display: flex;
-
             align-items: center;
-
-            gap: 10px;
-
-            margin:
-                22px 0;
-
-            color: #9db0bb;
-
-            font-size: 9px;
-
+            gap: 14px;
+            margin: 25px 0;
+            color: var(--muted);
+            font-size: 12px;
         }
-
 
         .divider::before,
         .divider::after {
-
             content: "";
-
             flex: 1;
-
             height: 1px;
-
-            background:
-                #e5eef2;
-
+            background: var(--border);
         }
 
-
-        /* =====================================
-           GOOGLE BUTTON
-        ====================================== */
-
-        .google-button {
-
+        .btn-google {
             width: 100%;
-
-            height: 45px;
-
-            display: flex;
-
-            align-items: center;
-
-            justify-content: center;
-
-            gap: 9px;
-
-            border:
-                1px solid
-                #d9e8ee;
-
-            border-radius: 11px;
-
-            background: white;
-
-            color: #365568;
-
-            font-size: 10px;
-
-            font-weight: 700;
-
-            cursor: pointer;
-
-            transition:
-                0.3s ease;
-
-        }
-
-
-        .google-button:hover {
-
-            background: #f8fcfe;
-
-            border-color:
-                #b9d8e5;
-
-            transform:
-                translateY(-1px);
-
-        }
-
-
-        .google-icon {
-
+            padding: 13px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.06);
+            color: white;
             font-size: 14px;
-
-        }
-
-
-        /* =====================================
-           REGISTER LINK
-        ====================================== */
-
-        .register-text {
-
-            text-align: center;
-
-            margin-top: 25px;
-
-            color: #78909c;
-
-            font-size: 10px;
-
-        }
-
-
-        .register-text a {
-
-            color: #0284c7;
-
-            font-weight: 800;
-
-        }
-
-
-        .register-text a:hover {
-
-            color: #0369a1;
-
-        }
-
-
-        /* =====================================
-           SECURITY INFO
-        ====================================== */
-
-        .security-info {
-
+            font-weight: 600;
+            cursor: pointer;
             display: flex;
-
-            justify-content: center;
-
             align-items: center;
+            justify-content: center;
+            gap: 11px;
+            transition: background 0.25s ease, border-color 0.25s ease;
+        }
 
-            gap: 6px;
+        .btn-google:hover {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: var(--primary);
+        }
 
+        .btn-google i {
+            color: #ffffff;
+            font-size: 17px;
+        }
+
+        .message {
+            display: none;
+            padding: 12px 14px;
+            margin-bottom: 18px;
+            border-radius: 10px;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .message.success {
+            display: block;
+            background: rgba(34, 197, 94, 0.12);
+            border: 1px solid rgba(34, 197, 94, 0.35);
+            color: #86efac;
+        }
+
+        .message.error {
+            display: block;
+            background: rgba(239, 68, 68, 0.12);
+            border: 1px solid rgba(239, 68, 68, 0.35);
+            color: #fca5a5;
+        }
+
+        .login-footer {
+            margin-top: 25px;
+            text-align: center;
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .login-footer a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        .login-footer a:hover {
+            color: var(--secondary);
+        }
+
+        .back-home {
+            display: block;
             margin-top: 18px;
-
-            color: #9aaeb9;
-
-            font-size: 8px;
-
+            text-align: center;
+            color: var(--muted);
+            text-decoration: none;
+            font-size: 13px;
+            transition: color 0.2s ease;
         }
 
-
-        .security-info i {
-
-            color: #22c55e;
-
+        .back-home:hover {
+            color: white;
         }
 
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
 
-        /* =====================================
-           RESPONSIVE
-        ====================================== */
-
-        @media (max-width: 850px) {
+        @media (max-width: 520px) {
+            body {
+                padding: 18px;
+            }
 
             .login-container {
-
-                grid-template-columns: 1fr;
-
-                max-width: 550px;
-
+                padding: 28px 22px;
+                border-radius: 18px;
             }
 
-
-            .login-visual {
-
-                min-height: auto;
-
-                padding: 40px;
-
+            .login-header h1 {
+                font-size: 25px;
             }
 
-
-            .visual-title {
-
-                font-size: 31px;
-
+            .form-options {
+                font-size: 12px;
             }
-
-
-            .visual-description {
-
-                max-width: 100%;
-
-            }
-
         }
-
-
-        @media (max-width: 600px) {
-
-            .top-nav {
-
-                padding:
-                    17px 5%;
-
-            }
-
-
-            .brand {
-
-                font-size: 15px;
-
-            }
-
-
-            .brand img {
-
-                width: 35px;
-                height: 35px;
-
-            }
-
-
-            .back-home {
-
-                padding:
-                    8px 10px;
-
-                font-size: 9px;
-
-            }
-
-
-            .login-wrapper {
-
-                padding:
-                    20px 12px 35px;
-
-            }
-
-
-            .login-container {
-
-                border-radius: 20px;
-
-            }
-
-
-            .login-visual {
-
-                padding: 32px 25px;
-
-            }
-
-
-            .login-panel {
-
-                padding: 32px 25px;
-
-            }
-
-
-            .visual-title {
-
-                font-size: 27px;
-
-            }
-
-
-            .visual-features {
-
-                grid-template-columns: 1fr;
-
-            }
-
-
-            .login-heading h1 {
-
-                font-size: 24px;
-
-            }
-
-        }
-
-    </style>
-
-</head>
-
-
-<body>
-
-
-    <!-- =========================================
-         BACKGROUND
-    ========================================== -->
-
-    <div class="water-background">
-
-        <div class="water-circle one"></div>
-
-        <div class="water-circle two"></div>
-
-        <div class="water-circle three"></div>
-
-    </div>
-
-
-
-    <!-- =========================================
-         TOP NAVIGATION
-    ========================================== -->
-
-    <header class="top-nav">
-
-
-        <a
-            href="index.html"
-            class="brand"
-        >
-
-            <img
-                src="LOGO_FLOWS-PRO-removebg-preview.png"
-                alt="Logo FLOWS-PRO"
-            >
-
-            <div>
-
-                FLOWS<span>-PRO</span>
-
+        <body>
+
+    <div class="login-container">
+
+        <div class="login-header">
+            <div class="login-logo">
+                <img src="LOGO_FLOWS-PRO-removebg-preview.png"
+                     alt="Logo FLOWS-PRO"
+                     onerror="this.style.display='none'">
             </div>
 
-        </a>
-
-
-        <a
-            href="index.html"
-            class="back-home"
-        >
-
-            <i class="fa-solid fa-arrow-left"></i>
-
-            Kembali ke Beranda
-
-        </a>
-
-
-    </header>
-
-
-
-    <!-- =========================================
-         LOGIN WRAPPER
-         
-         PART 2 AKAN DITEMPEL DI SINI
-    ========================================== -->
-
-    <main class="login-wrapper">
-
-        <div class="login-container">
-
-
-            <!-- =================================
-                 LEFT VISUAL PANEL
-            ================================== -->
-
-            <section class="login-visual">
-
-                <div class="visual-content">
-
-
-                    <div class="visual-badge">
-
-                        <i class="fa-solid fa-shield-halved"></i>
-
-                        FLOWS-PRO SECURE ACCESS
-
-                    </div>
-
-
-                    <h2 class="visual-title">
-
-                        Pantau Air.
-                        <br>
-
-                        <span>Cegah Banjir.</span>
-
-                    </h2>
-
-
-                    <p class="visual-description">
-
-                        Masuk ke sistem FLOWS-PRO untuk
-                        mengakses dashboard monitoring,
-                        data ketinggian air, histori sensor,
-                        dan informasi peringatan dini.
-
-                    </p>
-
-
-                    <div class="visual-features">
-
-
-                        <div class="visual-feature">
-
-                            <div class="visual-feature-icon">
-
-                                <i class="fa-solid fa-chart-line"></i>
-
-                            </div>
-
-                            <div class="visual-feature-text">
-
-                                Monitoring Realtime
-
-                            </div>
-
-                        </div>
-
-
-                        <div class="visual-feature">
-
-                            <div class="visual-feature-icon">
-
-                                <i class="fa-solid fa-database"></i>
-
-                            </div>
-
-                            <div class="visual-feature-text">
-
-                                Data Historis
-
-                            </div>
-
-                        </div>
-
-
-                        <div class="visual-feature">
-
-                            <div class="visual-feature-icon">
-
-                                <i class="fa-solid fa-bell"></i>
-
-                            </div>
-
-                            <div class="visual-feature-text">
-
-                                Early Warning
-
-                            </div>
-
-                        </div>
-
-
-                        <div class="visual-feature">
-
-                            <div class="visual-feature-icon">
-
-                                <i class="fa-solid fa-cloud"></i>
-
-                            </div>
-
-                            <div class="visual-feature-text">
-
-                                Cloud System
-
-                            </div>
-
-                        </div>
-
-
-                    </div>
-
-
-                </div>
-
-            </section>
-
-
-
-            <!-- =================================
-                 RIGHT PANEL
-                 
-                 PART 2 AKAN DILANJUTKAN DI SINI
-            ================================== -->
-
-            <section class="login-panel">
-                                <!-- =================================
-                     LOGIN HEADING
-                ================================== -->
-
-                <div class="login-heading">
-
-                    <span class="login-label">
-                        USER ACCESS
-                    </span>
-
-                    <h1>
-                        Selamat Datang Kembali
-                    </h1>
-
-                    <p>
-                        Masuk menggunakan akun FLOWS-PRO
-                        untuk melanjutkan ke dashboard.
-                    </p>
-
-                </div>
-
-
-
-                <!-- =================================
-                     LOGIN FORM
-                ================================== -->
-
-                <form
-                    id="loginForm"
-                    autocomplete="on"
-                >
-
-
-                    <!-- =============================
-                         EMAIL
-                    ============================== -->
-
-                    <div class="form-group">
-
-                        <label
-                            for="email"
-                            class="form-label"
-                        >
-                            Email
-                        </label>
-
-
-                        <div class="input-wrapper">
-
-                            <i
-                                class="fa-solid fa-envelope input-icon"
-                            ></i>
-
-
-                            <input
-                                type="email"
-                                id="email"
-                                name="email"
-                                class="form-input"
-                                placeholder="Masukkan email kamu"
-                                autocomplete="email"
-                                required
-                            >
-
-                        </div>
-
-                    </div>
-
-
-
-                    <!-- =============================
-                         PASSWORD
-                    ============================== -->
-
-                    <div class="form-group">
-
-                        <label
-                            for="password"
-                            class="form-label"
-                        >
-                            Password
-                        </label>
-
-
-                        <div class="input-wrapper">
-
-                            <i
-                                class="fa-solid fa-lock input-icon"
-                            ></i>
-
-
-                            <input
-                                type="password"
-                                id="password"
-                                name="password"
-                                class="form-input"
-                                placeholder="Masukkan password"
-                                autocomplete="current-password"
-                                required
-                            >
-
-
-                            <button
-                                type="button"
-                                class="password-toggle"
-                                id="togglePassword"
-                                aria-label="Tampilkan password"
-                            >
-
-                                <i
-                                    class="fa-solid fa-eye"
-                                ></i>
-
-                            </button>
-
-                        </div>
-
-                    </div>
-
-
-
-                    <!-- =============================
-                         OPTIONS
-                    ============================== -->
-
-                    <div class="login-options">
-
-
-                        <label class="remember-me">
-
-                            <input
-                                type="checkbox"
-                                id="rememberMe"
-                            >
-
-                            Ingat saya
-
-                        </label>
-
-
-                        <a
-                            href="#"
-                            class="forgot-password"
-                            id="forgotPassword"
-                        >
-
-                            Lupa password?
-
-                        </a>
-
-
-                    </div>
-
-
-
-                    <!-- =============================
-                         LOGIN BUTTON
-                    ============================== -->
-
-                    <button
-                        type="submit"
-                        class="login-button"
-                        id="loginButton"
-                    >
-
-                        <i
-                            class="fa-solid fa-right-to-bracket"
-                        ></i>
-
-                        Masuk ke Dashboard
-
-                    </button>
-
-
-                </form>
-
-
-
-                <!-- =================================
-                     DIVIDER
-                ================================== -->
-
-                <div class="divider">
-
-                    atau lanjutkan dengan
-
-                </div>
-
-
-
-                <!-- =================================
-                     GOOGLE LOGIN
-                ================================== -->
-
-                <button
-                    type="button"
-                    class="google-button"
-                    id="googleLoginButton"
-                >
-
-                    <i
-                        class="fa-brands fa-google google-icon"
-                    ></i>
-
-                    Masuk dengan Google
-
-                </button>
-
-
-
-                <!-- =================================
-                     REGISTER
-                ================================== -->
-
-                <div class="register-text">
-
-                    Belum memiliki akun?
-
-                    <a href="register.html">
-                        Daftar sekarang
-                    </a>
-
-                </div>
-
-
-
-                <!-- =================================
-                     SECURITY
-                ================================== -->
-
-                <div class="security-info">
-
-                    <i
-                        class="fa-solid fa-lock"
-                    ></i>
-
-                    Koneksi login dilindungi
-                    dengan sistem autentikasi aman.
-
-                </div>
-                                <!-- =================================
-                     STATUS MESSAGE
-                ================================== -->
-
-                <div
-                    id="statusMessage"
-                    style="
-                        display:none;
-                        margin-top:16px;
-                        padding:11px 13px;
-                        border-radius:10px;
-                        font-size:10px;
-                        line-height:1.6;
-                    "
-                ></div>
-
-
-
-                <!-- =================================
-                     SUPABASE AUTHENTICATION
-                ================================== -->
-
-                <script>
-
-                    /* =================================
-                       KONFIGURASI SUPABASE FLOWS-PRO
-                    ================================== */
-
-                    const SUPABASE_URL =
-                        "https://nydapuhnswrbgbjkaxqa.supabase.co";
-
-
-                    /*
-                     * Masukkan SUPABASE PUBLISHABLE KEY
-                     * milik project FLOWS-PRO di bawah ini.
-                     *
-                     * Jangan gunakan service_role key.
-                     */
-
-                    const SUPABASE_PUBLISHABLE_KEY =
-                        "MASUKKAN_PUBLISHABLE_KEY_DI_SINI";
-
-
-                    /* =================================
-                       CLIENT SUPABASE
-                    ================================== */
-
-                    const supabaseClient =
-                        window.supabase.createClient(
-                            SUPABASE_URL,
-                            SUPABASE_PUBLISHABLE_KEY
-                        );
-
-
-
-                    /* =================================
-                       ELEMENT
-                    ================================== */
-
-                    const loginForm =
-                        document.getElementById(
-                            "loginForm"
-                        );
-
-
-                    const loginButton =
-                        document.getElementById(
-                            "loginButton"
-                        );
-
-
-                    const googleLoginButton =
-                        document.getElementById(
-                            "googleLoginButton"
-                        );
-
-
-                    const passwordInput =
-                        document.getElementById(
-                            "password"
-                        );
-
-
-                    const togglePassword =
-                        document.getElementById(
-                            "togglePassword"
-                        );
-
-
-                    const forgotPassword =
-                        document.getElementById(
-                            "forgotPassword"
-                        );
-
-
-                    const statusMessage =
-                        document.getElementById(
-                            "statusMessage"
-                        );
-
-
-
-                    /* =================================
-                       STATUS MESSAGE FUNCTION
-                    ================================== */
-
-                    function showMessage(
-                        message,
-                        type = "error"
-                    ) {
-
-                        if (!statusMessage) {
-                            return;
-                        }
-
-
-                        statusMessage.style.display =
-                            "block";
-
-
-                        statusMessage.textContent =
-                            message;
-
-
-                        if (type === "success") {
-
-                            statusMessage.style.background =
-                                "#ecfdf5";
-
-                            statusMessage.style.border =
-                                "1px solid #bbf7d0";
-
-                            statusMessage.style.color =
-                                "#166534";
-
-                        }
-
-                        else if (type === "info") {
-
-                            statusMessage.style.background =
-                                "#eff6ff";
-
-                            statusMessage.style.border =
-                                "1px solid #bfdbfe";
-
-                            statusMessage.style.color =
-                                "#1d4ed8";
-
-                        }
-
-                        else {
-
-                            statusMessage.style.background =
-                                "#fef2f2";
-
-                            statusMessage.style.border =
-                                "1px solid #fecaca";
-
-                            statusMessage.style.color =
-                                "#b91c1c";
-
-                        }
-
-                    }
-
-
-
-                    /* =================================
-                       HIDE MESSAGE
-                    ================================== */
-
-                    function hideMessage() {
-
-                        if (!statusMessage) {
-                            return;
-                        }
-
-
-                        statusMessage.style.display =
-                            "none";
-
-                    }
-
-
-
-                    /* =================================
-                       PASSWORD TOGGLE
-                    ================================== */
-
-                    if (togglePassword) {
-
-                        togglePassword.addEventListener(
-                            "click",
-                            function() {
-
-                                const icon =
-                                    togglePassword.querySelector(
-                                        "i"
-                                    );
-
-
-                                if (
-                                    passwordInput.type ===
-                                    "password"
-                                ) {
-
-                                    passwordInput.type =
-                                        "text";
-
-
-                                    icon.className =
-                                        "fa-solid fa-eye-slash";
-
-
-                                    togglePassword.setAttribute(
-                                        "aria-label",
-                                        "Sembunyikan password"
-                                    );
-
-                                }
-
-                                else {
-
-                                    passwordInput.type =
-                                        "password";
-
-
-                                    icon.className =
-                                        "fa-solid fa-eye";
-
-
-                                    togglePassword.setAttribute(
-                                        "aria-label",
-                                        "Tampilkan password"
-                                    );
-
-                                }
-
-                            }
-                        );
-
-                    }
-
-
-
-                    /* =================================
-                       LOGIN EMAIL & PASSWORD
-                    ================================== */
-
-                    if (loginForm) {
-
-                        loginForm.addEventListener(
-                            "submit",
-                            async function(event) {
-
-                                event.preventDefault();
-
-
-                                hideMessage();
-
-
-                                const email =
-                                    document
-                                        .getElementById(
-                                            "email"
-                                        )
-                                        .value
-                                        .trim();
-
-
-                                const password =
-                                    passwordInput
-                                        .value;
-
-
-                                if (!email) {
-
-                                    showMessage(
-                                        "Email wajib diisi."
-                                    );
-
-                                    return;
-
-                                }
-
-
-                                if (!password) {
-
-                                    showMessage(
-                                        "Password wajib diisi."
-                                    );
-
-                                    return;
-
-                                }
-
-
-                                if (
-                                    !SUPABASE_PUBLISHABLE_KEY ||
-                                    SUPABASE_PUBLISHABLE_KEY ===
-                                    "MASUKKAN_PUBLISHABLE_KEY_DI_SINI"
-                                ) {
-
-                                    showMessage(
-                                        "Publishable Key Supabase belum dikonfigurasi."
-                                    );
-
-                                    return;
-
-                                }
-
-
-                                loginButton.disabled =
-                                    true;
-
-
-                                loginButton.innerHTML =
-                                    `
-                                    <i class="fa-solid fa-spinner fa-spin"></i>
-                                    Memproses login...
-                                    `;
-
-
-                                try {
-
-                                    const {
-                                        data,
-                                        error
-                                    } =
-                                        await supabaseClient
-                                            .auth
-                                            .signInWithPassword({
-                                                email:
-                                                    email,
-                                                password:
-                                                    password
-                                            });
-
-
-                                    if (error) {
-
-                                        console.error(
-                                            "Login error:",
-                                            error
-                                        );
-
-
-                                        showMessage(
-                                            getLoginErrorMessage(
-                                                error
-                                            )
-                                        );
-
-
-                                        return;
-
-                                    }
-
-
-                                    if (
-                                        !data ||
-                                        !data.user
-                                    ) {
-
-                                        showMessage(
-                                            "Login gagal. Data pengguna tidak ditemukan."
-                                        );
-
-                                        return;
-
-                                    }
-
-
-                                    showMessage(
-                                        "Login berhasil. Mengarahkan ke dashboard...",
-                                        "success"
-                                    );
-
-
-                                    /*
-                                     * Beri sedikit waktu agar
-                                     * pesan berhasil terlihat.
-                                     */
-
-                                    setTimeout(
-                                        function() {
-
-                                            window.location.href =
-                                                "dashboard.html";
-
-                                        },
-                                        700
-                                    );
-
-
-                                }
-
-                                catch (error) {
-
-                                    console.error(
-                                        "Unexpected login error:",
-                                        error
-                                    );
-
-
-                                    showMessage(
-                                        "Terjadi kesalahan saat login. Silakan coba lagi."
-                                    );
-
-                                }
-
-                                finally {
-
-                                    loginButton.disabled =
-                                        false;
-
-
-                                    loginButton.innerHTML =
-                                        `
-                                        <i class="fa-solid fa-right-to-bracket"></i>
-                                        Masuk ke Dashboard
-                                        `;
-
-                                }
-
-                            }
-                        );
-
-                    }
-
-
-
-                    /* =================================
-                       GOOGLE LOGIN
-                    ================================== */
-
-                    if (googleLoginButton) {
-
-                        googleLoginButton.addEventListener(
-                            "click",
-                            async function() {
-
-                                hideMessage();
-
-
-                                if (
-                                    !SUPABASE_PUBLISHABLE_KEY ||
-                                    SUPABASE_PUBLISHABLE_KEY ===
-                                    "MASUKKAN_PUBLISHABLE_KEY_DI_SINI"
-                                ) {
-
-                                    showMessage(
-                                        "Publishable Key Supabase belum dikonfigurasi."
-                                    );
-
-                                    return;
-
-                                }
-
-
-                                googleLoginButton.disabled =
-                                    true;
-
-
-                                googleLoginButton.innerHTML =
-                                    `
-                                    <i class="fa-solid fa-spinner fa-spin"></i>
-                                    Menghubungkan ke Google...
-                                    `;
-
-
-                                try {
-
-                                    const redirectUrl =
-                                        `${window.location.origin}/auth-callback.html`;
-
-
-                                    const {
-                                        data,
-                                        error
-                                    } =
-                                        await supabaseClient
-                                            .auth
-                                            .signInWithOAuth({
-
-                                                provider:
-                                                    "google",
-
-                                                options: {
-
-                                                    redirectTo:
-                                                        redirectUrl
-
-                                                }
-
-                                            });
-
-
-                                    if (error) {
-
-                                        console.error(
-                                            "Google login error:",
-                                            error
-                                        );
-
-
-                                        showMessage(
-                                            error.message ||
-                                            "Login Google gagal."
-                                        );
-
-
-                                        googleLoginButton.disabled =
-                                            false;
-
-
-                                        googleLoginButton.innerHTML =
-                                            `
-                                            <i class="fa-brands fa-google google-icon"></i>
-                                            Masuk dengan Google
-                                            `;
-
-                                    }
-
-                                }
-
-                                catch (error) {
-
-                                    console.error(
-                                        "Google login error:",
-                                        error
-                                    );
-
-
-                                    showMessage(
-                                        "Tidak dapat menghubungkan ke Google."
-                                    );
-
-
-                                    googleLoginButton.disabled =
-                                        false;
-
-
-                                    googleLoginButton.innerHTML =
-                                        `
-                                        <i class="fa-brands fa-google google-icon"></i>
-                                        Masuk dengan Google
-                                        `;
-
-                                }
-
-                            }
-                        );
-
-                    }
-
-
-
-                    /* =================================
-                       LUPA PASSWORD
-                    ================================== */
-
-                    if (forgotPassword) {
-
-                        forgotPassword.addEventListener(
-                            "click",
-                            async function(event) {
-
-                                event.preventDefault();
-
-
-                                hideMessage();
-
-
-                                const emailInput =
-                                    document.getElementById(
-                                        "email"
-                                    );
-
-
-                                const email =
-                                    emailInput
-                                        .value
-                                        .trim();
-
-
-                                if (!email) {
-
-                                    showMessage(
-                                        "Masukkan email terlebih dahulu untuk mereset password."
-                                    );
-
-
-                                    emailInput.focus();
-
-                                    return;
-
-                                }
-
-
-                                if (
-                                    !SUPABASE_PUBLISHABLE_KEY ||
-                                    SUPABASE_PUBLISHABLE_KEY ===
-                                    "sb_publishable_dypnRnjABFIf6GcshfrTIA_Q0zhuR0L"
-                                ) {
-
-                                    showMessage(
-                                        "Publishable Key Supabase belum dikonfigurasi."
-                                    );
-
-                                    return;
-
-                                }
-
-
-                                try {
-
-                                    const redirectUrl =
-                                        `${window.location.origin}/reset-password.html`;
-
-
-                                    const {
-                                        error
-                                    } =
-                                        await supabaseClient
-                                            .auth
-                                            .resetPasswordForEmail(
-                                                email,
-                                                {
-                                                    redirectTo:
-                                                        redirectUrl
-                                                }
-                                            );
-
-
-                                    if (error) {
-
-                                        console.error(
-                                            "Reset password error:",
-                                            error
-                                        );
-
-
-                                        showMessage(
-                                            error.message ||
-                                            "Gagal mengirim email reset password."
-                                        );
-
-
-                                        return;
-
-                                    }
-
-
-                                    showMessage(
-                                        "Email reset password telah dikirim. Silakan cek inbox email kamu.",
-                                        "success"
-                                    );
-
-                                }
-
-                                catch (error) {
-
-                                    console.error(
-                                        "Reset password error:",
-                                        error
-                                    );
-
-
-                                    showMessage(
-                                        "Terjadi kesalahan saat meminta reset password."
-                                    );
-
-                                }
-
-                            }
-                        );
-
-                    }
-
-
-
-                    /* =================================
-                       TERJEMAHKAN ERROR LOGIN
-                    ================================== */
-
-                    function getLoginErrorMessage(
-                        error
-                    ) {
-
-                        const message =
-                            (
-                                error?.message ||
-                                ""
-                            ).toLowerCase();
-
-
-                        if (
-                            message.includes(
-                                "invalid login credentials"
-                            )
-                        ) {
-
-                            return "Email atau password salah.";
-
-                        }
-
-
-                        if (
-                            message.includes(
-                                "email not confirmed"
-                            )
-                        ) {
-
-                            return "Email belum dikonfirmasi. Silakan cek inbox email kamu.";
-
-                        }
-
-
-                        if (
-                            message.includes(
-                                "user not found"
-                            )
-                        ) {
-
-                            return "Akun dengan email tersebut tidak ditemukan.";
-
-                        }
-
-
-                        if (
-                            message.includes(
-                                "too many requests"
-                            )
-                        ) {
-
-                            return "Terlalu banyak percobaan. Silakan tunggu beberapa saat.";
-
-                        }
-
-
-                        return (
-                            error?.message ||
-                            "Login gagal. Silakan coba lagi."
-                        );
-
-                    }
-
-
-
-                    /* =================================
-                       CEK SESSION YANG SUDAH ADA
-                    ================================== */
-
-                    async function checkExistingSession() {
-
-                        try {
-
-                            const {
-                                data,
-                                error
-                            } =
-                                await supabaseClient
-                                    .auth
-                                    .getSession();
-
-
-                            if (error) {
-
-                                console.error(
-                                    "Session check error:",
-                                    error
-                                );
-
-                                return;
-
-                            }
-
-
-                            if (
-                                data &&
-                                data.session &&
-                                data.session.user
-                            ) {
-
-                                /*
-                                 * Kalau pengguna sudah login,
-                                 * langsung diarahkan ke dashboard.
-                                 */
-
-                                window.location.href =
-                                    "dashboard.html";
-
-                            }
-
-                        }
-
-                        catch (error) {
-
-                            console.error(
-                                "Session check error:",
-                                error
-                            );
-
-                        }
-
-                    }
-
-
-                    checkExistingSession();
-
-                </script>
-                            </section>
-
+            <h1>Selamat Datang Kembali</h1>
+            <p>Masuk untuk memantau kondisi air secara real-time melalui FLOWS-PRO.</p>
+
+            <div class="security-badge">
+                <i class="fas fa-shield-alt"></i>
+                Sistem Monitoring Banjir
+            </div>
         </div>
 
-    </main>
+        <div id="message" class="message"></div>
 
+        <form id="loginForm">
 
-    <!-- =========================================
-         FOOTER LOGIN
-    ========================================== -->
+            <div class="form-group">
+                <label for="email">Email</label>
 
-    <footer
-        style="
-            position:relative;
-            z-index:2;
-            padding:0 20px 22px;
-            text-align:center;
-            color:#8ba7b7;
-            font-size:9px;
-        "
-    >
+                <div class="input-wrapper">
+                    <i class="fas fa-envelope input-icon"></i>
+                    <input
+                        type="email"
+                        id="email"
+                        class="form-control"
+                        placeholder="Masukkan email Anda"
+                        autocomplete="email"
+                        required>
+                </div>
+            </div>
 
-        <p>
-            © <span id="loginYear">2026</span>
-            FLOWS-PRO.
-            Flood Level Observation & Warning System.
-        </p>
+            <div class="form-group">
+                <label for="password">Password</label>
 
-        <p style="margin-top:6px;">
-            Pantau Air. Cegah Banjir.
-        </p>
+                <div class="input-wrapper">
+                    <i class="fas fa-lock input-icon"></i>
+                    <input
+                        type="password"
+                        id="password"
+                        class="form-control"
+                        placeholder="Masukkan password"
+                        autocomplete="current-password"
+                        required>
 
-    </footer>
+                    <i class="fas fa-eye password-toggle"
+                       id="togglePassword"></i>
+                </div>
+            </div>
 
+            <div class="form-options">
+                <label class="remember-me">
+                    <input type="checkbox" id="rememberMe">
+                    Ingat saya
+                </label>
 
-    <!-- =========================================
-         FOOTER SCRIPT
-    ========================================== -->
+                <a href="reset-password.html" class="forgot-link">
+                    Lupa password?
+                </a>
+            </div>
 
-    <script>
+            <button type="submit" class="btn-login" id="loginButton">
+                <i class="fas fa-sign-in-alt"></i>
+                Masuk ke Dashboard
+            </button>
 
-        const loginYear =
-            document.getElementById("loginYear");
+        </form>
 
-        if (loginYear) {
+        <div class="divider">atau masuk dengan</div>
 
-            loginYear.textContent =
-                new Date().getFullYear();
+        <button type="button" class="btn-google" id="googleLogin">
+            <i class="fab fa-google"></i>
+            Lanjutkan dengan Google
+        </button>
 
+        <div class="login-footer">
+            Belum punya akun?
+            <a href="register.html">Daftar sekarang</a>
+        </div>
+
+        <a href="index.html" class="back-home">
+            <i class="fas fa-arrow-left"></i>
+            Kembali ke Beranda
+        </a>
+
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+    const SUPABASE_URL = "https://nydapuhnswrbgbjkaxqa.supabase.co";
+
+    const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_dypnRnjABFIf6GcshfrTIA_Q0zhuR0L";
+
+    const supabaseClient = window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_PUBLISHABLE_KEY
+    );
+
+    const loginForm = document.getElementById("loginForm");
+    const loginButton = document.getElementById("loginButton");
+    const googleLogin = document.getElementById("googleLogin");
+    const messageBox = document.getElementById("message");
+    const passwordInput = document.getElementById("password");
+    const togglePassword = document.getElementById("togglePassword");
+
+    function showMessage(message, type) {
+        messageBox.textContent = message;
+        messageBox.className = "message " + type;
+    }
+
+    function setLoading(isLoading) {
+        loginButton.disabled = isLoading;
+
+        loginButton.innerHTML = isLoading
+            ? '<i class="fas fa-spinner fa-spin"></i> Memproses...'
+            : '<i class="fas fa-sign-in-alt"></i> Masuk ke Dashboard';
+    }
+
+    // Tampilkan atau sembunyikan password
+    togglePassword.addEventListener("click", function () {
+        const isPassword = passwordInput.type === "password";
+
+        passwordInput.type = isPassword ? "text" : "password";
+
+        togglePassword.classList.toggle("fa-eye", !isPassword);
+        togglePassword.classList.toggle("fa-eye-slash", isPassword);
+    });
+
+    // Login email dan password
+    loginForm.addEventListener("submit", async function (event) {
+        event.preventDefault();
+
+        const email = document.getElementById("email").value.trim();
+        const password = passwordInput.value;
+
+        setLoading(true);
+        showMessage("Sedang memverifikasi akun...", "success");
+
+        try {
+            const { data, error } = await supabaseClient.auth.signInWithPassword({
+                email: email,
+                password: password
+            });
+
+            if (error) {
+                throw error;
+            }
+
+            showMessage("Login berhasil! Mengalihkan ke dashboard...", "success");
+
+            setTimeout(function () {
+                window.location.href = "dashboard.html";
+            }, 800);
+
+        } catch (error) {
+            showMessage(
+                error.message || "Login gagal. Periksa email dan password.",
+                "error"
+            );
+
+            setLoading(false);
         }
+    });
 
-    </script>
+    // Login menggunakan Google
+    googleLogin.addEventListener("click", async function () {
+        googleLogin.disabled = true;
+        googleLogin.innerHTML =
+            '<i class="fas fa-spinner fa-spin"></i> Menghubungkan Google...';
 
+        try {
+            const { error } = await supabaseClient.auth.signInWithOAuth({
+                provider: "google",
+                options: {
+                    redirectTo: window.location.origin + "/auth-callback.html"
+                }
+            });
+
+            if (error) {
+                throw error;
+            }
+
+        } catch (error) {
+            showMessage(
+                error.message || "Login Google gagal. Silakan coba lagi.",
+                "error"
+            );
+
+            googleLogin.disabled = false;
+            googleLogin.innerHTML =
+                '<i class="fab fa-google"></i> Lanjutkan dengan Google';
+        }
+    });
+
+    // Jika pengguna sudah login, langsung ke dashboard
+    async function checkExistingSession() {
+        const { data, error } = await supabaseClient.auth.getSession();
+
+        if (!error && data.session) {
+            window.location.replace("dashboard.html");
+        }
+    }
+
+    checkExistingSession();
+</script>
 
 </body>
+</html>
+<!DOCTYPE html>
+<html lang="id">
 
+<head>
+    ...
+    <style>
+        CSS PART 1
+        CSS PART 2
+    </style>
+</head>
+
+<body>
+    HTML FORM PART 3
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <script>
+        JAVASCRIPT PART 4
+    </script>
+</body>
 </html>
