@@ -1315,60 +1315,101 @@ document.addEventListener("DOMContentLoaded", async function () {
     );
 
 
-    // =====================================
-    // ELEMENT REFERENCES
-    // =====================================
+// =====================================
+// ELEMENT REFERENCES
+// =====================================
 
-    const byId = (id) => document.getElementById(id);
+const byId = (id) => document.getElementById(id);
 
-    const currentDate = byId("currentDate");
-    const profileBtn = byId("profileBtn");
-    const profileDropdown = byId("profileDropdown");
-    const logoutBtn = byId("logoutBtn");
-
-
-    // =====================================
-    // TANGGAL
-    // =====================================
-
-    if (currentDate) {
-        currentDate.textContent = new Date().toLocaleDateString("id-ID", {
-            weekday: "long",
-            day: "numeric",
-            month: "long",
-            year: "numeric"
-        });
-    }
+const currentDate = byId("currentDate");
+const profileTrigger = byId("profileTrigger");
+const profileDropdown = byId("profileDropdown");
+const logoutButton = byId("logoutButton");
 
 
-    // =====================================
-    // PROFILE DROPDOWN
-    // =====================================
+// =====================================
+// TANGGAL
+// =====================================
 
-    if (profileBtn && profileDropdown) {
+if (currentDate) {
+    currentDate.textContent = new Date().toLocaleDateString("id-ID", {
+        weekday: "long",
+        day: "numeric",
+        month: "long",
+        year: "numeric"
+    });
+}
 
-        profileBtn.addEventListener("click", function (event) {
-            event.stopPropagation();
 
-            const isOpen = profileDropdown.classList.toggle("show");
+// =====================================
+// PROFILE DROPDOWN
+// =====================================
 
-            profileBtn.setAttribute("aria-expanded", String(isOpen));
-        });
+if (profileTrigger && profileDropdown) {
 
-        document.addEventListener("click", function (event) {
+    profileTrigger.addEventListener("click", function (event) {
 
-            if (
-                !profileDropdown.contains(event.target) &&
-                !profileBtn.contains(event.target)
-            ) {
-                profileDropdown.classList.remove("show");
-                profileBtn.setAttribute("aria-expanded", "false");
-            }
+        event.stopPropagation();
 
-        });
+        const isOpen = profileDropdown.classList.toggle("show");
 
-    }
+        profileTrigger.setAttribute("aria-expanded", String(isOpen));
 
+    });
+
+    document.addEventListener("click", function (event) {
+
+        if (
+            !profileDropdown.contains(event.target) &&
+            !profileTrigger.contains(event.target)
+        ) {
+
+            profileDropdown.classList.remove("show");
+
+            profileTrigger.setAttribute("aria-expanded", "false");
+
+        }
+
+    });
+
+}
+
+
+// =====================================
+// LOGOUT
+// =====================================
+
+if (logoutButton) {
+
+    logoutButton.addEventListener("click", async function () {
+
+        const confirmation = confirm("Yakin ingin keluar dari FLOWS-PRO?");
+
+        if (!confirmation) return;
+
+        logoutButton.disabled = true;
+
+        try {
+
+            const { error } = await supabaseClient.auth.signOut();
+
+            if (error) throw error;
+
+            window.location.replace("login.html");
+
+        } catch (error) {
+
+            console.error("Logout gagal:", error);
+
+            alert("Logout gagal. Silakan coba kembali.");
+
+            logoutButton.disabled = false;
+
+        }
+
+    });
+
+}
 
     // =====================================
     // CEK SESSION LOGIN
