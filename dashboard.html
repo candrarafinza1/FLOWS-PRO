@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -12,42 +11,39 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
     <style>
         :root {
-            --primary: #0788ff;
-            --primary-dark: #0565c5;
-            --secondary: #00c6f7;
-            --dark: #071b2d;
-            --dark-light: #102b43;
+            --navy: #071b2b;
+            --navy-light: #0d2b42;
+            --blue: #087fe8;
+            --cyan: #20c5dc;
+
+            --ink: #122c42;
+            --muted: #7d91a4;
+            --line: #e7eef4;
+            --background: #f3f7fb;
             --white: #ffffff;
-            --muted: #8ca2b8;
-            --background: #f3f7fc;
-            --border: #e6edf5;
-            --success: #16a34a;
-            --warning: #f59e0b;
-            --danger: #ef4444;
+
+            --green: #20a56b;
+            --amber: #e5a52d;
+            --red: #e25757;
+
+            --shadow: 0 14px 36px rgba(14, 49, 77, 0.055);
         }
 
         * {
-            margin: 0;
-            padding: 0;
             box-sizing: border-box;
         }
 
         body {
-            font-family: 'Inter', sans-serif;
+            margin: 0;
             background: var(--background);
-            color: #172b42;
-            min-height: 100vh;
-        }
-
-        button,
-        input {
-            font-family: inherit;
+            color: var(--ink);
+            font-family: "DM Sans", sans-serif;
         }
 
         a {
@@ -55,324 +51,949 @@
             color: inherit;
         }
 
-        .app-layout {
-            display: flex;
+        button {
+            font: inherit;
+            cursor: pointer;
+        }
+
+        .shell {
             min-height: 100vh;
+            display: flex;
         }
 
         /* SIDEBAR */
 
         .sidebar {
-            width: 260px;
-            min-height: 100vh;
-            background: var(--dark);
+            width: 252px;
+            flex: 0 0 252px;
+            background: linear-gradient(180deg, #081e30, #0b2a40);
             color: var(--white);
+            padding: 25px 15px 18px;
             display: flex;
             flex-direction: column;
-            padding: 24px 16px;
-            flex-shrink: 0;
         }
 
         .brand {
             display: flex;
             align-items: center;
-            gap: 12px;
-            padding: 0 10px 30px;
-            border-bottom: 1px solid rgba(255,255,255,.1);
+            gap: 11px;
+            padding: 2px 11px 26px;
+            border-bottom: 1px solid #ffffff17;
         }
 
-        .brand img {
-            width: 43px;
-            height: 43px;
-            object-fit: contain;
+        .brand-mark {
+            width: 39px;
+            height: 39px;
+            border-radius: 12px;
+            background: linear-gradient(145deg, #1bc5e2, #087fe8);
+            display: grid;
+            place-items: center;
+            box-shadow: 0 8px 20px #08a6d344;
         }
 
-        .brand-text h2 {
+        .brand-mark i {
             font-size: 17px;
+        }
+
+        .brand b {
+            font: 800 16px Manrope, sans-serif;
+            letter-spacing: 0.3px;
+        }
+
+        .brand small {
+            display: block;
+            color: #7ddff0;
+            font-size: 8px;
+            letter-spacing: 1.8px;
+            margin-top: 4px;
+        }
+
+        .nav-caption {
+            font-size: 9px;
             font-weight: 800;
-            letter-spacing: .5px;
+            letter-spacing: 1.6px;
+            color: #66839a;
+            padding: 25px 12px 10px;
         }
 
-        .brand-text span {
-            color: var(--secondary);
-            font-size: 10px;
-            letter-spacing: 2px;
+        .nav {
+            display: grid;
+            gap: 5px;
         }
 
-        .sidebar-label {
-            color: #71869b;
-            font-size: 10px;
-            font-weight: 700;
-            letter-spacing: 1.5px;
-            padding: 28px 12px 12px;
-        }
-
-        .sidebar-menu {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-
-        .menu-item {
+        .nav a {
             display: flex;
             align-items: center;
             gap: 13px;
-            padding: 13px 14px;
-            color: #9db0c4;
+            padding: 12px 13px;
             border-radius: 10px;
-            font-size: 13px;
-            font-weight: 500;
-            transition: .2s ease;
+            color: #a8bfd0;
+            font-size: 12px;
+            font-weight: 600;
+            transition: 0.18s;
         }
 
-        .menu-item i {
-            width: 18px;
+        .nav a i {
+            width: 17px;
             text-align: center;
-            font-size: 15px;
+            font-size: 14px;
         }
 
-        .menu-item:hover {
-            color: white;
-            background: rgba(255,255,255,.07);
+        .nav a:hover {
+            background: #ffffff0e;
+            color: #fff;
         }
 
-        .menu-item.active {
-            color: white;
-            background: linear-gradient(90deg, #087fe8, #0798f5);
-            box-shadow: 0 5px 18px rgba(7,136,255,.2);
+        .nav a.active {
+            color: #fff;
+            background: linear-gradient(100deg, #087fe8, #0aa7e7);
+            box-shadow: 0 7px 18px #087fe83b;
         }
 
-        .sidebar-bottom {
+        .side-bottom {
             margin-top: auto;
-            padding-top: 25px;
         }
 
-        /* MAIN CONTENT */
+        .connection {
+            padding: 14px;
+            border: 1px solid #ffffff17;
+            border-radius: 13px;
+            background: #ffffff09;
+        }
 
-        .main-content {
+        .connection-head {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 10px;
+            font-weight: 800;
+        }
+
+        .dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #35d39a;
+            box-shadow: 0 0 0 4px #35d39a20;
+        }
+
+        .connection p {
+            font-size: 10px;
+            color: #8ca8bb;
+            line-height: 1.6;
+            margin: 9px 0 0;
+        }
+
+        /* MAIN LAYOUT */
+
+        .main {
             flex: 1;
             min-width: 0;
-            padding: 28px 34px;
+            padding: 27px 34px 22px;
+            max-width: 1600px;
+            margin: 0 auto;
         }
 
         .topbar {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            gap: 20px;
-            margin-bottom: 32px;
+            gap: 16px;
+            margin-bottom: 25px;
         }
 
-        .page-heading h1 {
-            font-size: 25px;
+        .eyebrow {
+            font-size: 9px;
+            letter-spacing: 1.4px;
+            text-transform: uppercase;
+            color: #8ba0b2;
             font-weight: 800;
-            color: #102b43;
+            margin-bottom: 6px;
         }
 
-        .page-heading p {
-            margin-top: 7px;
-            color: #8193a6;
-            font-size: 13px;
+        .page-title {
+            font: 800 25px Manrope, sans-serif;
+            letter-spacing: -0.8px;
         }
 
-        .topbar-right {
+        .page-sub {
+            font-size: 11px;
+            color: var(--muted);
+            margin-top: 6px;
+        }
+
+        .actions {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 11px;
         }
 
-        .notification-btn {
-            width: 40px;
-            height: 40px;
-            border: 1px solid var(--border);
+        .square-btn {
+            width: 39px;
+            height: 39px;
+            border: 1px solid var(--line);
             border-radius: 12px;
             background: white;
-            color: #536b82;
-            cursor: pointer;
+            color: #678096;
+            position: relative;
         }
 
-        .profile-wrapper {
+        .square-btn .ping {
+            position: absolute;
+            right: 8px;
+            top: 7px;
+            width: 5px;
+            height: 5px;
+            background: #ef6262;
+            border-radius: 50%;
+            border: 1px solid white;
+        }
+
+        .profile {
             position: relative;
         }
 
         .profile-trigger {
             display: flex;
             align-items: center;
-            gap: 11px;
-            padding: 7px 12px;
-            border: 1px solid var(--border);
+            gap: 10px;
+            border: 1px solid var(--line);
+            background: #fff;
+            padding: 5px 10px 5px 6px;
             border-radius: 13px;
-            background: white;
-            cursor: pointer;
             text-align: left;
+            color: var(--ink);
         }
 
-        .profile-avatar {
-            width: 36px;
-            height: 36px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            background: #e4f2ff;
-            color: var(--primary-dark);
-            font-size: 14px;
+        .avatar {
+            width: 34px;
+            height: 34px;
+            border-radius: 11px;
+            background: #e4f3ff;
+            color: #087fe8;
+            display: grid;
+            place-items: center;
             font-weight: 800;
-        }
-
-        .profile-info {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
+            font-size: 12px;
         }
 
         .profile-name {
-            font-size: 12px;
-            font-weight: 700;
-            color: #18334c;
+            display: block;
+            font-size: 10px;
+            font-weight: 800;
         }
 
         .profile-role {
-            font-size: 10px;
-            color: #8ba0b5;
+            display: block;
+            font-size: 9px;
+            color: #91a4b5;
+            margin-top: 3px;
         }
 
         .profile-trigger > i {
-            color: #8ba0b5;
-            font-size: 11px;
+            font-size: 9px;
+            color: #8ca0b1;
             margin-left: 5px;
         }
 
-        .dashboard-content {
+        .dropdown {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: calc(100% + 9px);
+            width: 190px;
+            padding: 7px;
+            background: #fff;
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            z-index: 10;
+        }
+
+        .dropdown.show {
+            display: block;
+        }
+
+        .dropdown a,
+        .dropdown button {
             width: 100%;
+            display: flex;
+            gap: 9px;
+            align-items: center;
+            padding: 10px;
+            border: 0;
+            background: none;
+            text-align: left;
+            font-size: 11px;
+            color: #587085;
+            border-radius: 8px;
         }
 
-        @media (max-width: 900px) {
-            .sidebar {
-                width: 220px;
-            }
-
-            .main-content {
-                padding: 24px 20px;
-            }
+        .dropdown a:hover,
+        .dropdown button:hover {
+            background: #f2f7fb;
         }
 
-        @media (max-width: 650px) {
-            .sidebar {
-                display: none;
-            }
-
-            .main-content {
-                padding: 20px 15px;
-            }
-
-            .page-heading h1 {
-                font-size: 21px;
-            }
-
-            .profile-info {
-                display: none;
-            }
+        .dropdown button {
+            border-top: 1px solid var(--line);
+            border-radius: 0;
+            color: #d84c4c;
+            margin-top: 4px;
         }
-    </style>
+
+        /* WELCOME BANNER */
+
+        .hero {
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            padding: 25px 28px;
+            border-radius: 18px;
+            background: linear-gradient(112deg, #075fba 0%, #087fe8 48%, #13b7d4 100%);
+            color: white;
+            box-shadow: 0 13px 28px #087fe822;
+        }
+
+        .hero:after {
+            content: "";
+            position: absolute;
+            width: 260px;
+            height: 260px;
+            border: 1px solid #ffffff24;
+            border-radius: 50%;
+            right: 120px;
+            top: -155px;
+            box-shadow: 0 0 0 35px #ffffff08, 0 0 0 70px #ffffff06;
+        }
+
+        .hero-copy {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h2 {
+            font: 800 20px Manrope, sans-serif;
+            letter-spacing: -0.4px;
+            margin: 0 0 8px;
+        }
+
+        .hero p {
+            font-size: 11px;
+            line-height: 1.7;
+            color: #e3f6ff;
+            margin: 0;
+        }
+
+        .hero-date {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            padding: 11px 13px;
+            background: #ffffff1c;
+            border: 1px solid #ffffff25;
+            border-radius: 11px;
+            font-size: 10px;
+            white-space: nowrap;
+            backdrop-filter: blur(6px);
+        }
+
+        /* SECTION HEADINGS */
+
+        .section-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: end;
+            gap: 12px;
+            margin: 27px 0 13px;
+        }
+
+        .section-head h3 {
+            font: 800 14px Manrope, sans-serif;
+            margin: 0;
+        }
+
+        .section-head p {
+            font-size: 10px;
+            color: var(--muted);
+            margin: 5px 0 0;
+        }
+
+        .section-link {
+            font-size: 10px;
+            color: var(--blue);
+            font-weight: 800;
+        }
+'''
+/* =========================================
+   STATISTIC CARDS
+========================================= */
+
+.metrics {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 13px;
+}
+
+.metric {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 15px;
+    padding: 17px 18px;
+    box-shadow: 0 4px 16px #12324b05;
+    min-width: 0;
+    transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.metric:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow);
+}
+
+.metric-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.metric-icon {
+    width: 34px;
+    height: 34px;
+    border-radius: 11px;
+    background: #eaf4ff;
+    color: #087fe8;
+    display: grid;
+    place-items: center;
+    font-size: 13px;
+}
+
+.metric-icon.teal {
+    background: #e7faff;
+    color: #0aa4bd;
+}
+
+.metric-icon.gold {
+    background: #fff5e2;
+    color: #d99b24;
+}
+
+.metric-icon.purple {
+    background: #f2ebff;
+    color: #8b63d5;
+}
+
+.metric-label {
+    font-size: 10px;
+    color: #8398aa;
+    font-weight: 600;
+}
+
+.metric-value {
+    font: 800 21px Manrope, sans-serif;
+    letter-spacing: -.5px;
+    margin-top: 15px;
+    overflow-wrap: anywhere;
+}
+
+.metric-value small {
+    font: 600 10px "DM Sans";
+    color: #91a5b6;
+}
+
+.metric-foot {
+    font-size: 9px;
+    color: #9aabba;
+    margin-top: 6px;
+    min-height: 14px;
+}
+
+.metric-foot .ok {
+    color: var(--green);
+}
+
+/* =========================================
+   MONITORING PANELS
+========================================= */
+
+.content-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr);
+    gap: 14px;
+}
+
+.panel {
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 4px 16px #12324b05;
+    min-width: 0;
+}
+
+.panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.panel-title {
+    font: 800 12px Manrope, sans-serif;
+}
+
+.panel-sub {
+    font-size: 10px;
+    color: #9aabba;
+    margin-top: 5px;
+}
+
+.live-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #e9f8ef;
+    color: #188b53;
+    border-radius: 30px;
+    padding: 6px 9px;
+    font-size: 9px;
+    font-weight: 800;
+}
+
+.live-badge span {
+    width: 6px;
+    height: 6px;
+    background: #1aaa68;
+    border-radius: 50%;
+}
+
+.reading {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    margin-top: 26px;
+}
+
+.reading strong {
+    font: 800 50px Manrope, sans-serif;
+    letter-spacing: -2px;
+    color: #087fe8;
+}
+
+.reading span {
+    font-size: 12px;
+    color: #8da1b2;
+}
+
+.reading-note {
+    font-size: 10px;
+    color: #8da1b2;
+    margin-top: 4px;
+}
+
+.meter {
+    height: 9px;
+    border-radius: 30px;
+    background: #edf3f8;
+    overflow: hidden;
+    margin-top: 23px;
+}
+
+.meter-fill {
+    width: 0;
+    height: 100%;
+    background: linear-gradient(90deg, #087fe8, #1ac4d8);
+    border-radius: 30px;
+    transition: width .3s;
+}
+
+.meter-scale {
+    display: flex;
+    justify-content: space-between;
+    font-size: 9px;
+    color: #9aabba;
+    margin-top: 8px;
+}
+
+.panel-foot {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    border-top: 1px solid var(--line);
+    padding-top: 14px;
+    margin-top: 17px;
+}
+
+.panel-foot div {
+    display: grid;
+    gap: 5px;
+}
+
+.panel-foot small {
+    font-size: 9px;
+    color: #9aabba;
+}
+
+.panel-foot b {
+    font-size: 10px;
+}
+
+/* =========================================
+   DEVICE STATUS
+========================================= */
+
+.device-list {
+    margin-top: 13px;
+}
+
+.device {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    padding: 13px 0;
+    border-bottom: 1px solid #eff3f7;
+}
+
+.device:last-child {
+    border-bottom: 0;
+}
+
+.device-icon {
+    width: 32px;
+    height: 32px;
+    flex: 0 0 32px;
+    display: grid;
+    place-items: center;
+    border-radius: 10px;
+    background: #eef6ff;
+    color: #087fe8;
+    font-size: 12px;
+}
+
+.device-copy {
+    flex: 1;
+    min-width: 0;
+}
+
+.device-copy b {
+    display: block;
+    font-size: 10px;
+}
+
+.device-copy small {
+    display: block;
+    color: #9aabba;
+    font-size: 9px;
+    margin-top: 4px;
+}
+
+.device-status {
+    font-size: 9px;
+    color: #d59a27;
+    font-weight: 800;
+}
+
+.device-status.connected {
+    color: var(--green);
+}
+
+/* =========================================
+   QUICK ACCESS
+========================================= */
+
+.quick-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.quick {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    padding: 14px;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 13px;
+    transition: .18s;
+    min-width: 0;
+}
+
+.quick:hover {
+    transform: translateY(-2px);
+    border-color: #9acdf6;
+    box-shadow: 0 9px 20px #087fe80d;
+}
+
+.quick-icon {
+    width: 34px;
+    height: 34px;
+    flex: 0 0 34px;
+    border-radius: 10px;
+    background: #eaf4ff;
+    color: #087fe8;
+    display: grid;
+    place-items: center;
+}
+
+.quick-icon.purple {
+    background: #f2ebff;
+    color: #8b63d5;
+}
+
+.quick-icon.green {
+    background: #e9f8ef;
+    color: #199b5e;
+}
+
+.quick-icon.orange {
+    background: #fff5e2;
+    color: #d99b24;
+}
+
+.quick-copy {
+    min-width: 0;
+}
+
+.quick-copy b {
+    display: block;
+    font-size: 10px;
+    white-space: nowrap;
+}
+
+.quick-copy small {
+    display: block;
+    color: #9aabba;
+    font-size: 9px;
+    margin-top: 4px;
+}
+
+.quick > i {
+    font-size: 9px;
+    color: #a2b2c0;
+    margin-left: auto;
+}
+
+/* =========================================
+   FOOTER
+========================================= */
+
+.footer {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+    border-top: 1px solid var(--line);
+    margin-top: 27px;
+    padding-top: 15px;
+    color: #9aabba;
+    font-size: 9px;
+}
+/* =========================================
+   RESPONSIVE TABLET
+========================================= */
+
+@media (max-width: 1100px) {
+    .metrics {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .quick-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .main {
+        padding: 24px;
+    }
+}
+
+@media (max-width: 820px) {
+    .sidebar {
+        width: 215px;
+        flex-basis: 215px;
+    }
+
+    .content-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* =========================================
+   RESPONSIVE MOBILE
+========================================= */
+
+@media (max-width: 620px) {
+    .sidebar {
+        display: none;
+    }
+
+    .main {
+        padding: 17px 13px;
+    }
+
+    .page-title {
+        font-size: 21px;
+    }
+
+    .profile-name,
+    .profile-role {
+        display: none;
+    }
+
+    .hero {
+        display: block;
+        padding: 21px;
+    }
+
+    .hero h2 {
+        font-size: 17px;
+    }
+
+    .hero-date {
+        display: inline-flex;
+        margin-top: 15px;
+    }
+
+    .metrics {
+        gap: 9px;
+    }
+
+    .metric {
+        padding: 13px;
+    }
+
+    .metric-value {
+        font-size: 18px;
+    }
+
+    .metric-label {
+        font-size: 9px;
+    }
+
+    .quick-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .panel {
+        padding: 16px;
+    }
+
+    .reading strong {
+        font-size: 43px;
+    }
+
+    .footer {
+        display: block;
+        line-height: 1.9;
+    }
+}
+</style>
 </head>
-<body>
-    
-<div class="app-layout">
 
-    <!-- SIDEBAR -->
+<body>
+
+<div class="shell">
+
     <aside class="sidebar">
 
         <div class="brand">
-            <img src="LOGO_FLOWS-PRO-removebg-preview.png" alt="FLOWS-PRO Logo">
+            <div class="brand-mark">
+                <i class="fa-solid fa-water"></i>
+            </div>
 
-            <div class="brand-text">
-                <h2>FLOWS-PRO</h2>
-                <span>SMART FLOOD SYSTEM</span>
+            <div>
+                <b>FLOWS-PRO</b>
+                <small>SMART FLOOD SYSTEM</small>
             </div>
         </div>
 
-        <div class="sidebar-label">MENU UTAMA</div>
+        <div class="nav-caption">MENU UTAMA</div>
 
-        <nav class="sidebar-menu">
-
-            <a href="dashboard.html" class="menu-item active">
-                <i class="fas fa-house"></i>
-                <span>Dashboard</span>
+        <nav class="nav">
+            <a class="active" href="dashboard.html">
+                <i class="fa-solid fa-house"></i>
+                Dashboard
             </a>
 
-            <a href="live_sensor.html" class="menu-item">
-                <i class="fas fa-tower-broadcast"></i>
-                <span>Live Sensor</span>
+            <a href="live_sensor.html">
+                <i class="fa-solid fa-tower-broadcast"></i>
+                Live Sensor
             </a>
 
-            <a href="reports.html" class="menu-item">
-                <i class="fas fa-chart-line"></i>
-                <span>Histori & Laporan</span>
+            <a href="reports.html">
+                <i class="fa-solid fa-chart-line"></i>
+                Histori &amp; Laporan
             </a>
 
-            <a href="peta_banjir.html" class="menu-item">
-                <i class="fas fa-map-location-dot"></i>
-                <span>Peta Banjir</span>
+            <a href="peta_banjir.html">
+                <i class="fa-solid fa-map-location-dot"></i>
+                Peta Banjir
             </a>
 
-            <a href="weather.html" class="menu-item">
-                <i class="fas fa-cloud-sun"></i>
-                <span>Informasi Cuaca</span>
+            <a href="weather.html">
+                <i class="fa-solid fa-cloud-sun"></i>
+                Informasi Cuaca
             </a>
-
         </nav>
 
-        <div class="sidebar-label">PREFERENSI</div>
+        <div class="nav-caption">PREFERENSI</div>
 
-        <nav class="sidebar-menu">
-
-            <a href="profile.html" class="menu-item">
-                <i class="fas fa-user"></i>
-                <span>Profil Saya</span>
+        <nav class="nav">
+            <a href="profile.html">
+                <i class="fa-regular fa-user"></i>
+                Profil Saya
             </a>
 
-            <a href="settings.html" class="menu-item">
-                <i class="fas fa-gear"></i>
-                <span>Pengaturan</span>
+            <a href="settings.html">
+                <i class="fa-solid fa-gear"></i>
+                Pengaturan
             </a>
-
         </nav>
 
-        <div class="sidebar-bottom">
-            <div style="padding:15px;border-radius:12px;background:rgba(255,255,255,.06);">
-                <div style="display:flex;align-items:center;gap:9px;margin-bottom:8px;">
-                    <span style="width:8px;height:8px;border-radius:50%;background:#22c55e;"></span>
-                    <span style="font-size:11px;font-weight:700;">STATUS SISTEM</span>
+        <div class="side-bottom">
+            <div class="connection">
+                <div class="connection-head">
+                    <span class="dot"></span>
+                    SISTEM SIAP
                 </div>
 
-                <p style="font-size:11px;color:#8ca2b8;line-height:1.6;">
-                    FLOWS-PRO siap melakukan pemantauan.
+                <p>
+                    Ringkasan kondisi FLOWS-PRO.
+                    Data sensor akan muncul setelah integrasi aktif.
                 </p>
             </div>
         </div>
 
     </aside>
 
-    <!-- MAIN AREA -->
-    <main class="main-content">
+    <main class="main">
 
-        <!-- HEADER -->
         <header class="topbar">
 
-            <div class="page-heading">
-                <h1>Dashboard</h1>
-                <p>Ringkasan pemantauan dan kondisi sistem FLOWS-PRO.</p>
+            <div>
+                <div class="eyebrow">
+                    PUSAT KENDALI / RINGKASAN
+                </div>
+
+                <h1 class="page-title">Dashboard</h1>
+
+                <p class="page-sub">
+                    Pantau sistem peringatan banjir dari satu tempat.
+                </p>
             </div>
 
-            <div class="topbar-right">
+            <div class="actions">
 
-                <button class="notification-btn" type="button" title="Notifikasi">
-                    <i class="fas fa-bell"></i>
+                <button class="square-btn" aria-label="Notifikasi" type="button">
+                    <i class="fa-regular fa-bell"></i>
+                    <span class="ping"></span>
                 </button>
 
-                <!-- PROFIL PENGGUNA -->
-                <div class="profile-wrapper">
+                <div class="profile">
 
                     <button
                         class="profile-trigger"
@@ -380,40 +1001,35 @@
                         type="button"
                         aria-expanded="false"
                     >
+                        <span class="avatar" id="profileAvatar">U</span>
 
-                        <div class="profile-avatar" id="profileAvatar">
-                            U
-                        </div>
-
-                        <div class="profile-info">
+                        <span>
                             <span class="profile-name" id="profileName">
                                 Memuat pengguna...
                             </span>
 
-                            <span class="profile-role" id="profileRole">
+                            <small class="profile-role" id="profileRole">
                                 OPERATOR
-                            </span>
-                        </div>
+                            </small>
+                        </span>
 
-                        <i class="fas fa-chevron-down"></i>
-
+                        <i class="fa-solid fa-chevron-down"></i>
                     </button>
 
-                    <!-- MENU DROPDOWN -->
-                    <div id="profileDropdown" style="display:none;">
+                    <div class="dropdown" id="profileDropdown">
 
                         <a href="profile.html">
-                            <i class="fas fa-user"></i>
+                            <i class="fa-regular fa-user"></i>
                             Profil Saya
                         </a>
 
                         <a href="settings.html">
-                            <i class="fas fa-gear"></i>
+                            <i class="fa-solid fa-gear"></i>
                             Pengaturan Akun
                         </a>
 
                         <button id="logoutButton" type="button">
-                            <i class="fas fa-right-from-bracket"></i>
+                            <i class="fa-solid fa-right-from-bracket"></i>
                             Keluar dari Akun
                         </button>
 
@@ -424,844 +1040,270 @@
             </div>
 
         </header>
+        <!-- =====================================
+     WELCOME BANNER
+===================================== -->
 
-        <!-- ISI DASHBOARD AKAN DILANJUTKAN DI PART 3 -->
-        <section class="dashboard-content">
-            
-    <!-- WELCOME SECTION -->
-    <div class="welcome-section">
-        <div>
-            <h2>Selamat Datang di FLOWS-PRO 👋</h2>
-            <p>
-                Pantau kondisi ketinggian air dan sistem peringatan banjir
-                secara terpusat.
-            </p>
-        </div>
+<section class="hero">
 
-        <div class="date-display">
-            <i class="fas fa-calendar-days"></i>
-            <span id="currentDate">Memuat tanggal...</span>
-        </div>
+    <div class="hero-copy">
+        <h2>Selamat datang kembali 👋</h2>
+
+        <p>
+            FLOWS-PRO membantu memantau ketinggian air dan kesiapsiagaan
+            <br>
+            banjir secara lebih terarah dan mudah dipahami.
+        </p>
     </div>
 
-    <!-- SYSTEM STATUS -->
-    <div class="section-heading">
-        <div>
-            <h3>Status Sistem</h3>
-            <p>Informasi kondisi pemantauan terkini</p>
-        </div>
+    <div class="hero-date">
+        <i class="fa-regular fa-calendar"></i>
+        <span id="currentDate">Memuat tanggal...</span>
     </div>
 
-    <div class="stats-grid">
-
-        <!-- STATUS SENSOR -->
-        <div class="stat-card">
-            <div class="stat-top">
-                <div class="stat-icon blue">
-                    <i class="fas fa-tower-broadcast"></i>
-                </div>
-                <span class="stat-label">Koneksi Sensor</span>
-            </div>
-
-            <h2 id="sensorConnection">Memuat...</h2>
-            <p id="sensorConnectionInfo">Memeriksa koneksi perangkat</p>
-        </div>
-
-        <!-- KETINGGIAN AIR -->
-        <div class="stat-card">
-            <div class="stat-top">
-                <div class="stat-icon cyan">
-                    <i class="fas fa-water"></i>
-                </div>
-                <span class="stat-label">Ketinggian Air</span>
-            </div>
-
-            <h2><span id="waterLevel">--</span> <small>cm</small></h2>
-            <p>Data pembacaan sensor terakhir</p>
-        </div>
-
-        <!-- STATUS BANJIR -->
-        <div class="stat-card">
-            <div class="stat-top">
-                <div class="stat-icon orange">
-                    <i class="fas fa-triangle-exclamation"></i>
-                </div>
-                <span class="stat-label">Status Peringatan</span>
-            </div>
-
-            <h2 id="floodStatus">--</h2>
-            <p id="floodStatusInfo">Menunggu data sensor</p>
-        </div>
-
-        <!-- UPDATE TERAKHIR -->
-        <div class="stat-card">
-            <div class="stat-top">
-                <div class="stat-icon purple">
-                    <i class="fas fa-clock"></i>
-                </div>
-                <span class="stat-label">Pembaruan Terakhir</span>
-            </div>
-
-            <h2 id="lastUpdate">--:--</h2>
-            <p id="lastUpdateDate">Belum ada data diterima</p>
-        </div>
-
-    </div>
-
-    <!-- MONITORING OVERVIEW -->
-    <div class="section-heading">
-        <div>
-            <h3>Ringkasan Pemantauan</h3>
-            <p>Gambaran umum aktivitas FLOWS-PRO</p>
-        </div>
-
-        <a href="live_sensor.html" class="view-link">
-            Lihat Sensor
-            <i class="fas fa-arrow-right"></i>
-        </a>
-    </div>
-
-    <div class="monitoring-grid">
-
-        <!-- WATER LEVEL PANEL -->
-        <div class="content-card water-panel">
-
-            <div class="card-header">
-                <div>
-                    <h3>Monitoring Ketinggian Air</h3>
-                    <p>Pembacaan sensor secara real-time</p>
-                </div>
-
-                <span class="live-indicator">
-                    <span></span>
-                    LIVE
-                </span>
-            </div>
-
-            <div class="water-display">
-
-                <div class="water-value">
-                    <h1 id="mainWaterLevel">--</h1>
-                    <span>cm</span>
-                </div>
-
-                <p id="waterDescription">
-                    Menunggu data ketinggian air...
-                </p>
-
-                <div class="water-progress">
-                    <div id="waterProgressBar"></div>
-                </div>
-
-                <div class="water-scale">
-                    <span>0 cm</span>
-                    <span id="waterMaxScale">Batas pemantauan</span>
-                </div>
-
-            </div>
-
-            <div class="water-footer">
-                <div>
-                    <span class="footer-label">Status Saat Ini</span>
-                    <strong id="mainFloodStatus">MENUNGGU DATA</strong>
-                </div>
-
-                <div>
-                    <span class="footer-label">Sumber Data</span>
-                    <strong>Sensor FLOWS-PRO</strong>
-                </div>
-            </div>
-
-        </div>
-
-        <!-- DEVICE INFORMATION -->
-        <div class="content-card device-panel">
-
-            <div class="card-header">
-                <div>
-                    <h3>Informasi Perangkat</h3>
-                    <p>Komponen utama sistem</p>
-                </div>
-
-                <i class="fas fa-microchip device-header-icon"></i>
-            </div>
-
-            <div class="device-list">
-
-                <div class="device-item">
-                    <div class="device-icon">
-                        <i class="fas fa-microchip"></i>
-                    </div>
-
-                    <div class="device-detail">
-                        <strong>ESP32 / Wemos</strong>
-                        <span>Unit pemrosesan data</span>
-                    </div>
-
-                    <span class="device-status" id="controllerStatus">
-                        Memuat
-                    </span>
-                </div>
-
-                <div class="device-item">
-                    <div class="device-icon">
-                        <i class="fas fa-ruler-vertical"></i>
-                    </div>
-
-                    <div class="device-detail">
-                        <strong>Sensor Ketinggian Air</strong>
-                        <span>Pengukuran permukaan air</span>
-                    </div>
-
-                    <span class="device-status" id="sensorStatus">
-                        Memuat
-                    </span>
-                </div>
-
-                <div class="device-item">
-                    <div class="device-icon">
-                        <i class="fas fa-cloud"></i>
-                    </div>
-
-                    <div class="device-detail">
-                        <strong>Supabase Cloud</strong>
-                        <span>Penyimpanan data sistem</span>
-                    </div>
-
-                    <span class="device-status" id="databaseStatus">
-                        Memuat
-                    </span>
-                </div>
-
-            </div>
-
-            <a href="settings.html" class="device-link">
-                Pengaturan Sistem
-                <i class="fas fa-arrow-right"></i>
-            </a>
-
-        </div>
-
-    </div>
-
-    <!-- QUICK ACCESS -->
-    <div class="section-heading">
-        <div>
-            <h3>Akses Cepat</h3>
-            <p>Menu utama untuk mengelola pemantauan</p>
-        </div>
-    </div>
-
-    <div class="quick-access-grid">
-
-        <a href="live_sensor.html" class="quick-card">
-            <div class="quick-icon blue">
-                <i class="fas fa-chart-line"></i>
-            </div>
-            <div>
-                <strong>Live Sensor</strong>
-                <span>Pantau data sensor</span>
-            </div>
-            <i class="fas fa-chevron-right quick-arrow"></i>
-        </a>
-
-        <a href="reports.html" class="quick-card">
-            <div class="quick-icon purple">
-                <i class="fas fa-file-lines"></i>
-            </div>
-            <div>
-                <strong>Histori & Laporan</strong>
-                <span>Lihat riwayat pengukuran</span>
-            </div>
-            <i class="fas fa-chevron-right quick-arrow"></i>
-        </a>
-
-        <a href="peta_banjir.html" class="quick-card">
-            <div class="quick-icon green">
-                <i class="fas fa-map-location-dot"></i>
-            </div>
-            <div>
-                <strong>Peta Banjir</strong>
-                <span>Lihat lokasi pemantauan</span>
-            </div>
-            <i class="fas fa-chevron-right quick-arrow"></i>
-        </a>
-
-        <a href="weather.html" class="quick-card">
-            <div class="quick-icon orange">
-                <i class="fas fa-cloud-sun"></i>
-            </div>
-            <div>
-                <strong>Informasi Cuaca</strong>
-                <span>Pantau kondisi cuaca</span>
-            </div>
-            <i class="fas fa-chevron-right quick-arrow"></i>
-        </a>
-
-    </div>
-
-    <!-- FOOTER -->
-    <footer class="dashboard-footer">
-        <p>© 2026 FLOWS-PRO — Flood Level Observation and Warning System</p>
-        <span>Smart Monitoring for Flood Preparedness</span>
-    </footer>
 </section>
 
-        /* WELCOME SECTION */
-        .welcome-section {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 20px;
-            padding: 25px 28px;
-            margin-bottom: 30px;
-            border-radius: 18px;
-            color: white;
-            background: linear-gradient(115deg, #087fe8, #00b8e8);
-            box-shadow: 0 12px 30px rgba(7, 136, 255, .13);
-        }
-
-        .welcome-section h2 {
-            font-size: 20px;
-            font-weight: 800;
-            margin-bottom: 9px;
-        }
-
-        .welcome-section p {
-            font-size: 12px;
-            line-height: 1.7;
-            color: rgba(255,255,255,.85);
-        }
-
-        .date-display {
-            display: flex;
-            align-items: center;
-            gap: 9px;
-            padding: 11px 14px;
-            border-radius: 10px;
-            background: rgba(255,255,255,.16);
-            font-size: 11px;
-            white-space: nowrap;
-        }
-
-        /* SECTION HEADING */
-        .section-heading {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 15px;
-            margin: 30px 0 17px;
-        }
-
-        .section-heading h3 {
-            font-size: 16px;
-            font-weight: 800;
-            color: #17334c;
-        }
-
-        .section-heading p {
-            font-size: 11px;
-            color: #91a2b4;
-            margin-top: 6px;
-        }
-
-        .view-link {
-            color: #0788ff;
-            font-size: 11px;
-            font-weight: 700;
-        }
-
-        .view-link i {
-            margin-left: 5px;
-        }
-
-        /* STATISTICS CARDS */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(4, minmax(0, 1fr));
-            gap: 16px;
-        }
-
-        .stat-card {
-            background: white;
-            border: 1px solid var(--border);
-            border-radius: 15px;
-            padding: 20px;
-            min-width: 0;
-            box-shadow: 0 5px 18px rgba(20, 55, 90, .025);
-            transition: .2s ease;
-        }
-
-        .stat-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(20, 55, 90, .07);
-        }
-
-        .stat-top {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-
-        .stat-icon {
-            width: 37px;
-            height: 37px;
-            border-radius: 11px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 15px;
-        }
-
-        .stat-icon.blue, .quick-icon.blue {
-            background: #e8f3ff;
-            color: #0788ff;
-        }
-
-        .stat-icon.cyan {
-            background: #e5faff;
-            color: #00a9cf;
-        }
-
-        .stat-icon.orange, .quick-icon.orange {
-            background: #fff3df;
-            color: #ed9b16;
-        }
-
-        .stat-icon.purple, .quick-icon.purple {
-            background: #f1eaff;
-            color: #8958d8;
-        }
-
-        .stat-label {
-            color: #8497aa;
-            font-size: 11px;
-            font-weight: 600;
-        }
-
-        .stat-card h2 {
-            color: #17334c;
-            font-size: 23px;
-            font-weight: 800;
-            overflow-wrap: anywhere;
-        }
-
-        .stat-card h2 small {
-            font-size: 12px;
-            color: #8ba0b5;
-            font-weight: 600;
-        }
-
-        .stat-card > p {
-            margin-top: 8px;
-            color: #9aabba;
-            font-size: 10px;
-            line-height: 1.5;
-        }
-
-        /* MAIN MONITORING GRID */
-        .monitoring-grid {
-            display: grid;
-            grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr);
-            gap: 18px;
-        }
-
-        .content-card {
-            background: white;
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 23px;
-            min-width: 0;
-            box-shadow: 0 5px 18px rgba(20, 55, 90, .025);
-        }
-
-        .card-header {
-            display: flex;
-            align-items: flex-start;
-            justify-content: space-between;
-            gap: 12px;
-        }
-
-        .card-header h3 {
-            font-size: 14px;
-            color: #17334c;
-            font-weight: 800;
-        }
-
-        .card-header p {
-            color: #9aabba;
-            font-size: 10px;
-            margin-top: 6px;
-        }
-
-        .live-indicator {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            color: #16a34a;
-            background: #eaf9ef;
-            border-radius: 20px;
-            padding: 7px 10px;
-            font-size: 9px;
-            font-weight: 800;
-        }
-
-        .live-indicator span {
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background: #16a34a;
-        }
-
-        /* WATER DISPLAY */
-        .water-display {
-            padding: 32px 0 24px;
-        }
-
-        .water-value {
-            display: flex;
-            align-items: baseline;
-            gap: 9px;
-        }
-
-        .water-value h1 {
-            font-size: 55px;
-            line-height: 1;
-            font-weight: 800;
-            color: #0788ff;
-            letter-spacing: -2px;
-        }
-
-        .water-value span {
-            font-size: 14px;
-            color: #8ba0b5;
-            font-weight: 600;
-        }
-
-        .water-display > p {
-            font-size: 11px;
-            color: #8ba0b5;
-            margin-top: 12px;
-        }
-
-        .water-progress {
-            width: 100%;
-            height: 9px;
-            background: #edf3f8;
-            border-radius: 20px;
-            overflow: hidden;
-            margin-top: 25px;
-        }
-
-        .water-progress div {
-            width: 0%;
-            height: 100%;
-            background: linear-gradient(90deg, #0788ff, #00c6f7);
-            border-radius: 20px;
-            transition: width .5s ease;
-        }
-
-        .water-scale {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 9px;
-            font-size: 9px;
-            color: #9aabba;
-        }
-
-        .water-footer {
-            display: flex;
-            justify-content: space-between;
-            gap: 15px;
-            border-top: 1px solid #edf2f7;
-            padding-top: 18px;
-        }
-
-        .water-footer > div {
-            display: flex;
-            flex-direction: column;
-            gap: 7px;
-        }
-
-        .footer-label {
-            color: #9aabba;
-            font-size: 10px;
-        }
-
-        .water-footer strong {
-            color: #17334c;
-            font-size: 11px;
-        }
-
-        /* DEVICE INFORMATION */
-        .device-header-icon {
-            color: #0788ff;
-            font-size: 19px;
-        }
-
-        .device-list {
-            margin-top: 18px;
-        }
-
-        .device-item {
-            display: flex;
-            align-items: center;
-            gap: 11px;
-            padding: 15px 0;
-            border-bottom: 1px solid #edf2f7;
-        }
-
-        .device-icon {
-            width: 35px;
-            height: 35px;
-            border-radius: 10px;
-            background: #edf6ff;
-            color: #0788ff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            font-size: 13px;
-        }
-
-        .device-detail {
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-            flex: 1;
-            min-width: 0;
-        }
-
-        .device-detail strong {
-            font-size: 10px;
-            color: #29445d;
-        }
-
-        .device-detail span {
-            font-size: 9px;
-            color: #9aabba;
-        }
-
-        .device-status {
-            font-size: 9px;
-            font-weight: 700;
-            color: #e49a16;
-            white-space: nowrap;
-        }
-
-        .device-link {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            color: #0788ff;
-            font-size: 10px;
-            font-weight: 700;
-            margin-top: 20px;
-        }
-
-        /* QUICK ACCESS */
-        .quick-access-grid {
-            display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 13px;
-        }
-
-        .quick-card {
-            display: flex;
-            align-items: center;
-            gap: 13px;
-            background: white;
-            border: 1px solid var(--border);
-            border-radius: 13px;
-            padding: 17px;
-            transition: .2s ease;
-        }
-
-        .quick-card:hover {
-            border-color: #9bcfff;
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(7, 136, 255, .06);
-        }
-
-        .quick-icon {
-            width: 39px;
-            height: 39px;
-            border-radius: 11px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            font-size: 15px;
-        }
-
-        .quick-icon.green {
-            background: #e8f8ed;
-            color: #16a34a;
-        }
-
-        .quick-card > div:nth-child(2) {
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-            flex: 1;
-            min-width: 0;
-        }
-
-        .quick-card strong {
-            font-size: 11px;
-            color: #29445d;
-        }
-
-        .quick-card span {
-            font-size: 9px;
-            color: #9aabba;
-        }
-
-        .quick-arrow {
-            font-size: 10px;
-            color: #a7b7c6;
-        }
-
-        /* FOOTER */
-        .dashboard-footer {
-            display: flex;
-            justify-content: space-between;
-            gap: 15px;
-            flex-wrap: wrap;
-            margin-top: 35px;
-            padding: 20px 0 5px;
-            border-top: 1px solid #e6edf5;
-            color: #9aabba;
-            font-size: 9px;
-        }
-
-        /* PROFILE DROPDOWN */
-        .profile-wrapper {
-            position: relative;
-        }
-
-        #profileDropdown {
-            position: absolute;
-            z-index: 100;
-            top: calc(100% + 10px);
-            right: 0;
-            width: 205px;
-            padding: 7px;
-            background: white;
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            box-shadow: 0 12px 35px rgba(10, 35, 60, .13);
-        }
-
-        #profileDropdown a,
-        #profileDropdown button {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            width: 100%;
-            padding: 12px;
-            border: 0;
-            border-radius: 8px;
-            background: transparent;
-            color: #526a80;
-            font-size: 11px;
-            text-align: left;
-            cursor: pointer;
-        }
-
-        #profileDropdown a:hover,
-        #profileDropdown button:hover {
-            background: #f1f7fd;
-            color: #0788ff;
-        }
-
-        #profileDropdown button {
-            color: #e04444;
-            border-top: 1px solid #edf2f7;
-            border-radius: 0 0 8px 8px;
-            margin-top: 4px;
-        }
-
-        /* RESPONSIVE */
-        @media (max-width: 1100px) {
-            .stats-grid {
-                grid-template-columns: repeat(2, minmax(0, 1fr));
-            }
-        }
-
-        @media (max-width: 850px) {
-            .monitoring-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        @media (max-width: 650px) {
-            .welcome-section {
-                flex-direction: column;
-                align-items: flex-start;
-                padding: 21px;
-            }
-
-            .welcome-section h2 {
-                font-size: 17px;
-            }
-
-            .date-display {
-                font-size: 10px;
-            }
-
-            .stats-grid {
-                gap: 10px;
-            }
-
-            .stat-card {
-                padding: 14px;
-            }
-
-            .stat-top {
-                align-items: flex-start;
-                flex-direction: column;
-                gap: 8px;
-                margin-bottom: 13px;
-            }
-
-            .stat-card h2 {
-                font-size: 19px;
-            }
-
-            .stat-label {
-                font-size: 10px;
-            }
-
-            .content-card {
-                padding: 17px;
-            }
-
-            .water-value h1 {
-                font-size: 46px;
-            }
-
-            .quick-access-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .dashboard-footer {
-                flex-direction: column;
-                line-height: 1.6;
-            }
-        }
-        
+
+<!-- =====================================
+     IKHTISAR SISTEM
+===================================== -->
+
+<div class="section-head">
+
+    <div>
+        <h3>Ikhtisar Sistem</h3>
+        <p>Informasi utama dari perangkat pemantauan</p>
+    </div>
+
+</div>
+
+
+<!-- =====================================
+     STATISTIC CARDS
+===================================== -->
+
+<section class="metrics">
+
+    <!-- KONEKSI SENSOR -->
+
+    <article class="metric">
+
+        <div class="metric-top">
+            <span class="metric-label">Koneksi Sensor</span>
+
+            <span class="metric-icon">
+                <i class="fa-solid fa-tower-broadcast"></i>
+            </span>
+        </div>
+
+        <div class="metric-value" id="sensorConnection">
+            Belum terhubung
+        </div>
+
+        <div class="metric-foot" id="sensorConnectionInfo">
+            Menunggu integrasi data sensor
+        </div>
+
+    </article>
+
+
+    <!-- KETINGGIAN AIR -->
+
+    <article class="metric">
+
+        <div class="metric-top">
+            <span class="metric-label">Ketinggian Air</span>
+
+            <span class="metric-icon teal">
+                <i class="fa-solid fa-water"></i>
+            </span>
+        </div>
+
+        <div class="metric-value">
+            <span id="waterLevel">--</span>
+            <small>cm</small>
+        </div>
+
+        <div class="metric-foot">
+            Pembacaan sensor terakhir
+        </div>
+
+    </article>
+
+
+    <!-- STATUS PERINGATAN -->
+
+    <article class="metric">
+
+        <div class="metric-top">
+            <span class="metric-label">Status Peringatan</span>
+
+            <span class="metric-icon gold">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+            </span>
+        </div>
+
+        <div class="metric-value" id="floodStatus">
+            MENUNGGU
+        </div>
+
+        <div class="metric-foot" id="floodStatusInfo">
+            Data sensor belum dimuat
+        </div>
+
+    </article>
+
+
+    <!-- PEMBARUAN TERAKHIR -->
+
+    <article class="metric">
+
+        <div class="metric-top">
+            <span class="metric-label">Pembaruan Terakhir</span>
+
+            <span class="metric-icon purple">
+                <i class="fa-regular fa-clock"></i>
+            </span>
+        </div>
+
+        <div class="metric-value" id="lastUpdate">
+            --:--
+        </div>
+
+        <div class="metric-foot" id="lastUpdateDate">
+            Belum ada data diterima
+        </div>
+
+    </article>
+
+</section>
+<!-- =====================================
+     AKSES CEPAT
+===================================== -->
+
+<div class="section-head">
+
+    <div>
+        <h3>Akses Cepat</h3>
+        <p>Pilih fitur FLOWS-PRO yang ingin kamu buka</p>
+    </div>
+
+</div>
+
+
+<section class="quick-grid">
+
+    <!-- LIVE SENSOR -->
+
+    <a href="live_sensor.html" class="quick-tile">
+
+        <div class="quick-icon">
+            <i class="fa-solid fa-wave-square"></i>
+        </div>
+
+        <div class="quick-content">
+            <div class="quick-title">Live Monitoring</div>
+            <div class="quick-desc">
+                Pantau pembacaan sensor secara langsung
+            </div>
+        </div>
+
+        <i class="fa-solid fa-arrow-up-right-from-square quick-arrow"></i>
+
+    </a>
+
+
+    <!-- LAPORAN -->
+
+    <a href="reports.html" class="quick-tile">
+
+        <div class="quick-icon teal">
+            <i class="fa-solid fa-chart-line"></i>
+        </div>
+
+        <div class="quick-content">
+            <div class="quick-title">Laporan Data</div>
+            <div class="quick-desc">
+                Lihat riwayat dan perkembangan data
+            </div>
+        </div>
+
+        <i class="fa-solid fa-arrow-up-right-from-square quick-arrow"></i>
+
+    </a>
+
+
+    <!-- PETA BANJIR -->
+
+    <a href="peta_banjir.html" class="quick-tile">
+
+        <div class="quick-icon gold">
+            <i class="fa-solid fa-map-location-dot"></i>
+        </div>
+
+        <div class="quick-content">
+            <div class="quick-title">Peta Banjir</div>
+            <div class="quick-desc">
+                Lihat informasi lokasi pemantauan
+            </div>
+        </div>
+
+        <i class="fa-solid fa-arrow-up-right-from-square quick-arrow"></i>
+
+    </a>
+
+
+    <!-- CUACA -->
+
+    <a href="weather.html" class="quick-tile">
+
+        <div class="quick-icon purple">
+            <i class="fa-solid fa-cloud-sun"></i>
+        </div>
+
+        <div class="quick-content">
+            <div class="quick-title">Informasi Cuaca</div>
+            <div class="quick-desc">
+                Akses informasi kondisi cuaca
+            </div>
+        </div>
+
+        <i class="fa-solid fa-arrow-up-right-from-square quick-arrow"></i>
+
+    </a>
+
+</section>
+
+
+<!-- =====================================
+     FOOTER
+===================================== -->
+
+<footer class="footer">
+
+    <span>
+        © 2026 FLOWS-PRO · Flood Level Observation and Warning System
+    </span>
+
+    <span>
+        Designed for Water & Environmental Sustainability
+    </span>
+
+</footer>
+
 </main>
 </div>
 
-<!-- SUPABASE LIBRARY -->
+
+<!-- =====================================
+     SUPABASE LIBRARY
+===================================== -->
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
-    // =====================================
-    // SUPABASE CONFIGURATION
-    // =====================================
+
+document.addEventListener("DOMContentLoaded", async function () {
 
     const SUPABASE_URL = "https://nydapuhnswrbgbjkaxqa.supabase.co";
 
@@ -1272,24 +1314,25 @@
         SUPABASE_KEY
     );
 
+
     // =====================================
     // ELEMENT REFERENCES
     // =====================================
 
-    const profileTrigger = document.getElementById("profileTrigger");
-    const profileDropdown = document.getElementById("profileDropdown");
-    const logoutButton = document.getElementById("logoutButton");
+    const byId = (id) => document.getElementById(id);
+
+    const currentDate = byId("currentDate");
+    const profileBtn = byId("profileBtn");
+    const profileDropdown = byId("profileDropdown");
+    const logoutBtn = byId("logoutBtn");
+
 
     // =====================================
-    // DATE
+    // TANGGAL
     // =====================================
 
-    function updateDate() {
-        const dateElement = document.getElementById("currentDate");
-
-        if (!dateElement) return;
-
-        dateElement.textContent = new Date().toLocaleDateString("id-ID", {
+    if (currentDate) {
+        currentDate.textContent = new Date().toLocaleDateString("id-ID", {
             weekday: "long",
             day: "numeric",
             month: "long",
@@ -1297,172 +1340,165 @@
         });
     }
 
-    updateDate();
 
     // =====================================
-    // USER PROFILE
+    // PROFILE DROPDOWN
     // =====================================
 
-    function getDisplayName(user) {
-        const metadata = user.user_metadata || {};
+    if (profileBtn && profileDropdown) {
 
-        const fullName =
-            metadata.full_name ||
-            metadata.name ||
-            metadata.nama;
+        profileBtn.addEventListener("click", function (event) {
+            event.stopPropagation();
 
-        if (fullName && fullName.trim()) {
-            return fullName.trim();
-        }
+            const isOpen = profileDropdown.classList.toggle("show");
 
-        if (user.email) {
-            return user.email.split("@")[0];
-        }
+            profileBtn.setAttribute("aria-expanded", String(isOpen));
+        });
 
-        return "Pengguna";
+        document.addEventListener("click", function (event) {
+
+            if (
+                !profileDropdown.contains(event.target) &&
+                !profileBtn.contains(event.target)
+            ) {
+                profileDropdown.classList.remove("show");
+                profileBtn.setAttribute("aria-expanded", "false");
+            }
+
+        });
+
     }
 
-    function getInitial(name) {
-        return name.trim().charAt(0).toUpperCase() || "U";
-    }
-
-    function displayUser(user) {
-        const name = getDisplayName(user);
-        const role =
-            user.app_metadata?.role ||
-            user.user_metadata?.role ||
-            "OPERATOR";
-
-        document.getElementById("profileName").textContent = name;
-        document.getElementById("profileAvatar").textContent =
-            getInitial(name);
-
-        document.getElementById("profileRole").textContent =
-            String(role).toUpperCase();
-    }
 
     // =====================================
-    // AUTHENTICATION CHECK
+    // CEK SESSION LOGIN
     // =====================================
 
-    async function checkAuthentication() {
-        const {
-            data: { session },
-            error
-        } = await supabaseClient.auth.getSession();
+    try {
 
-        if (error) {
-            console.error("Gagal memeriksa sesi:", error.message);
-            window.location.replace("login.html");
-            return;
+        const { data: sessionData, error: sessionError } =
+            await supabaseClient.auth.getSession();
+
+        if (sessionError) {
+            throw sessionError;
         }
+
+        const session = sessionData.session;
 
         if (!session) {
             window.location.replace("login.html");
             return;
         }
 
-        const {
-            data: { user },
-            error: userError
-        } = await supabaseClient.auth.getUser();
 
-        if (userError || !user) {
-            await supabaseClient.auth.signOut();
+        // =====================================
+        // AMBIL DATA USER
+        // =====================================
+
+        const { data: userData, error: userError } =
+            await supabaseClient.auth.getUser();
+
+        if (userError || !userData.user) {
             window.location.replace("login.html");
             return;
         }
 
-        displayUser(user);
+        const user = userData.user;
+        const metadata = user.user_metadata || {};
+        const appMetadata = user.app_metadata || {};
+
+        const displayName =
+            metadata.full_name ||
+            metadata.name ||
+            metadata.nama ||
+            user.email?.split("@")[0] ||
+            "Pengguna";
+
+        const userRole =
+            appMetadata.role ||
+            metadata.role ||
+            "OPERATOR";
+
+
+        // =====================================
+        // TAMPILKAN PROFIL
+        // =====================================
+
+        if (byId("profileName")) {
+            byId("profileName").textContent = displayName;
+        }
+
+        if (byId("profileRole")) {
+            byId("profileRole").textContent = userRole.toUpperCase();
+        }
+
+        if (byId("profileAvatar")) {
+            byId("profileAvatar").textContent =
+                displayName.trim().charAt(0).toUpperCase();
+        }
+
+
+        // =====================================
+        // STATUS DATABASE
+        // =====================================
+
+        if (byId("databaseStatus")) {
+            byId("databaseStatus").textContent = "Terhubung";
+            byId("databaseStatus").classList.add("connected");
+        }
+
+    } catch (error) {
+
+        console.error("Kesalahan autentikasi:", error);
+
+        alert("Terjadi masalah saat memeriksa sesi login. Silakan login kembali.");
+
+        window.location.replace("login.html");
+
+        return;
     }
 
-    // =====================================
-    // PROFILE DROPDOWN
-    // =====================================
-
-    profileTrigger.addEventListener("click", function (event) {
-        event.stopPropagation();
-
-        const isOpen =
-            profileDropdown.style.display === "block";
-
-        profileDropdown.style.display =
-            isOpen ? "none" : "block";
-
-        profileTrigger.setAttribute(
-            "aria-expanded",
-            String(!isOpen)
-        );
-    });
-
-    document.addEventListener("click", function (event) {
-        if (!event.target.closest(".profile-wrapper")) {
-            profileDropdown.style.display = "none";
-            profileTrigger.setAttribute("aria-expanded", "false");
-        }
-    });
 
     // =====================================
     // LOGOUT
     // =====================================
 
-    logoutButton.addEventListener("click", async function () {
-        const confirmLogout = confirm(
-            "Apakah kamu yakin ingin keluar dari akun FLOWS-PRO?"
-        );
+    if (logoutBtn) {
 
-        if (!confirmLogout) return;
+        logoutBtn.addEventListener("click", async function () {
 
-        logoutButton.disabled = true;
-        logoutButton.innerHTML =
-            '<i class="fas fa-spinner fa-spin"></i> Keluar...';
+            const confirmation = confirm("Yakin ingin keluar dari FLOWS-PRO?");
 
-        const { error } = await supabaseClient.auth.signOut();
+            if (!confirmation) return;
 
-        if (error) {
-            alert("Gagal logout: " + error.message);
-            logoutButton.disabled = false;
-            logoutButton.innerHTML =
-                '<i class="fas fa-right-from-bracket"></i> Keluar dari Akun';
-            return;
-        }
+            logoutBtn.disabled = true;
 
-        window.location.replace("login.html");
-    });
+            try {
 
-    // =====================================
-    // INITIAL DASHBOARD STATE
-    // =====================================
+                const { error } = await supabaseClient.auth.signOut();
 
-    document.getElementById("sensorConnection").textContent =
-        "Belum terhubung";
+                if (error) {
+                    throw error;
+                }
 
-    document.getElementById("sensorConnectionInfo").textContent =
-        "Menunggu integrasi data sensor";
+                window.location.replace("login.html");
 
-    document.getElementById("controllerStatus").textContent =
-        "Menunggu";
+            } catch (error) {
 
-    document.getElementById("sensorStatus").textContent =
-        "Menunggu";
+                console.error("Logout gagal:", error);
 
-    document.getElementById("databaseStatus").textContent =
-        "Memeriksa";
+                alert("Logout gagal. Silakan coba kembali.");
 
-    document.getElementById("floodStatus").textContent =
-        "MENUNGGU";
+                logoutBtn.disabled = false;
 
-    document.getElementById("floodStatusInfo").textContent =
-        "Data sensor belum dimuat";
+            }
 
-    document.getElementById("mainFloodStatus").textContent =
-        "MENUNGGU DATA";
+        });
 
-    // =====================================
-    // START
-    // =====================================
+    }
 
-    checkAuthentication();
+});
+
 </script>
 
 </body>
