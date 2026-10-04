@@ -1,554 +1,780 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Dashboard | FLOWS-PRO</title>
+    <title>FLOWS-PRO | Dashboard</title>
 
-    <link rel="icon" href="LOGO_FLOWS-PRO-removebg-preview.png">
+    <link rel="icon" href="favicon.ico">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
-    <style>
-        :root {
-            --navy: #071b2b;
-            --navy-light: #0d2b42;
-            --blue: #087fe8;
-            --cyan: #20c5dc;
+<style>
 
-            --ink: #122c42;
-            --muted: #7d91a4;
-            --line: #e7eef4;
-            --background: #f3f7fb;
-            --white: #ffffff;
+/* =====================================
+   FLOWS-PRO THEME SYSTEM
+===================================== */
 
-            --green: #20a56b;
-            --amber: #e5a52d;
-            --red: #e25757;
+:root {
+    --primary: #2563eb;
+    --primary-dark: #1d4ed8;
+    --primary-light: #eff6ff;
 
-            --shadow: 0 14px 36px rgba(14, 49, 77, 0.055);
-        }
+    --cyan: #0891b2;
+    --success: #16a34a;
+    --warning: #d97706;
+    --danger: #dc2626;
+    --purple: #7c3aed;
 
-        * {
-            box-sizing: border-box;
-        }
+    --sidebar-width: 250px;
 
-        body {
-            margin: 0;
-            background: var(--background);
-            color: var(--ink);
-            font-family: "DM Sans", sans-serif;
-        }
+    --radius-sm: 10px;
+    --radius-md: 16px;
+    --radius-lg: 22px;
 
-        a {
-            text-decoration: none;
-            color: inherit;
-        }
+    --shadow-sm: 0 2px 8px rgba(15,23,42,.035);
+    --shadow-md: 0 8px 25px rgba(15,23,42,.045);
+}
 
-        button {
-            font: inherit;
-            cursor: pointer;
-        }
 
-        .shell {
-            min-height: 100vh;
-            display: flex;
-        }
+/* =====================================
+   LIGHT CLEAN
+===================================== */
 
-        /* SIDEBAR */
+html[data-theme="light"] {
+    color-scheme: light;
 
-        .sidebar {
-            width: 252px;
-            flex: 0 0 252px;
-            background: linear-gradient(180deg, #081e30, #0b2a40);
-            color: var(--white);
-            padding: 25px 15px 18px;
-            display: flex;
-            flex-direction: column;
-        }
+    --background: #f5f7fb;
+    --surface: #ffffff;
+    --surface-soft: #f8fafc;
 
-        .brand {
-            display: flex;
-            align-items: center;
-            gap: 11px;
-            padding: 2px 11px 26px;
-            border-bottom: 1px solid #ffffff17;
-        }
+    --text: #17243a;
+    --text-secondary: #64748b;
+    --text-muted: #94a3b8;
 
-        .brand-mark {
-            width: 39px;
-            height: 39px;
-            border-radius: 12px;
-            background: linear-gradient(145deg, #1bc5e2, #087fe8);
-            display: grid;
-            place-items: center;
-            box-shadow: 0 8px 20px #08a6d344;
-        }
+    --border: #e8edf4;
+    --sidebar-bg: #ffffff;
+    --hover-bg: #f1f5f9;
+    --input-bg: #ffffff;
 
-        .brand-mark i {
-            font-size: 17px;
-        }
+    --card-shadow: 0 5px 20px rgba(15,23,42,.035);
+}
 
-        .brand b {
-            font: 800 16px Manrope, sans-serif;
-            letter-spacing: 0.3px;
-        }
 
-        .brand small {
-            display: block;
-            color: #7ddff0;
-            font-size: 8px;
-            letter-spacing: 1.8px;
-            margin-top: 4px;
-        }
+/* =====================================
+   DARK PREMIUM
+===================================== */
 
-        .nav-caption {
-            font-size: 9px;
-            font-weight: 800;
-            letter-spacing: 1.6px;
-            color: #66839a;
-            padding: 25px 12px 10px;
-        }
+html[data-theme="dark"] {
+    color-scheme: dark;
 
-        .nav {
-            display: grid;
-            gap: 5px;
-        }
+    --background: #0b1220;
+    --surface: #111c2e;
+    --surface-soft: #172438;
 
-        .nav a {
-            display: flex;
-            align-items: center;
-            gap: 13px;
-            padding: 12px 13px;
-            border-radius: 10px;
-            color: #a8bfd0;
-            font-size: 12px;
-            font-weight: 600;
-            transition: 0.18s;
-        }
+    --text: #f1f5f9;
+    --text-secondary: #a3b2c7;
+    --text-muted: #71839c;
 
-        .nav a i {
-            width: 17px;
-            text-align: center;
-            font-size: 14px;
-        }
+    --border: #26364c;
+    --sidebar-bg: #101a2b;
+    --hover-bg: #1d2b40;
+    --input-bg: #172438;
 
-        .nav a:hover {
-            background: #ffffff0e;
-            color: #fff;
-        }
+    --primary-light: #1e3559;
 
-        .nav a.active {
-            color: #fff;
-            background: linear-gradient(100deg, #087fe8, #0aa7e7);
-            box-shadow: 0 7px 18px #087fe83b;
-        }
+    --shadow-sm: 0 2px 8px rgba(0,0,0,.12);
+    --shadow-md: 0 8px 25px rgba(0,0,0,.18);
+    --card-shadow: 0 5px 22px rgba(0,0,0,.16);
+}
 
-        .side-bottom {
-            margin-top: auto;
-        }
 
-        .connection {
-            padding: 14px;
-            border: 1px solid #ffffff17;
-            border-radius: 13px;
-            background: #ffffff09;
-        }
+/* =====================================
+   RESET
+===================================== */
 
-        .connection-head {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 10px;
-            font-weight: 800;
-        }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-        .dot {
-            width: 7px;
-            height: 7px;
-            border-radius: 50%;
-            background: #35d39a;
-            box-shadow: 0 0 0 4px #35d39a20;
-        }
+html {
+    scroll-behavior: smooth;
+}
 
-        .connection p {
-            font-size: 10px;
-            color: #8ca8bb;
-            line-height: 1.6;
-            margin: 9px 0 0;
-        }
+body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--background);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    transition: background .25s ease, color .25s ease;
+}
 
-        /* MAIN LAYOUT */
+button,
+input {
+    font: inherit;
+}
 
-        .main {
-            flex: 1;
-            min-width: 0;
-            padding: 27px 34px 22px;
-            max-width: 1600px;
-            margin: 0 auto;
-        }
+button {
+    cursor: pointer;
+}
 
-        .topbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 16px;
-            margin-bottom: 25px;
-        }
+a {
+    color: inherit;
+    text-decoration: none;
+}
 
-        .eyebrow {
-            font-size: 9px;
-            letter-spacing: 1.4px;
-            text-transform: uppercase;
-            color: #8ba0b2;
-            font-weight: 800;
-            margin-bottom: 6px;
-        }
 
-        .page-title {
-            font: 800 25px Manrope, sans-serif;
-            letter-spacing: -0.8px;
-        }
+/* =====================================
+   MAIN LAYOUT
+===================================== */
 
-        .page-sub {
-            font-size: 11px;
-            color: var(--muted);
-            margin-top: 6px;
-        }
+.app-layout {
+    display: flex;
+    min-height: 100vh;
+}
 
-        .actions {
-            display: flex;
-            align-items: center;
-            gap: 11px;
-        }
+.main-content {
+    flex: 1;
+    min-width: 0;
+    margin-left: var(--sidebar-width);
+    padding: 30px 36px 28px;
+}
 
-        .square-btn {
-            width: 39px;
-            height: 39px;
-            border: 1px solid var(--line);
-            border-radius: 12px;
-            background: white;
-            color: #678096;
-            position: relative;
-        }
 
-        .square-btn .ping {
-            position: absolute;
-            right: 8px;
-            top: 7px;
-            width: 5px;
-            height: 5px;
-            background: #ef6262;
-            border-radius: 50%;
-            border: 1px solid white;
-        }
+/* =====================================
+   SIDEBAR
+===================================== */
 
-        .profile {
-            position: relative;
-        }
+.sidebar {
+    width: var(--sidebar-width);
+    position: fixed;
+    inset: 0 auto 0 0;
+    background: var(--sidebar-bg);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    padding: 25px 17px 18px;
+    z-index: 100;
+    transition: background .25s ease, border-color .25s ease;
+}
 
-        .profile-trigger {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            border: 1px solid var(--line);
-            background: #fff;
-            padding: 5px 10px 5px 6px;
-            border-radius: 13px;
-            text-align: left;
-            color: var(--ink);
-        }
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 3px 9px 30px;
+}
 
-        .avatar {
-            width: 34px;
-            height: 34px;
-            border-radius: 11px;
-            background: #e4f3ff;
-            color: #087fe8;
-            display: grid;
-            place-items: center;
-            font-weight: 800;
-            font-size: 12px;
-        }
-
-        .profile-name {
-            display: block;
-            font-size: 10px;
-            font-weight: 800;
-        }
-
-        .profile-role {
-            display: block;
-            font-size: 9px;
-            color: #91a4b5;
-            margin-top: 3px;
-        }
-
-        .profile-trigger > i {
-            font-size: 9px;
-            color: #8ca0b1;
-            margin-left: 5px;
-        }
-
-        .dropdown {
-            display: none;
-            position: absolute;
-            right: 0;
-            top: calc(100% + 9px);
-            width: 190px;
-            padding: 7px;
-            background: #fff;
-            border: 1px solid var(--line);
-            border-radius: 12px;
-            box-shadow: var(--shadow);
-            z-index: 10;
-        }
-
-        .dropdown.show {
-            display: block;
-        }
-
-        .dropdown a,
-        .dropdown button {
-            width: 100%;
-            display: flex;
-            gap: 9px;
-            align-items: center;
-            padding: 10px;
-            border: 0;
-            background: none;
-            text-align: left;
-            font-size: 11px;
-            color: #587085;
-            border-radius: 8px;
-        }
-
-        .dropdown a:hover,
-        .dropdown button:hover {
-            background: #f2f7fb;
-        }
-
-        .dropdown button {
-            border-top: 1px solid var(--line);
-            border-radius: 0;
-            color: #d84c4c;
-            margin-top: 4px;
-        }
-
-        /* WELCOME BANNER */
-
-        .hero {
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 20px;
-            padding: 25px 28px;
-            border-radius: 18px;
-            background: linear-gradient(112deg, #075fba 0%, #087fe8 48%, #13b7d4 100%);
-            color: white;
-            box-shadow: 0 13px 28px #087fe822;
-        }
-
-        .hero:after {
-            content: "";
-            position: absolute;
-            width: 260px;
-            height: 260px;
-            border: 1px solid #ffffff24;
-            border-radius: 50%;
-            right: 120px;
-            top: -155px;
-            box-shadow: 0 0 0 35px #ffffff08, 0 0 0 70px #ffffff06;
-        }
-
-        .hero-copy {
-            position: relative;
-            z-index: 1;
-        }
-
-        .hero h2 {
-            font: 800 20px Manrope, sans-serif;
-            letter-spacing: -0.4px;
-            margin: 0 0 8px;
-        }
-
-        .hero p {
-            font-size: 11px;
-            line-height: 1.7;
-            color: #e3f6ff;
-            margin: 0;
-        }
-
-        .hero-date {
-            position: relative;
-            z-index: 1;
-            display: flex;
-            align-items: center;
-            gap: 9px;
-            padding: 11px 13px;
-            background: #ffffff1c;
-            border: 1px solid #ffffff25;
-            border-radius: 11px;
-            font-size: 10px;
-            white-space: nowrap;
-            backdrop-filter: blur(6px);
-        }
-
-        /* SECTION HEADINGS */
-
-        .section-head {
-            display: flex;
-            justify-content: space-between;
-            align-items: end;
-            gap: 12px;
-            margin: 27px 0 13px;
-        }
-
-        .section-head h3 {
-            font: 800 14px Manrope, sans-serif;
-            margin: 0;
-        }
-
-        .section-head p {
-            font-size: 10px;
-            color: var(--muted);
-            margin: 5px 0 0;
-        }
-
-        .section-link {
-            font-size: 10px;
-            color: var(--blue);
-            font-weight: 800;
-        }
-'''
-/* =========================================
-   STATISTIC CARDS
-========================================= */
-
-.metrics {
+.brand-logo {
+    width: 43px;
+    height: 43px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #2563eb, #06b6d4);
+    color: white;
     display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    place-items: center;
+    font-size: 19px;
+    box-shadow: 0 7px 16px rgba(37,99,235,.20);
+}
+
+.brand-name {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 17px;
+    font-weight: 800;
+    letter-spacing: -.6px;
+    color: var(--text);
+}
+
+.brand-name span {
+    color: var(--primary);
+}
+
+.brand-caption {
+    font-size: 9px;
+    color: var(--text-muted);
+    letter-spacing: 1.3px;
+    font-weight: 700;
+    margin-top: 3px;
+}
+
+
+/* =====================================
+   SIDEBAR NAVIGATION
+===================================== */
+
+.nav-label {
+    font-size: 9px;
+    font-weight: 800;
+    color: var(--text-muted);
+    letter-spacing: 1.3px;
+    padding: 0 12px;
+    margin: 9px 0 12px;
+}
+
+.nav-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-height: 44px;
+    padding: 0 13px;
+    border-radius: 11px;
+    color: var(--text-secondary);
+    font-size: 12px;
+    font-weight: 600;
+    transition: all .2s ease;
+}
+
+.nav-item i {
+    width: 19px;
+    text-align: center;
+    font-size: 14px;
+}
+
+.nav-item:hover {
+    background: var(--hover-bg);
+    color: var(--primary);
+}
+
+.nav-item.active {
+    color: var(--primary);
+    background: var(--primary-light);
+    font-weight: 800;
+}
+
+
+/* =====================================
+   SIDEBAR BOTTOM
+===================================== */
+
+.sidebar-bottom {
+    margin-top: auto;
+    padding-top: 20px;
+}
+
+.system-status {
+    background: var(--surface-soft);
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    padding: 15px;
+}
+
+.system-status-top {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    font-weight: 800;
+    color: var(--text);
+}
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+    background: #22c55e;
+    border-radius: 50%;
+    box-shadow: 0 0 0 4px rgba(34,197,94,.12);
+}
+
+.system-status p {
+    font-size: 10px;
+    line-height: 1.6;
+    color: var(--text-secondary);
+    margin-top: 8px;
+}
+
+.sidebar-version {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 9px;
+    margin-top: 17px;
+}
+
+
+/* =====================================
+   TOPBAR
+===================================== */
+
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 27px;
+}
+
+.breadcrumb {
+    font-size: 9px;
+    font-weight: 800;
+    color: var(--primary);
+    letter-spacing: 1.1px;
+    margin-bottom: 8px;
+}
+
+.page-title {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 25px;
+    font-weight: 800;
+    letter-spacing: -.9px;
+    color: var(--text);
+}
+
+.page-subtitle {
+    font-size: 11px;
+    color: var(--text-secondary);
+    margin-top: 5px;
+}
+
+
+/* =====================================
+   TOPBAR ACTIONS
+===================================== */
+
+.topbar-actions {
+    display: flex;
+    align-items: center;
     gap: 13px;
 }
 
-.metric {
-    background: #fff;
-    border: 1px solid var(--line);
+.icon-button {
+    position: relative;
+    width: 40px;
+    height: 40px;
+    display: grid;
+    place-items: center;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    border-radius: 12px;
+    color: var(--text-secondary);
+    font-size: 14px;
+    transition: .2s ease;
+}
+
+.icon-button:hover {
+    color: var(--primary);
+    background: var(--primary-light);
+}
+
+.notification-dot {
+    position: absolute;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #ef4444;
+    top: 8px;
+    right: 8px;
+    border: 1.5px solid var(--surface);
+}
+
+
+/* =====================================
+   PROFILE
+===================================== */
+
+.profile {
+    position: relative;
+}
+
+.profile-trigger {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    border-radius: 13px;
+    padding: 6px 10px 6px 6px;
+    text-align: left;
+    transition: .2s ease;
+}
+
+.profile-trigger:hover {
+    border-color: #93c5fd;
+    box-shadow: var(--shadow-sm);
+}
+
+.avatar {
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
+    display: grid;
+    place-items: center;
+    background: linear-gradient(135deg, #2563eb, #06b6d4);
+    color: white;
+    font-size: 13px;
+    font-weight: 800;
+}
+
+.profile-name {
+    display: block;
+    font-size: 11px;
+    font-weight: 800;
+    color: var(--text);
+    max-width: 130px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.profile-role {
+    display: block;
+    font-size: 9px;
+    color: var(--text-muted);
+    margin-top: 3px;
+    font-weight: 700;
+}
+
+.profile-trigger > i {
+    font-size: 10px;
+    color: var(--text-muted);
+    margin-left: 5px;
+}
+
+
+/* =====================================
+   PROFILE DROPDOWN
+===================================== */
+
+.dropdown {
+    display: none;
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0;
+    width: 215px;
+    background: var(--surface);
+    border: 1px solid var(--border);
     border-radius: 15px;
-    padding: 17px 18px;
-    box-shadow: 0 4px 16px #12324b05;
-    min-width: 0;
-    transition: transform .2s ease, box-shadow .2s ease;
+    padding: 7px;
+    box-shadow: 0 15px 40px rgba(15,23,42,.12);
+    z-index: 200;
 }
 
-.metric:hover {
+.dropdown.show {
+    display: block;
+    animation: dropdownIn .18s ease;
+}
+
+@keyframes dropdownIn {
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.dropdown a,
+.dropdown button {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    padding: 11px 12px;
+    border: none;
+    background: transparent;
+    border-radius: 9px;
+    color: var(--text-secondary);
+    font-size: 11px;
+    font-weight: 600;
+    text-align: left;
+}
+
+.dropdown a:hover {
+    background: var(--hover-bg);
+    color: var(--primary);
+}
+
+.dropdown button {
+    color: var(--danger);
+}
+
+.dropdown button:hover {
+    background: rgba(220,38,38,.08);
+}
+
+.dropdown i {
+    width: 16px;
+    text-align: center;
+}
+
+
+/* =====================================
+   WELCOME HERO
+===================================== */
+
+.welcome-card {
+    position: relative;
+    overflow: hidden;
+    min-height: 175px;
+    padding: 30px 32px;
+    border-radius: 22px;
+    background: linear-gradient(115deg, #2563eb 0%, #2585dc 58%, #06b6d4 100%);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    box-shadow: 0 12px 28px rgba(37,99,235,.13);
+}
+
+.welcome-card::before {
+    content: "";
+    position: absolute;
+    width: 260px;
+    height: 260px;
+    border: 1px solid rgba(255,255,255,.13);
+    border-radius: 50%;
+    right: 70px;
+    top: -130px;
+}
+
+.welcome-card::after {
+    content: "";
+    position: absolute;
+    width: 190px;
+    height: 190px;
+    border: 1px solid rgba(255,255,255,.12);
+    border-radius: 50%;
+    right: -40px;
+    bottom: -120px;
+}
+
+.welcome-content {
+    position: relative;
+    z-index: 1;
+}
+
+.welcome-label {
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    color: rgba(255,255,255,.75);
+    margin-bottom: 12px;
+}
+
+.welcome-title {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 23px;
+    font-weight: 800;
+    letter-spacing: -.7px;
+    line-height: 1.4;
+}
+
+.welcome-description {
+    font-size: 11px;
+    line-height: 1.8;
+    color: rgba(255,255,255,.82);
+    margin-top: 8px;
+}
+
+.welcome-date {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 12px 15px;
+    background: rgba(255,255,255,.16);
+    border: 1px solid rgba(255,255,255,.20);
+    border-radius: 12px;
+    font-size: 10px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+
+/* =====================================
+   SECTION HEADINGS
+===================================== */
+
+.section-heading {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 15px;
+    margin: 29px 0 16px;
+}
+
+.section-heading h3 {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 800;
+    color: var(--text);
+    letter-spacing: -.3px;
+}
+
+.section-heading p {
+    font-size: 10px;
+    color: var(--text-muted);
+    margin-top: 5px;
+}
+
+.section-action {
+    color: var(--primary);
+    font-size: 10px;
+    font-weight: 800;
+}
+
+
+/* =====================================
+   PART 1 END
+===================================== */
+/* =====================================
+   STATISTIC CARDS
+===================================== */
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 15px;
+}
+
+.stat-card {
+    position: relative;
+    overflow: hidden;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 19px;
+    box-shadow: var(--card-shadow);
+    transition: transform .2s ease, background .25s ease;
+}
+
+.stat-card:hover {
     transform: translateY(-3px);
-    box-shadow: var(--shadow);
 }
 
-.metric-top {
+.stat-top {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 8px;
 }
 
-.metric-icon {
-    width: 34px;
-    height: 34px;
+.stat-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--text-secondary);
+}
+
+.stat-icon {
+    width: 35px;
+    height: 35px;
     border-radius: 11px;
-    background: #eaf4ff;
-    color: #087fe8;
     display: grid;
     place-items: center;
-    font-size: 13px;
+    color: var(--primary);
+    background: var(--primary-light);
+    font-size: 14px;
 }
 
-.metric-icon.teal {
-    background: #e7faff;
-    color: #0aa4bd;
+.stat-icon.cyan {
+    color: var(--cyan);
+    background: rgba(8,145,178,.10);
 }
 
-.metric-icon.gold {
-    background: #fff5e2;
-    color: #d99b24;
+.stat-icon.green {
+    color: var(--success);
+    background: rgba(22,163,74,.10);
 }
 
-.metric-icon.purple {
-    background: #f2ebff;
-    color: #8b63d5;
+.stat-icon.orange {
+    color: var(--warning);
+    background: rgba(217,119,6,.10);
 }
 
-.metric-label {
-    font-size: 10px;
-    color: #8398aa;
-    font-weight: 600;
+.stat-icon.purple {
+    color: var(--purple);
+    background: rgba(124,58,237,.10);
 }
 
-.metric-value {
-    font: 800 21px Manrope, sans-serif;
-    letter-spacing: -.5px;
-    margin-top: 15px;
-    overflow-wrap: anywhere;
+.stat-value {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 25px;
+    font-weight: 800;
+    letter-spacing: -1px;
+    color: var(--text);
+    margin-top: 17px;
+    line-height: 1.2;
 }
 
-.metric-value small {
-    font: 600 10px "DM Sans";
-    color: #91a5b6;
+.stat-value small {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0;
+    color: var(--text-secondary);
 }
 
-.metric-foot {
+.stat-description {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: var(--text-muted);
     font-size: 9px;
-    color: #9aabba;
-    margin-top: 6px;
-    min-height: 14px;
+    margin-top: 9px;
 }
 
-.metric-foot .ok {
-    color: var(--green);
+.stat-description i {
+    font-size: 9px;
 }
 
-/* =========================================
-   MONITORING PANELS
-========================================= */
 
-.content-grid {
+/* =====================================
+   MONITORING GRID
+===================================== */
+
+.monitor-grid {
     display: grid;
-    grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr);
-    gap: 14px;
+    grid-template-columns: minmax(0, 1.5fr) minmax(260px, 1fr);
+    gap: 17px;
+    align-items: stretch;
 }
 
 .panel {
-    background: white;
-    border: 1px solid var(--line);
-    border-radius: 16px;
-    padding: 20px;
-    box-shadow: 0 4px 16px #12324b05;
     min-width: 0;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 22px;
+    box-shadow: var(--card-shadow);
+    transition: background .25s ease, border-color .25s ease;
 }
 
 .panel-header {
     display: flex;
-    justify-content: space-between;
     align-items: flex-start;
-    gap: 10px;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 22px;
 }
 
 .panel-title {
-    font: 800 12px Manrope, sans-serif;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 800;
+    color: var(--text);
 }
 
-.panel-sub {
+.panel-subtitle {
     font-size: 10px;
-    color: #9aabba;
+    color: var(--text-muted);
     margin-top: 5px;
 }
 
@@ -556,249 +782,393 @@
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    background: #e9f8ef;
-    color: #188b53;
-    border-radius: 30px;
-    padding: 6px 9px;
+    border-radius: 20px;
+    padding: 7px 10px;
+    background: var(--success-light);
+    color: var(--success);
     font-size: 9px;
     font-weight: 800;
+    white-space: nowrap;
+}
+
+html[data-theme="dark"] .live-badge {
+    background: rgba(22,163,74,.13);
 }
 
 .live-badge span {
     width: 6px;
     height: 6px;
-    background: #1aaa68;
     border-radius: 50%;
+    background: currentColor;
 }
 
-.reading {
+
+/* =====================================
+   WATER LEVEL DISPLAY
+===================================== */
+
+.water-display {
     display: flex;
-    align-items: baseline;
-    gap: 8px;
-    margin-top: 26px;
+    align-items: flex-end;
+    gap: 9px;
+    margin: 8px 0 18px;
 }
 
-.reading strong {
-    font: 800 50px Manrope, sans-serif;
-    letter-spacing: -2px;
-    color: #087fe8;
+.water-number {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: clamp(42px, 5vw, 60px);
+    font-weight: 800;
+    letter-spacing: -3px;
+    line-height: 1;
+    color: var(--text);
 }
 
-.reading span {
-    font-size: 12px;
-    color: #8da1b2;
+.water-unit {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-secondary);
+    padding-bottom: 6px;
 }
 
-.reading-note {
+.water-description {
+    color: var(--text-secondary);
     font-size: 10px;
-    color: #8da1b2;
-    margin-top: 4px;
+    line-height: 1.7;
 }
 
-.meter {
-    height: 9px;
-    border-radius: 30px;
-    background: #edf3f8;
-    overflow: hidden;
-    margin-top: 23px;
+
+/* =====================================
+   WATER PROGRESS
+===================================== */
+
+.water-scale {
+    margin-top: 25px;
 }
 
-.meter-fill {
-    width: 0;
-    height: 100%;
-    background: linear-gradient(90deg, #087fe8, #1ac4d8);
-    border-radius: 30px;
-    transition: width .3s;
-}
-
-.meter-scale {
+.scale-labels {
     display: flex;
     justify-content: space-between;
+    color: var(--text-muted);
     font-size: 9px;
-    color: #9aabba;
-    margin-top: 8px;
+    margin-bottom: 9px;
 }
 
-.panel-foot {
+.scale-track {
+    position: relative;
+    height: 10px;
+    border-radius: 20px;
+    background: linear-gradient(
+        90deg,
+        #22c55e 0%,
+        #22c55e 35%,
+        #facc15 35%,
+        #facc15 65%,
+        #f97316 65%,
+        #f97316 85%,
+        #ef4444 85%,
+        #ef4444 100%
+    );
+    overflow: hidden;
+}
+
+.scale-marker {
+    position: absolute;
+    top: -4px;
+    left: 0%;
+    width: 4px;
+    height: 18px;
+    background: var(--text);
+    border: 1px solid var(--surface);
+    border-radius: 5px;
+    transform: translateX(-50%);
+    transition: left .3s ease;
+}
+
+.scale-legend {
     display: flex;
     justify-content: space-between;
-    gap: 10px;
-    border-top: 1px solid var(--line);
-    padding-top: 14px;
-    margin-top: 17px;
+    gap: 8px;
+    margin-top: 11px;
+    font-size: 9px;
+    color: var(--text-muted);
 }
 
-.panel-foot div {
-    display: grid;
+.scale-legend span {
+    display: flex;
+    align-items: center;
     gap: 5px;
 }
 
-.panel-foot small {
-    font-size: 9px;
-    color: #9aabba;
+.legend-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
 }
 
-.panel-foot b {
-    font-size: 10px;
+.legend-safe {
+    background: #22c55e;
 }
 
-/* =========================================
-   DEVICE STATUS
-========================================= */
-
-.device-list {
-    margin-top: 13px;
+.legend-alert {
+    background: #facc15;
 }
 
-.device {
+.legend-danger {
+    background: #ef4444;
+}
+
+
+/* =====================================
+   FLOOD STATUS
+===================================== */
+
+.flood-status {
     display: flex;
     align-items: center;
-    gap: 11px;
-    padding: 13px 0;
-    border-bottom: 1px solid #eff3f7;
+    gap: 12px;
+    padding: 15px;
+    background: var(--success-light);
+    border: 1px solid rgba(22,163,74,.15);
+    border-radius: 13px;
+    margin-top: 22px;
 }
 
-.device:last-child {
-    border-bottom: 0;
+html[data-theme="dark"] .flood-status {
+    background: rgba(22,163,74,.10);
+}
+
+.flood-status.warning {
+    background: var(--warning-light);
+    border-color: rgba(217,119,6,.18);
+}
+
+.flood-status.danger {
+    background: var(--danger-light);
+    border-color: rgba(220,38,38,.18);
+}
+
+html[data-theme="dark"] .flood-status.warning {
+    background: rgba(217,119,6,.12);
+}
+
+html[data-theme="dark"] .flood-status.danger {
+    background: rgba(220,38,38,.12);
+}
+
+.flood-status-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 11px;
+    display: grid;
+    place-items: center;
+    background: rgba(22,163,74,.12);
+    color: var(--success);
+    flex-shrink: 0;
+}
+
+.flood-status.warning .flood-status-icon {
+    background: rgba(217,119,6,.12);
+    color: var(--warning);
+}
+
+.flood-status.danger .flood-status-icon {
+    background: rgba(220,38,38,.12);
+    color: var(--danger);
+}
+
+.flood-status strong {
+    display: block;
+    font-size: 11px;
+    color: var(--text);
+}
+
+.flood-status p {
+    font-size: 9px;
+    color: var(--text-secondary);
+    margin-top: 4px;
+    line-height: 1.5;
+}
+
+
+/* =====================================
+   DEVICE STATUS PANEL
+===================================== */
+
+.device-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.device-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+}
+
+.device-item:last-child {
+    border-bottom: none;
 }
 
 .device-icon {
-    width: 32px;
-    height: 32px;
-    flex: 0 0 32px;
+    width: 37px;
+    height: 37px;
+    border-radius: 11px;
+    background: var(--surface-soft);
+    border: 1px solid var(--border);
     display: grid;
     place-items: center;
-    border-radius: 10px;
-    background: #eef6ff;
-    color: #087fe8;
-    font-size: 12px;
+    color: var(--primary);
+    font-size: 14px;
+    flex-shrink: 0;
 }
 
-.device-copy {
+.device-info {
     flex: 1;
     min-width: 0;
 }
 
-.device-copy b {
-    display: block;
-    font-size: 10px;
+.device-name {
+    font-size: 11px;
+    font-weight: 800;
+    color: var(--text);
 }
 
-.device-copy small {
-    display: block;
-    color: #9aabba;
+.device-description {
     font-size: 9px;
+    color: var(--text-muted);
     margin-top: 4px;
 }
 
-.device-status {
+.device-state {
+    display: flex;
+    align-items: center;
+    gap: 5px;
     font-size: 9px;
-    color: #d59a27;
     font-weight: 800;
+    color: var(--text-muted);
+    white-space: nowrap;
 }
 
-.device-status.connected {
-    color: var(--green);
+.device-state.connected {
+    color: var(--success);
 }
 
-/* =========================================
+.device-state::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+}
+
+
+/* =====================================
    QUICK ACCESS
-========================================= */
+===================================== */
 
 .quick-grid {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 12px;
+    gap: 14px;
 }
 
-.quick {
+.quick-card {
     display: flex;
     align-items: center;
-    gap: 11px;
-    padding: 14px;
-    background: #fff;
-    border: 1px solid var(--line);
-    border-radius: 13px;
-    transition: .18s;
+    gap: 12px;
+    padding: 16px;
     min-width: 0;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    box-shadow: var(--card-shadow);
+    transition: .2s ease;
 }
 
-.quick:hover {
-    transform: translateY(-2px);
-    border-color: #9acdf6;
-    box-shadow: 0 9px 20px #087fe80d;
+.quick-card:hover {
+    transform: translateY(-3px);
+    border-color: #93c5fd;
 }
 
 .quick-icon {
-    width: 34px;
-    height: 34px;
-    flex: 0 0 34px;
-    border-radius: 10px;
-    background: #eaf4ff;
-    color: #087fe8;
+    width: 38px;
+    height: 38px;
+    border-radius: 11px;
     display: grid;
     place-items: center;
+    color: var(--primary);
+    background: var(--primary-light);
+    flex-shrink: 0;
 }
 
-.quick-icon.purple {
-    background: #f2ebff;
-    color: #8b63d5;
-}
-
-.quick-icon.green {
-    background: #e9f8ef;
-    color: #199b5e;
+.quick-icon.cyan {
+    color: var(--cyan);
+    background: rgba(8,145,178,.10);
 }
 
 .quick-icon.orange {
-    background: #fff5e2;
-    color: #d99b24;
+    color: var(--warning);
+    background: rgba(217,119,6,.10);
 }
 
-.quick-copy {
-    min-width: 0;
+.quick-icon.purple {
+    color: var(--purple);
+    background: rgba(124,58,237,.10);
 }
 
-.quick-copy b {
-    display: block;
+.quick-card h4 {
     font-size: 10px;
-    white-space: nowrap;
+    font-weight: 800;
+    color: var(--text);
 }
 
-.quick-copy small {
-    display: block;
-    color: #9aabba;
+.quick-card p {
     font-size: 9px;
+    line-height: 1.5;
+    color: var(--text-muted);
     margin-top: 4px;
 }
 
-.quick > i {
-    font-size: 9px;
-    color: #a2b2c0;
+.quick-arrow {
     margin-left: auto;
+    color: var(--text-muted);
+    font-size: 10px;
 }
 
-/* =========================================
+
+/* =====================================
    FOOTER
-========================================= */
+===================================== */
 
 .footer {
     display: flex;
     justify-content: space-between;
     gap: 12px;
     flex-wrap: wrap;
-    border-top: 1px solid var(--line);
-    margin-top: 27px;
-    padding-top: 15px;
-    color: #9aabba;
+    border-top: 1px solid var(--border);
+    margin-top: 30px;
+    padding-top: 17px;
+    color: var(--text-muted);
     font-size: 9px;
 }
-/* =========================================
-   RESPONSIVE TABLET
-========================================= */
 
-@media (max-width: 1100px) {
-    .metrics {
+
+/* =====================================
+   PART 2 END
+===================================== */
+/* =====================================
+   RESPONSIVE DESIGN
+===================================== */
+
+@media (max-width: 1250px) {
+
+    .main-content {
+        padding: 26px 25px;
+    }
+
+    .stats-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
@@ -806,192 +1176,272 @@
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
-    .main {
-        padding: 24px;
-    }
 }
 
-@media (max-width: 820px) {
-    .sidebar {
-        width: 215px;
-        flex-basis: 215px;
+
+@media (max-width: 950px) {
+
+    :root {
+        --sidebar-width: 215px;
     }
 
-    .content-grid {
+    .monitor-grid {
         grid-template-columns: 1fr;
     }
+
 }
 
-/* =========================================
-   RESPONSIVE MOBILE
-========================================= */
 
-@media (max-width: 620px) {
+@media (max-width: 650px) {
+
     .sidebar {
         display: none;
     }
 
-    .main {
-        padding: 17px 13px;
+    .main-content {
+        margin-left: 0;
+        padding: 20px 15px;
+    }
+
+    .topbar {
+        align-items: flex-start;
     }
 
     .page-title {
         font-size: 21px;
     }
 
+    .page-subtitle {
+        max-width: 230px;
+        line-height: 1.6;
+    }
+
+    .topbar-actions {
+        gap: 7px;
+    }
+
     .profile-name,
-    .profile-role {
+    .profile-role,
+    .profile-trigger > i {
         display: none;
     }
 
-    .hero {
-        display: block;
-        padding: 21px;
+    .profile-trigger {
+        padding: 4px;
+        border: none;
+        background: transparent;
     }
 
-    .hero h2 {
-        font-size: 17px;
+    .welcome-card {
+        min-height: 190px;
+        padding: 23px 20px;
+        align-items: flex-start;
+        flex-direction: column;
     }
 
-    .hero-date {
-        display: inline-flex;
-        margin-top: 15px;
+    .welcome-title {
+        font-size: 20px;
     }
 
-    .metrics {
-        gap: 9px;
+    .welcome-description br {
+        display: none;
     }
 
-    .metric {
-        padding: 13px;
+    .welcome-date {
+        padding: 9px 11px;
     }
 
-    .metric-value {
-        font-size: 18px;
+    .stats-grid {
+        gap: 10px;
     }
 
-    .metric-label {
-        font-size: 9px;
+    .stat-card {
+        padding: 14px;
+    }
+
+    .stat-value {
+        font-size: 21px;
+    }
+
+    .stat-icon {
+        width: 30px;
+        height: 30px;
+        font-size: 12px;
+    }
+
+    .panel {
+        padding: 17px;
+    }
+
+    .water-number {
+        font-size: 45px;
     }
 
     .quick-grid {
         grid-template-columns: 1fr;
     }
 
-    .panel {
-        padding: 16px;
-    }
-
-    .reading strong {
-        font-size: 43px;
-    }
-
     .footer {
-        display: block;
-        line-height: 1.9;
+        flex-direction: column;
+        line-height: 1.6;
     }
+
 }
+
+
+/* =====================================
+   END CSS
+===================================== */
+
 </style>
 </head>
 
 <body>
 
-<div class="shell">
+<div class="app-layout">
+
+    <!-- =================================
+         SIDEBAR
+    ================================== -->
 
     <aside class="sidebar">
 
         <div class="brand">
-            <div class="brand-mark">
+
+            <div class="brand-logo">
                 <i class="fa-solid fa-water"></i>
             </div>
 
             <div>
-                <b>FLOWS-PRO</b>
-                <small>SMART FLOOD SYSTEM</small>
+                <div class="brand-name">
+                    FLOWS<span>-PRO</span>
+                </div>
+
+                <div class="brand-caption">
+                    FLOOD MONITORING SYSTEM
+                </div>
             </div>
+
         </div>
 
-        <div class="nav-caption">MENU UTAMA</div>
 
-        <nav class="nav">
-            <a class="active" href="dashboard.html">
-                <i class="fa-solid fa-house"></i>
+        <div class="nav-label">
+            MENU UTAMA
+        </div>
+
+        <nav class="nav-menu">
+
+            <a href="dashboard.html" class="nav-item active">
+                <i class="fa-solid fa-border-all"></i>
                 Dashboard
             </a>
 
-            <a href="live_sensor.html">
-                <i class="fa-solid fa-tower-broadcast"></i>
-                Live Sensor
+            <a href="live_sensor.html" class="nav-item">
+                <i class="fa-solid fa-wave-square"></i>
+                Live Monitoring
             </a>
 
-            <a href="reports.html">
+            <a href="reports.html" class="nav-item">
                 <i class="fa-solid fa-chart-line"></i>
-                Histori &amp; Laporan
+                Laporan Data
             </a>
 
-            <a href="peta_banjir.html">
+            <a href="peta_banjir.html" class="nav-item">
                 <i class="fa-solid fa-map-location-dot"></i>
                 Peta Banjir
             </a>
 
-            <a href="weather.html">
+            <a href="weather.html" class="nav-item">
                 <i class="fa-solid fa-cloud-sun"></i>
                 Informasi Cuaca
             </a>
+
         </nav>
 
-        <div class="nav-caption">PREFERENSI</div>
 
-        <nav class="nav">
-            <a href="profile.html">
+        <div class="nav-label" style="margin-top: 27px;">
+            PREFERENSI
+        </div>
+
+        <nav class="nav-menu">
+
+            <a href="profile.html" class="nav-item">
                 <i class="fa-regular fa-user"></i>
                 Profil Saya
             </a>
 
-            <a href="settings.html">
-                <i class="fa-solid fa-gear"></i>
+            <a href="settings.html" class="nav-item">
+                <i class="fa-solid fa-sliders"></i>
                 Pengaturan
             </a>
+
         </nav>
 
-        <div class="side-bottom">
-            <div class="connection">
-                <div class="connection-head">
-                    <span class="dot"></span>
-                    SISTEM SIAP
+
+        <div class="sidebar-bottom">
+
+            <div class="system-status">
+
+                <div class="system-status-top">
+                    <span class="status-dot"></span>
+                    FLOWS-PRO SYSTEM
                 </div>
 
                 <p>
-                    Ringkasan kondisi FLOWS-PRO.
-                    Data sensor akan muncul setelah integrasi aktif.
+                    Sistem pemantauan banjir untuk mendukung
+                    kesiapsiagaan lingkungan.
                 </p>
+
             </div>
+
+            <div class="sidebar-version">
+                FLOWS-PRO · VERSION 2.0
+            </div>
+
         </div>
 
     </aside>
 
-    <main class="main">
+
+    <!-- =================================
+         MAIN CONTENT
+    ================================== -->
+
+    <main class="main-content">
+
+
+        <!-- =================================
+             TOPBAR
+        ================================== -->
 
         <header class="topbar">
 
             <div>
-                <div class="eyebrow">
+
+                <div class="breadcrumb">
                     PUSAT KENDALI / RINGKASAN
                 </div>
 
-                <h1 class="page-title">Dashboard</h1>
+                <h1 class="page-title">
+                    Dashboard
+                </h1>
 
-                <p class="page-sub">
+                <p class="page-subtitle">
                     Pantau sistem peringatan banjir dari satu tempat.
                 </p>
+
             </div>
 
-            <div class="actions">
 
-                <button class="square-btn" aria-label="Notifikasi" type="button">
+            <div class="topbar-actions">
+
+                <button class="icon-button" type="button" aria-label="Notifikasi">
                     <i class="fa-regular fa-bell"></i>
-                    <span class="ping"></span>
+                    <span class="notification-dot"></span>
                 </button>
+
+
+                <!-- PROFILE -->
 
                 <div class="profile">
 
@@ -1001,7 +1451,10 @@
                         type="button"
                         aria-expanded="false"
                     >
-                        <span class="avatar" id="profileAvatar">U</span>
+
+                        <span class="avatar" id="profileAvatar">
+                            U
+                        </span>
 
                         <span>
                             <span class="profile-name" id="profileName">
@@ -1014,7 +1467,9 @@
                         </span>
 
                         <i class="fa-solid fa-chevron-down"></i>
+
                     </button>
+
 
                     <div class="dropdown" id="profileDropdown">
 
@@ -1040,258 +1495,519 @@
             </div>
 
         </header>
-        <!-- =====================================
-     WELCOME BANNER
-===================================== -->
+                <!-- =================================
+             WELCOME BANNER
+        ================================== -->
 
-<section class="hero">
+        <section class="welcome-card">
 
-    <div class="hero-copy">
-        <h2>Selamat datang kembali 👋</h2>
+            <div class="welcome-content">
 
-        <p>
-            FLOWS-PRO membantu memantau ketinggian air dan kesiapsiagaan
-            <br>
-            banjir secara lebih terarah dan mudah dipahami.
-        </p>
-    </div>
+                <div class="welcome-label">
+                    FLOWS-PRO MONITORING CENTER
+                </div>
 
-    <div class="hero-date">
-        <i class="fa-regular fa-calendar"></i>
-        <span id="currentDate">Memuat tanggal...</span>
-    </div>
+                <h2 class="welcome-title">
+                    Selamat datang kembali 👋
+                </h2>
 
-</section>
+                <p class="welcome-description">
+                    Pantau kondisi ketinggian air dan kesiapsiagaan banjir
+                    <br>
+                    melalui satu dashboard pemantauan terintegrasi.
+                </p>
 
-
-<!-- =====================================
-     IKHTISAR SISTEM
-===================================== -->
-
-<div class="section-head">
-
-    <div>
-        <h3>Ikhtisar Sistem</h3>
-        <p>Informasi utama dari perangkat pemantauan</p>
-    </div>
-
-</div>
-
-
-<!-- =====================================
-     STATISTIC CARDS
-===================================== -->
-
-<section class="metrics">
-
-    <!-- KONEKSI SENSOR -->
-
-    <article class="metric">
-
-        <div class="metric-top">
-            <span class="metric-label">Koneksi Sensor</span>
-
-            <span class="metric-icon">
-                <i class="fa-solid fa-tower-broadcast"></i>
-            </span>
-        </div>
-
-        <div class="metric-value" id="sensorConnection">
-            Belum terhubung
-        </div>
-
-        <div class="metric-foot" id="sensorConnectionInfo">
-            Menunggu integrasi data sensor
-        </div>
-
-    </article>
-
-
-    <!-- KETINGGIAN AIR -->
-
-    <article class="metric">
-
-        <div class="metric-top">
-            <span class="metric-label">Ketinggian Air</span>
-
-            <span class="metric-icon teal">
-                <i class="fa-solid fa-water"></i>
-            </span>
-        </div>
-
-        <div class="metric-value">
-            <span id="waterLevel">--</span>
-            <small>cm</small>
-        </div>
-
-        <div class="metric-foot">
-            Pembacaan sensor terakhir
-        </div>
-
-    </article>
-
-
-    <!-- STATUS PERINGATAN -->
-
-    <article class="metric">
-
-        <div class="metric-top">
-            <span class="metric-label">Status Peringatan</span>
-
-            <span class="metric-icon gold">
-                <i class="fa-solid fa-triangle-exclamation"></i>
-            </span>
-        </div>
-
-        <div class="metric-value" id="floodStatus">
-            MENUNGGU
-        </div>
-
-        <div class="metric-foot" id="floodStatusInfo">
-            Data sensor belum dimuat
-        </div>
-
-    </article>
-
-
-    <!-- PEMBARUAN TERAKHIR -->
-
-    <article class="metric">
-
-        <div class="metric-top">
-            <span class="metric-label">Pembaruan Terakhir</span>
-
-            <span class="metric-icon purple">
-                <i class="fa-regular fa-clock"></i>
-            </span>
-        </div>
-
-        <div class="metric-value" id="lastUpdate">
-            --:--
-        </div>
-
-        <div class="metric-foot" id="lastUpdateDate">
-            Belum ada data diterima
-        </div>
-
-    </article>
-
-</section>
-<!-- =====================================
-     AKSES CEPAT
-===================================== -->
-
-<div class="section-head">
-
-    <div>
-        <h3>Akses Cepat</h3>
-        <p>Pilih fitur FLOWS-PRO yang ingin kamu buka</p>
-    </div>
-
-</div>
-
-
-<section class="quick-grid">
-
-    <!-- LIVE SENSOR -->
-
-    <a href="live_sensor.html" class="quick-tile">
-
-        <div class="quick-icon">
-            <i class="fa-solid fa-wave-square"></i>
-        </div>
-
-        <div class="quick-content">
-            <div class="quick-title">Live Monitoring</div>
-            <div class="quick-desc">
-                Pantau pembacaan sensor secara langsung
             </div>
-        </div>
 
-        <i class="fa-solid fa-arrow-up-right-from-square quick-arrow"></i>
-
-    </a>
-
-
-    <!-- LAPORAN -->
-
-    <a href="reports.html" class="quick-tile">
-
-        <div class="quick-icon teal">
-            <i class="fa-solid fa-chart-line"></i>
-        </div>
-
-        <div class="quick-content">
-            <div class="quick-title">Laporan Data</div>
-            <div class="quick-desc">
-                Lihat riwayat dan perkembangan data
+            <div class="welcome-date">
+                <i class="fa-regular fa-calendar"></i>
+                <span id="currentDate">Memuat tanggal...</span>
             </div>
-        </div>
 
-        <i class="fa-solid fa-arrow-up-right-from-square quick-arrow"></i>
-
-    </a>
+        </section>
 
 
-    <!-- PETA BANJIR -->
+        <!-- =================================
+             STATISTIK SISTEM
+        ================================== -->
 
-    <a href="peta_banjir.html" class="quick-tile">
+        <div class="section-heading">
 
-        <div class="quick-icon gold">
-            <i class="fa-solid fa-map-location-dot"></i>
-        </div>
-
-        <div class="quick-content">
-            <div class="quick-title">Peta Banjir</div>
-            <div class="quick-desc">
-                Lihat informasi lokasi pemantauan
+            <div>
+                <h3>Ringkasan Sistem</h3>
+                <p>Informasi utama perangkat pemantauan FLOWS-PRO</p>
             </div>
+
         </div>
 
-        <i class="fa-solid fa-arrow-up-right-from-square quick-arrow"></i>
 
-    </a>
+        <section class="stats-grid">
 
 
-    <!-- CUACA -->
+            <!-- SENSOR CONNECTION -->
 
-    <a href="weather.html" class="quick-tile">
+            <article class="stat-card">
 
-        <div class="quick-icon purple">
-            <i class="fa-solid fa-cloud-sun"></i>
-        </div>
+                <div class="stat-top">
 
-        <div class="quick-content">
-            <div class="quick-title">Informasi Cuaca</div>
-            <div class="quick-desc">
-                Akses informasi kondisi cuaca
+                    <span class="stat-label">
+                        Koneksi Sensor
+                    </span>
+
+                    <span class="stat-icon">
+                        <i class="fa-solid fa-tower-broadcast"></i>
+                    </span>
+
+                </div>
+
+                <div class="stat-value" id="sensorConnection">
+                    Menunggu
+                </div>
+
+                <div class="stat-description" id="sensorConnectionInfo">
+                    <i class="fa-solid fa-circle-info"></i>
+                    Menunggu integrasi data sensor
+                </div>
+
+            </article>
+
+
+            <!-- WATER LEVEL -->
+
+            <article class="stat-card">
+
+                <div class="stat-top">
+
+                    <span class="stat-label">
+                        Ketinggian Air
+                    </span>
+
+                    <span class="stat-icon cyan">
+                        <i class="fa-solid fa-water"></i>
+                    </span>
+
+                </div>
+
+                <div class="stat-value">
+                    <span id="waterLevel">--</span>
+                    <small>cm</small>
+                </div>
+
+                <div class="stat-description">
+                    <i class="fa-solid fa-wave-square"></i>
+                    Pembacaan sensor terakhir
+                </div>
+
+            </article>
+
+
+            <!-- FLOOD STATUS -->
+
+            <article class="stat-card">
+
+                <div class="stat-top">
+
+                    <span class="stat-label">
+                        Status Peringatan
+                    </span>
+
+                    <span class="stat-icon orange">
+                        <i class="fa-solid fa-triangle-exclamation"></i>
+                    </span>
+
+                </div>
+
+                <div class="stat-value" id="floodStatus">
+                    MENUNGGU
+                </div>
+
+                <div class="stat-description" id="floodStatusInfo">
+                    <i class="fa-solid fa-circle-info"></i>
+                    Data sensor belum dimuat
+                </div>
+
+            </article>
+
+
+            <!-- LAST UPDATE -->
+
+            <article class="stat-card">
+
+                <div class="stat-top">
+
+                    <span class="stat-label">
+                        Pembaruan Terakhir
+                    </span>
+
+                    <span class="stat-icon purple">
+                        <i class="fa-regular fa-clock"></i>
+                    </span>
+
+                </div>
+
+                <div class="stat-value" id="lastUpdate">
+                    --:--
+                </div>
+
+                <div class="stat-description" id="lastUpdateDate">
+                    Belum ada data diterima
+                </div>
+
+            </article>
+
+        </section>
+
+
+        <!-- =================================
+             MONITORING SECTION
+        ================================== -->
+
+        <div class="section-heading">
+
+            <div>
+                <h3>Pemantauan Kondisi Air</h3>
+                <p>Ringkasan kondisi dan status perangkat</p>
             </div>
+
+            <a href="live_sensor.html" class="section-action">
+                Buka Monitoring <i class="fa-solid fa-arrow-right"></i>
+            </a>
+
         </div>
 
-        <i class="fa-solid fa-arrow-up-right-from-square quick-arrow"></i>
 
-    </a>
-
-</section>
+        <section class="monitor-grid">
 
 
-<!-- =====================================
-     FOOTER
-===================================== -->
+            <!-- =================================
+                 WATER LEVEL PANEL
+            ================================== -->
 
-<footer class="footer">
+            <article class="panel">
 
-    <span>
-        © 2026 FLOWS-PRO · Flood Level Observation and Warning System
-    </span>
+                <div class="panel-header">
 
-    <span>
-        Designed for Water & Environmental Sustainability
-    </span>
+                    <div>
+                        <h3 class="panel-title">
+                            Ketinggian Permukaan Air
+                        </h3>
 
-</footer>
+                        <p class="panel-subtitle">
+                            Pemantauan level air berdasarkan sensor
+                        </p>
+                    </div>
 
-</main>
+                    <span class="live-badge">
+                        <span></span>
+                        MONITORING
+                    </span>
+
+                </div>
+
+
+                <div class="water-display">
+
+                    <div class="water-number" id="mainWaterLevel">
+                        --
+                    </div>
+
+                    <div class="water-unit">
+                        cm
+                    </div>
+
+                </div>
+
+
+                <p class="water-description" id="waterDescription">
+                    Menunggu data ketinggian air dari perangkat sensor.
+                </p>
+
+
+                <!-- WATER SCALE -->
+
+                <div class="water-scale">
+
+                    <div class="scale-labels">
+                        <span>0 cm</span>
+                        <span id="waterMaxScale">200 cm</span>
+                    </div>
+
+                    <div class="scale-track">
+
+                        <div
+                            class="scale-marker"
+                            id="waterProgressBar"
+                            style="left: 0%;"
+                        ></div>
+
+                    </div>
+
+                    <div class="scale-legend">
+
+                        <span>
+                            <i class="legend-dot legend-safe"></i>
+                            Aman
+                        </span>
+
+                        <span>
+                            <i class="legend-dot legend-alert"></i>
+                            Siaga
+                        </span>
+
+                        <span>
+                            <i class="legend-dot legend-danger"></i>
+                            Waspada
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- FLOOD STATUS CARD -->
+
+                <div class="flood-status" id="mainFloodStatus">
+
+                    <div class="flood-status-icon">
+                        <i class="fa-solid fa-shield-halved"></i>
+                    </div>
+
+                    <div>
+                        <strong>MENUNGGU DATA</strong>
+
+                        <p>
+                            Status kondisi air akan ditampilkan
+                            setelah data sensor tersedia.
+                        </p>
+                    </div>
+
+                </div>
+
+            </article>
+
+
+            <!-- =================================
+                 DEVICE STATUS PANEL
+            ================================== -->
+
+            <article class="panel">
+
+                <div class="panel-header">
+
+                    <div>
+                        <h3 class="panel-title">
+                            Status Perangkat
+                        </h3>
+
+                        <p class="panel-subtitle">
+                            Komponen utama sistem
+                        </p>
+                    </div>
+
+                    <i class="fa-solid fa-microchip"
+                       style="color: var(--primary); font-size: 17px;">
+                    </i>
+
+                </div>
+
+
+                <div class="device-list">
+
+
+                    <!-- CONTROLLER -->
+
+                    <div class="device-item">
+
+                        <div class="device-icon">
+                            <i class="fa-solid fa-microchip"></i>
+                        </div>
+
+                        <div class="device-info">
+
+                            <div class="device-name">
+                                Mikrokontroler
+                            </div>
+
+                            <div class="device-description">
+                                ESP32 / Wemos
+                            </div>
+
+                        </div>
+
+                        <span class="device-state" id="controllerStatus">
+                            Menunggu
+                        </span>
+
+                    </div>
+
+
+                    <!-- SENSOR -->
+
+                    <div class="device-item">
+
+                        <div class="device-icon">
+                            <i class="fa-solid fa-water"></i>
+                        </div>
+
+                        <div class="device-info">
+
+                            <div class="device-name">
+                                Sensor Ketinggian Air
+                            </div>
+
+                            <div class="device-description">
+                                Pembacaan permukaan air
+                            </div>
+
+                        </div>
+
+                        <span class="device-state" id="sensorStatus">
+                            Menunggu
+                        </span>
+
+                    </div>
+
+
+                    <!-- DATABASE -->
+
+                    <div class="device-item">
+
+                        <div class="device-icon">
+                            <i class="fa-solid fa-database"></i>
+                        </div>
+
+                        <div class="device-info">
+
+                            <div class="device-name">
+                                Cloud Database
+                            </div>
+
+                            <div class="device-description">
+                                Supabase
+                            </div>
+
+                        </div>
+
+                        <span class="device-state" id="databaseStatus">
+                            Memeriksa
+                        </span>
+
+                    </div>
+
+
+                </div>
+
+            </article>
+
+        </section>
+                <!-- =================================
+             QUICK ACCESS
+        ================================== -->
+
+        <div class="section-heading">
+
+            <div>
+                <h3>Akses Cepat</h3>
+                <p>Buka fitur utama FLOWS-PRO</p>
+            </div>
+
+        </div>
+
+
+        <section class="quick-grid">
+
+            <!-- LIVE MONITORING -->
+
+            <a href="live_sensor.html" class="quick-card">
+
+                <div class="quick-icon">
+                    <i class="fa-solid fa-wave-square"></i>
+                </div>
+
+                <div>
+                    <h4>Live Monitoring</h4>
+                    <p>Pantau pembacaan sensor</p>
+                </div>
+
+                <i class="fa-solid fa-arrow-up-right-from-square quick-arrow"></i>
+
+            </a>
+
+
+            <!-- REPORTS -->
+
+            <a href="reports.html" class="quick-card">
+
+                <div class="quick-icon cyan">
+                    <i class="fa-solid fa-chart-line"></i>
+                </div>
+
+                <div>
+                    <h4>Laporan Data</h4>
+                    <p>Riwayat dan analisis data</p>
+                </div>
+
+                <i class="fa-solid fa-arrow-up-right-from-square quick-arrow"></i>
+
+            </a>
+
+
+            <!-- FLOOD MAP -->
+
+            <a href="peta_banjir.html" class="quick-card">
+
+                <div class="quick-icon orange">
+                    <i class="fa-solid fa-map-location-dot"></i>
+                </div>
+
+                <div>
+                    <h4>Peta Banjir</h4>
+                    <p>Informasi lokasi pemantauan</p>
+                </div>
+
+                <i class="fa-solid fa-arrow-up-right-from-square quick-arrow"></i>
+
+            </a>
+
+
+            <!-- WEATHER -->
+
+            <a href="weather.html" class="quick-card">
+
+                <div class="quick-icon purple">
+                    <i class="fa-solid fa-cloud-sun"></i>
+                </div>
+
+                <div>
+                    <h4>Informasi Cuaca</h4>
+                    <p>Informasi kondisi cuaca</p>
+                </div>
+
+                <i class="fa-solid fa-arrow-up-right-from-square quick-arrow"></i>
+
+            </a>
+
+        </section>
+
+
+        <!-- =================================
+             FOOTER
+        ================================== -->
+
+        <footer class="footer">
+
+            <span>
+                © 2026 FLOWS-PRO · Flood Level Observation and Warning System
+            </span>
+
+            <span>
+                Water & Environmental Sustainability
+            </span>
+
+        </footer>
+
+    </main>
+
 </div>
 
 
@@ -1305,9 +2021,15 @@
 
 document.addEventListener("DOMContentLoaded", async function () {
 
-    const SUPABASE_URL = "https://nydapuhnswrbgbjkaxqa.supabase.co";
+    // =====================================
+    // SUPABASE CONFIGURATION
+    // =====================================
 
-    const SUPABASE_KEY = "sb_publishable_dypnRnjABFIf6GcshfrTIA_Q0zhuR0L";
+    const SUPABASE_URL =
+        "https://nydapuhnswrbgbjkaxqa.supabase.co";
+
+    const SUPABASE_KEY =
+        "sb_publishable_dypnRnjABFIf6GcshfrTIA_Q0zhuR0L";
 
     const supabaseClient = window.supabase.createClient(
         SUPABASE_URL,
@@ -1315,104 +2037,112 @@ document.addEventListener("DOMContentLoaded", async function () {
     );
 
 
-// =====================================
-// ELEMENT REFERENCES
-// =====================================
+    // =====================================
+    // ELEMENT REFERENCES
+    // =====================================
 
-const byId = (id) => document.getElementById(id);
+    const byId = (id) => document.getElementById(id);
 
-const currentDate = byId("currentDate");
-const profileTrigger = byId("profileTrigger");
-const profileDropdown = byId("profileDropdown");
-const logoutButton = byId("logoutButton");
+    const currentDate = byId("currentDate");
 
+    const profileTrigger = byId("profileTrigger");
 
-// =====================================
-// TANGGAL
-// =====================================
+    const profileDropdown = byId("profileDropdown");
 
-if (currentDate) {
-    currentDate.textContent = new Date().toLocaleDateString("id-ID", {
-        weekday: "long",
-        day: "numeric",
-        month: "long",
-        year: "numeric"
-    });
-}
+    const logoutButton = byId("logoutButton");
 
-
-// =====================================
-// PROFILE DROPDOWN
-// =====================================
-
-if (profileTrigger && profileDropdown) {
-
-    profileTrigger.addEventListener("click", function (event) {
-
-        event.stopPropagation();
-
-        const isOpen = profileDropdown.classList.toggle("show");
-
-        profileTrigger.setAttribute("aria-expanded", String(isOpen));
-
-    });
-
-    document.addEventListener("click", function (event) {
-
-        if (
-            !profileDropdown.contains(event.target) &&
-            !profileTrigger.contains(event.target)
-        ) {
-
-            profileDropdown.classList.remove("show");
-
-            profileTrigger.setAttribute("aria-expanded", "false");
-
-        }
-
-    });
-
-}
-
-
-// =====================================
-// LOGOUT
-// =====================================
-
-if (logoutButton) {
-
-    logoutButton.addEventListener("click", async function () {
-
-        const confirmation = confirm("Yakin ingin keluar dari FLOWS-PRO?");
-
-        if (!confirmation) return;
-
-        logoutButton.disabled = true;
-
-        try {
-
-            const { error } = await supabaseClient.auth.signOut();
-
-            if (error) throw error;
-
-            window.location.replace("login.html");
-
-        } catch (error) {
-
-            console.error("Logout gagal:", error);
-
-            alert("Logout gagal. Silakan coba kembali.");
-
-            logoutButton.disabled = false;
-
-        }
-
-    });
-
-}
 
     // =====================================
-    // CEK SESSION LOGIN
+    // THEME SYSTEM
+    // =====================================
+
+    function applySavedTheme() {
+
+        let savedTheme = "light";
+
+        try {
+            savedTheme = localStorage.getItem("flowsTheme") || "light";
+        } catch (error) {
+            console.warn("Preferensi tema tidak dapat dibaca.");
+        }
+
+        if (savedTheme !== "dark" && savedTheme !== "light") {
+            savedTheme = "light";
+        }
+
+        document.documentElement.setAttribute(
+            "data-theme",
+            savedTheme
+        );
+
+    }
+
+    applySavedTheme();
+
+
+    // =====================================
+    // DATE
+    // =====================================
+
+    if (currentDate) {
+
+        currentDate.textContent = new Date().toLocaleDateString(
+            "id-ID",
+            {
+                weekday: "long",
+                day: "numeric",
+                month: "long",
+                year: "numeric"
+            }
+        );
+
+    }
+
+
+    // =====================================
+    // PROFILE DROPDOWN
+    // =====================================
+
+    if (profileTrigger && profileDropdown) {
+
+        profileTrigger.addEventListener("click", function (event) {
+
+            event.stopPropagation();
+
+            const isOpen =
+                profileDropdown.classList.toggle("show");
+
+            profileTrigger.setAttribute(
+                "aria-expanded",
+                String(isOpen)
+            );
+
+        });
+
+
+        document.addEventListener("click", function (event) {
+
+            if (
+                !profileDropdown.contains(event.target) &&
+                !profileTrigger.contains(event.target)
+            ) {
+
+                profileDropdown.classList.remove("show");
+
+                profileTrigger.setAttribute(
+                    "aria-expanded",
+                    "false"
+                );
+
+            }
+
+        });
+
+    }
+
+
+    // =====================================
+    // AUTHENTICATION
     // =====================================
 
     try {
@@ -1424,29 +2154,33 @@ if (logoutButton) {
             throw sessionError;
         }
 
-        const session = sessionData.session;
+        if (!sessionData.session) {
 
-        if (!session) {
             window.location.replace("login.html");
+
             return;
+
         }
 
-
-        // =====================================
-        // AMBIL DATA USER
-        // =====================================
 
         const { data: userData, error: userError } =
             await supabaseClient.auth.getUser();
 
         if (userError || !userData.user) {
+
             window.location.replace("login.html");
+
             return;
+
         }
 
+
         const user = userData.user;
+
         const metadata = user.user_metadata || {};
+
         const appMetadata = user.app_metadata || {};
+
 
         const displayName =
             metadata.full_name ||
@@ -1455,6 +2189,7 @@ if (logoutButton) {
             user.email?.split("@")[0] ||
             "Pengguna";
 
+
         const userRole =
             appMetadata.role ||
             metadata.role ||
@@ -1462,7 +2197,7 @@ if (logoutButton) {
 
 
         // =====================================
-        // TAMPILKAN PROFIL
+        // PROFILE DISPLAY
         // =====================================
 
         if (byId("profileName")) {
@@ -1470,7 +2205,8 @@ if (logoutButton) {
         }
 
         if (byId("profileRole")) {
-            byId("profileRole").textContent = userRole.toUpperCase();
+            byId("profileRole").textContent =
+                userRole.toUpperCase();
         }
 
         if (byId("profileAvatar")) {
@@ -1480,23 +2216,29 @@ if (logoutButton) {
 
 
         // =====================================
-        // STATUS DATABASE
+        // DATABASE AUTH STATUS
         // =====================================
 
         if (byId("databaseStatus")) {
+
             byId("databaseStatus").textContent = "Terhubung";
+
             byId("databaseStatus").classList.add("connected");
+
         }
 
     } catch (error) {
 
         console.error("Kesalahan autentikasi:", error);
 
-        alert("Terjadi masalah saat memeriksa sesi login. Silakan login kembali.");
+        alert(
+            "Terjadi masalah saat memeriksa sesi login. Silakan login kembali."
+        );
 
         window.location.replace("login.html");
 
         return;
+
     }
 
 
@@ -1504,19 +2246,22 @@ if (logoutButton) {
     // LOGOUT
     // =====================================
 
-    if (logoutBtn) {
+    if (logoutButton) {
 
-        logoutBtn.addEventListener("click", async function () {
+        logoutButton.addEventListener("click", async function () {
 
-            const confirmation = confirm("Yakin ingin keluar dari FLOWS-PRO?");
+            const confirmation = confirm(
+                "Yakin ingin keluar dari FLOWS-PRO?"
+            );
 
             if (!confirmation) return;
 
-            logoutBtn.disabled = true;
+            logoutButton.disabled = true;
 
             try {
 
-                const { error } = await supabaseClient.auth.signOut();
+                const { error } =
+                    await supabaseClient.auth.signOut();
 
                 if (error) {
                     throw error;
@@ -1530,7 +2275,7 @@ if (logoutButton) {
 
                 alert("Logout gagal. Silakan coba kembali.");
 
-                logoutBtn.disabled = false;
+                logoutButton.disabled = false;
 
             }
 
