@@ -320,15 +320,12 @@ img {
 ========================================= */
 
 .main-content {
-    margin-left: var(--sidebar-width);
-
-    width: calc(100% - var(--sidebar-width));
-
+    margin-left: 260px;
+    width: calc(100% - 260px);
     min-height: 100vh;
-
-    background: var(--bg);
-
-    transition: var(--transition);
+    padding: 0;
+    overflow-x: hidden;
+    box-sizing: border-box;
 }
 
 /* PAGE CONTENT */
@@ -626,24 +623,18 @@ img {
 /* SETTINGS CONTENT */
 
 .settings-content {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-
-    min-width: 0;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 24px 32px 40px;
+    box-sizing: border-box;
 }
 
 /* SETTINGS CARD */
 
 .settings-card {
-    background: var(--surface);
-
-    border: 1px solid var(--border);
-    border-radius: 16px;
-
-    box-shadow: var(--shadow);
-
-    overflow: hidden;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .card-header {
