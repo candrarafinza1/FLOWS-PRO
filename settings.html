@@ -141,115 +141,172 @@ img {
 }
 
 /* =====================================
-   FLOWS-PRO STANDARD SIDEBAR
+   FLOWS-PRO DASHBOARD SIDEBAR
 ===================================== */
 
 .sidebar {
-    position: fixed;
-
-    top: 0;
-    left: 0;
-
     width: 260px;
-    height: 100vh;
+    min-height: 100vh;
 
-    padding: 24px 14px;
-
-    background: var(--surface);
-
-    border-right: 1px solid var(--border);
+    background: #071b2d;
+    color: #ffffff;
 
     display: flex;
     flex-direction: column;
 
+    padding: 24px 16px;
+
+    flex-shrink: 0;
+
     box-sizing: border-box;
-
-    overflow-x: hidden;
-    overflow-y: auto;
-
-    z-index: 1000;
 }
 
 
 /* =====================================
-   BRAND
+   SIDEBAR BRAND
 ===================================== */
 
 .brand {
-    width: 100%;
-
     display: flex;
+
     align-items: center;
 
     gap: 12px;
 
-    padding: 0 10px 25px;
+    padding: 0 10px 30px;
 
-    box-sizing: border-box;
+    border-bottom: 1px solid rgba(255,255,255,.1);
 
     flex-shrink: 0;
 }
 
-.brand-logo {
+.brand img {
     width: 43px;
     height: 43px;
 
-    flex-shrink: 0;
-
-    border-radius: 14px;
-
     object-fit: contain;
 
-    background: linear-gradient(
-        135deg,
-        #2563eb,
-        #06b6d4
-    );
-
-    color: white;
-
-    display: grid;
-    place-items: center;
-
-    font-size: 19px;
-
-    box-shadow:
-        0 7px 16px
-        rgba(37,99,235,.20);
+    flex-shrink: 0;
 }
 
-.brand-info {
+.brand-text {
     display: flex;
     flex-direction: column;
-
-    gap: 3px;
-
-    min-width: 0;
 }
 
-.brand-name {
-    font-family: var(--font-heading);
+.brand-text h2 {
+    font-family: 'Plus Jakarta Sans', sans-serif;
 
     font-size: 17px;
+
     font-weight: 800;
 
-    letter-spacing: -.6px;
+    letter-spacing: .5px;
 
-    color: var(--text);
+    color: #ffffff;
+}
+
+.brand-text span {
+    color: #00c6f7;
+
+    font-size: 10px;
+
+    letter-spacing: 2px;
 
     white-space: nowrap;
 }
 
-.brand-subtitle {
-    font-size: 9px;
 
-    color: var(--text-muted);
+/* =====================================
+   SIDEBAR LABEL
+===================================== */
 
-    letter-spacing: 1.3px;
+.sidebar-label {
+    color: #71869b;
+
+    font-size: 10px;
 
     font-weight: 700;
 
-    white-space: nowrap;
+    letter-spacing: 1.5px;
+
+    padding: 28px 12px 12px;
+}
+
+
+/* =====================================
+   SIDEBAR MENU
+===================================== */
+
+.sidebar-menu {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 6px;
+
+    width: 100%;
+}
+
+
+/* =====================================
+   MENU ITEM
+===================================== */
+
+.menu-item {
+    width: 100%;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 13px;
+
+    padding: 13px 14px;
+
+    box-sizing: border-box;
+
+    color: #9db0c4;
+
+    border-radius: 10px;
+
+    font-size: 13px;
+
+    font-weight: 500;
+
+    text-decoration: none;
+
+    transition: .2s ease;
+}
+
+.menu-item i {
+    width: 18px;
+
+    min-width: 18px;
+
+    text-align: center;
+
+    font-size: 15px;
+}
+
+.menu-item:hover {
+    color: #ffffff;
+
+    background: rgba(255,255,255,.07);
+}
+
+.menu-item.active {
+    color: #ffffff;
+
+    background: linear-gradient(
+        90deg,
+        #087fe8,
+        #0798f5
+    );
+
+    box-shadow:
+        0 5px 18px
+        rgba(7,136,255,.20);
 }
 
 
@@ -262,100 +319,28 @@ img {
 
     margin-top: auto;
 
-    padding-top: 20px;
-
-    box-sizing: border-box;
-
-    flex-shrink: 0;
-}
-
-
-/* =====================================
-   SYSTEM STATUS
-===================================== */
-
-.system-status {
-    width: 100%;
-
-    background: var(--surface-soft);
-
-    border: 1px solid var(--border);
-
-    border-radius: 15px;
-
-    padding: 15px;
-
-    box-sizing: border-box;
-}
-
-.system-status-top {
-    display: flex;
-    align-items: center;
-
-    gap: 8px;
-
-    font-size: 11px;
-    font-weight: 800;
-
-    color: var(--text);
-}
-
-.status-dot {
-    width: 8px;
-    height: 8px;
-
-    flex-shrink: 0;
-
-    background: #22c55e;
-
-    border-radius: 50%;
-
-    box-shadow:
-        0 0 0 4px
-        rgba(34,197,94,.12);
-}
-
-.system-status p {
-    font-size: 10px;
-
-    line-height: 1.6;
-
-    color: var(--text-secondary);
-
-    margin-top: 8px;
-}
-
-.sidebar-version {
-    width: 100%;
-
-    text-align: center;
-
-    color: var(--text-muted);
-
-    font-size: 9px;
-
-    margin-top: 17px;
+    padding-top: 25px;
 
     box-sizing: border-box;
 }
 
 
 /* =====================================
-   MAIN CONTENT AREA
+   MAIN CONTENT
 ===================================== */
 
 .main-content {
-    margin-left: 260px;
+    flex: 1;
 
-    width: calc(100% - 260px);
+    min-width: 0;
 
     min-height: 100vh;
 
-    padding: 0;
-
-    overflow-x: hidden;
+    padding: 28px 34px;
 
     box-sizing: border-box;
+
+    overflow-x: hidden;
 }
 
 
@@ -370,25 +355,22 @@ img {
 
     margin: 0 auto;
 
-    padding: 30px 34px 50px;
-
     box-sizing: border-box;
 }
 
 
 /* =====================================
-   RESPONSIVE SIDEBAR
+   RESPONSIVE
 ===================================== */
 
 @media (max-width: 900px) {
 
-    .page-content {
-        padding: 24px 22px 40px;
+    .sidebar {
+        width: 220px;
     }
 
-    .brand {
-        padding-left: 8px;
-        padding-right: 8px;
+    .main-content {
+        padding: 24px 20px;
     }
 }
 
@@ -396,23 +378,17 @@ img {
 @media (max-width: 650px) {
 
     .sidebar {
-        transform: translateX(-100%);
-
-        width: 260px;
-    }
-
-    .sidebar.mobile-open {
-        transform: translateX(0);
+        display: none;
     }
 
     .main-content {
-        margin-left: 0;
-
         width: 100%;
+
+        padding: 20px 15px;
     }
 
-    .page-content {
-        padding: 20px 16px 35px;
+    .page-heading h1 {
+        font-size: 21px;
     }
 }
 
