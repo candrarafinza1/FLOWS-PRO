@@ -1,12 +1,7 @@
 <!DOCTYPE html>
-<html lang="id" data-theme="dark">
+<html lang="id" data-theme="light">
 
 <head>
-
-    <!-- =====================================================
-         FLOWS-PRO SETTINGS
-         PART 1 — HEAD + SIDEBAR + BASE CSS
-         ===================================================== -->
 
     <meta charset="UTF-8">
 
@@ -15,27 +10,13 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <meta
-        name="theme-color"
-        content="#0b1120"
-    >
-
     <title>FLOWS-PRO | Pengaturan</title>
 
+    <link rel="icon" href="favicon.ico">
 
-    <!-- =====================================================
-         FAVICON
-         ===================================================== -->
-
-    <link
-        rel="icon"
-        href="favicon.ico"
-    >
-
-
-    <!-- =====================================================
-         GOOGLE FONT
-         ===================================================== -->
+    <!-- =========================================
+         GOOGLE FONTS
+    ========================================== -->
 
     <link
         rel="preconnect"
@@ -53,10 +34,9 @@
         rel="stylesheet"
     >
 
-
-    <!-- =====================================================
+    <!-- =========================================
          FONT AWESOME
-         ===================================================== -->
+    ========================================== -->
 
     <link
         rel="stylesheet"
@@ -64,2589 +44,1707 @@
     >
 
 
-    <!-- =====================================================
-         BASE CSS
-         ===================================================== -->
-
-    <style>
-
-        /* =================================================
-           ROOT VARIABLES
-           ================================================= */
-
-        :root {
-
-            --primary: #2563eb;
-
-            --primary-hover: #1d4ed8;
-
-            --primary-light:
-                rgba(37, 99, 235, 0.15);
-
-            --success: #22c55e;
-
-            --warning: #f59e0b;
-
-            --danger: #ef4444;
-
-            --info: #38bdf8;
-
-
-            --bg: #0b1120;
-
-            --surface: #111c2e;
-
-            --surface-soft: #152238;
-
-            --surface-hover: #1a2a43;
-
-
-            --text: #f8fafc;
-
-            --text-secondary: #94a3b8;
-
-            --text-muted: #64748b;
-
-
-            --border: #23334b;
-
-
-            --sidebar-width: 260px;
-
-
-            --font-main:
-                'DM Sans',
-                sans-serif;
-
-            --font-heading:
-                'Plus Jakarta Sans',
-                sans-serif;
-
-
-            --transition:
-                all 0.2s ease;
-
-        }
-
-
-        /* =================================================
-           LIGHT THEME
-           ================================================= */
-
-        [data-theme="light"] {
-
-            --bg: #f5f7fb;
-
-            --surface: #ffffff;
-
-            --surface-soft: #f8fafc;
-
-            --surface-hover: #f1f5f9;
-
-
-            --text: #172033;
-
-            --text-secondary: #64748b;
-
-            --text-muted: #94a3b8;
-
-
-            --border: #e2e8f0;
-
-        }
-
-
-        /* =================================================
-           DARK THEME
-           ================================================= */
-
-        [data-theme="dark"] {
-
-            --bg: #0b1120;
-
-            --surface: #111c2e;
-
-            --surface-soft: #152238;
-
-            --surface-hover: #1a2a43;
-
-
-            --text: #f8fafc;
-
-            --text-secondary: #94a3b8;
-
-            --text-muted: #64748b;
-
-
-            --border: #23334b;
-
-        }
-
-
-        /* =================================================
-           GLOBAL RESET
-           ================================================= */
-
-        * {
-
-            margin: 0;
-
-            padding: 0;
-
-            box-sizing: border-box;
-
-        }
-
-
-        html {
-
-            scroll-behavior: smooth;
-
-        }
-
-
-        body {
-
-            width: 100%;
-
-            min-height: 100vh;
-
-            margin: 0;
-
-            background: var(--bg);
-
-            color: var(--text);
-
-            font-family: var(--font-main);
-
-            overflow-x: hidden;
-
-            transition:
-                background 0.25s ease,
-                color 0.25s ease;
-
-        }
-
-
-        button,
-        input,
-        select,
-        textarea {
-
-            font-family: inherit;
-
-        }
-
-
-        button {
-
-            cursor: pointer;
-
-        }
-
-
-        a {
-
-            color: inherit;
-
-            text-decoration: none;
-
-        }
-
-
-        img {
-
-            display: block;
-
-            max-width: 100%;
-
-        }
-
-
-        /* =================================================
-           MAIN APPLICATION LAYOUT
-           ================================================= */
-
-        .app-layout {
-
-            width: 100%;
-
-            min-height: 100vh;
-
-            display: flex;
-
-        }
-
-
-        /* =================================================
-           SIDEBAR
-           ================================================= */
-
-        .sidebar {
-
-            position: fixed;
-
-            top: 0;
-
-            left: 0;
-
-            width: var(--sidebar-width);
-
-            height: 100vh;
-
-            padding: 24px 14px;
-
-            display: flex;
-
-            flex-direction: column;
-
-            background: #111c2e;
-
-            border-right:
-                1px solid #23334b;
-
-            overflow-x: hidden;
-
-            overflow-y: auto;
-
-            z-index: 1000;
-
-            scrollbar-width: none;
-
-            transition:
-                transform 0.25s ease;
-
-        }
-
-
-        .sidebar::-webkit-scrollbar {
-
-            display: none;
-
-        }
-
-
-        /* =================================================
-           SIDEBAR BRAND
-           ================================================= */
-
-        .brand {
-
-            width: 100%;
-
-            display: flex;
-
-            align-items: center;
-
-            gap: 12px;
-
-            padding:
-                0 10px 25px;
-
-            flex-shrink: 0;
-
-        }
-
-
-        .brand-logo {
-
-            width: 43px;
-
-            height: 43px;
-
-            flex-shrink: 0;
-
-            object-fit: contain;
-
-            border-radius: 12px;
-
-        }
-
-
-        .brand-text {
-
-            min-width: 0;
-
-            display: flex;
-
-            flex-direction: column;
-
-        }
-
-
-        .brand-name {
-
-            color: #ffffff;
-
-            font-family: var(--font-heading);
-
-            font-size: 17px;
-
-            font-weight: 800;
-
-            line-height: 1.2;
-
-            letter-spacing: -0.5px;
-
-            white-space: nowrap;
-
-        }
-
-
-        .brand-name span {
-
-            color: #00c6f7;
-
-        }
-
-
-        .brand-caption {
-
-            margin-top: 4px;
-
-            color: #71869b;
-
-            font-size: 9px;
-
-            font-weight: 700;
-
-            line-height: 1;
-
-            letter-spacing: 1.3px;
-
-            white-space: nowrap;
-
-        }
-
-
-        /* =================================================
-           SIDEBAR SECTION LABEL
-           ================================================= */
-
-        .nav-label {
-
-            width: 100%;
-
-            margin:
-                18px 0 10px;
-
-            padding:
-                0 12px;
-
-            color: #71869b;
-
-            font-size: 9px;
-
-            font-weight: 800;
-
-            line-height: 1.2;
-
-            letter-spacing: 1.3px;
-
-            text-transform: uppercase;
-
-        }
-
-
-        /* =================================================
-           NAVIGATION
-           ================================================= */
-
-        .nav-menu {
-
-            width: 100%;
-
-            display: flex;
-
-            flex-direction: column;
-
-            gap: 5px;
-
-            margin: 0;
-
-            padding: 0;
-
-            list-style: none;
-
-            flex-shrink: 0;
-
-        }
-
-
-        .nav-item {
-
-            width: 100%;
-
-            min-height: 44px;
-
-            display: flex;
-
-            align-items: center;
-
-            gap: 12px;
-
-            padding:
-                0 13px;
-
-            border-radius: 11px;
-
-            color: #9db0c4;
-
-            font-size: 12px;
-
-            font-weight: 600;
-
-            text-decoration: none;
-
-            overflow: hidden;
-
-            transition:
-                background 0.2s ease,
-                color 0.2s ease;
-
-        }
-
-
-        .nav-item i {
-
-            width: 19px;
-
-            min-width: 19px;
-
-            color: inherit;
-
-            font-size: 14px;
-
-            text-align: center;
-
-        }
-
-
-        .nav-item:hover {
-
-            background:
-                rgba(255, 255, 255, 0.07);
-
-            color: #ffffff;
-
-        }
-
-
-        .nav-item.active {
-
-            background: #234577;
-
-            color: #ffffff;
-
-            font-weight: 800;
-
-        }
-
-
-        .nav-item.active i {
-
-            color: #60a5fa;
-
-        }
-
-
-        /* =================================================
-           SIDEBAR BOTTOM
-           ================================================= */
-
-        .sidebar-bottom {
-
-            width: 100%;
-
-            margin-top: auto;
-
-            padding-top: 20px;
-
-            flex-shrink: 0;
-
-        }
-
-
-        .system-status {
-
-            width: 100%;
-
-            padding: 15px;
-
-            background: #17263b;
-
-            border:
-                1px solid #243751;
-
-            border-radius: 15px;
-
-        }
-
-
-        .system-status-top {
-
-            display: flex;
-
-            align-items: center;
-
-            gap: 8px;
-
-            color: #ffffff;
-
-            font-size: 11px;
-
-            font-weight: 800;
-
-        }
-
-
-        .status-dot {
-
-            width: 8px;
-
-            height: 8px;
-
-            flex-shrink: 0;
-
-            background: #22c55e;
-
-            border-radius: 50%;
-
-            box-shadow:
-                0 0 0 4px
-                rgba(34, 197, 94, 0.12);
-
-        }
-
-
-        .system-status p {
-
-            margin-top: 8px;
-
-            color: #8ea2ba;
-
-            font-size: 10px;
-
-            line-height: 1.6;
-
-        }
-
-
-        .sidebar-version {
-
-            width: 100%;
-
-            margin-top: 15px;
-
-            color: #53677f;
-
-            font-size: 9px;
-
-            text-align: center;
-
-        }
-
-
-        /* =================================================
-           MAIN CONTENT
-           ================================================= */
-
-        .main-content {
-
-            width:
-                calc(100% - var(--sidebar-width));
-
-            min-height: 100vh;
-
-            margin-left:
-                var(--sidebar-width);
-
-            padding:
-                28px 26px 50px;
-
-            overflow-x: hidden;
-
-        }
-
-
-        .page-content {
-
-            width: 100%;
-
-            max-width: 1600px;
-
-            margin: 0 auto;
-
-        }
-
-
-        /* =================================================
-           PAGE HEADER
-           ================================================= */
-
-        .page-header {
-
-            width: 100%;
-
-            display: flex;
-
-            align-items: flex-start;
-
-            justify-content: space-between;
-
-            gap: 20px;
-
-            margin-bottom: 30px;
-
-        }
-
-
-        .page-heading {
-
-            min-width: 0;
-
-            display: flex;
-
-            flex-direction: column;
-
-            gap: 8px;
-
-        }
-
-
-        .breadcrumb {
-
-            display: flex;
-
-            align-items: center;
-
-            gap: 9px;
-
-            color: var(--text-muted);
-
-            font-size: 11px;
-
-            font-weight: 600;
-
-        }
-
-
-        .breadcrumb i {
-
-            font-size: 9px;
-
-        }
-
-
-        .breadcrumb .current {
-
-            color: #3b82f6;
-
-        }
-
-
-        .page-title {
-
-            color: var(--text);
-
-            font-family: var(--font-heading);
-
-            font-size: 27px;
-
-            font-weight: 800;
-
-            line-height: 1.2;
-
-            letter-spacing: -0.8px;
-
-        }
-
-
-        .page-description {
-
-            max-width: 680px;
-
-            color: var(--text-secondary);
-
-            font-size: 12px;
-
-            line-height: 1.7;
-
-        }
-
-
-        /* =================================================
-           HEADER ACTIONS
-           ================================================= */
-
-        .header-actions {
-
-            display: flex;
-
-            align-items: center;
-
-            gap: 10px;
-
-            flex-shrink: 0;
-
-        }
-
-
-        .icon-button {
-
-            width: 42px;
-
-            height: 42px;
-
-            display: flex;
-
-            align-items: center;
-
-            justify-content: center;
-
-            border:
-                1px solid var(--border);
-
-            border-radius: 11px;
-
-            background: var(--surface);
-
-            color: var(--text-secondary);
-
-            transition: var(--transition);
-
-        }
-
-
-        .icon-button:hover {
-
-            background:
-                var(--surface-hover);
-
-            border-color:
-                var(--primary);
-
-            color:
-                var(--primary);
-
-        }
-
-
-        /* =================================================
-           MOBILE MENU BUTTON
-           ================================================= */
-
-        .mobile-menu-button {
-
-            display: none;
-
-        }
-
-
-        /* =================================================
-           MOBILE OVERLAY
-           ================================================= */
-
-        .sidebar-overlay {
-
-            position: fixed;
-
-            inset: 0;
-
-            background:
-                rgba(0, 0, 0, 0.55);
-
-            opacity: 0;
-
-            visibility: hidden;
-
-            z-index: 999;
-
-            transition:
-                opacity 0.25s ease,
-                visibility 0.25s ease;
-
-        }
-
-
-        .sidebar-overlay.show {
-
-            opacity: 1;
-
-            visibility: visible;
-
-        }
-
-
-        /* =================================================
-           TABLET
-           ================================================= */
-
-        @media (max-width: 900px) {
-
-            :root {
-
-                --sidebar-width: 220px;
-
-            }
-
-
-            .main-content {
-
-                padding:
-                    24px 20px 40px;
-
-            }
-
-
-            .page-title {
-
-                font-size: 24px;
-
-            }
-
-        }
-
-
-        /* =================================================
-           MOBILE
-           ================================================= */
-
-        @media (max-width: 650px) {
-
-            .sidebar {
-
-                width: 260px;
-
-                transform:
-                    translateX(-100%);
-
-            }
-
-
-            .sidebar.mobile-open {
-
-                transform:
-                    translateX(0);
-
-            }
-
-
-            .main-content {
-
-                width: 100%;
-
-                margin-left: 0;
-
-                padding:
-                    20px 16px 35px;
-
-            }
-
-
-            .page-header {
-
-                flex-direction: column;
-
-            }
-
-
-            .page-title {
-
-                font-size: 22px;
-
-            }
-
-
-            .header-actions {
-
-                width: 100%;
-
-                justify-content: flex-end;
-
-            }
-
-
-            .mobile-menu-button {
-
-                display: flex;
-
-            }
-
-        }
-
-
-        /* =================================================
-           SMALL MOBILE
-           ================================================= */
-
-        @media (max-width: 430px) {
-
-            .main-content {
-
-                padding:
-                    18px 12px 30px;
-
-            }
-
-
-            .page-title {
-
-                font-size: 20px;
-
-            }
-
-
-            .page-description {
-
-                font-size: 11px;
-
-            }
-
-        }
-
-    </style>
-
-</head>
-
-
-<!-- =====================================================
-     PART 1 SELESAI
-     
-     PART 2 DITEMPEL LANGSUNG DI BAWAH BARIS TERAKHIR
-     PART 1
-     ===================================================== -->
-
-
-<body>
-
-    <div class="app-layout">
-
-
-        <!-- =================================================
-             SIDEBAR
-             ================================================= -->
-
-        <aside
-            class="sidebar"
-            id="sidebar"
-        >
-
-
-            <!-- BRAND -->
-
-            <div class="brand">
-
-                <img
-                    src="assets/logo-flows-pro.png"
-                    alt="FLOWS-PRO"
-                    class="brand-logo"
-                    onerror="
-                        this.style.display='none';
-                    "
-                >
-
-                <div class="brand-text">
-
-                    <div class="brand-name">
-
-                        FLOWS<span>-PRO</span>
-
-                    </div>
-
-                    <div class="brand-caption">
-
-                        FLOOD LEVEL OBSERVATION
-
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <!-- MAIN MENU -->
-
-            <div class="nav-label">
-
-                MAIN MENU
-
-            </div>
-
-
-            <nav class="nav-menu">
-
-
-                <a
-                    href="dashboard.html"
-                    class="nav-item"
-                >
-
-                    <i class="fa-solid fa-chart-line"></i>
-
-                    <span>
-                        Dashboard
-                    </span>
-
-                </a>
-
-
-                <a
-                    href="monitoring.html"
-                    class="nav-item"
-                >
-
-                    <i class="fa-solid fa-water"></i>
-
-                    <span>
-                        Monitoring
-                    </span>
-
-                </a>
-
-
-                <a
-                    href="history.html"
-                    class="nav-item"
-                >
-
-                    <i class="fa-solid fa-clock-rotate-left"></i>
-
-                    <span>
-                        History
-                    </span>
-
-                </a>
-
-
-                <a
-                    href="map.html"
-                    class="nav-item"
-                >
-
-                    <i class="fa-solid fa-map-location-dot"></i>
-
-                    <span>
-                        Peta Banjir
-                    </span>
-
-                </a>
-
-
-                <a
-                    href="weather.html"
-                    class="nav-item"
-                >
-
-                    <i class="fa-solid fa-cloud-sun"></i>
-
-                    <span>
-                        Cuaca
-                    </span>
-
-                </a>
-
-
-            </nav>
-
-
-            <!-- TOOLS -->
-
-            <div class="nav-label">
-
-                TOOLS
-
-            </div>
-
-
-            <nav class="nav-menu">
-
-
-                <a
-                    href="reports.html"
-                    class="nav-item"
-                >
-
-                    <i class="fa-solid fa-file-lines"></i>
-
-                    <span>
-                        Laporan
-                    </span>
-
-                </a>
-
-
-                <a
-                    href="evacuation.html"
-                    class="nav-item"
-                >
-
-                    <i class="fa-solid fa-person-shelter"></i>
-
-                    <span>
-                        Evakuasi
-                    </span>
-
-                </a>
-
-
-            </nav>
-
-
-            <!-- PREFERENCES -->
-
-            <div class="nav-label">
-
-                PREFERENCES
-
-            </div>
-
-
-            <nav class="nav-menu">
-
-
-                <a
-                    href="profile.html"
-                    class="nav-item"
-                >
-
-                    <i class="fa-solid fa-user"></i>
-
-                    <span>
-                        Profile
-                    </span>
-
-                </a>
-
-
-                <a
-                    href="settings.html"
-                    class="nav-item active"
-                >
-
-                    <i class="fa-solid fa-gear"></i>
-
-                    <span>
-                        Settings
-                    </span>
-
-                </a>
-
-
-            </nav>
-
-
-            <!-- SIDEBAR BOTTOM -->
-
-            <div class="sidebar-bottom">
-
-                <div class="system-status">
-
-                    <div class="system-status-top">
-
-                        <span class="status-dot"></span>
-
-                        <span>
-                            FLOWS-PRO SYSTEM
-                        </span>
-
-                    </div>
-
-
-                    <p>
-                        Sistem pemantauan ketinggian
-                        air berjalan normal.
-                    </p>
-
-                </div>
-
-
-                <div class="sidebar-version">
-
-                    FLOWS-PRO v2.0
-
-                </div>
-
-            </div>
-
-
-        </aside>
-
-
-        <!-- =================================================
-             MOBILE OVERLAY
-             ================================================= -->
-
-        <div
-            class="sidebar-overlay"
-            id="sidebarOverlay"
-        ></div>
-
-
-        <!-- =================================================
-             MAIN CONTENT
-             ================================================= -->
-
-        <main class="main-content">
-
-
-            <div class="page-content">
-
-
-                <!-- =================================================
-                     PAGE HEADER
-                     ================================================= -->
-
-                <header class="page-header">
-
-
-                    <div class="page-heading">
-
-
-                        <div class="breadcrumb">
-
-                            <span>
-                                FLOWS-PRO
-                            </span>
-
-                            <i class="fa-solid fa-chevron-right"></i>
-
-                            <span class="current">
-                                Settings
-                            </span>
-
-                        </div>
-
-
-                        <h1 class="page-title">
-
-                            Pengaturan Sistem
-
-                        </h1>
-
-
-                        <p class="page-description">
-
-                            Kelola profil pengguna,
-                            tampilan, notifikasi,
-                            threshold sensor,
-                            perangkat, dan alarm
-                            FLOWS-PRO.
-
-                        </p>
-
-                    </div>
-
-
-                    <!-- HEADER ACTION -->
-
-                    <div class="header-actions">
-
-
-                        <button
-                            type="button"
-                            class="icon-button mobile-menu-button"
-                            id="mobileMenuButton"
-                            aria-label="Buka menu"
-                        >
-
-                            <i class="fa-solid fa-bars"></i>
-
-                        </button>
-
-
-                        <button
-                            type="button"
-                            class="icon-button"
-                            id="themeToggle"
-                            aria-label="Ganti tema"
-                            title="Ganti tema"
-                        >
-
-                            <i class="fa-solid fa-moon"></i>
-
-                        </button>
-
-
-                    </div>
-
-
-                </header>
-
-
-                <!-- =================================================
-                     PART 1 BERAKHIR DI SINI
-                     
-                     PART 2 LANGSUNG DITEMPEL DI BAWAHNYA.
-                     JANGAN HAPUS KODE PART 1.
-                     ================================================= -->
-
-                     <!-- =====================================================
-     PART 2 — SETTINGS INTERFACE
-     LANGSUNG DITEMPEL SETELAH PART 1
-     JANGAN HAPUS PART 1
-     ===================================================== -->
-
-
 <style>
 
-    /* =================================================
-       SETTINGS LAYOUT
-       ================================================= */
+/* =====================================
+   FLOWS-PRO THEME SYSTEM
+   SAME AS DASHBOARD
+===================================== */
 
-    .settings-layout {
+:root {
 
-        width: 100%;
+    --primary: #2563eb;
+    --primary-dark: #1d4ed8;
+    --primary-light: #eff6ff;
 
-        display: grid;
+    --cyan: #0891b2;
+    --success: #16a34a;
+    --warning: #d97706;
+    --danger: #dc2626;
+    --purple: #7c3aed;
 
-        grid-template-columns:
-            220px minmax(0, 1fr);
+    --sidebar-width: 250px;
 
-        gap: 22px;
+    --radius-sm: 10px;
+    --radius-md: 16px;
+    --radius-lg: 22px;
 
-        align-items: start;
+    --shadow-sm:
+        0 2px 8px rgba(15,23,42,.035);
 
-    }
+    --shadow-md:
+        0 8px 25px rgba(15,23,42,.045);
+}
 
 
-    /* =================================================
-       SETTINGS NAVIGATION
-       ================================================= */
+/* =====================================
+   LIGHT CLEAN
+   SAME AS DASHBOARD
+===================================== */
 
-    .settings-nav {
+html[data-theme="light"] {
 
-        position: sticky;
+    color-scheme: light;
 
-        top: 28px;
+    --background: #f5f7fb;
+    --surface: #ffffff;
+    --surface-soft: #f8fafc;
 
-        width: 100%;
+    --text: #17243a;
+    --text-secondary: #64748b;
+    --text-muted: #94a3b8;
 
-        padding: 10px;
+    --border: #e8edf4;
+    --sidebar-bg: #ffffff;
+    --hover-bg: #f1f5f9;
+    --input-bg: #ffffff;
 
-        background: var(--surface);
+    --card-shadow:
+        0 5px 20px rgba(15,23,42,.035);
+}
 
-        border:
-            1px solid var(--border);
 
-        border-radius: 16px;
+/* =====================================
+   DARK PREMIUM
+   SAME AS DASHBOARD
+===================================== */
 
-    }
+html[data-theme="dark"] {
 
+    color-scheme: dark;
 
-    .settings-nav-title {
+    --background: #0b1220;
+    --surface: #111c2e;
+    --surface-soft: #172438;
 
-        padding:
-            8px 10px 12px;
+    --text: #f1f5f9;
+    --text-secondary: #a3b2c7;
+    --text-muted: #71839c;
 
-        color: var(--text-muted);
+    --border: #26364c;
+    --sidebar-bg: #101a2b;
+    --hover-bg: #1d2b40;
+    --input-bg: #172438;
 
-        font-size: 9px;
+    --primary-light: #1e3559;
 
-        font-weight: 800;
+    --shadow-sm:
+        0 2px 8px rgba(0,0,0,.12);
 
-        letter-spacing: 1.2px;
+    --shadow-md:
+        0 8px 25px rgba(0,0,0,.18);
 
-        text-transform: uppercase;
+    --card-shadow:
+        0 5px 22px rgba(0,0,0,.16);
+}
 
-    }
 
+/* =====================================
+   RESET
+   SAME AS DASHBOARD
+===================================== */
 
-    .settings-nav-item {
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-        width: 100%;
 
-        min-height: 41px;
+html {
+    scroll-behavior: smooth;
+}
 
-        display: flex;
 
-        align-items: center;
+body {
 
-        gap: 10px;
+    font-family: 'DM Sans', sans-serif;
 
-        padding:
-            0 11px;
+    background: var(--background);
 
-        margin-bottom: 4px;
+    color: var(--text);
 
-        border: 0;
+    min-height: 100vh;
 
-        border-radius: 10px;
+    overflow-x: hidden;
 
-        background: transparent;
+    -webkit-font-smoothing: antialiased;
 
-        color: var(--text-secondary);
+    transition:
+        background .25s ease,
+        color .25s ease;
+}
 
-        font-size: 11px;
 
-        font-weight: 600;
+button,
+input,
+select,
+textarea {
+    font: inherit;
+}
 
-        text-align: left;
 
-        transition: var(--transition);
+button {
+    cursor: pointer;
+}
 
-    }
 
+a {
+    color: inherit;
+    text-decoration: none;
+}
 
-    .settings-nav-item:last-child {
 
-        margin-bottom: 0;
+/* =====================================
+   MAIN LAYOUT
+   SAME AS DASHBOARD
+===================================== */
 
-    }
+.app-layout {
 
+    display: flex;
 
-    .settings-nav-item i {
+    min-height: 100vh;
+}
 
-        width: 17px;
 
-        min-width: 17px;
+.main-content {
 
-        text-align: center;
+    flex: 1;
 
-        font-size: 13px;
+    min-width: 0;
 
-    }
+    margin-left: var(--sidebar-width);
 
+    padding: 30px 36px 28px;
+}
 
-    .settings-nav-item:hover {
 
-        background:
-            var(--surface-hover);
+/* =====================================
+   FLOWS-PRO STANDARD SIDEBAR
+   COPIED FROM DASHBOARD
+===================================== */
 
-        color: var(--text);
+.sidebar {
 
-    }
+    position: fixed;
 
+    top: 0;
+    left: 0;
 
-    .settings-nav-item.active {
+    width: 260px;
 
-        background:
-            var(--primary-light);
+    height: 100vh;
 
-        color: #60a5fa;
+    padding: 24px 14px;
 
-        font-weight: 800;
+    background: var(--surface);
 
-    }
+    border-right: 1px solid var(--border);
 
+    display: flex;
 
-    /* =================================================
-       SETTINGS CONTENT
-       ================================================= */
+    flex-direction: column;
 
-    .settings-content {
+    box-sizing: border-box;
 
-        width: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
 
-        min-width: 0;
+    z-index: 1000;
+}
 
-        display: flex;
 
-        flex-direction: column;
+/* =====================================
+   BRAND
+   SAME AS DASHBOARD
+===================================== */
 
-        gap: 18px;
+.brand {
 
-    }
+    width: 100%;
 
+    display: flex;
 
-    /* =================================================
-       SETTINGS CARD
-       ================================================= */
+    align-items: center;
 
-    .settings-card {
+    gap: 12px;
 
-        width: 100%;
+    padding: 0 10px 25px;
 
-        background: var(--surface);
+    box-sizing: border-box;
 
-        border:
-            1px solid var(--border);
+    flex-shrink: 0;
+}
 
-        border-radius: 16px;
 
-        overflow: hidden;
+.brand-logo {
 
-        scroll-margin-top: 28px;
+    width: 43px;
+    height: 43px;
 
-    }
+    flex-shrink: 0;
 
+    border-radius: 14px;
 
-    .card-header {
+    background:
+        linear-gradient(
+            135deg,
+            #2563eb,
+            #06b6d4
+        );
 
-        width: 100%;
+    color: white;
 
-        display: flex;
+    display: grid;
 
-        align-items: flex-start;
+    place-items: center;
 
-        gap: 13px;
+    font-size: 19px;
 
-        padding:
-            20px 22px;
+    box-shadow:
+        0 7px 16px
+        rgba(37,99,235,.20);
+}
 
-        border-bottom:
-            1px solid var(--border);
 
-    }
+.brand-name {
 
+    font-family:
+        'Plus Jakarta Sans',
+        sans-serif;
 
-    .card-icon {
+    font-size: 17px;
 
-        width: 38px;
+    font-weight: 800;
 
-        height: 38px;
+    letter-spacing: -.6px;
 
-        flex-shrink: 0;
+    color: var(--text);
 
-        display: flex;
+    white-space: nowrap;
+}
 
-        align-items: center;
 
-        justify-content: center;
+.brand-name span {
+    color: var(--primary);
+}
 
-        border-radius: 10px;
 
-        background:
-            var(--primary-light);
+.brand-caption {
 
-        color: #60a5fa;
+    font-size: 9px;
 
-        font-size: 14px;
+    color: var(--text-muted);
 
-    }
+    letter-spacing: 1.3px;
 
+    font-weight: 700;
 
-    .card-heading {
+    margin-top: 3px;
 
-        min-width: 0;
+    white-space: nowrap;
+}
 
-        display: flex;
 
-        flex-direction: column;
+/* =====================================
+   SIDEBAR NAVIGATION
+   SAME AS DASHBOARD
+===================================== */
 
-        gap: 4px;
+.nav-label {
 
-    }
+    width: 100%;
 
+    font-size: 9px;
 
-    .card-title {
+    font-weight: 800;
 
-        color: var(--text);
+    color: var(--text-muted);
 
-        font-family: var(--font-heading);
+    letter-spacing: 1.3px;
 
-        font-size: 15px;
+    padding: 0 12px;
 
-        font-weight: 800;
+    margin: 18px 0 10px;
 
-        line-height: 1.3;
+    box-sizing: border-box;
+}
 
-    }
 
+.nav-menu {
 
-    .card-description {
+    width: 100%;
 
-        color: var(--text-secondary);
+    display: flex;
 
-        font-size: 11px;
+    flex-direction: column;
 
-        line-height: 1.6;
+    gap: 5px;
 
-    }
+    margin: 0;
 
+    padding: 0;
 
-    .card-body {
+    box-sizing: border-box;
 
-        width: 100%;
+    flex-shrink: 0;
+}
 
-        padding:
-            22px;
 
-    }
+/* =====================================
+   MENU ITEM
+   SAME AS DASHBOARD
+===================================== */
 
+.nav-item {
 
-    .card-footer {
+    width: 100%;
 
-        width: 100%;
+    max-width: 100%;
 
-        display: flex;
+    min-height: 44px;
 
-        align-items: center;
+    display: flex;
 
-        justify-content: flex-end;
+    align-items: center;
 
-        gap: 10px;
+    gap: 12px;
 
-        padding:
-            16px 22px;
+    padding: 0 13px;
 
-        border-top:
-            1px solid var(--border);
+    margin: 0;
 
-    }
+    border-radius: 11px;
 
+    box-sizing: border-box;
 
-    /* =================================================
-       FORM GRID
-       ================================================= */
+    color: var(--text-secondary);
 
-    .form-grid {
+    font-size: 12px;
 
-        width: 100%;
+    font-weight: 600;
 
-        display: grid;
+    text-decoration: none;
 
-        grid-template-columns:
-            repeat(
-                2,
-                minmax(0, 1fr)
-            );
+    overflow: hidden;
 
-        gap: 18px;
+    transition:
+        background .2s ease,
+        color .2s ease;
+}
 
-    }
 
+/* =====================================
+   MENU ICON
+   SAME AS DASHBOARD
+===================================== */
 
-    .form-group {
+.nav-item i {
 
-        width: 100%;
+    width: 19px;
 
-        display: flex;
+    min-width: 19px;
 
-        flex-direction: column;
+    text-align: center;
 
-        gap: 7px;
+    font-size: 14px;
 
-    }
+    flex-shrink: 0;
+}
 
 
-    .form-group.full {
+/* =====================================
+   HOVER
+===================================== */
 
-        grid-column: 1 / -1;
+.nav-item:hover {
 
-    }
+    background: var(--hover-bg);
 
+    color: var(--primary);
+}
 
-    .form-label {
 
-        color: var(--text);
+/* =====================================
+   ACTIVE MENU
+   SETTINGS AKTIF
+===================================== */
 
-        font-size: 11px;
+.nav-item.active {
 
-        font-weight: 700;
+    width: 100%;
 
-    }
+    max-width: 100%;
 
+    color: var(--primary);
 
-    .form-control {
+    background: var(--primary-light);
 
-        width: 100%;
+    font-weight: 800;
 
-        min-height: 42px;
+    box-sizing: border-box;
+}
 
-        padding:
-            0 12px;
 
-        border:
-            1px solid var(--border);
+/* =====================================
+   SIDEBAR BOTTOM
+   SAME AS DASHBOARD
+===================================== */
 
-        border-radius: 10px;
+.sidebar-bottom {
 
-        outline: none;
+    width: 100%;
 
-        background:
-            var(--surface-soft);
+    margin-top: auto;
 
-        color: var(--text);
+    padding-top: 20px;
 
-        font-size: 12px;
+    box-sizing: border-box;
 
-        transition: var(--transition);
+    flex-shrink: 0;
+}
 
-    }
 
+/* =====================================
+   SYSTEM STATUS
+   SAME AS DASHBOARD
+===================================== */
 
-    .form-control:hover {
+.system-status {
 
-        border-color: #36506f;
+    width: 100%;
 
-    }
+    background: var(--surface-soft);
 
+    border: 1px solid var(--border);
 
-    .form-control:focus {
+    border-radius: 15px;
 
-        border-color:
-            var(--primary);
+    padding: 15px;
 
-        box-shadow:
-            0 0 0 3px
-            rgba(37, 99, 235, 0.10);
+    box-sizing: border-box;
+}
 
-    }
 
+.system-status-top {
 
-    .form-control[readonly] {
+    display: flex;
 
-        cursor: default;
+    align-items: center;
 
-        opacity: 0.72;
+    gap: 8px;
 
-    }
+    font-size: 11px;
 
+    font-weight: 800;
 
-    .form-hint {
+    color: var(--text);
+}
 
-        color: var(--text-muted);
 
-        font-size: 10px;
+.status-dot {
 
-        line-height: 1.5;
+    width: 8px;
+    height: 8px;
 
-    }
+    flex-shrink: 0;
 
+    background: #22c55e;
 
-    select.form-control {
+    border-radius: 50%;
 
-        cursor: pointer;
+    box-shadow:
+        0 0 0 4px
+        rgba(34,197,94,.12);
+}
 
-    }
 
+.system-status p {
 
-    /* =================================================
-       SETTING ROW
-       ================================================= */
+    font-size: 10px;
 
-    .setting-row {
+    line-height: 1.6;
 
-        width: 100%;
+    color: var(--text-secondary);
 
-        display: flex;
+    margin-top: 8px;
+}
 
-        align-items: center;
 
-        justify-content: space-between;
+.sidebar-version {
 
-        gap: 20px;
+    width: 100%;
 
-        padding:
-            15px 0;
+    text-align: center;
 
-        border-bottom:
-            1px solid var(--border);
+    color: var(--text-muted);
 
-    }
+    font-size: 9px;
 
+    margin-top: 17px;
 
-    .setting-row:first-child {
+    box-sizing: border-box;
+}
 
-        padding-top: 0;
 
-    }
+/* =====================================
+   TOPBAR
+   SAME VISUAL LANGUAGE AS DASHBOARD
+===================================== */
 
+.topbar {
 
-    .setting-row:last-child {
+    display: flex;
 
-        padding-bottom: 0;
+    justify-content: space-between;
 
-        border-bottom: 0;
+    align-items: center;
 
-    }
+    gap: 20px;
 
+    margin-bottom: 27px;
+}
 
-    .setting-info {
 
-        min-width: 0;
+.breadcrumb {
 
-        flex: 1;
+    font-size: 9px;
 
-    }
+    font-weight: 800;
 
+    color: var(--primary);
 
-    .setting-name {
+    letter-spacing: 1.1px;
 
-        color: var(--text);
+    margin-bottom: 8px;
+}
 
-        font-size: 12px;
 
-        font-weight: 700;
+.page-title {
 
-    }
+    font-family:
+        'Plus Jakarta Sans',
+        sans-serif;
 
+    font-size: 25px;
 
-    .setting-description {
+    font-weight: 800;
 
-        margin-top: 4px;
+    letter-spacing: -.9px;
 
-        color: var(--text-secondary);
+    color: var(--text);
+}
 
-        font-size: 10px;
 
-        line-height: 1.6;
+.page-subtitle {
 
-    }
+    font-size: 11px;
 
+    color: var(--text-secondary);
 
-    /* =================================================
-       SWITCH
-       ================================================= */
+    margin-top: 5px;
+}
 
-    .switch {
 
-        position: relative;
+/* =====================================
+   TOPBAR ACTIONS
+===================================== */
 
-        width: 44px;
+.topbar-actions {
 
-        height: 24px;
+    display: flex;
 
-        flex-shrink: 0;
+    align-items: center;
 
-    }
+    gap: 13px;
+}
 
 
-    .switch input {
+.icon-button {
 
-        width: 0;
+    position: relative;
 
-        height: 0;
+    width: 40px;
+    height: 40px;
 
+    display: grid;
+
+    place-items: center;
+
+    border: 1px solid var(--border);
+
+    background: var(--surface);
+
+    border-radius: 12px;
+
+    color: var(--text-secondary);
+
+    font-size: 14px;
+
+    transition: .2s ease;
+}
+
+
+.icon-button:hover {
+
+    color: var(--primary);
+
+    background: var(--primary-light);
+}
+
+
+.notification-dot {
+
+    position: absolute;
+
+    width: 7px;
+    height: 7px;
+
+    border-radius: 50%;
+
+    background: #ef4444;
+
+    top: 8px;
+    right: 8px;
+
+    border: 1.5px solid var(--surface);
+}
+
+
+/* =====================================
+   PROFILE
+   SAME AS DASHBOARD
+===================================== */
+
+.profile {
+
+    position: relative;
+}
+
+
+.profile-trigger {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    border: 1px solid var(--border);
+
+    background: var(--surface);
+
+    border-radius: 13px;
+
+    padding: 6px 10px 6px 6px;
+
+    text-align: left;
+
+    transition: .2s ease;
+}
+
+
+.profile-trigger:hover {
+
+    border-color: #93c5fd;
+
+    box-shadow: var(--shadow-sm);
+}
+
+
+.avatar {
+
+    width: 34px;
+    height: 34px;
+
+    border-radius: 10px;
+
+    display: grid;
+
+    place-items: center;
+
+    background:
+        linear-gradient(
+            135deg,
+            #2563eb,
+            #06b6d4
+        );
+
+    color: white;
+
+    font-size: 13px;
+
+    font-weight: 800;
+}
+
+
+.profile-name {
+
+    display: block;
+
+    font-size: 11px;
+
+    font-weight: 800;
+
+    color: var(--text);
+
+    max-width: 130px;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+}
+
+
+.profile-role {
+
+    display: block;
+
+    font-size: 9px;
+
+    color: var(--text-muted);
+
+    margin-top: 3px;
+
+    font-weight: 700;
+}
+
+
+.profile-trigger > i {
+
+    font-size: 10px;
+
+    color: var(--text-muted);
+
+    margin-left: 5px;
+}
+
+
+/* =====================================
+   PROFILE DROPDOWN
+   SAME AS DASHBOARD
+===================================== */
+
+.dropdown {
+
+    display: none;
+
+    position: absolute;
+
+    top: calc(100% + 10px);
+
+    right: 0;
+
+    width: 215px;
+
+    background: var(--surface);
+
+    border: 1px solid var(--border);
+
+    border-radius: 15px;
+
+    padding: 7px;
+
+    box-shadow:
+        0 15px 40px
+        rgba(15,23,42,.12);
+
+    z-index: 200;
+}
+
+
+.dropdown.show {
+
+    display: block;
+
+    animation:
+        dropdownIn .18s ease;
+}
+
+
+@keyframes dropdownIn {
+
+    from {
         opacity: 0;
-
+        transform: translateY(-5px);
     }
 
-
-    .switch-slider {
-
-        position: absolute;
-
-        inset: 0;
-
-        cursor: pointer;
-
-        background:
-            #334155;
-
-        border-radius: 999px;
-
-        transition:
-            0.2s ease;
-
-    }
-
-
-    .switch-slider::before {
-
-        content: "";
-
-        position: absolute;
-
-        width: 18px;
-
-        height: 18px;
-
-        left: 3px;
-
-        top: 3px;
-
-        background: #ffffff;
-
-        border-radius: 50%;
-
-        transition:
-            0.2s ease;
-
-    }
-
-
-    .switch input:checked +
-    .switch-slider {
-
-        background:
-            var(--primary);
-
-    }
-
-
-    .switch input:checked +
-    .switch-slider::before {
-
-        transform:
-            translateX(20px);
-
-    }
-
-
-    /* =================================================
-       THRESHOLD
-       ================================================= */
-
-    .threshold-grid {
-
-        width: 100%;
-
-        display: grid;
-
-        grid-template-columns:
-            repeat(
-                3,
-                minmax(0, 1fr)
-            );
-
-        gap: 14px;
-
-    }
-
-
-    .threshold-item {
-
-        padding: 16px;
-
-        background:
-            var(--surface-soft);
-
-        border:
-            1px solid var(--border);
-
-        border-radius: 12px;
-
-    }
-
-
-    .threshold-label {
-
-        display: flex;
-
-        align-items: center;
-
-        gap: 8px;
-
-        margin-bottom: 10px;
-
-        color: var(--text);
-
-        font-size: 11px;
-
-        font-weight: 700;
-
-    }
-
-
-    .threshold-indicator {
-
-        width: 8px;
-
-        height: 8px;
-
-        border-radius: 50%;
-
-        flex-shrink: 0;
-
-    }
-
-
-    .threshold-indicator.safe {
-
-        background:
-            var(--success);
-
-    }
-
-
-    .threshold-indicator.warning {
-
-        background:
-            var(--warning);
-
-    }
-
-
-    .threshold-indicator.danger {
-
-        background:
-            var(--danger);
-
-    }
-
-
-    .threshold-input {
-
-        width: 100%;
-
-        height: 42px;
-
-        padding:
-            0 12px;
-
-        border:
-            1px solid var(--border);
-
-        border-radius: 9px;
-
-        outline: none;
-
-        background:
-            var(--surface);
-
-        color: var(--text);
-
-        font-size: 13px;
-
-        font-weight: 700;
-
-    }
-
-
-    .threshold-input:focus {
-
-        border-color:
-            var(--primary);
-
-        box-shadow:
-            0 0 0 3px
-            rgba(37, 99, 235, 0.10);
-
-    }
-
-
-    .threshold-unit {
-
-        margin-top: 6px;
-
-        color: var(--text-muted);
-
-        font-size: 9px;
-
-    }
-
-
-    .threshold-validation {
-
-        margin-top: 14px;
-
-        padding:
-            10px 12px;
-
-        border-radius: 9px;
-
-        font-size: 10px;
-
-        line-height: 1.5;
-
-    }
-
-
-    /* =================================================
-       BUTTON
-       ================================================= */
-
-    .btn {
-
-        min-height: 39px;
-
-        display: inline-flex;
-
-        align-items: center;
-
-        justify-content: center;
-
-        gap: 8px;
-
-        padding:
-            0 15px;
-
-        border:
-            1px solid transparent;
-
-        border-radius: 9px;
-
-        font-size: 11px;
-
-        font-weight: 700;
-
-        transition: var(--transition);
-
-    }
-
-
-    .btn-primary {
-
-        background:
-            var(--primary);
-
-        color: #ffffff;
-
-    }
-
-
-    .btn-primary:hover {
-
-        background:
-            var(--primary-hover);
-
-    }
-
-
-    .btn-secondary {
-
-        background:
-            var(--surface-soft);
-
-        border-color:
-            var(--border);
-
-        color:
-            var(--text-secondary);
-
-    }
-
-
-    .btn-secondary:hover {
-
-        background:
-            var(--surface-hover);
-
-        color:
-            var(--text);
-
-    }
-
-
-    /* =================================================
-       STATUS MESSAGE
-       ================================================= */
-
-    .settings-message {
-
-        position: fixed;
-
-        right: 24px;
-
-        bottom: 24px;
-
-        min-width: 260px;
-
-        max-width: 380px;
-
-        padding:
-            13px 16px;
-
-        display: flex;
-
-        align-items: center;
-
-        gap: 10px;
-
-        border:
-            1px solid var(--border);
-
-        border-radius: 11px;
-
-        background:
-            var(--surface);
-
-        color: var(--text);
-
-        box-shadow:
-            0 15px 40px
-            rgba(0, 0, 0, 0.25);
-
-        opacity: 0;
-
-        visibility: hidden;
-
-        transform:
-            translateY(12px);
-
-        z-index: 2000;
-
-        transition:
-            opacity 0.2s ease,
-            visibility 0.2s ease,
-            transform 0.2s ease;
-
-    }
-
-
-    .settings-message.show {
-
+    to {
         opacity: 1;
-
-        visibility: visible;
-
-        transform:
-            translateY(0);
-
+        transform: translateY(0);
     }
+}
 
 
-    .settings-message.success {
+.dropdown a,
+.dropdown button {
 
-        border-color:
-            rgba(34, 197, 94, 0.35);
+    width: 100%;
 
-    }
+    display: flex;
 
+    align-items: center;
 
-    .settings-message.error {
+    gap: 11px;
 
-        border-color:
-            rgba(239, 68, 68, 0.35);
+    padding: 11px 12px;
 
-    }
+    border: none;
 
+    background: transparent;
 
-    .settings-message.warning {
+    border-radius: 9px;
 
-        border-color:
-            rgba(245, 158, 11, 0.35);
+    color: var(--text-secondary);
 
-    }
+    font-size: 11px;
 
+    font-weight: 600;
 
-    .settings-message-icon {
+    text-align: left;
+}
 
-        width: 30px;
 
-        height: 30px;
+.dropdown a:hover {
 
-        display: flex;
+    background: var(--hover-bg);
 
-        align-items: center;
+    color: var(--primary);
+}
 
-        justify-content: center;
 
-        flex-shrink: 0;
+.dropdown button {
 
-        border-radius: 8px;
+    color: var(--danger);
+}
 
-        background:
-            var(--primary-light);
 
-        color:
-            #60a5fa;
+.dropdown button:hover {
 
-        font-size: 12px;
+    background:
+        rgba(220,38,38,.08);
+}
 
-    }
 
+.dropdown i {
 
-    .settings-message-text {
+    width: 16px;
 
-        min-width: 0;
+    text-align: center;
+}
 
-        font-size: 11px;
 
-        line-height: 1.5;
-
-    }
-
-
-    /* =================================================
-       RESPONSIVE SETTINGS
-       ================================================= */
-
-    @media (max-width: 950px) {
-
-        .settings-layout {
-
-            grid-template-columns:
-                180px minmax(0, 1fr);
-
-        }
-
-
-        .threshold-grid {
-
-            grid-template-columns:
-                1fr;
-
-        }
-
-    }
-
-
-    @media (max-width: 750px) {
-
-        .settings-layout {
-
-            grid-template-columns:
-                1fr;
-
-        }
-
-
-        .settings-nav {
-
-            position: relative;
-
-            top: auto;
-
-            display: grid;
-
-            grid-template-columns:
-                repeat(3, 1fr);
-
-            gap: 5px;
-
-        }
-
-
-        .settings-nav-title {
-
-            display: none;
-
-        }
-
-
-        .settings-nav-item {
-
-            justify-content: center;
-
-            padding:
-                0 7px;
-
-            font-size: 10px;
-
-        }
-
-
-        .settings-nav-item span {
-
-            display: none;
-
-        }
-
-
-        .settings-nav-item i {
-
-            width: auto;
-
-        }
-
-    }
-
-
-    @media (max-width: 600px) {
-
-        .form-grid {
-
-            grid-template-columns:
-                1fr;
-
-        }
-
-
-        .form-group.full {
-
-            grid-column: auto;
-
-        }
-
-
-        .card-header {
-
-            padding:
-                17px;
-
-        }
-
-
-        .card-body {
-
-            padding:
-                17px;
-
-        }
-
-
-        .card-footer {
-
-            padding:
-                14px 17px;
-
-        }
-
-
-        .setting-row {
-
-            align-items: flex-start;
-
-        }
-
-
-        .settings-message {
-
-            right: 14px;
-
-            bottom: 14px;
-
-            left: 14px;
-
-            min-width: 0;
-
-            max-width: none;
-
-        }
-
-    }
-
+/* ============================================================
+   AKHIR PART 1
+   PART 2 DITEMPEL LANGSUNG DI BAWAH BARIS INI
+============================================================ */
 
 </style>
 
+</head>
 
-<!-- =====================================================
-     SETTINGS BODY
-     ===================================================== -->
+<body>
 
-<div class="settings-layout">
-
-
-    <!-- =================================================
-         SETTINGS NAVIGATION
-         ================================================= -->
-
-    <aside class="settings-nav">
+<div class="app-layout">
 
 
-        <div class="settings-nav-title">
+    <!-- =================================
+         SIDEBAR
+         IDENTIK DENGAN DASHBOARD
+    ================================== -->
 
-            Pengaturan
+    <aside class="sidebar">
+
+
+        <!-- BRAND -->
+
+        <div class="brand">
+
+            <div class="brand-logo">
+                <i class="fa-solid fa-water"></i>
+            </div>
+
+            <div>
+
+                <div class="brand-name">
+                    FLOWS<span>-PRO</span>
+                </div>
+
+                <div class="brand-caption">
+                    FLOOD MONITORING SYSTEM
+                </div>
+
+            </div>
 
         </div>
 
 
-        <button
-            type="button"
-            class="settings-nav-item active"
-            data-target="generalSettings"
+        <!-- MENU UTAMA -->
+
+        <div class="nav-label">
+            MENU UTAMA
+        </div>
+
+
+        <nav class="nav-menu">
+
+            <a
+                href="dashboard.html"
+                class="nav-item"
+            >
+                <i class="fa-solid fa-border-all"></i>
+                Dashboard
+            </a>
+
+
+            <a
+                href="live_sensor.html"
+                class="nav-item"
+            >
+                <i class="fa-solid fa-wave-square"></i>
+                Live Monitoring
+            </a>
+
+
+            <a
+                href="reports.html"
+                class="nav-item"
+            >
+                <i class="fa-solid fa-chart-line"></i>
+                Laporan Data
+            </a>
+
+
+            <a
+                href="peta_banjir.html"
+                class="nav-item"
+            >
+                <i class="fa-solid fa-map-location-dot"></i>
+                Peta Banjir
+            </a>
+
+
+            <a
+                href="weather.html"
+                class="nav-item"
+            >
+                <i class="fa-solid fa-cloud-sun"></i>
+                Informasi Cuaca
+            </a>
+
+        </nav>
+
+
+        <!-- PREFERENSI -->
+
+        <div
+            class="nav-label"
+            style="margin-top: 27px;"
         >
-
-            <i class="fa-solid fa-user"></i>
-
-            <span>
-                Umum
-            </span>
-
-        </button>
+            PREFERENSI
+        </div>
 
 
-        <button
-            type="button"
-            class="settings-nav-item"
-            data-target="appearanceSettings"
-        >
+        <nav class="nav-menu">
 
-            <i class="fa-solid fa-palette"></i>
-
-            <span>
-                Tampilan
-            </span>
-
-        </button>
+            <a
+                href="profile.html"
+                class="nav-item"
+            >
+                <i class="fa-regular fa-user"></i>
+                Profil Saya
+            </a>
 
 
-        <button
-            type="button"
-            class="settings-nav-item"
-            data-target="notificationSettings"
-        >
+            <a
+                href="settings.html"
+                class="nav-item active"
+            >
+                <i class="fa-solid fa-sliders"></i>
+                Pengaturan
+            </a>
 
-            <i class="fa-solid fa-bell"></i>
-
-            <span>
-                Notifikasi
-            </span>
-
-        </button>
+        </nav>
 
 
-        <button
-            type="button"
-            class="settings-nav-item"
-            data-target="thresholdSettings"
-        >
+        <!-- SIDEBAR BOTTOM -->
 
-            <i class="fa-solid fa-ruler-vertical"></i>
+        <div class="sidebar-bottom">
 
-            <span>
-                Threshold
-            </span>
+            <div class="system-status">
 
-        </button>
+                <div class="system-status-top">
 
+                    <span class="status-dot"></span>
 
-        <button
-            type="button"
-            class="settings-nav-item"
-            data-target="sensorSettings"
-        >
+                    FLOWS-PRO SYSTEM
 
-            <i class="fa-solid fa-satellite-dish"></i>
-
-            <span>
-                Sensor
-            </span>
-
-        </button>
+                </div>
 
 
-        <button
-            type="button"
-            class="settings-nav-item"
-            data-target="alarmSettings"
-        >
+                <p>
+                    Sistem pemantauan banjir untuk mendukung
+                    kesiapsiagaan lingkungan.
+                </p>
 
-            <i class="fa-solid fa-volume-high"></i>
+            </div>
 
-            <span>
-                Alarm
-            </span>
 
-        </button>
+            <div class="sidebar-version">
+                FLOWS-PRO · VERSION 2.0
+            </div>
+
+        </div>
 
 
     </aside>
 
 
-    <!-- =================================================
-         SETTINGS CONTENT
-         ================================================= -->
+    <!-- =================================
+         MAIN CONTENT
+         PART 2 MULAI DARI SINI
+    ================================== -->
 
-    <div class="settings-content">
-
-
-        <!-- =================================================
-             1. GENERAL
-             ================================================= -->
-
-        <section
-            class="settings-card"
-            id="generalSettings"
-        >
+    <main class="main-content">
 
 
-            <div class="card-header">
+        <!-- TOPBAR -->
 
-                <div class="card-icon">
+        <header class="topbar">
 
-                    <i class="fa-solid fa-user"></i>
+            <div>
 
+                <div class="breadcrumb">
+                    PUSAT KENDALI / PENGATURAN
                 </div>
 
 
-                <div class="card-heading">
-
-                    <h2 class="card-title">
-
-                        Profil & Umum
-
-                    </h2>
+                <h1 class="page-title">
+                    Pengaturan
+                </h1>
 
 
-                    <p class="card-description">
+                <p class="page-subtitle">
+                    Kelola konfigurasi dan preferensi sistem FLOWS-PRO.
+                </p>
 
-                        Informasi pengguna dan identitas
-                        sistem FLOWS-PRO.
+            </div>
 
+
+            <div class="topbar-actions">
+
+
+                <!-- NOTIFICATION -->
+
+                <button
+                    class="icon-button"
+                    type="button"
+                    aria-label="Notifikasi"
+                    id="notificationButton"
+                >
+
+                    <i class="fa-regular fa-bell"></i>
+
+                    <span class="notification-dot"></span>
+
+                </button>
+
+
+                <!-- PROFILE -->
+
+                <div class="profile">
+
+                    <button
+                        class="profile-trigger"
+                        id="profileTrigger"
+                        type="button"
+                        aria-expanded="false"
+                    >
+
+                        <span
+                            class="avatar"
+                            id="profileAvatar"
+                        >
+                            U
+                        </span>
+
+
+                        <span>
+
+                            <span
+                                class="profile-name"
+                                id="profileName"
+                            >
+                                Memuat pengguna...
+                            </span>
+
+
+                            <small
+                                class="profile-role"
+                                id="profileRole"
+                            >
+                                OPERATOR
+                            </small>
+
+                        </span>
+
+
+                        <i class="fa-solid fa-chevron-down"></i>
+
+                    </button>
+
+
+                    <div
+                        class="dropdown"
+                        id="profileDropdown"
+                    >
+
+                        <a href="profile.html">
+
+                            <i class="fa-regular fa-user"></i>
+
+                            Profil Saya
+
+                        </a>
+
+
+                        <a href="settings.html">
+
+                            <i class="fa-solid fa-gear"></i>
+
+                            Pengaturan Akun
+
+                        </a>
+
+
+                        <button
+                            id="logoutButton"
+                            type="button"
+                        >
+
+                            <i
+                                class="fa-solid fa-right-from-bracket"
+                            ></i>
+
+                            Keluar dari Akun
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- ==================================================
+             PART 1 SELESAI
+             
+             PART 2 DITEMPEL LANGSUNG DI BAWAH BARIS INI.
+             
+             JANGAN TAMBAHKAN </main>, </body>, ATAU </html>
+             SAMPAI PART 5.
+        =================================================== -->
+        <style>
+
+/* =====================================
+   SETTINGS CONTENT
+===================================== */
+
+.settings-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* =====================================
+   SETTINGS INTRO
+===================================== */
+
+.settings-intro {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 22px 24px;
+    box-shadow: var(--shadow);
+}
+
+.settings-intro h2 {
+    margin: 0;
+    font-size: 17px;
+    font-weight: 800;
+    letter-spacing: -0.3px;
+    color: var(--text-primary);
+}
+
+.settings-intro p {
+    margin: 7px 0 0;
+    font-size: 11px;
+    line-height: 1.7;
+    color: var(--text-secondary);
+}
+
+/* =====================================
+   SETTINGS GRID
+===================================== */
+
+.settings-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+}
+
+/* =====================================
+   SETTINGS CARD
+===================================== */
+
+.settings-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 22px;
+    box-shadow: var(--shadow);
+}
+
+.settings-card.full-width {
+    grid-column: 1 / -1;
+}
+
+.settings-card-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.settings-card-icon {
+    width: 38px;
+    height: 38px;
+    min-width: 38px;
+    border-radius: 11px;
+    display: grid;
+    place-items: center;
+    background: var(--primary-light);
+    color: var(--primary);
+    font-size: 15px;
+}
+
+.settings-card-title {
+    min-width: 0;
+}
+
+.settings-card-title h3 {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 800;
+    color: var(--text-primary);
+}
+
+.settings-card-title p {
+    margin: 4px 0 0;
+    font-size: 10px;
+    line-height: 1.6;
+    color: var(--text-muted);
+}
+
+/* =====================================
+   FORM
+===================================== */
+
+.form-group {
+    margin-bottom: 16px;
+}
+
+.form-group:last-child {
+    margin-bottom: 0;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 7px;
+    font-size: 10px;
+    font-weight: 800;
+    color: var(--text-secondary);
+    letter-spacing: 0.2px;
+}
+
+.form-control {
+    width: 100%;
+    height: 42px;
+    padding: 0 13px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    outline: none;
+    background: var(--surface-soft);
+    color: var(--text-primary);
+    font-family: inherit;
+    font-size: 11px;
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
+}
+
+.form-control:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.10);
+    background: var(--surface);
+}
+
+.form-control:disabled,
+.form-control[readonly] {
+    cursor: not-allowed;
+    opacity: 0.75;
+}
+
+select.form-control {
+    cursor: pointer;
+}
+
+/* =====================================
+   TWO COLUMN FORM
+===================================== */
+
+.form-row {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+}
+
+/* =====================================
+   SAVE BUTTON
+===================================== */
+
+.settings-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 9px;
+    margin-top: 18px;
+    padding-top: 18px;
+    border-top: 1px solid var(--border);
+}
+
+.btn {
+    height: 39px;
+    padding: 0 15px;
+    border: 1px solid transparent;
+    border-radius: 10px;
+    font-family: inherit;
+    font-size: 10px;
+    font-weight: 800;
+    cursor: pointer;
+    transition:
+        transform 0.2s ease,
+        opacity 0.2s ease,
+        background 0.2s ease;
+}
+
+.btn:hover {
+    transform: translateY(-1px);
+}
+
+.btn:disabled {
+    cursor: not-allowed;
+    opacity: 0.55;
+    transform: none;
+}
+
+.btn-primary {
+    background: var(--primary);
+    color: #ffffff;
+}
+
+.btn-primary:hover {
+    opacity: 0.92;
+}
+
+.btn-secondary {
+    background: var(--surface-soft);
+    border-color: var(--border);
+    color: var(--text-secondary);
+}
+
+.btn-secondary:hover {
+    background: var(--hover-bg);
+    color: var(--text-primary);
+}
+
+/* =====================================
+   SETTING ROW
+===================================== */
+
+.setting-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.setting-row {
+    min-height: 58px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+}
+
+.setting-row:first-child {
+    padding-top: 0;
+}
+
+.setting-row:last-child {
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
+.setting-info {
+    min-width: 0;
+}
+
+.setting-info strong {
+    display: block;
+    font-size: 11px;
+    font-weight: 800;
+    color: var(--text-primary);
+}
+
+.setting-info span {
+    display: block;
+    margin-top: 3px;
+    font-size: 9px;
+    line-height: 1.5;
+    color: var(--text-muted);
+}
+
+/* =====================================
+   SWITCH
+===================================== */
+
+.switch {
+    position: relative;
+    width: 42px;
+    min-width: 42px;
+    height: 23px;
+}
+
+.switch input {
+    width: 0;
+    height: 0;
+    opacity: 0;
+}
+
+.switch-slider {
+    position: absolute;
+    inset: 0;
+    border-radius: 30px;
+    background: var(--border);
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.switch-slider::before {
+    content: "";
+    position: absolute;
+    width: 17px;
+    height: 17px;
+    left: 3px;
+    top: 3px;
+    border-radius: 50%;
+    background: #ffffff;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.18);
+    transition: 0.2s ease;
+}
+
+.switch input:checked + .switch-slider {
+    background: var(--primary);
+}
+
+.switch input:checked + .switch-slider::before {
+    transform: translateX(19px);
+}
+
+/* =====================================
+   THRESHOLD
+===================================== */
+
+.threshold-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.threshold-box {
+    padding: 14px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: var(--surface-soft);
+}
+
+.threshold-box label {
+    display: block;
+    margin-bottom: 7px;
+    font-size: 9px;
+    font-weight: 800;
+    color: var(--text-secondary);
+}
+
+.threshold-box input {
+    width: 100%;
+    height: 37px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0 9px;
+    outline: none;
+    background: var(--surface);
+    color: var(--text-primary);
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.threshold-box input:focus {
+    border-color: var(--primary);
+}
+
+.threshold-unit {
+    display: block;
+    margin-top: 5px;
+    font-size: 8px;
+    color: var(--text-muted);
+}
+
+/* =====================================
+   STATUS MESSAGE
+===================================== */
+
+.settings-message {
+    display: none;
+    align-items: center;
+    gap: 8px;
+    padding: 11px 13px;
+    margin-top: 14px;
+    border-radius: 10px;
+    font-size: 10px;
+    font-weight: 700;
+}
+
+.settings-message.show {
+    display: flex;
+}
+
+.settings-message.success {
+    background: rgba(34, 197, 94, 0.10);
+    color: #15803d;
+    border: 1px solid rgba(34, 197, 94, 0.18);
+}
+
+.settings-message.error {
+    background: rgba(239, 68, 68, 0.10);
+    color: #b91c1c;
+    border: 1px solid rgba(239, 68, 68, 0.18);
+}
+
+/* =====================================
+   RESPONSIVE
+===================================== */
+
+@media (max-width: 950px) {
+
+    .settings-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .settings-card.full-width {
+        grid-column: auto;
+    }
+
+}
+
+@media (max-width: 650px) {
+
+    .settings-grid {
+        grid-template-columns: 1fr;
+        gap: 14px;
+    }
+
+    .settings-card {
+        padding: 18px;
+        border-radius: 15px;
+    }
+
+    .settings-intro {
+        padding: 18px;
+        border-radius: 15px;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+
+    .threshold-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .settings-actions {
+        flex-direction: column-reverse;
+    }
+
+    .settings-actions .btn {
+        width: 100%;
+    }
+
+}
+
+</style>
+
+
+<!-- =====================================
+     MAIN SETTINGS CONTENT
+===================================== -->
+
+<section class="settings-container">
+
+    <!-- INTRO -->
+    <div class="settings-intro">
+
+        <h2>Pengaturan FLOWS-PRO</h2>
+
+        <p>
+            Kelola profil, tampilan, notifikasi, ambang batas
+            sensor, serta konfigurasi perangkat sistem FLOWS-PRO.
+        </p>
+
+    </div>
+
+
+    <!-- SETTINGS GRID -->
+    <div class="settings-grid">
+
+
+        <!-- =================================
+             PROFIL & UMUM
+        ================================== -->
+
+        <section class="settings-card">
+
+            <div class="settings-card-header">
+
+                <div class="settings-card-icon">
+                    <i class="fa-regular fa-user"></i>
+                </div>
+
+                <div class="settings-card-title">
+
+                    <h3>Profil & Umum</h3>
+
+                    <p>
+                        Informasi pengguna dan identitas sistem.
                     </p>
 
                 </div>
@@ -2654,162 +1752,105 @@
             </div>
 
 
-            <div class="card-body">
+            <div class="form-group">
 
+                <label
+                    class="form-label"
+                    for="userName"
+                >
+                    Nama Pengguna
+                </label>
 
-                <div class="form-grid">
-
-
-                    <div class="form-group">
-
-                        <label
-                            class="form-label"
-                            for="userName"
-                        >
-
-                            Nama Pengguna
-
-                        </label>
-
-
-                        <input
-                            type="text"
-                            id="userName"
-                            class="form-control"
-                            placeholder="Masukkan nama pengguna"
-                            autocomplete="name"
-                        >
-
-
-                        <span class="form-hint">
-
-                            Nama ini akan digunakan pada
-                            Dashboard dan Profile.
-
-                        </span>
-
-                    </div>
-
-
-                    <div class="form-group">
-
-                        <label
-                            class="form-label"
-                            for="userEmail"
-                        >
-
-                            Email
-
-                        </label>
-
-
-                        <input
-                            type="email"
-                            id="userEmail"
-                            class="form-control"
-                            readonly
-                        >
-
-
-                        <span class="form-hint">
-
-                            Email diambil dari akun
-                            Supabase Authentication.
-
-                        </span>
-
-                    </div>
-
-
-                    <div class="form-group full">
-
-                        <label
-                            class="form-label"
-                            for="systemName"
-                        >
-
-                            Nama Sistem
-
-                        </label>
-
-
-                        <input
-                            type="text"
-                            id="systemName"
-                            class="form-control"
-                            value="FLOWS-PRO"
-                            maxlength="50"
-                        >
-
-
-                        <span class="form-hint">
-
-                            Nama sistem yang digunakan
-                            pada konfigurasi aplikasi.
-
-                        </span>
-
-                    </div>
-
-
-                </div>
+                <input
+                    type="text"
+                    id="userName"
+                    class="form-control"
+                    placeholder="Masukkan nama pengguna"
+                    autocomplete="name"
+                >
 
             </div>
 
 
-            <div class="card-footer">
+            <div class="form-group">
+
+                <label
+                    class="form-label"
+                    for="userEmail"
+                >
+                    Email Akun
+                </label>
+
+                <input
+                    type="email"
+                    id="userEmail"
+                    class="form-control"
+                    readonly
+                    placeholder="Memuat email..."
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label
+                    class="form-label"
+                    for="systemName"
+                >
+                    Nama Sistem
+                </label>
+
+                <input
+                    type="text"
+                    id="systemName"
+                    class="form-control"
+                    value="FLOWS-PRO"
+                >
+
+            </div>
+
+
+            <div
+                class="settings-message"
+                id="profileMessage"
+            ></div>
+
+
+            <div class="settings-actions">
 
                 <button
                     type="button"
                     class="btn btn-primary"
-                    id="saveGeneral"
+                    id="saveProfileButton"
                 >
-
                     <i class="fa-solid fa-floppy-disk"></i>
-
-                    Simpan Perubahan
-
+                    &nbsp; Simpan Profil
                 </button>
 
             </div>
 
-
         </section>
 
 
-        <!-- =================================================
-             2. APPEARANCE
-             ================================================= -->
+        <!-- =================================
+             TAMPILAN
+        ================================== -->
 
-        <section
-            class="settings-card"
-            id="appearanceSettings"
-        >
+        <section class="settings-card">
 
+            <div class="settings-card-header">
 
-            <div class="card-header">
-
-                <div class="card-icon">
-
+                <div class="settings-card-icon">
                     <i class="fa-solid fa-palette"></i>
-
                 </div>
 
+                <div class="settings-card-title">
 
-                <div class="card-heading">
+                    <h3>Tampilan</h3>
 
-                    <h2 class="card-title">
-
-                        Tampilan
-
-                    </h2>
-
-
-                    <p class="card-description">
-
-                        Atur tampilan antarmuka
-                        FLOWS-PRO.
-
+                    <p>
+                        Atur tampilan antarmuka FLOWS-PRO.
                     </p>
 
                 </div>
@@ -2817,476 +1858,397 @@
             </div>
 
 
-            <div class="card-body">
+            <div class="form-group">
+
+                <label
+                    class="form-label"
+                    for="themeSelect"
+                >
+                    Tema Antarmuka
+                </label>
+
+                <select
+                    id="themeSelect"
+                    class="form-control"
+                >
+
+                    <option value="light">
+                        Mode Terang
+                    </option>
+
+                    <option value="dark">
+                        Mode Gelap
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="setting-list">
+
+                <div class="setting-row">
+
+                    <div class="setting-info">
+
+                        <strong>Animasi Antarmuka</strong>
+
+                        <span>
+                            Gunakan transisi visual pada elemen sistem.
+                        </span>
+
+                    </div>
+
+                    <label class="switch">
+
+                        <input
+                            type="checkbox"
+                            id="animationToggle"
+                            checked
+                        >
+
+                        <span class="switch-slider"></span>
+
+                    </label>
+
+                </div>
 
 
                 <div class="setting-row">
 
-
                     <div class="setting-info">
 
-                        <div class="setting-name">
+                        <strong>Efek Bayangan</strong>
 
-                            Tema Aplikasi
-
-                        </div>
-
-
-                        <div class="setting-description">
-
-                            Pilih tema gelap, terang,
-                            atau mengikuti sistem perangkat.
-
-                        </div>
+                        <span>
+                            Tampilkan bayangan pada kartu dan panel.
+                        </span>
 
                     </div>
 
+                    <label class="switch">
+
+                        <input
+                            type="checkbox"
+                            id="shadowToggle"
+                            checked
+                        >
+
+                        <span class="switch-slider"></span>
+
+                    </label>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================
+             NOTIFIKASI
+        ================================== -->
+
+        <section class="settings-card">
+
+            <div class="settings-card-header">
+
+                <div class="settings-card-icon">
+                    <i class="fa-regular fa-bell"></i>
+                </div>
+
+                <div class="settings-card-title">
+
+                    <h3>Notifikasi</h3>
+
+                    <p>
+                        Atur jenis peringatan yang ingin diterima.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="setting-list">
+
+                <div class="setting-row">
+
+                    <div class="setting-info">
+
+                        <strong>Notifikasi Sistem</strong>
+
+                        <span>
+                            Aktifkan pemberitahuan umum dari FLOWS-PRO.
+                        </span>
+
+                    </div>
+
+                    <label class="switch">
+
+                        <input
+                            type="checkbox"
+                            id="notificationToggle"
+                            checked
+                        >
+
+                        <span class="switch-slider"></span>
+
+                    </label>
+
+                </div>
+
+
+                <div class="setting-row">
+
+                    <div class="setting-info">
+
+                        <strong>Peringatan WASPADA</strong>
+
+                        <span>
+                            Beri notifikasi ketika kondisi memasuki level waspada.
+                        </span>
+
+                    </div>
+
+                    <label class="switch">
+
+                        <input
+                            type="checkbox"
+                            id="warningNotificationToggle"
+                            checked
+                        >
+
+                        <span class="switch-slider"></span>
+
+                    </label>
+
+                </div>
+
+
+                <div class="setting-row">
+
+                    <div class="setting-info">
+
+                        <strong>Peringatan DARURAT</strong>
+
+                        <span>
+                            Beri notifikasi ketika kondisi banjir mencapai tingkat bahaya.
+                        </span>
+
+                    </div>
+
+                    <label class="switch">
+
+                        <input
+                            type="checkbox"
+                            id="dangerNotificationToggle"
+                            checked
+                        >
+
+                        <span class="switch-slider"></span>
+
+                    </label>
+
+                </div>
+
+
+                <div class="setting-row">
+
+                    <div class="setting-info">
+
+                        <strong>Perangkat Offline</strong>
+
+                        <span>
+                            Beri notifikasi ketika perangkat sensor tidak terhubung.
+                        </span>
+
+                    </div>
+
+                    <label class="switch">
+
+                        <input
+                            type="checkbox"
+                            id="offlineNotificationToggle"
+                            checked
+                        >
+
+                        <span class="switch-slider"></span>
+
+                    </label>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================
+             SENSOR
+        ================================== -->
+
+        <section class="settings-card">
+
+            <div class="settings-card-header">
+
+                <div class="settings-card-icon">
+                    <i class="fa-solid fa-wave-square"></i>
+                </div>
+
+                <div class="settings-card-title">
+
+                    <h3>Konfigurasi Sensor</h3>
+
+                    <p>
+                        Atur informasi dasar perangkat pemantauan.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label
+                    class="form-label"
+                    for="deviceName"
+                >
+                    Nama Perangkat
+                </label>
+
+                <input
+                    type="text"
+                    id="deviceName"
+                    class="form-control"
+                    value="FLOWS-PRO DEVICE 01"
+                >
+
+            </div>
+
+
+            <div class="form-row">
+
+                <div class="form-group">
+
+                    <label
+                        class="form-label"
+                        for="sensorType"
+                    >
+                        Jenis Sensor
+                    </label>
 
                     <select
-                        id="themeSelect"
+                        id="sensorType"
                         class="form-control"
-                        style="max-width: 180px;"
                     >
 
-                        <option value="dark">
-                            Dark
+                        <option value="AJ-SR04M">
+                            AJ-SR04M
                         </option>
 
-                        <option value="light">
-                            Light
+                        <option value="JSN-SR04T">
+                            JSN-SR04T
                         </option>
 
-                        <option value="system">
-                            System
+                        <option value="HC-SR04">
+                            HC-SR04
                         </option>
 
                     </select>
 
-
                 </div>
 
 
-            </div>
+                <div class="form-group">
 
-
-        </section>
-
-
-        <!-- =================================================
-             3. NOTIFICATION
-             ================================================= -->
-
-        <section
-            class="settings-card"
-            id="notificationSettings"
-        >
-
-
-            <div class="card-header">
-
-                <div class="card-icon">
-
-                    <i class="fa-solid fa-bell"></i>
-
-                </div>
-
-
-                <div class="card-heading">
-
-                    <h2 class="card-title">
-
-                        Notifikasi
-
-                    </h2>
-
-
-                    <p class="card-description">
-
-                        Tentukan kondisi yang dapat
-                        menghasilkan notifikasi sistem.
-
-                    </p>
-
-                </div>
-
-            </div>
-
-
-            <div class="card-body">
-
-
-                <div class="setting-row">
-
-                    <div class="setting-info">
-
-                        <div class="setting-name">
-
-                            Status Siaga
-
-                        </div>
-
-                        <div class="setting-description">
-
-                            Tampilkan notifikasi ketika
-                            ketinggian air memasuki kondisi siaga.
-
-                        </div>
-
-                    </div>
-
-
-                    <label class="switch">
-
-                        <input
-                            type="checkbox"
-                            id="notifyWarning"
-                            checked
-                        >
-
-                        <span class="switch-slider"></span>
-
+                    <label
+                        class="form-label"
+                        for="measurementUnit"
+                    >
+                        Satuan Pengukuran
                     </label>
 
-                </div>
+                    <select
+                        id="measurementUnit"
+                        class="form-control"
+                    >
 
+                        <option value="cm">
+                            Centimeter (cm)
+                        </option>
 
-                <div class="setting-row">
+                        <option value="m">
+                            Meter (m)
+                        </option>
 
-                    <div class="setting-info">
-
-                        <div class="setting-name">
-
-                            Status Bahaya
-
-                        </div>
-
-                        <div class="setting-description">
-
-                            Tampilkan notifikasi ketika
-                            ketinggian air memasuki kondisi bahaya.
-
-                        </div>
-
-                    </div>
-
-
-                    <label class="switch">
-
-                        <input
-                            type="checkbox"
-                            id="notifyDanger"
-                            checked
-                        >
-
-                        <span class="switch-slider"></span>
-
-                    </label>
-
-                </div>
-
-
-                <div class="setting-row">
-
-                    <div class="setting-info">
-
-                        <div class="setting-name">
-
-                            Sensor Offline
-
-                        </div>
-
-                        <div class="setting-description">
-
-                            Beri tahu ketika perangkat
-                            sensor tidak mengirim data.
-
-                        </div>
-
-                    </div>
-
-
-                    <label class="switch">
-
-                        <input
-                            type="checkbox"
-                            id="notifyOffline"
-                            checked
-                        >
-
-                        <span class="switch-slider"></span>
-
-                    </label>
-
-                </div>
-
-
-            </div>
-
-
-        </section>
-
-
-        <!-- =================================================
-             4. THRESHOLD
-             ================================================= -->
-
-        <section
-            class="settings-card"
-            id="thresholdSettings"
-        >
-
-
-            <div class="card-header">
-
-                <div class="card-icon">
-
-                    <i class="fa-solid fa-ruler-vertical"></i>
-
-                </div>
-
-
-                <div class="card-heading">
-
-                    <h2 class="card-title">
-
-                        Threshold Ketinggian Air
-
-                    </h2>
-
-
-                    <p class="card-description">
-
-                        Tentukan batas ketinggian air
-                        untuk menentukan status sistem.
-
-                    </p>
+                    </select>
 
                 </div>
 
             </div>
 
 
-            <div class="card-body">
+            <div class="form-group">
 
+                <label
+                    class="form-label"
+                    for="locationName"
+                >
+                    Lokasi Perangkat
+                </label>
 
-                <div class="threshold-grid">
-
-
-                    <div class="threshold-item">
-
-                        <div class="threshold-label">
-
-                            <span
-                                class="threshold-indicator safe"
-                            ></span>
-
-                            Aman
-
-                        </div>
-
-
-                        <input
-                            type="number"
-                            id="safeThreshold"
-                            class="threshold-input"
-                            min="0"
-                            step="1"
-                            value="30"
-                        >
-
-
-                        <div class="threshold-unit">
-
-                            cm
-
-                        </div>
-
-                    </div>
-
-
-                    <div class="threshold-item">
-
-                        <div class="threshold-label">
-
-                            <span
-                                class="threshold-indicator warning"
-                            ></span>
-
-                            Siaga
-
-                        </div>
-
-
-                        <input
-                            type="number"
-                            id="warningThreshold"
-                            class="threshold-input"
-                            min="0"
-                            step="1"
-                            value="60"
-                        >
-
-
-                        <div class="threshold-unit">
-
-                            cm
-
-                        </div>
-
-                    </div>
-
-
-                    <div class="threshold-item">
-
-                        <div class="threshold-label">
-
-                            <span
-                                class="threshold-indicator danger"
-                            ></span>
-
-                            Bahaya
-
-                        </div>
-
-
-                        <input
-                            type="number"
-                            id="dangerThreshold"
-                            class="threshold-input"
-                            min="0"
-                            step="1"
-                            value="61"
-                        >
-
-
-                        <div class="threshold-unit">
-
-                            cm
-
-                        </div>
-
-                    </div>
-
-
-                </div>
-
-
-                <div
-                    id="thresholdValidation"
-                    class="threshold-validation"
-                ></div>
-
-
-                <div
-                    class="setting-row"
-                    style="margin-top: 16px;"
+                <input
+                    type="text"
+                    id="locationName"
+                    class="form-control"
+                    placeholder="Contoh: Pesisir Kota Dumai"
                 >
 
-                    <div class="setting-info">
-
-                        <div class="setting-name">
-
-                            Aktifkan Threshold
-
-                        </div>
-
-
-                        <div class="setting-description">
-
-                            Gunakan konfigurasi threshold
-                            ini untuk menentukan status air.
-
-                        </div>
-
-                    </div>
-
-
-                    <label class="switch">
-
-                        <input
-                            type="checkbox"
-                            id="thresholdEnabled"
-                            checked
-                        >
-
-                        <span class="switch-slider"></span>
-
-                    </label>
-
-                </div>
-
-
             </div>
 
 
-            <div class="card-footer">
+            <div
+                class="settings-message"
+                id="sensorMessage"
+            ></div>
 
 
-                <button
-                    type="button"
-                    class="btn btn-secondary"
-                    id="resetThreshold"
-                >
-
-                    <i class="fa-solid fa-rotate-left"></i>
-
-                    Reset
-
-                </button>
-
+            <div class="settings-actions">
 
                 <button
                     type="button"
                     class="btn btn-primary"
-                    id="saveThreshold"
+                    id="saveSensorButton"
                 >
-
                     <i class="fa-solid fa-floppy-disk"></i>
-
-                    Simpan Threshold
-
+                    &nbsp; Simpan Sensor
                 </button>
 
-
             </div>
-
 
         </section>
 
 
-        <!-- =================================================
-             5. SENSOR
-             ================================================= -->
+        <!-- =================================
+             AMBANG BATAS
+        ================================== -->
 
-        <section
-            class="settings-card"
-            id="sensorSettings"
-        >
+        <section class="settings-card full-width">
 
+            <div class="settings-card-header">
 
-            <div class="card-header">
-
-                <div class="card-icon">
-
-                    <i class="fa-solid fa-satellite-dish"></i>
-
+                <div class="settings-card-icon">
+                    <i class="fa-solid fa-gauge-high"></i>
                 </div>
 
+                <div class="settings-card-title">
 
-                <div class="card-heading">
+                    <h3>Ambang Batas Ketinggian Air</h3>
 
-                    <h2 class="card-title">
-
-                        Konfigurasi Sensor
-
-                    </h2>
-
-
-                    <p class="card-description">
-
-                        Atur identitas dan informasi
-                        perangkat pemantauan FLOWS-PRO.
-
+                    <p>
+                        Tentukan batas level ketinggian air untuk menentukan status sistem.
                     </p>
 
                 </div>
@@ -3294,162 +2256,153 @@
             </div>
 
 
-            <div class="card-body">
+            <div class="threshold-grid">
 
+                <div class="threshold-box">
 
-                <div class="form-grid">
+                    <label for="safeThreshold">
+                        BATAS AMAN
+                    </label>
 
+                    <input
+                        type="number"
+                        id="safeThreshold"
+                        min="0"
+                        step="1"
+                        value="30"
+                    >
 
-                    <div class="form-group">
-
-                        <label
-                            class="form-label"
-                            for="deviceName"
-                        >
-
-                            Nama Perangkat
-
-                        </label>
-
-
-                        <input
-                            type="text"
-                            id="deviceName"
-                            class="form-control"
-                            value="FLOWS-PRO Device 01"
-                        >
-
-                    </div>
-
-
-                    <div class="form-group">
-
-                        <label
-                            class="form-label"
-                            for="sensorType"
-                        >
-
-                            Jenis Sensor
-
-                        </label>
-
-
-                        <select
-                            id="sensorType"
-                            class="form-control"
-                        >
-
-                            <option value="AJ-SR04M">
-                                AJ-SR04M
-                            </option>
-
-                            <option value="HC-SR04">
-                                HC-SR04
-                            </option>
-
-                            <option value="JSN-SR04T">
-                                JSN-SR04T
-                            </option>
-
-                        </select>
-
-                    </div>
-
-
-                    <div class="form-group">
-
-                        <label
-                            class="form-label"
-                            for="locationName"
-                        >
-
-                            Lokasi Pemantauan
-
-                        </label>
-
-
-                        <input
-                            type="text"
-                            id="locationName"
-                            class="form-control"
-                            placeholder="Contoh: Sungai Dumai"
-                        >
-
-                    </div>
-
-
-                    <div class="form-group">
-
-                        <label
-                            class="form-label"
-                            for="measurementUnit"
-                        >
-
-                            Satuan Pengukuran
-
-                        </label>
-
-
-                        <select
-                            id="measurementUnit"
-                            class="form-control"
-                        >
-
-                            <option value="cm">
-                                Centimeter (cm)
-                            </option>
-
-                            <option value="m">
-                                Meter (m)
-                            </option>
-
-                        </select>
-
-                    </div>
-
+                    <span class="threshold-unit">
+                        cm
+                    </span>
 
                 </div>
 
 
+                <div class="threshold-box">
+
+                    <label for="warningThreshold">
+                        BATAS WASPADA
+                    </label>
+
+                    <input
+                        type="number"
+                        id="warningThreshold"
+                        min="0"
+                        step="1"
+                        value="60"
+                    >
+
+                    <span class="threshold-unit">
+                        cm
+                    </span>
+
+                </div>
+
+
+                <div class="threshold-box">
+
+                    <label for="dangerThreshold">
+                        BATAS BAHAYA
+                    </label>
+
+                    <input
+                        type="number"
+                        id="dangerThreshold"
+                        min="0"
+                        step="1"
+                        value="61"
+                    >
+
+                    <span class="threshold-unit">
+                        cm
+                    </span>
+
+                </div>
+
             </div>
 
+
+            <div class="setting-list" style="margin-top: 18px;">
+
+                <div class="setting-row">
+
+                    <div class="setting-info">
+
+                        <strong>Gunakan Ambang Batas</strong>
+
+                        <span>
+                            Gunakan nilai di atas sebagai acuan status ketinggian air.
+                        </span>
+
+                    </div>
+
+                    <label class="switch">
+
+                        <input
+                            type="checkbox"
+                            id="thresholdToggle"
+                            checked
+                        >
+
+                        <span class="switch-slider"></span>
+
+                    </label>
+
+                </div>
+
+            </div>
+
+
+            <div
+                class="settings-message"
+                id="thresholdMessage"
+            ></div>
+
+
+            <div class="settings-actions">
+
+                <button
+                    type="button"
+                    class="btn btn-secondary"
+                    id="resetThresholdButton"
+                >
+                    <i class="fa-solid fa-rotate-left"></i>
+                    &nbsp; Kembalikan Default
+                </button>
+
+                <button
+                    type="button"
+                    class="btn btn-primary"
+                    id="saveThresholdButton"
+                >
+                    <i class="fa-solid fa-floppy-disk"></i>
+                    &nbsp; Simpan Ambang Batas
+                </button>
+
+            </div>
 
         </section>
 
 
-        <!-- =================================================
-             6. ALARM
-             ================================================= -->
+        <!-- =================================
+             ALARM
+        ================================== -->
 
-        <section
-            class="settings-card"
-            id="alarmSettings"
-        >
+        <section class="settings-card full-width">
 
+            <div class="settings-card-header">
 
-            <div class="card-header">
-
-                <div class="card-icon">
-
+                <div class="settings-card-icon">
                     <i class="fa-solid fa-volume-high"></i>
-
                 </div>
 
+                <div class="settings-card-title">
 
-                <div class="card-heading">
+                    <h3>Alarm Peringatan</h3>
 
-                    <h2 class="card-title">
-
-                        Alarm Sistem
-
-                    </h2>
-
-
-                    <p class="card-description">
-
-                        Atur perilaku alarm berdasarkan
-                        kondisi ketinggian air.
-
+                    <p>
+                        Atur perilaku alarm berdasarkan kondisi ketinggian air.
                     </p>
 
                 </div>
@@ -3457,35 +2410,25 @@
             </div>
 
 
-            <div class="card-body">
-
+            <div class="setting-list">
 
                 <div class="setting-row">
 
                     <div class="setting-info">
 
-                        <div class="setting-name">
+                        <strong>Alarm Sistem</strong>
 
-                            Alarm Utama
-
-                        </div>
-
-
-                        <div class="setting-description">
-
-                            Aktifkan atau nonaktifkan
-                            alarm FLOWS-PRO.
-
-                        </div>
+                        <span>
+                            Aktifkan alarm peringatan FLOWS-PRO.
+                        </span>
 
                     </div>
-
 
                     <label class="switch">
 
                         <input
                             type="checkbox"
-                            id="alarmEnabled"
+                            id="alarmToggle"
                             checked
                         >
 
@@ -3500,28 +2443,19 @@
 
                     <div class="setting-info">
 
-                        <div class="setting-name">
+                        <strong>Alarm WASPADA</strong>
 
-                            Alarm Siaga
-
-                        </div>
-
-
-                        <div class="setting-description">
-
-                            Aktifkan alarm ketika
-                            kondisi air memasuki status siaga.
-
-                        </div>
+                        <span>
+                            Aktifkan suara alarm saat status berada pada level waspada.
+                        </span>
 
                     </div>
-
 
                     <label class="switch">
 
                         <input
                             type="checkbox"
-                            id="alarmWarning"
+                            id="warningAlarmToggle"
                             checked
                         >
 
@@ -3536,28 +2470,19 @@
 
                     <div class="setting-info">
 
-                        <div class="setting-name">
+                        <strong>Alarm DARURAT</strong>
 
-                            Alarm Bahaya
-
-                        </div>
-
-
-                        <div class="setting-description">
-
-                            Aktifkan alarm ketika
-                            kondisi air memasuki status bahaya.
-
-                        </div>
+                        <span>
+                            Aktifkan alarm lebih kuat saat kondisi mencapai bahaya.
+                        </span>
 
                     </div>
-
 
                     <label class="switch">
 
                         <input
                             type="checkbox"
-                            id="alarmDanger"
+                            id="dangerAlarmToggle"
                             checked
                         >
 
@@ -3566,2369 +2491,1658 @@
                     </label>
 
                 </div>
-
 
             </div>
 
+
+            <div
+                class="settings-message"
+                id="alarmMessage"
+            ></div>
+
+
+            <div class="settings-actions">
+
+                <button
+                    type="button"
+                    class="btn btn-primary"
+                    id="saveAlarmButton"
+                >
+                    <i class="fa-solid fa-floppy-disk"></i>
+                    &nbsp; Simpan Pengaturan Alarm
+                </button>
+
+            </div>
 
         </section>
 
 
     </div>
 
-
-</div>
-
-
-<!-- =====================================================
-     SETTINGS MESSAGE
-     ===================================================== -->
-
-<div
-    class="settings-message"
-    id="settingsMessage"
-    role="status"
-    aria-live="polite"
->
-
-    <div
-        class="settings-message-icon"
-        id="settingsMessageIcon"
-    >
-
-        <i class="fa-solid fa-check"></i>
-
-    </div>
-
-
-    <div
-        class="settings-message-text"
-        id="settingsMessageText"
-    >
-
-        Pengaturan berhasil disimpan.
-
-    </div>
-
-</div>
-
-
-<!-- =====================================================
-     PART 2 SELESAI
-
-     PART 3 DITEMPEL LANGSUNG DI BAWAH
-     BARIS TERAKHIR PART 2.
-
-     JANGAN TUTUP BODY/HTML DULU.
-     ===================================================== -->
-
-     <!-- ============================================================
-     PART 3 — JAVASCRIPT CORE & SUPABASE AUTH
-     Tempel langsung di bawah PART 2
-     ============================================================ -->
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
+</section>
 <script>
-/* ============================================================
-   SUPABASE CONFIGURATION
-   ============================================================ */
 
-const SUPABASE_URL = "https://nydapuhnswrbgbjkaxqa.supabase.co";
+/* =====================================
+   SETTINGS JAVASCRIPT
+===================================== */
 
-const SUPABASE_KEY =
-    "sb_publishable_dypnRnjABFIf6GcshfrTIA_Q0zhuR0L";
+document.addEventListener("DOMContentLoaded", async function () {
 
-const supabaseClient = window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
-);
+    /* =====================================
+       SUPABASE CONFIGURATION
+    ===================================== */
 
+    const SUPABASE_URL =
+        "https://nydapuhnswrbgbjkaxqa.supabase.co";
 
-/* ============================================================
-   SETTINGS CONFIGURATION
-   ============================================================ */
+    const SUPABASE_KEY =
+        "sb_publishable_dypnRnjABFIf6GcshfrTIA_Q0zhuR0L";
 
-const SETTINGS_STORAGE_KEY = "flowspro_settings";
-const THEME_STORAGE_KEY = "flowsTheme";
-
-const DEFAULT_SETTINGS = {
-    general: {
-        systemName: "FLOWS-PRO"
-    },
-
-    appearance: {
-        theme: "dark"
-    },
-
-    notifications: {
-        warning: true,
-        danger: true,
-        offline: true
-    },
-
-    threshold: {
-        enabled: true,
-        safe: 30,
-        warning: 60,
-        danger: 61
-    },
-
-    sensor: {
-        deviceName: "FLOWS-PRO Device 01",
-        sensorType: "AJ-SR04M",
-        locationName: "Lokasi Pemantauan",
-        measurementUnit: "cm"
-    },
-
-    alarm: {
-        enabled: true,
-        warning: true,
-        danger: true
-    }
-};
-
-let settings = loadSettings();
-let currentUser = null;
-
-
-/* ============================================================
-   LOAD SETTINGS FROM LOCAL STORAGE
-   ============================================================ */
-
-function loadSettings() {
-    try {
-        const saved = localStorage.getItem(SETTINGS_STORAGE_KEY);
-
-        if (!saved) {
-            return structuredClone(DEFAULT_SETTINGS);
-        }
-
-        const parsed = JSON.parse(saved);
-
-        return {
-            ...structuredClone(DEFAULT_SETTINGS),
-            ...parsed,
-
-            general: {
-                ...DEFAULT_SETTINGS.general,
-                ...(parsed.general || {})
-            },
-
-            appearance: {
-                ...DEFAULT_SETTINGS.appearance,
-                ...(parsed.appearance || {})
-            },
-
-            notifications: {
-                ...DEFAULT_SETTINGS.notifications,
-                ...(parsed.notifications || {})
-            },
-
-            threshold: {
-                ...DEFAULT_SETTINGS.threshold,
-                ...(parsed.threshold || {})
-            },
-
-            sensor: {
-                ...DEFAULT_SETTINGS.sensor,
-                ...(parsed.sensor || {})
-            },
-
-            alarm: {
-                ...DEFAULT_SETTINGS.alarm,
-                ...(parsed.alarm || {})
-            }
-        };
-
-    } catch (error) {
-        console.error("Gagal membaca settings:", error);
-        return structuredClone(DEFAULT_SETTINGS);
-    }
-}
-
-
-/* ============================================================
-   SAVE SETTINGS TO LOCAL STORAGE
-   ============================================================ */
-
-function saveSettings() {
-    try {
-        localStorage.setItem(
-            SETTINGS_STORAGE_KEY,
-            JSON.stringify(settings)
+    const supabaseClient =
+        window.supabase.createClient(
+            SUPABASE_URL,
+            SUPABASE_KEY
         );
 
-        return true;
 
-    } catch (error) {
-        console.error("Gagal menyimpan settings:", error);
-        return false;
-    }
-}
+    /* =====================================
+       HELPER
+    ===================================== */
 
-
-/* ============================================================
-   TOAST / MESSAGE
-   ============================================================ */
-
-function showMessage(message, type = "success") {
-
-    const messageBox = document.getElementById("settingsMessage");
-    const messageText = document.getElementById("settingsMessageText");
-
-    if (!messageBox || !messageText) return;
-
-    messageText.textContent = message;
-
-    messageBox.classList.remove(
-        "success",
-        "error",
-        "warning",
-        "show"
-    );
-
-    messageBox.classList.add(type);
-
-    requestAnimationFrame(() => {
-        messageBox.classList.add("show");
-    });
-
-    clearTimeout(window.settingsMessageTimer);
-
-    window.settingsMessageTimer = setTimeout(() => {
-        messageBox.classList.remove("show");
-    }, 3200);
-}
+    const byId = (id) =>
+        document.getElementById(id);
 
 
-/* ============================================================
-   AUTHENTICATION GUARD
-   ============================================================ */
+    function showMessage(
+        elementId,
+        message,
+        type = "success"
+    ) {
 
-async function checkAuthentication() {
+        const element = byId(elementId);
 
-    try {
+        if (!element) return;
 
-        const {
-            data: {
-                user
-            },
-            error
-        } = await supabaseClient.auth.getUser();
+        element.className =
+            "settings-message show " + type;
 
-        if (error) {
-            console.error("Auth error:", error);
-        }
+        element.innerHTML =
+            `<i class="fa-solid ${
+                type === "success"
+                    ? "fa-circle-check"
+                    : "fa-circle-exclamation"
+            }"></i> ${message}`;
 
-        if (!user) {
+        setTimeout(function () {
 
-            console.warn("User belum login.");
+            element.classList.remove("show");
 
-            window.location.href = "login.html";
+        }, 3500);
 
-            return false;
-        }
-
-        currentUser = user;
-
-        return true;
-
-    } catch (error) {
-
-        console.error(
-            "Gagal memeriksa autentikasi:",
-            error
-        );
-
-        window.location.href = "login.html";
-
-        return false;
-    }
-}
-
-
-/* ============================================================
-   LOAD USER PROFILE FROM SUPABASE AUTH
-   ============================================================ */
-
-function loadUserProfile() {
-
-    if (!currentUser) return;
-
-    const metadata = currentUser.user_metadata || {};
-
-    const displayName =
-        metadata.full_name ||
-        metadata.name ||
-        metadata.nama ||
-        currentUser.email?.split("@")[0] ||
-        "Pengguna";
-
-    const email =
-        currentUser.email || "-";
-
-    const nameInput =
-        document.getElementById("userName");
-
-    const emailInput =
-        document.getElementById("userEmail");
-
-    if (nameInput) {
-        nameInput.value = displayName;
-    }
-
-    if (emailInput) {
-        emailInput.value = email;
-    }
-}
-
-
-/* ============================================================
-   UPDATE USER NAME
-   ============================================================ */
-
-async function updateUserProfile() {
-
-    if (!currentUser) {
-
-        showMessage(
-            "Sesi pengguna tidak ditemukan.",
-            "error"
-        );
-
-        return;
-    }
-
-    const nameInput =
-        document.getElementById("userName");
-
-    const name =
-        nameInput?.value.trim();
-
-    if (!name) {
-
-        showMessage(
-            "Nama pengguna tidak boleh kosong.",
-            "error"
-        );
-
-        nameInput?.focus();
-
-        return;
-    }
-
-    if (name.length < 2) {
-
-        showMessage(
-            "Nama pengguna minimal 2 karakter.",
-            "error"
-        );
-
-        nameInput?.focus();
-
-        return;
     }
 
 
-    const saveButton =
-        document.getElementById("saveGeneral");
+    /* =====================================
+       DEFAULT SETTINGS
+    ===================================== */
 
-    const originalButtonHTML =
-        saveButton?.innerHTML;
+    const DEFAULT_SETTINGS = {
+
+        systemName:
+            "FLOWS-PRO",
+
+        animation:
+            true,
+
+        shadow:
+            true,
+
+        notifications:
+            true,
+
+        warningNotification:
+            true,
+
+        dangerNotification:
+            true,
+
+        offlineNotification:
+            true,
+
+        deviceName:
+            "FLOWS-PRO DEVICE 01",
+
+        sensorType:
+            "AJ-SR04M",
+
+        measurementUnit:
+            "cm",
+
+        locationName:
+            "",
+
+        safeThreshold:
+            30,
+
+        warningThreshold:
+            60,
+
+        dangerThreshold:
+            61,
+
+        thresholdEnabled:
+            true,
+
+        alarmEnabled:
+            true,
+
+        warningAlarm:
+            true,
+
+        dangerAlarm:
+            true
+
+    };
 
 
-    if (saveButton) {
+    /* =====================================
+       LOCAL SETTINGS STORAGE
+    ===================================== */
 
-        saveButton.disabled = true;
+    function getSettings() {
 
-        saveButton.innerHTML =
-            '<i class="fa-solid fa-spinner fa-spin"></i> Menyimpan...';
-    }
+        let savedSettings = {};
 
+        try {
 
-    try {
+            const raw =
+                localStorage.getItem(
+                    "flowspro_settings"
+                );
 
-        /*
-         * SUPABASE AUTH
-         *
-         * Dashboard membaca:
-         * user.user_metadata.full_name
-         *
-         * Jadi nama di Settings sekarang
-         * disimpan langsung ke Supabase Auth.
-         */
+            if (raw) {
 
-        const {
-            data,
-            error
-        } = await supabaseClient.auth.updateUser({
+                savedSettings =
+                    JSON.parse(raw) || {};
 
-            data: {
-                full_name: name,
-                name: name
             }
 
-        });
+        } catch (error) {
 
-
-        if (error) {
-
-            console.error(
-                "Gagal update profile:",
+            console.warn(
+                "Pengaturan lokal tidak dapat dibaca.",
                 error
             );
 
-            throw error;
         }
 
+        return {
+            ...DEFAULT_SETTINGS,
+            ...savedSettings
+        };
 
-        /*
-         * Update current user
-         */
-
-        if (data?.user) {
-            currentUser = data.user;
-        }
-
-
-        /*
-         * Simpan nama ke cache lokal juga.
-         *
-         * Ini bukan sumber utama profile.
-         * Sumber utama tetap Supabase Auth.
-         */
-
-        localStorage.setItem(
-            "flowspro_profile_name",
-            name
-        );
-
-
-        /*
-         * Simpan pengaturan umum
-         */
-
-        settings.general.systemName =
-            document
-                .getElementById("systemName")
-                ?.value.trim() ||
-            "FLOWS-PRO";
-
-        saveSettings();
-
-
-        /*
-         * Broadcast event untuk komponen
-         * yang menggunakan halaman yang sama.
-         */
-
-        window.dispatchEvent(
-            new CustomEvent(
-                "flowspro:profile-updated",
-                {
-                    detail: {
-                        name: name
-                    }
-                }
-            )
-        );
-
-
-        showMessage(
-            "Profil berhasil diperbarui.",
-            "success"
-        );
-
-
-    } catch (error) {
-
-        console.error(error);
-
-        showMessage(
-            error?.message ||
-            "Gagal memperbarui profil.",
-            "error"
-        );
-
-
-    } finally {
-
-        if (saveButton) {
-
-            saveButton.disabled = false;
-
-            saveButton.innerHTML =
-                originalButtonHTML ||
-                '<i class="fa-solid fa-floppy-disk"></i> Simpan Pengaturan';
-        }
-    }
-}
-
-
-/* ============================================================
-   APPLY THEME
-   ============================================================ */
-
-function applyTheme(theme) {
-
-    let actualTheme = theme;
-
-    if (theme === "system") {
-
-        actualTheme =
-            window.matchMedia(
-                "(prefers-color-scheme: dark)"
-            ).matches
-                ? "dark"
-                : "light";
     }
 
 
-    document.documentElement
-        .setAttribute(
-            "data-theme",
-            actualTheme
-        );
+    function saveSettings(settings) {
 
+        try {
 
-    localStorage.setItem(
-        THEME_STORAGE_KEY,
-        theme
-    );
-}
+            localStorage.setItem(
+                "flowspro_settings",
+                JSON.stringify(settings)
+            );
 
+            return true;
 
-/* ============================================================
-   LOAD THEME
-   ============================================================ */
+        } catch (error) {
 
-function loadTheme() {
+            console.error(
+                "Pengaturan gagal disimpan:",
+                error
+            );
 
-    const savedTheme =
-        settings.appearance?.theme ||
-        localStorage.getItem(THEME_STORAGE_KEY) ||
-        "dark";
+            return false;
 
+        }
 
-    const themeSelect =
-        document.getElementById("themeSelect");
-
-    if (themeSelect) {
-        themeSelect.value = savedTheme;
     }
 
 
-    applyTheme(savedTheme);
-}
+    /* =====================================
+       LOAD SETTINGS TO FORM
+    ===================================== */
+
+    function loadSettings() {
+
+        const settings =
+            getSettings();
 
 
-/* ============================================================
-   THEME SELECT
-   ============================================================ */
+        /* -----------------------------
+           SYSTEM
+        ----------------------------- */
 
-function handleThemeChange() {
+        if (byId("systemName")) {
 
-    const themeSelect =
-        document.getElementById("themeSelect");
+            byId("systemName").value =
+                settings.systemName;
 
-    if (!themeSelect) return;
-
-    const theme =
-        themeSelect.value;
-
-    settings.appearance.theme =
-        theme;
-
-    saveSettings();
-
-    applyTheme(theme);
-
-    showMessage(
-        "Tema berhasil diperbarui.",
-        "success"
-    );
-}
+        }
 
 
-/* ============================================================
-   THEME TOGGLE HEADER
-   ============================================================ */
+        /* -----------------------------
+           APPEARANCE
+        ----------------------------- */
 
-function toggleTheme() {
+        if (byId("animationToggle")) {
 
-    const current =
+            byId("animationToggle").checked =
+                Boolean(settings.animation);
+
+        }
+
+
+        if (byId("shadowToggle")) {
+
+            byId("shadowToggle").checked =
+                Boolean(settings.shadow);
+
+        }
+
+
+        /* -----------------------------
+           NOTIFICATIONS
+        ----------------------------- */
+
+        if (byId("notificationToggle")) {
+
+            byId("notificationToggle").checked =
+                Boolean(settings.notifications);
+
+        }
+
+
+        if (byId("warningNotificationToggle")) {
+
+            byId("warningNotificationToggle").checked =
+                Boolean(settings.warningNotification);
+
+        }
+
+
+        if (byId("dangerNotificationToggle")) {
+
+            byId("dangerNotificationToggle").checked =
+                Boolean(settings.dangerNotification);
+
+        }
+
+
+        if (byId("offlineNotificationToggle")) {
+
+            byId("offlineNotificationToggle").checked =
+                Boolean(settings.offlineNotification);
+
+        }
+
+
+        /* -----------------------------
+           SENSOR
+        ----------------------------- */
+
+        if (byId("deviceName")) {
+
+            byId("deviceName").value =
+                settings.deviceName;
+
+        }
+
+
+        if (byId("sensorType")) {
+
+            byId("sensorType").value =
+                settings.sensorType;
+
+        }
+
+
+        if (byId("measurementUnit")) {
+
+            byId("measurementUnit").value =
+                settings.measurementUnit;
+
+        }
+
+
+        if (byId("locationName")) {
+
+            byId("locationName").value =
+                settings.locationName;
+
+        }
+
+
+        /* -----------------------------
+           THRESHOLD
+        ----------------------------- */
+
+        if (byId("safeThreshold")) {
+
+            byId("safeThreshold").value =
+                settings.safeThreshold;
+
+        }
+
+
+        if (byId("warningThreshold")) {
+
+            byId("warningThreshold").value =
+                settings.warningThreshold;
+
+        }
+
+
+        if (byId("dangerThreshold")) {
+
+            byId("dangerThreshold").value =
+                settings.dangerThreshold;
+
+        }
+
+
+        if (byId("thresholdToggle")) {
+
+            byId("thresholdToggle").checked =
+                Boolean(settings.thresholdEnabled);
+
+        }
+
+
+        /* -----------------------------
+           ALARM
+        ----------------------------- */
+
+        if (byId("alarmToggle")) {
+
+            byId("alarmToggle").checked =
+                Boolean(settings.alarmEnabled);
+
+        }
+
+
+        if (byId("warningAlarmToggle")) {
+
+            byId("warningAlarmToggle").checked =
+                Boolean(settings.warningAlarm);
+
+        }
+
+
+        if (byId("dangerAlarmToggle")) {
+
+            byId("dangerAlarmToggle").checked =
+                Boolean(settings.dangerAlarm);
+
+        }
+
+    }
+
+
+    /* =====================================
+       THEME
+    ===================================== */
+
+    function loadTheme() {
+
+        let theme =
+            "light";
+
+        try {
+
+            theme =
+                localStorage.getItem(
+                    "flowsTheme"
+                ) || "light";
+
+        } catch (error) {
+
+            console.warn(
+                "Tema tidak dapat dibaca."
+            );
+
+        }
+
+
+        if (
+            theme !== "light" &&
+            theme !== "dark"
+        ) {
+
+            theme = "light";
+
+        }
+
+
         document.documentElement
-            .getAttribute("data-theme");
-
-    const next =
-        current === "dark"
-            ? "light"
-            : "dark";
+            .setAttribute(
+                "data-theme",
+                theme
+            );
 
 
-    settings.appearance.theme =
-        next;
+        if (byId("themeSelect")) {
 
-    saveSettings();
+            byId("themeSelect").value =
+                theme;
 
-    applyTheme(next);
+        }
 
-
-    const themeSelect =
-        document.getElementById("themeSelect");
-
-    if (themeSelect) {
-        themeSelect.value = next;
     }
-}
 
 
-/* ============================================================
-   SYSTEM THEME CHANGE
-   ============================================================ */
+    function saveTheme(theme) {
 
-function setupSystemThemeListener() {
+        if (
+            theme !== "light" &&
+            theme !== "dark"
+        ) {
 
-    const mediaQuery =
-        window.matchMedia(
-            "(prefers-color-scheme: dark)"
-        );
+            theme = "light";
+
+        }
 
 
-    mediaQuery.addEventListener(
-        "change",
-        () => {
+        document.documentElement
+            .setAttribute(
+                "data-theme",
+                theme
+            );
 
-            const selectedTheme =
-                settings.appearance?.theme;
 
-            if (selectedTheme === "system") {
-                applyTheme("system");
-            }
+        try {
+
+            localStorage.setItem(
+                "flowsTheme",
+                theme
+            );
+
+        } catch (error) {
+
+            console.warn(
+                "Tema gagal disimpan."
+            );
+
+        }
+
+    }
+
+
+    /* =====================================
+       THEME EVENT
+    ===================================== */
+
+    if (byId("themeSelect")) {
+
+        byId("themeSelect")
+            .addEventListener(
+                "change",
+                function () {
+
+                    saveTheme(
+                        this.value
+                    );
+
+                }
+            );
+
+    }
+
+
+    /* =====================================
+       SAVE PROFILE
+    ===================================== */
+
+    if (byId("saveProfileButton")) {
+
+        byId("saveProfileButton")
+            .addEventListener(
+                "click",
+                async function () {
+
+                    const button =
+                        byId("saveProfileButton");
+
+                    const name =
+                        byId("userName")
+                            ?.value
+                            .trim();
+
+                    const systemName =
+                        byId("systemName")
+                            ?.value
+                            .trim();
+
+
+                    if (!name) {
+
+                        showMessage(
+                            "profileMessage",
+                            "Nama pengguna tidak boleh kosong.",
+                            "error"
+                        );
+
+                        return;
+
+                    }
+
+
+                    if (!systemName) {
+
+                        showMessage(
+                            "profileMessage",
+                            "Nama sistem tidak boleh kosong.",
+                            "error"
+                        );
+
+                        return;
+
+                    }
+
+
+                    button.disabled =
+                        true;
+
+                    button.innerHTML =
+                        `<i class="fa-solid fa-spinner fa-spin"></i>
+                         &nbsp; Menyimpan...`;
+
+
+                    try {
+
+                        /*
+                         * Nama pengguna disimpan
+                         * langsung ke Supabase Auth.
+                         *
+                         * Dashboard membaca:
+                         * full_name / name / nama
+                         */
+
+                        const {
+                            error
+                        } =
+                            await supabaseClient
+                                .auth
+                                .updateUser({
+
+                                    data: {
+
+                                        full_name:
+                                            name,
+
+                                        name:
+                                            name
+
+                                    }
+
+                                });
+
+
+                        if (error) {
+
+                            throw error;
+
+                        }
+
+
+                        const settings =
+                            getSettings();
+
+
+                        settings.systemName =
+                            systemName;
+
+
+                        saveSettings(
+                            settings
+                        );
+
+
+                        showMessage(
+                            "profileMessage",
+                            "Profil berhasil diperbarui.",
+                            "success"
+                        );
+
+
+                        if (
+                            byId("profileName")
+                        ) {
+
+                            byId(
+                                "profileName"
+                            ).textContent =
+                                name;
+
+                        }
+
+
+                        if (
+                            byId("profileAvatar")
+                        ) {
+
+                            byId(
+                                "profileAvatar"
+                            ).textContent =
+                                name
+                                    .trim()
+                                    .charAt(0)
+                                    .toUpperCase();
+
+                        }
+
+
+                    } catch (error) {
+
+                        console.error(
+                            "Gagal memperbarui profil:",
+                            error
+                        );
+
+                        showMessage(
+                            "profileMessage",
+                            "Profil gagal diperbarui. Silakan coba lagi.",
+                            "error"
+                        );
+
+                    } finally {
+
+                        button.disabled =
+                            false;
+
+                        button.innerHTML =
+                            `<i class="fa-solid fa-floppy-disk"></i>
+                             &nbsp; Simpan Profil`;
+
+                    }
+
+                }
+            );
+
+    }
+
+
+    /* =====================================
+       SAVE SENSOR
+    ===================================== */
+
+    if (byId("saveSensorButton")) {
+
+        byId("saveSensorButton")
+            .addEventListener(
+                "click",
+                function () {
+
+                    const settings =
+                        getSettings();
+
+
+                    settings.deviceName =
+                        byId("deviceName")
+                            ?.value
+                            .trim() ||
+                        DEFAULT_SETTINGS.deviceName;
+
+
+                    settings.sensorType =
+                        byId("sensorType")
+                            ?.value ||
+                        DEFAULT_SETTINGS.sensorType;
+
+
+                    settings.measurementUnit =
+                        byId("measurementUnit")
+                            ?.value ||
+                        DEFAULT_SETTINGS.measurementUnit;
+
+
+                    settings.locationName =
+                        byId("locationName")
+                            ?.value
+                            .trim() ||
+                        "";
+
+
+                    saveSettings(
+                        settings
+                    );
+
+
+                    showMessage(
+                        "sensorMessage",
+                        "Konfigurasi sensor berhasil disimpan.",
+                        "success"
+                    );
+
+                }
+            );
+
+    }
+
+
+    /* =====================================
+       SAVE NOTIFICATIONS
+    ===================================== */
+
+    const notificationInputs = [
+
+        "notificationToggle",
+
+        "warningNotificationToggle",
+
+        "dangerNotificationToggle",
+
+        "offlineNotificationToggle"
+
+    ];
+
+
+    notificationInputs.forEach(
+        function (id) {
+
+            const element =
+                byId(id);
+
+            if (!element) return;
+
+
+            element.addEventListener(
+                "change",
+                function () {
+
+                    const settings =
+                        getSettings();
+
+
+                    settings.notifications =
+                        byId(
+                            "notificationToggle"
+                        )?.checked ?? true;
+
+
+                    settings.warningNotification =
+                        byId(
+                            "warningNotificationToggle"
+                        )?.checked ?? true;
+
+
+                    settings.dangerNotification =
+                        byId(
+                            "dangerNotificationToggle"
+                        )?.checked ?? true;
+
+
+                    settings.offlineNotification =
+                        byId(
+                            "offlineNotificationToggle"
+                        )?.checked ?? true;
+
+
+                    saveSettings(
+                        settings
+                    );
+
+                }
+            );
+
         }
     );
-}
 
 
-/* ============================================================
-   LOAD GENERAL SETTINGS
-   ============================================================ */
+    /* =====================================
+       APPEARANCE SETTINGS
+    ===================================== */
 
-function loadGeneralSettings() {
+    const appearanceInputs = [
 
-    const systemName =
-        document.getElementById("systemName");
+        "animationToggle",
 
-    if (systemName) {
+        "shadowToggle"
 
-        systemName.value =
-            settings.general?.systemName ||
-            "FLOWS-PRO";
-    }
-}
+    ];
 
 
-/* ============================================================
-   LOAD NOTIFICATION SETTINGS
-   ============================================================ */
+    appearanceInputs.forEach(
+        function (id) {
 
-function loadNotificationSettings() {
+            const element =
+                byId(id);
 
-    const warning =
-        document.getElementById("notifyWarning");
+            if (!element) return;
 
-    const danger =
-        document.getElementById("notifyDanger");
 
-    const offline =
-        document.getElementById("notifyOffline");
+            element.addEventListener(
+                "change",
+                function () {
 
+                    const settings =
+                        getSettings();
 
-    if (warning) {
-        warning.checked =
-            settings.notifications.warning;
-    }
 
-    if (danger) {
-        danger.checked =
-            settings.notifications.danger;
-    }
+                    settings.animation =
+                        byId(
+                            "animationToggle"
+                        )?.checked ?? true;
 
-    if (offline) {
-        offline.checked =
-            settings.notifications.offline;
-    }
-}
 
+                    settings.shadow =
+                        byId(
+                            "shadowToggle"
+                        )?.checked ?? true;
 
-/* ============================================================
-   SAVE NOTIFICATION SETTINGS
-   ============================================================ */
 
-function saveNotificationSettings() {
-
-    const warning =
-        document.getElementById("notifyWarning");
-
-    const danger =
-        document.getElementById("notifyDanger");
-
-    const offline =
-        document.getElementById("notifyOffline");
-
-
-    settings.notifications.warning =
-        !!warning?.checked;
-
-    settings.notifications.danger =
-        !!danger?.checked;
-
-    settings.notifications.offline =
-        !!offline?.checked;
-
-
-    saveSettings();
-
-    showMessage(
-        "Pengaturan notifikasi diperbarui.",
-        "success"
-    );
-}
-
-
-/* ============================================================
-   LOAD THRESHOLD SETTINGS
-   ============================================================ */
-
-function loadThresholdSettings() {
-
-    const safe =
-        document.getElementById("safeThreshold");
-
-    const warning =
-        document.getElementById("warningThreshold");
-
-    const danger =
-        document.getElementById("dangerThreshold");
-
-    const enabled =
-        document.getElementById("thresholdEnabled");
-
-
-    if (safe) {
-        safe.value =
-            settings.threshold.safe;
-    }
-
-    if (warning) {
-        warning.value =
-            settings.threshold.warning;
-    }
-
-    if (danger) {
-        danger.value =
-            settings.threshold.danger;
-    }
-
-    if (enabled) {
-        enabled.checked =
-            settings.threshold.enabled;
-    }
-
-    validateThresholds(false);
-}
-
-
-/* ============================================================
-   VALIDATE THRESHOLDS
-   ============================================================ */
-
-function validateThresholds(showFeedback = true) {
-
-    const safe =
-        Number(
-            document.getElementById(
-                "safeThreshold"
-            )?.value
-        );
-
-    const warning =
-        Number(
-            document.getElementById(
-                "warningThreshold"
-            )?.value
-        );
-
-    const danger =
-        Number(
-            document.getElementById(
-                "dangerThreshold"
-            )?.value
-        );
-
-
-    const validation =
-        document.getElementById(
-            "thresholdValidation"
-        );
-
-
-    let valid = true;
-    let message =
-        "Nilai threshold valid.";
-
-
-    if (
-        Number.isNaN(safe) ||
-        Number.isNaN(warning) ||
-        Number.isNaN(danger)
-    ) {
-
-        valid = false;
-
-        message =
-            "Semua nilai threshold harus diisi.";
-
-    } else if (safe >= warning) {
-
-        valid = false;
-
-        message =
-            "Batas Aman harus lebih kecil dari Batas Siaga.";
-
-    } else if (warning >= danger) {
-
-        valid = false;
-
-        message =
-            "Batas Siaga harus lebih kecil dari Batas Waspada.";
-
-    } else if (
-        safe < 0 ||
-        warning < 0 ||
-        danger < 0
-    ) {
-
-        valid = false;
-
-        message =
-            "Nilai threshold tidak boleh negatif.";
-    }
-
-
-    if (validation) {
-
-        validation.textContent =
-            message;
-
-        validation.classList.toggle(
-            "valid",
-            valid
-        );
-
-        validation.classList.toggle(
-            "invalid",
-            !valid
-        );
-    }
-
-
-    if (
-        !valid &&
-        showFeedback
-    ) {
-
-        showMessage(
-            message,
-            "error"
-        );
-    }
-
-
-    return valid;
-}
-
-
-/* ============================================================
-   SAVE THRESHOLD SETTINGS
-   ============================================================ */
-
-function saveThresholdSettings() {
-
-    if (!validateThresholds(true)) {
-        return;
-    }
-
-
-    settings.threshold.safe =
-        Number(
-            document.getElementById(
-                "safeThreshold"
-            ).value
-        );
-
-    settings.threshold.warning =
-        Number(
-            document.getElementById(
-                "warningThreshold"
-            ).value
-        );
-
-    settings.threshold.danger =
-        Number(
-            document.getElementById(
-                "dangerThreshold"
-            ).value
-        );
-
-    settings.threshold.enabled =
-        document.getElementById(
-            "thresholdEnabled"
-        ).checked;
-
-
-    saveSettings();
-
-
-    showMessage(
-        "Threshold berhasil disimpan.",
-        "success"
-    );
-}
-
-
-/* ============================================================
-   RESET THRESHOLD
-   ============================================================ */
-
-function resetThresholdSettings() {
-
-    settings.threshold =
-        structuredClone(
-            DEFAULT_SETTINGS.threshold
-        );
-
-    loadThresholdSettings();
-
-    saveSettings();
-
-    showMessage(
-        "Threshold dikembalikan ke nilai default.",
-        "success"
-    );
-}
-
-
-/* ============================================================
-   LOAD SENSOR SETTINGS
-   ============================================================ */
-
-function loadSensorSettings() {
-
-    const deviceName =
-        document.getElementById("deviceName");
-
-    const sensorType =
-        document.getElementById("sensorType");
-
-    const locationName =
-        document.getElementById("locationName");
-
-    const measurementUnit =
-        document.getElementById(
-            "measurementUnit"
-        );
-
-
-    if (deviceName) {
-        deviceName.value =
-            settings.sensor.deviceName;
-    }
-
-    if (sensorType) {
-        sensorType.value =
-            settings.sensor.sensorType;
-    }
-
-    if (locationName) {
-        locationName.value =
-            settings.sensor.locationName;
-    }
-
-    if (measurementUnit) {
-        measurementUnit.value =
-            settings.sensor.measurementUnit;
-    }
-}
-
-
-/* ============================================================
-   SAVE SENSOR SETTINGS
-   ============================================================ */
-
-function saveSensorSettings() {
-
-    settings.sensor.deviceName =
-        document.getElementById(
-            "deviceName"
-        )?.value.trim() ||
-        DEFAULT_SETTINGS.sensor.deviceName;
-
-
-    settings.sensor.sensorType =
-        document.getElementById(
-            "sensorType"
-        )?.value ||
-        DEFAULT_SETTINGS.sensor.sensorType;
-
-
-    settings.sensor.locationName =
-        document.getElementById(
-            "locationName"
-        )?.value.trim() ||
-        DEFAULT_SETTINGS.sensor.locationName;
-
-
-    settings.sensor.measurementUnit =
-        document.getElementById(
-            "measurementUnit"
-        )?.value ||
-        DEFAULT_SETTINGS.sensor.measurementUnit;
-
-
-    saveSettings();
-
-
-    showMessage(
-        "Pengaturan sensor berhasil disimpan.",
-        "success"
-    );
-}
-
-
-/* ============================================================
-   LOAD ALARM SETTINGS
-   ============================================================ */
-
-function loadAlarmSettings() {
-
-    const enabled =
-        document.getElementById(
-            "alarmEnabled"
-        );
-
-    const warning =
-        document.getElementById(
-            "alarmWarning"
-        );
-
-    const danger =
-        document.getElementById(
-            "alarmDanger"
-        );
-
-
-    if (enabled) {
-        enabled.checked =
-            settings.alarm.enabled;
-    }
-
-    if (warning) {
-        warning.checked =
-            settings.alarm.warning;
-    }
-
-    if (danger) {
-        danger.checked =
-            settings.alarm.danger;
-    }
-}
-
-
-/* ============================================================
-   SAVE ALARM SETTINGS
-   ============================================================ */
-
-function saveAlarmSettings() {
-
-    settings.alarm.enabled =
-        !!document.getElementById(
-            "alarmEnabled"
-        )?.checked;
-
-    settings.alarm.warning =
-        !!document.getElementById(
-            "alarmWarning"
-        )?.checked;
-
-    settings.alarm.danger =
-        !!document.getElementById(
-            "alarmDanger"
-        )?.checked;
-
-
-    saveSettings();
-
-
-    showMessage(
-        "Pengaturan alarm berhasil diperbarui.",
-        "success"
-    );
-}
-
-
-/* ============================================================
-   AUTO SAVE GENERAL SYSTEM NAME
-   ============================================================ */
-
-function saveSystemNameOnly() {
-
-    const systemName =
-        document.getElementById(
-            "systemName"
-        )?.value.trim();
-
-
-    settings.general.systemName =
-        systemName ||
-        "FLOWS-PRO";
-
-
-    saveSettings();
-}
-
-
-/* ============================================================
-   SETTINGS NAVIGATION
-   ============================================================ */
-
-function setupSettingsNavigation() {
-
-    const navItems =
-        document.querySelectorAll(
-            ".settings-nav-item"
-        );
-
-
-    navItems.forEach(item => {
-
-        item.addEventListener(
-            "click",
-            () => {
-
-                const targetId =
-                    item.dataset.target;
-
-                const target =
-                    document.getElementById(
-                        targetId
+                    saveSettings(
+                        settings
                     );
 
-                if (!target) return;
+                }
+            );
 
-
-                navItems.forEach(nav => {
-                    nav.classList.remove(
-                        "active"
-                    );
-                });
-
-                item.classList.add(
-                    "active"
-                );
-
-
-                target.scrollIntoView({
-                    behavior: "smooth",
-                    block: "start"
-                });
-            }
-        );
-
-    });
-}
-
-
-/* ============================================================
-   MOBILE SIDEBAR
-   ============================================================ */
-
-function setupMobileSidebar() {
-
-    const menuButton =
-        document.getElementById(
-            "mobileMenuButton"
-        );
-
-    const sidebar =
-        document.querySelector(
-            ".sidebar"
-        );
-
-    const overlay =
-        document.getElementById(
-            "sidebarOverlay"
-        );
-
-
-    if (!menuButton || !sidebar) {
-        return;
-    }
-
-
-    function openSidebar() {
-
-        sidebar.classList.add(
-            "mobile-open"
-        );
-
-        overlay?.classList.add(
-            "show"
-        );
-    }
-
-
-    function closeSidebar() {
-
-        sidebar.classList.remove(
-            "mobile-open"
-        );
-
-        overlay?.classList.remove(
-            "show"
-        );
-    }
-
-
-    menuButton.addEventListener(
-        "click",
-        openSidebar
+        }
     );
 
 
-    overlay?.addEventListener(
-        "click",
-        closeSidebar
-    );
+    /* =====================================
+       SAVE THRESHOLD
+    ===================================== */
 
+    if (byId("saveThresholdButton")) {
 
-    document
-        .querySelectorAll(
-            ".sidebar a"
-        )
-        .forEach(link => {
-
-            link.addEventListener(
+        byId("saveThresholdButton")
+            .addEventListener(
                 "click",
-                closeSidebar
-            );
-        });
-}
+                function () {
+
+                    const safe =
+                        Number(
+                            byId(
+                                "safeThreshold"
+                            )?.value
+                        );
+
+
+                    const warning =
+                        Number(
+                            byId(
+                                "warningThreshold"
+                            )?.value
+                        );
+
+
+                    const danger =
+                        Number(
+                            byId(
+                                "dangerThreshold"
+                            )?.value
+                        );
 
-
-/* ============================================================
-   INITIALIZE SETTINGS PAGE
-   ============================================================ */
-
-async function initializeSettingsPage() {
-
-    /*
-     * Tema diterapkan lebih awal
-     * supaya halaman tidak berkedip.
-     */
-
-    loadTheme();
-
-
-    /*
-     * Periksa login
-     */
-
-    const authenticated =
-        await checkAuthentication();
-
-
-    if (!authenticated) {
-        return;
-    }
-
-
-    /*
-     * Ambil profile dari Supabase
-     */
-
-    loadUserProfile();
-
-
-    /*
-     * Load semua settings
-     */
-
-    loadGeneralSettings();
-
-    loadNotificationSettings();
-
-    loadThresholdSettings();
-
-    loadSensorSettings();
-
-    loadAlarmSettings();
-
-
-    /*
-     * Navigation
-     */
-
-    setupSettingsNavigation();
-
-
-    /*
-     * Mobile sidebar
-     */
-
-    setupMobileSidebar();
-
-
-    /*
-     * Theme listener
-     */
-
-    setupSystemThemeListener();
-
-
-    /*
-     * Event: tombol tema header
-     */
-
-    const themeToggle =
-        document.getElementById(
-            "themeToggle"
-        );
-
-    themeToggle?.addEventListener(
-        "click",
-        toggleTheme
-    );
-
-
-    /*
-     * Event: dropdown theme
-     */
-
-    const themeSelect =
-        document.getElementById(
-            "themeSelect"
-        );
-
-    themeSelect?.addEventListener(
-        "change",
-        handleThemeChange
-    );
-
-
-    /*
-     * Event: Save General
-     */
-
-    document
-        .getElementById("saveGeneral")
-        ?.addEventListener(
-            "click",
-            updateUserProfile
-        );
-
-
-    /*
-     * Event: system name berubah
-     */
-
-    document
-        .getElementById("systemName")
-        ?.addEventListener(
-            "change",
-            saveSystemNameOnly
-        );
-
-
-    /*
-     * Event: notification switches
-     */
-
-    [
-        "notifyWarning",
-        "notifyDanger",
-        "notifyOffline"
-    ].forEach(id => {
-
-        document
-            .getElementById(id)
-            ?.addEventListener(
-                "change",
-                saveNotificationSettings
-            );
-    });
-
-
-    /*
-     * Event: threshold
-     */
-
-    [
-        "safeThreshold",
-        "warningThreshold",
-        "dangerThreshold"
-    ].forEach(id => {
-
-        document
-            .getElementById(id)
-            ?.addEventListener(
-                "input",
-                () => validateThresholds(false)
-            );
-    });
-
-
-    document
-        .getElementById("saveThreshold")
-        ?.addEventListener(
-            "click",
-            saveThresholdSettings
-        );
-
-
-    document
-        .getElementById("resetThreshold")
-        ?.addEventListener(
-            "click",
-            resetThresholdSettings
-        );
-
-
-    document
-        .getElementById("thresholdEnabled")
-        ?.addEventListener(
-            "change",
-            saveThresholdSettings
-        );
-
-
-    /*
-     * Event: sensor settings
-     */
-
-    [
-        "deviceName",
-        "sensorType",
-        "locationName",
-        "measurementUnit"
-    ].forEach(id => {
-
-        document
-            .getElementById(id)
-            ?.addEventListener(
-                "change",
-                saveSensorSettings
-            );
-    });
-
-
-    /*
-     * Event: alarm settings
-     */
-
-    [
-        "alarmEnabled",
-        "alarmWarning",
-        "alarmDanger"
-    ].forEach(id => {
-
-        document
-            .getElementById(id)
-            ?.addEventListener(
-                "change",
-                saveAlarmSettings
-            );
-    });
-
-
-    console.log(
-        "FLOWS-PRO Settings berhasil diinisialisasi."
-    );
-
-    console.log(
-        "Authenticated user:",
-        currentUser?.email
-    );
-}
-
-
-/* ============================================================
-   START
-   ============================================================ */
-
-document.addEventListener(
-    "DOMContentLoaded",
-    initializeSettingsPage
-);
-
-</script>
-
-<!-- ============================================================
-     AKHIR PART 3
-     PART 4 DITEMPEL LANGSUNG DI BAWAH BARIS INI
-     ============================================================ -->
-     <!-- ============================================================
-     PART 4 — SETTINGS INTERACTION, SIDEBAR & SYSTEM ACTIONS
-     Tempel langsung di bawah PART 3
-     ============================================================ -->
-
-<script>
-
-/* ============================================================
-   SIDEBAR ACTIVE STATE
-   ============================================================ */
-
-function setActiveSidebarItem() {
-
-    const currentPage =
-        window.location.pathname
-            .split("/")
-            .pop()
-            .toLowerCase() || "settings.html";
-
-
-    document
-        .querySelectorAll(".sidebar a")
-        .forEach(link => {
-
-            const href =
-                link.getAttribute("href");
-
-            if (!href) return;
-
-            const linkPage =
-                href
-                    .split("/")
-                    .pop()
-                    .toLowerCase();
-
-
-            link.classList.remove("active");
-
-
-            if (
-                linkPage === currentPage
-            ) {
-                link.classList.add("active");
-            }
-        });
-}
-
-
-/* ============================================================
-   SIDEBAR LINK PROTECTION
-   ============================================================ */
-
-function setupSidebarLinks() {
-
-    document
-        .querySelectorAll(".sidebar a")
-        .forEach(link => {
-
-            link.addEventListener(
-                "click",
-                function(event) {
-
-                    const href =
-                        this.getAttribute("href");
 
                     if (
-                        !href ||
-                        href === "#" ||
-                        href.startsWith("javascript:")
+                        !Number.isFinite(safe) ||
+                        !Number.isFinite(warning) ||
+                        !Number.isFinite(danger)
                     ) {
-                        event.preventDefault();
+
+                        showMessage(
+                            "thresholdMessage",
+                            "Nilai ambang batas harus berupa angka.",
+                            "error"
+                        );
+
                         return;
+
                     }
+
+
+                    if (
+                        safe < 0 ||
+                        warning < 0 ||
+                        danger < 0
+                    ) {
+
+                        showMessage(
+                            "thresholdMessage",
+                            "Nilai ambang batas tidak boleh negatif.",
+                            "error"
+                        );
+
+                        return;
+
+                    }
+
+
+                    if (
+                        safe >= warning
+                    ) {
+
+                        showMessage(
+                            "thresholdMessage",
+                            "Batas Aman harus lebih kecil dari Batas Waspada.",
+                            "error"
+                        );
+
+                        return;
+
+                    }
+
+
+                    if (
+                        warning >= danger
+                    ) {
+
+                        showMessage(
+                            "thresholdMessage",
+                            "Batas Waspada harus lebih kecil dari Batas Bahaya.",
+                            "error"
+                        );
+
+                        return;
+
+                    }
+
+
+                    const settings =
+                        getSettings();
+
+
+                    settings.safeThreshold =
+                        safe;
+
+                    settings.warningThreshold =
+                        warning;
+
+                    settings.dangerThreshold =
+                        danger;
+
+                    settings.thresholdEnabled =
+                        byId(
+                            "thresholdToggle"
+                        )?.checked ?? true;
+
+
+                    saveSettings(
+                        settings
+                    );
+
+
+                    showMessage(
+                        "thresholdMessage",
+                        "Ambang batas berhasil disimpan.",
+                        "success"
+                    );
+
                 }
             );
-        });
-}
 
-
-/* ============================================================
-   SAVE ALL CURRENT SETTINGS
-   ============================================================ */
-
-function saveAllSettings() {
-
-    /*
-     * General
-     */
-
-    const systemName =
-        document
-            .getElementById("systemName")
-            ?.value
-            .trim();
-
-
-    if (systemName) {
-        settings.general.systemName =
-            systemName;
     }
 
 
-    /*
-     * Appearance
-     */
+    /* =====================================
+       RESET THRESHOLD
+    ===================================== */
 
-    const theme =
-        document
-            .getElementById("themeSelect")
-            ?.value;
+    if (byId("resetThresholdButton")) {
 
+        byId("resetThresholdButton")
+            .addEventListener(
+                "click",
+                function () {
 
-    if (theme) {
-        settings.appearance.theme =
-            theme;
-    }
+                    const confirmation =
+                        confirm(
+                            "Kembalikan ambang batas ke nilai default?"
+                        );
 
 
-    /*
-     * Notifications
-     */
+                    if (!confirmation) {
 
-    const notifyWarning =
-        document.getElementById(
-            "notifyWarning"
-        );
+                        return;
 
-    const notifyDanger =
-        document.getElementById(
-            "notifyDanger"
-        );
-
-    const notifyOffline =
-        document.getElementById(
-            "notifyOffline"
-        );
+                    }
 
 
-    if (notifyWarning) {
-        settings.notifications.warning =
-            notifyWarning.checked;
-    }
+                    if (byId("safeThreshold")) {
 
-    if (notifyDanger) {
-        settings.notifications.danger =
-            notifyDanger.checked;
-    }
-
-    if (notifyOffline) {
-        settings.notifications.offline =
-            notifyOffline.checked;
-    }
-
-
-    /*
-     * Threshold
-     */
+                        byId(
+                            "safeThreshold"
+                        ).value =
+                            DEFAULT_SETTINGS.safeThreshold;
 
-    const safeThreshold =
-        document.getElementById(
-            "safeThreshold"
-        );
+                    }
 
-    const warningThreshold =
-        document.getElementById(
-            "warningThreshold"
-        );
-
-    const dangerThreshold =
-        document.getElementById(
-            "dangerThreshold"
-        );
-
-    const thresholdEnabled =
-        document.getElementById(
-            "thresholdEnabled"
-        );
 
+                    if (
+                        byId("warningThreshold")
+                    ) {
 
-    if (
-        safeThreshold &&
-        warningThreshold &&
-        dangerThreshold
-    ) {
-
-        if (validateThresholds(false)) {
-
-            settings.threshold.safe =
-                Number(
-                    safeThreshold.value
-                );
-
-            settings.threshold.warning =
-                Number(
-                    warningThreshold.value
-                );
-
-            settings.threshold.danger =
-                Number(
-                    dangerThreshold.value
-                );
-        }
-    }
+                        byId(
+                            "warningThreshold"
+                        ).value =
+                            DEFAULT_SETTINGS.warningThreshold;
 
+                    }
 
-    if (thresholdEnabled) {
-        settings.threshold.enabled =
-            thresholdEnabled.checked;
-    }
 
+                    if (
+                        byId("dangerThreshold")
+                    ) {
 
-    /*
-     * Sensor
-     */
+                        byId(
+                            "dangerThreshold"
+                        ).value =
+                            DEFAULT_SETTINGS.dangerThreshold;
 
-    const deviceName =
-        document.getElementById(
-            "deviceName"
-        );
+                    }
 
-    const sensorType =
-        document.getElementById(
-            "sensorType"
-        );
 
-    const locationName =
-        document.getElementById(
-            "locationName"
-        );
+                    if (
+                        byId("thresholdToggle")
+                    ) {
 
-    const measurementUnit =
-        document.getElementById(
-            "measurementUnit"
-        );
+                        byId(
+                            "thresholdToggle"
+                        ).checked =
+                            DEFAULT_SETTINGS.thresholdEnabled;
 
+                    }
 
-    if (deviceName) {
-        settings.sensor.deviceName =
-            deviceName.value.trim();
-    }
 
-    if (sensorType) {
-        settings.sensor.sensorType =
-            sensorType.value;
-    }
+                    const settings =
+                        getSettings();
 
-    if (locationName) {
-        settings.sensor.locationName =
-            locationName.value.trim();
-    }
 
-    if (measurementUnit) {
-        settings.sensor.measurementUnit =
-            measurementUnit.value;
-    }
+                    settings.safeThreshold =
+                        DEFAULT_SETTINGS.safeThreshold;
 
+                    settings.warningThreshold =
+                        DEFAULT_SETTINGS.warningThreshold;
 
-    /*
-     * Alarm
-     */
+                    settings.dangerThreshold =
+                        DEFAULT_SETTINGS.dangerThreshold;
 
-    const alarmEnabled =
-        document.getElementById(
-            "alarmEnabled"
-        );
+                    settings.thresholdEnabled =
+                        DEFAULT_SETTINGS.thresholdEnabled;
 
-    const alarmWarning =
-        document.getElementById(
-            "alarmWarning"
-        );
 
-    const alarmDanger =
-        document.getElementById(
-            "alarmDanger"
-        );
+                    saveSettings(
+                        settings
+                    );
 
 
-    if (alarmEnabled) {
-        settings.alarm.enabled =
-            alarmEnabled.checked;
-    }
+                    showMessage(
+                        "thresholdMessage",
+                        "Ambang batas telah dikembalikan ke nilai default.",
+                        "success"
+                    );
 
-    if (alarmWarning) {
-        settings.alarm.warning =
-            alarmWarning.checked;
-    }
-
-    if (alarmDanger) {
-        settings.alarm.danger =
-            alarmDanger.checked;
-    }
-
-
-    /*
-     * Save
-     */
-
-    saveSettings();
-
-    applyTheme(
-        settings.appearance.theme
-    );
-}
-
-
-/* ============================================================
-   RESET ALL LOCAL SETTINGS
-   ============================================================ */
-
-function resetAllSettings() {
-
-    const confirmed =
-        window.confirm(
-            "Yakin ingin mengembalikan seluruh pengaturan ke nilai default?"
-        );
-
-
-    if (!confirmed) {
-        return;
-    }
-
-
-    settings =
-        structuredClone(
-            DEFAULT_SETTINGS
-        );
-
-
-    saveSettings();
-
-
-    /*
-     * Reload form values
-     */
-
-    loadGeneralSettings();
-
-    loadNotificationSettings();
-
-    loadThresholdSettings();
-
-    loadSensorSettings();
-
-    loadAlarmSettings();
-
-    loadTheme();
-
-
-    showMessage(
-        "Seluruh pengaturan berhasil dikembalikan ke default.",
-        "success"
-    );
-}
-
-
-/* ============================================================
-   KEYBOARD SHORTCUT
-   ============================================================ */
-
-function setupKeyboardShortcuts() {
-
-    document.addEventListener(
-        "keydown",
-        event => {
-
-            /*
-             * Ctrl + S
-             *
-             * Menyimpan seluruh pengaturan lokal.
-             */
-
-            if (
-                event.ctrlKey &&
-                event.key.toLowerCase() === "s"
-            ) {
-
-                event.preventDefault();
-
-                saveAllSettings();
-
-                showMessage(
-                    "Pengaturan berhasil disimpan.",
-                    "success"
-                );
-            }
-        }
-    );
-}
-
-
-/* ============================================================
-   BEFORE PAGE LEAVE
-   ============================================================ */
-
-function setupBeforeUnload() {
-
-    window.addEventListener(
-        "beforeunload",
-        () => {
-
-            /*
-             * Pastikan konfigurasi lokal
-             * yang sedang aktif tetap tersimpan.
-             */
-
-            saveAllSettings();
-        }
-    );
-}
-
-
-/* ============================================================
-   SUPABASE AUTH STATE LISTENER
-   ============================================================ */
-
-function setupAuthListener() {
-
-    supabaseClient.auth.onAuthStateChange(
-        (event, session) => {
-
-            console.log(
-                "Supabase auth event:",
-                event
+                }
             );
 
-
-            /*
-             * Jika user logout,
-             * arahkan ke halaman login.
-             */
-
-            if (
-                event === "SIGNED_OUT" ||
-                !session
-            ) {
-
-                currentUser = null;
-
-                window.location.href =
-                    "login.html";
-
-                return;
-            }
+    }
 
 
-            /*
-             * Jika profile berhasil diperbarui,
-             * gunakan user terbaru dari session.
-             */
+    /* =====================================
+       SAVE ALARM
+    ===================================== */
 
-            if (
-                event === "USER_UPDATED" &&
-                session.user
-            ) {
+    if (byId("saveAlarmButton")) {
 
-                currentUser =
-                    session.user;
+        byId("saveAlarmButton")
+            .addEventListener(
+                "click",
+                function () {
 
-                loadUserProfile();
-            }
+                    const settings =
+                        getSettings();
+
+
+                    settings.alarmEnabled =
+                        byId(
+                            "alarmToggle"
+                        )?.checked ?? true;
+
+
+                    settings.warningAlarm =
+                        byId(
+                            "warningAlarmToggle"
+                        )?.checked ?? true;
+
+
+                    settings.dangerAlarm =
+                        byId(
+                            "dangerAlarmToggle"
+                        )?.checked ?? true;
+
+
+                    saveSettings(
+                        settings
+                    );
+
+
+                    showMessage(
+                        "alarmMessage",
+                        "Pengaturan alarm berhasil disimpan.",
+                        "success"
+                    );
+
+                }
+            );
+
+    }
+
+
+    /* =====================================
+       AUTO SAVE ALARM SWITCHES
+    ===================================== */
+
+    const alarmInputs = [
+
+        "alarmToggle",
+
+        "warningAlarmToggle",
+
+        "dangerAlarmToggle"
+
+    ];
+
+
+    alarmInputs.forEach(
+        function (id) {
+
+            const element =
+                byId(id);
+
+            if (!element) return;
+
+
+            element.addEventListener(
+                "change",
+                function () {
+
+                    const settings =
+                        getSettings();
+
+
+                    settings.alarmEnabled =
+                        byId(
+                            "alarmToggle"
+                        )?.checked ?? true;
+
+
+                    settings.warningAlarm =
+                        byId(
+                            "warningAlarmToggle"
+                        )?.checked ?? true;
+
+
+                    settings.dangerAlarm =
+                        byId(
+                            "dangerAlarmToggle"
+                        )?.checked ?? true;
+
+
+                    saveSettings(
+                        settings
+                    );
+
+                }
+            );
+
         }
     );
-}
 
 
-/* ============================================================
-   REFRESH USER PROFILE
-   ============================================================ */
-
-async function refreshUserProfile() {
+    /* =====================================
+       LOAD USER FROM SUPABASE
+    ===================================== */
 
     try {
 
         const {
-            data,
-            error
+            data: sessionData,
+            error: sessionError
         } =
-            await supabaseClient.auth.getUser();
+            await supabaseClient
+                .auth
+                .getSession();
 
 
-        if (error) {
-            throw error;
+        if (sessionError) {
+
+            throw sessionError;
+
         }
 
 
-        if (data?.user) {
+        if (!sessionData.session) {
 
-            currentUser =
-                data.user;
+            window.location.replace(
+                "login.html"
+            );
 
-            loadUserProfile();
+            return;
+
         }
+
+
+        const {
+            data: userData,
+            error: userError
+        } =
+            await supabaseClient
+                .auth
+                .getUser();
+
+
+        if (
+            userError ||
+            !userData.user
+        ) {
+
+            window.location.replace(
+                "login.html"
+            );
+
+            return;
+
+        }
+
+
+        const user =
+            userData.user;
+
+
+        const metadata =
+            user.user_metadata || {};
+
+
+        const appMetadata =
+            user.app_metadata || {};
+
+
+        const displayName =
+            metadata.full_name ||
+            metadata.name ||
+            metadata.nama ||
+            user.email
+                ?.split("@")[0] ||
+            "Pengguna";
+
+
+        const userRole =
+            appMetadata.role ||
+            metadata.role ||
+            "OPERATOR";
+
+
+        /* -----------------------------
+           PROFILE TOPBAR
+        ----------------------------- */
+
+        if (byId("profileName")) {
+
+            byId(
+                "profileName"
+            ).textContent =
+                displayName;
+
+        }
+
+
+        if (byId("profileRole")) {
+
+            byId(
+                "profileRole"
+            ).textContent =
+                userRole.toUpperCase();
+
+        }
+
+
+        if (byId("profileAvatar")) {
+
+            byId(
+                "profileAvatar"
+            ).textContent =
+                displayName
+                    .trim()
+                    .charAt(0)
+                    .toUpperCase();
+
+        }
+
+
+        /* -----------------------------
+           SETTINGS PROFILE
+        ----------------------------- */
+
+        if (byId("userName")) {
+
+            byId(
+                "userName"
+            ).value =
+                displayName;
+
+        }
+
+
+        if (byId("userEmail")) {
+
+            byId(
+                "userEmail"
+            ).value =
+                user.email || "";
+
+        }
+
 
     } catch (error) {
 
         console.error(
-            "Gagal refresh profile:",
+            "Kesalahan autentikasi:",
             error
         );
-    }
-}
 
+        alert(
+            "Terjadi masalah saat memeriksa sesi login. Silakan login kembali."
+        );
 
-/* ============================================================
-   PAGE VISIBILITY
-   ============================================================ */
+        window.location.replace(
+            "login.html"
+        );
 
-function setupVisibilityRefresh() {
+        return;
 
-    document.addEventListener(
-        "visibilitychange",
-        async () => {
-
-            if (
-                document.visibilityState ===
-                "visible"
-            ) {
-
-                await refreshUserProfile();
-            }
-        }
-    );
-}
-
-
-/* ============================================================
-   LOCAL STORAGE SYNC
-   ============================================================ */
-
-function setupStorageSync() {
-
-    window.addEventListener(
-        "storage",
-        event => {
-
-            if (
-                event.key ===
-                SETTINGS_STORAGE_KEY
-            ) {
-
-                settings =
-                    loadSettings();
-
-                loadGeneralSettings();
-
-                loadNotificationSettings();
-
-                loadThresholdSettings();
-
-                loadSensorSettings();
-
-                loadAlarmSettings();
-
-                loadTheme();
-            }
-
-
-            /*
-             * Jika nama profile diubah
-             * dari tab lain.
-             */
-
-            if (
-                event.key ===
-                "flowspro_profile_name"
-            ) {
-
-                refreshUserProfile();
-            }
-        }
-    );
-}
-
-
-/* ============================================================
-   CHECK INTERNET CONNECTION
-   ============================================================ */
-
-function setupConnectionMonitor() {
-
-    function updateConnectionStatus() {
-
-        const online =
-            navigator.onLine;
-
-
-        document.body
-            .classList.toggle(
-                "offline",
-                !online
-            );
-
-
-        if (!online) {
-
-            showMessage(
-                "Koneksi internet terputus. Pengaturan lokal tetap dapat digunakan.",
-                "warning"
-            );
-        }
     }
 
 
-    window.addEventListener(
-        "online",
-        () => {
+    /* =====================================
+       LOAD LOCAL SETTINGS
+    ===================================== */
 
-            showMessage(
-                "Koneksi internet kembali.",
-                "success"
+    loadTheme();
+
+    loadSettings();
+
+
+});
+</script>
+<script>
+
+/* =====================================
+   LOGOUT SYSTEM
+   SAME BEHAVIOR AS DASHBOARD
+===================================== */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+        const logoutButton =
+            document.getElementById(
+                "logoutButton"
             );
+
+
+        if (!logoutButton) {
+
+            return;
+
         }
-    );
 
 
-    window.addEventListener(
-        "offline",
-        updateConnectionStatus
-    );
+        logoutButton.addEventListener(
+            "click",
+            async function () {
+
+                const confirmation =
+                    confirm(
+                        "Yakin ingin keluar dari FLOWS-PRO?"
+                    );
 
 
-    updateConnectionStatus();
-}
+                if (!confirmation) {
+
+                    return;
+
+                }
 
 
-/* ============================================================
-   INITIALIZE PART 4 FEATURES
-   ============================================================ */
-
-function initializePart4() {
-
-    /*
-     * Sidebar
-     */
-
-    setActiveSidebarItem();
-
-    setupSidebarLinks();
+                logoutButton.disabled =
+                    true;
 
 
-    /*
-     * Keyboard
-     */
-
-    setupKeyboardShortcuts();
+                const originalText =
+                    logoutButton.innerHTML;
 
 
-    /*
-     * Page lifecycle
-     */
-
-    setupBeforeUnload();
-
-    setupVisibilityRefresh();
+                logoutButton.innerHTML =
+                    `<i class="fa-solid fa-spinner fa-spin"></i>
+                     &nbsp; Keluar...`;
 
 
-    /*
-     * Local storage
-     */
+                try {
 
-    setupStorageSync();
+                    /*
+                     * Logout menggunakan
+                     * Supabase Auth.
+                     */
 
-
-    /*
-     * Supabase
-     */
-
-    setupAuthListener();
-
-
-    /*
-     * Network
-     */
-
-    setupConnectionMonitor();
+                    const {
+                        error
+                    } =
+                        await window.supabase
+                            .createClient(
+                                "https://nydapuhnswrbgbjkaxqa.supabase.co",
+                                "sb_publishable_dypnRnjABFIf6GcshfrTIA_Q0zhuR0L"
+                            )
+                            .auth
+                            .signOut();
 
 
-    console.log(
-        "FLOWS-PRO Settings Part 4 aktif."
-    );
-}
+                    if (error) {
+
+                        throw error;
+
+                    }
 
 
-/* ============================================================
-   START PART 4
-   ============================================================ */
+                    window.location.replace(
+                        "login.html"
+                    );
 
-if (
-    document.readyState ===
-    "loading"
-) {
 
-    document.addEventListener(
-        "DOMContentLoaded",
-        initializePart4
-    );
+                } catch (error) {
 
-} else {
+                    console.error(
+                        "Logout gagal:",
+                        error
+                    );
 
-    initializePart4();
-}
+
+                    alert(
+                        "Logout gagal. Silakan coba kembali."
+                    );
+
+
+                    logoutButton.disabled =
+                        false;
+
+
+                    logoutButton.innerHTML =
+                        originalText;
+
+                }
+
+            }
+        );
+
+    }
+);
+
+
+/* =====================================
+   FINAL SETTINGS CHECK
+===================================== */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+        /*
+         * Pastikan tema selalu valid.
+         */
+
+        let theme =
+            "light";
+
+
+        try {
+
+            theme =
+                localStorage.getItem(
+                    "flowsTheme"
+                ) || "light";
+
+        } catch (error) {
+
+            theme =
+                "light";
+
+        }
+
+
+        if (
+            theme !== "light" &&
+            theme !== "dark"
+        ) {
+
+            theme =
+                "light";
+
+        }
+
+
+        document.documentElement
+            .setAttribute(
+                "data-theme",
+                theme
+            );
+
+
+        /*
+         * Pastikan settings lokal
+         * tersedia.
+         */
+
+        try {
+
+            const existing =
+                localStorage.getItem(
+                    "flowspro_settings"
+                );
+
+
+            if (!existing) {
+
+                localStorage.setItem(
+                    "flowspro_settings",
+                    JSON.stringify({
+                        systemName:
+                            "FLOWS-PRO",
+
+                        animation:
+                            true,
+
+                        shadow:
+                            true,
+
+                        notifications:
+                            true,
+
+                        warningNotification:
+                            true,
+
+                        dangerNotification:
+                            true,
+
+                        offlineNotification:
+                            true,
+
+                        deviceName:
+                            "FLOWS-PRO DEVICE 01",
+
+                        sensorType:
+                            "AJ-SR04M",
+
+                        measurementUnit:
+                            "cm",
+
+                        locationName:
+                            "",
+
+                        safeThreshold:
+                            30,
+
+                        warningThreshold:
+                            60,
+
+                        dangerThreshold:
+                            61,
+
+                        thresholdEnabled:
+                            true,
+
+                        alarmEnabled:
+                            true,
+
+                        warningAlarm:
+                            true,
+
+                        dangerAlarm:
+                            true
+                    })
+                );
+
+            }
+
+        } catch (error) {
+
+            console.warn(
+                "Pengaturan default tidak dapat dibuat."
+            );
+
+        }
+
+    }
+);
 
 </script>
 
 
-<!-- ============================================================
-     AKHIR PART 4
-     
-     PART 5 DITEMPEL LANGSUNG DI BAWAH BARIS INI.
-     
-     JANGAN TUTUP </body> DAN </html> DI SINI.
-     ============================================================ -->
-     <!-- ============================================================
-     PART 5 — FINALIZATION
-     Tempel langsung di bawah PART 4
-     ============================================================ -->
-
-<style>
-    /* ========================================================
-       FINAL FOOTER
-       ======================================================== */
-
-    .settings-footer {
-        margin-top: 28px;
-        padding: 18px 4px 8px;
-        border-top: 1px solid var(--border);
-        text-align: center;
-        color: var(--muted);
-        font-size: 12px;
-        line-height: 1.6;
-    }
-
-    .settings-footer strong {
-        color: var(--secondary);
-        font-weight: 700;
-    }
-
-    /* ========================================================
-       ACCESSIBILITY
-       ======================================================== */
-
-    button:focus-visible,
-    a:focus-visible,
-    input:focus-visible,
-    select:focus-visible {
-        outline: 2px solid var(--primary);
-        outline-offset: 2px;
-    }
-
-    /* ========================================================
-       DISABLED BUTTON
-       ======================================================== */
-
-    button:disabled {
-        opacity: 0.65;
-        cursor: not-allowed;
-    }
-
-    /* ========================================================
-       SETTINGS SCROLL POSITION
-       ======================================================== */
-
-    .settings-card {
-        scroll-margin-top: 24px;
-    }
-
-    /* ========================================================
-       PRINT MODE
-       ======================================================== */
-
-    @media print {
-        .sidebar,
-        .mobile-menu-button,
-        .theme-toggle,
-        .settings-nav,
-        .settings-message {
-            display: none !important;
-        }
-
-        .main-content {
-            margin-left: 0 !important;
-            width: 100% !important;
-        }
-
-        .settings-layout {
-            display: block !important;
-        }
-
-        .settings-card {
-            box-shadow: none !important;
-            border: 1px solid #ccc;
-            break-inside: avoid;
-        }
-    }
-
-    /* ========================================================
-       MOBILE
-       ======================================================== */
-
-    @media (max-width: 768px) {
-        .settings-footer {
-            margin-top: 20px;
-            padding-bottom: 24px;
-        }
-    }
-</style>
-
-
-<!-- ============================================================
-     FOOTER SETTINGS
-     ============================================================ -->
-
-<div class="settings-footer">
-    <strong>FLOWS-PRO</strong>
-    &nbsp;•&nbsp;
-    Flood Level Observation and Warning System
-    &nbsp;•&nbsp;
-    System Settings
-</div>
-
-
-<!-- ============================================================
-     CLOSE PAGE CONTENT
-     ============================================================ -->
+<!-- =====================================
+     END MAIN CONTENT
+===================================== -->
 
 </main>
 
 
-<!-- ============================================================
-     CLOSE MAIN CONTENT
-     ============================================================ -->
+<!-- =====================================
+     END APP LAYOUT
+===================================== -->
 
 </div>
 
-
-<!-- ============================================================
-     CLOSE APP LAYOUT
-     ============================================================ -->
-
-</div>
-
-
-<!-- ============================================================
-     CLOSE BODY
-     ============================================================ -->
 
 </body>
-
-
-<!-- ============================================================
-     CLOSE HTML
-     ============================================================ -->
-
 </html>
