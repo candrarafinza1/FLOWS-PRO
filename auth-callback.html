@@ -1,259 +1,2118 @@
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Memproses Login | FLOWS-PRO</title>
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-    <link rel="icon" href="LOGO_FLOWS-PRO-removebg-preview.png">
+    <meta
+        name="description"
+        content="Memproses autentikasi FLOWS-PRO"
+    >
 
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <meta
+        name="theme-color"
+        content="#2563eb"
+    >
+
+    <title>Memproses Login — FLOWS-PRO</title>
+
+    <link
+        rel="icon"
+        href="favicon.ico"
+    >
+
+    <!-- Google Fonts -->
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <!-- Font Awesome -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+
+    <!-- Supabase -->
+    <script
+        src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+    ></script>
+
 
     <style>
+
+        /* =====================================
+           ROOT
+        ===================================== */
+
+        :root {
+
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --cyan: #06b6d4;
+
+            --text: #0f172a;
+            --text-secondary: #64748b;
+            --text-muted: #94a3b8;
+
+            --surface: #ffffff;
+            --surface-soft: #f8fafc;
+
+            --border: #e2e8f0;
+
+            --success: #16a34a;
+            --danger: #dc2626;
+
+            --radius-sm: 10px;
+            --radius-md: 14px;
+            --radius-lg: 20px;
+
+        }
+
+
+        /* =====================================
+           RESET
+        ===================================== */
+
         * {
+
             margin: 0;
             padding: 0;
+
             box-sizing: border-box;
+
         }
+
+
+        html {
+
+            scroll-behavior: smooth;
+
+        }
+
 
         body {
+
             min-height: 100vh;
-            font-family: 'Inter', sans-serif;
+
+            font-family:
+                "DM Sans",
+                sans-serif;
+
+            color: var(--text);
+
             background:
-                radial-gradient(circle at top left, #dbeafe, transparent 40%),
-                linear-gradient(135deg, #eff6ff, #f8fafc);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            color: #0f172a;
+                var(--surface-soft);
+
+            -webkit-font-smoothing:
+                antialiased;
+
         }
+
+
+        button {
+
+            font-family: inherit;
+
+            border: 0;
+
+            cursor: pointer;
+
+        }
+
+
+        a {
+
+            color: inherit;
+
+            text-decoration: none;
+
+        }
+
+
+        /* =====================================
+           PAGE
+        ===================================== */
+
+        .callback-page {
+
+            min-height: 100vh;
+
+            display: grid;
+
+            grid-template-columns:
+                minmax(420px, 0.95fr)
+                minmax(480px, 1.05fr);
+
+        }
+
+
+        /* =====================================
+           LEFT SHOWCASE
+        ===================================== */
+
+        .callback-showcase {
+
+            position: relative;
+
+            min-height: 100vh;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            padding: 60px;
+
+            overflow: hidden;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #0f2f63 0%,
+                    #1556a8 48%,
+                    #0e7490 100%
+                );
+
+            color: #ffffff;
+
+        }
+
+
+        .callback-showcase::before {
+
+            content: "";
+
+            position: absolute;
+
+            width: 430px;
+
+            height: 430px;
+
+            border-radius: 50%;
+
+            top: -170px;
+
+            right: -140px;
+
+            background:
+                rgba(255,255,255,0.07);
+
+        }
+
+
+        .callback-showcase::after {
+
+            content: "";
+
+            position: absolute;
+
+            width: 370px;
+
+            height: 370px;
+
+            border-radius: 50%;
+
+            bottom: -190px;
+
+            left: -130px;
+
+            background:
+                rgba(6,182,212,0.15);
+
+        }
+
+
+        .showcase-content {
+
+            position: relative;
+
+            z-index: 2;
+
+            width: 100%;
+
+            max-width: 540px;
+
+        }
+
+
+        /* =====================================
+           BRAND
+        ===================================== */
+
+        .brand {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            margin-bottom: 65px;
+
+        }
+
+
+        .brand-logo {
+
+            width: 46px;
+
+            height: 46px;
+
+            flex-shrink: 0;
+
+            display: grid;
+
+            place-items: center;
+
+            border-radius: 14px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #2563eb,
+                    #06b6d4
+                );
+
+            color: #ffffff;
+
+            font-size: 19px;
+
+            box-shadow:
+                0 10px 25px
+                rgba(0,0,0,0.18);
+
+        }
+
+
+        .brand-name {
+
+            font-family:
+                "Plus Jakarta Sans",
+                sans-serif;
+
+            font-size: 18px;
+
+            font-weight: 800;
+
+            letter-spacing: -0.6px;
+
+        }
+
+
+        .brand-name span {
+
+            color: #67e8f9;
+
+        }
+
+
+        .brand-caption {
+
+            margin-top: 2px;
+
+            font-size: 9px;
+
+            font-weight: 700;
+
+            letter-spacing: 1.3px;
+
+            color:
+                rgba(255,255,255,0.58);
+
+        }
+
+
+        /* =====================================
+           SHOWCASE CONTENT
+        ===================================== */
+
+        .showcase-label {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            margin-bottom: 18px;
+
+            padding: 7px 11px;
+
+            border:
+                1px solid
+                rgba(255,255,255,0.14);
+
+            border-radius: 999px;
+
+            background:
+                rgba(255,255,255,0.08);
+
+            font-size: 10px;
+
+            font-weight: 700;
+
+            letter-spacing: 0.8px;
+
+            color:
+                rgba(255,255,255,0.82);
+
+        }
+
+
+        .showcase-label i {
+
+            color: #67e8f9;
+
+        }
+
+
+        .showcase-title {
+
+            max-width: 500px;
+
+            font-family:
+                "Plus Jakarta Sans",
+                sans-serif;
+
+            font-size:
+                clamp(34px, 4vw, 52px);
+
+            line-height: 1.08;
+
+            letter-spacing: -1.8px;
+
+            font-weight: 800;
+
+        }
+
+
+        .showcase-title span {
+
+            color: #67e8f9;
+
+        }
+
+
+        .showcase-description {
+
+            max-width: 470px;
+
+            margin-top: 20px;
+
+            font-size: 14px;
+
+            line-height: 1.8;
+
+            color:
+                rgba(255,255,255,0.68);
+
+        }
+
+
+        /* =====================================
+           FEATURES
+        ===================================== */
+
+        .showcase-features {
+
+            display: grid;
+
+            gap: 14px;
+
+            margin-top: 36px;
+
+        }
+
+
+        .feature-item {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 13px;
+
+        }
+
+
+        .feature-icon {
+
+            width: 34px;
+
+            height: 34px;
+
+            flex-shrink: 0;
+
+            display: grid;
+
+            place-items: center;
+
+            border-radius: 10px;
+
+            background:
+                rgba(255,255,255,0.10);
+
+            color: #67e8f9;
+
+            font-size: 13px;
+
+        }
+
+
+        .feature-item span {
+
+            font-size: 12px;
+
+            font-weight: 600;
+
+            color:
+                rgba(255,255,255,0.78);
+
+        }
+
+
+        /* =====================================
+           RIGHT PANEL
+        ===================================== */
+
+        .callback-panel {
+
+            min-height: 100vh;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background:
+                var(--surface);
+
+            overflow-y: auto;
+
+        }
+
+
+        .callback-inner {
+
+            width: 100%;
+
+            max-width: 560px;
+
+            padding:
+                48px
+                clamp(30px, 5vw, 72px);
+
+        }
+
+
+        /* =====================================
+           STATUS CARD
+        ===================================== */
 
         .callback-card {
+
             width: 100%;
-            max-width: 440px;
-            background: rgba(255, 255, 255, 0.95);
-            border: 1px solid #dbeafe;
-            border-radius: 24px;
-            padding: 40px 30px;
+
+            padding:
+                34px 28px;
+
+            border:
+                1px solid var(--border);
+
+            border-radius:
+                var(--radius-lg);
+
+            background:
+                var(--surface);
+
             text-align: center;
-            box-shadow: 0 20px 60px rgba(30, 64, 175, 0.10);
+
+            box-shadow:
+                0 20px 50px
+                rgba(15,23,42,0.06);
+
         }
 
-        .logo {
-            width: 85px;
-            height: 85px;
-            object-fit: contain;
-            margin-bottom: 20px;
+
+        .status-icon {
+
+            width: 64px;
+
+            height: 64px;
+
+            margin: 0 auto 20px;
+
+            display: grid;
+
+            place-items: center;
+
+            border-radius: 18px;
+
+            background:
+                var(--primary-soft);
+
+            color:
+                var(--primary);
+
+            font-size: 24px;
+
         }
 
-        .loader {
-            width: 48px;
-            height: 48px;
-            border: 4px solid #dbeafe;
-            border-top: 4px solid #2563eb;
-            border-radius: 50%;
-            animation: spin 0.9s linear infinite;
-            margin: 0 auto 24px;
+
+        .status-icon.loading i {
+
+            animation:
+                callbackSpin
+                0.9s linear infinite;
+
         }
 
-        @keyframes spin {
-            to {
-                transform: rotate(360deg);
-            }
-        }
 
-        h1 {
-            font-size: 23px;
+        .callback-eyebrow {
+
+            margin-bottom: 8px;
+
+            font-size: 10px;
+
             font-weight: 800;
-            margin-bottom: 12px;
+
+            letter-spacing: 1.4px;
+
+            color:
+                var(--primary);
+
         }
 
-        p {
-            color: #64748b;
-            font-size: 14px;
+
+        .callback-title {
+
+            font-family:
+                "Plus Jakarta Sans",
+                sans-serif;
+
+            font-size: 27px;
+
+            line-height: 1.2;
+
+            letter-spacing: -0.7px;
+
+            font-weight: 800;
+
+            color:
+                var(--text);
+
+        }
+
+
+        .callback-description {
+
+            max-width: 410px;
+
+            margin:
+                12px auto 0;
+
+            font-size: 13px;
+
             line-height: 1.7;
+
+            color:
+                var(--text-secondary);
+
         }
 
-        .status {
-            margin-top: 20px;
-            padding: 12px;
-            border-radius: 12px;
-            background: #eff6ff;
-            color: #1d4ed8;
-            font-size: 13px;
-            font-weight: 600;
-        }
 
-        .error {
-            background: #fef2f2;
-            color: #b91c1c;
-        }
+        /* =====================================
+           STATUS MESSAGE
+        ===================================== */
 
-        .back-link {
-            display: inline-block;
+        .callback-message {
+
+            display: none;
+
+            align-items: flex-start;
+
+            gap: 10px;
+
             margin-top: 22px;
-            color: #2563eb;
-            text-decoration: none;
-            font-size: 13px;
-            font-weight: 700;
+
+            padding: 12px 14px;
+
+            border-radius:
+                var(--radius-sm);
+
+            text-align: left;
+
+            font-size: 12px;
+
+            line-height: 1.6;
+
         }
 
-        .back-link:hover {
-            text-decoration: underline;
+
+        .callback-message.show {
+
+            display: flex;
+
         }
+
+
+        .callback-message i {
+
+            margin-top: 2px;
+
+        }
+
+
+        .callback-message.error {
+
+            color: #991b1b;
+
+            background: #fef2f2;
+
+            border:
+                1px solid #fecaca;
+
+        }
+
+
+        .callback-message.success {
+
+            color: #166534;
+
+            background: #f0fdf4;
+
+            border:
+                1px solid #bbf7d0;
+
+        }
+
+
+        /* =====================================
+           ACTION
+        ===================================== */
+
+        .callback-action {
+
+            display: none;
+
+            margin-top: 22px;
+
+        }
+
+
+        .callback-action.show {
+
+            display: block;
+
+        }
+
+
+        .btn-callback {
+
+            width: 100%;
+
+            min-height: 46px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 8px;
+
+            border-radius:
+                var(--radius-sm);
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #2563eb,
+                    #1d4ed8
+                );
+
+            color: #ffffff;
+
+            font-size: 12px;
+
+            font-weight: 800;
+
+            box-shadow:
+                0 10px 22px
+                rgba(37,99,235,0.18);
+
+            transition:
+                transform 0.2s ease,
+                box-shadow 0.2s ease;
+
+        }
+
+
+        .btn-callback:hover {
+
+            transform:
+                translateY(-1px);
+
+            box-shadow:
+                0 13px 25px
+                rgba(37,99,235,0.24);
+
+        }
+
+
+        /* =====================================
+           FOOTER
+        ===================================== */
+
+        .callback-footer {
+
+            margin-top: 24px;
+
+            text-align: center;
+
+            font-size: 11px;
+
+            color:
+                var(--text-muted);
+
+        }
+
+
+        .callback-footer a {
+
+            color:
+                var(--primary);
+
+            font-weight: 700;
+
+        }
+
+
+        /* =====================================
+           ANIMATION
+        ===================================== */
+
+        @keyframes callbackSpin {
+
+            to {
+
+                transform:
+                    rotate(360deg);
+
+            }
+
+        }
+
+
+        /* =====================================
+           PART 2 DITEMPEL DI SINI
+        ===================================== */
+
     </style>
+
 </head>
 
 <body>
 
-    <div class="callback-card">
-                <img
-            src="LOGO_FLOWS-PRO-removebg-preview.png"
-            alt="Logo FLOWS-PRO"
-            class="logo"
-        >
+    <main class="callback-page">
 
-        <div class="loader" id="loader"></div>
+        <!-- =================================
+             LEFT SHOWCASE
+        ================================== -->
 
-        <h1 id="title">Memverifikasi Akun</h1>
+        <section class="callback-showcase">
 
-        <p id="description">
-            Mohon tunggu sebentar. Kami sedang menyelesaikan proses login Google Anda.
-        </p>
+            <div class="showcase-content">
 
-        <div class="status" id="statusMessage">
-            Menghubungkan ke FLOWS-PRO...
-        </div>
+                <div class="brand">
 
-        <a href="login.html" class="back-link" id="backLink" style="display:none;">
-            Kembali ke halaman login
-        </a>
+                    <div class="brand-logo">
+                        <i class="fa-solid fa-water"></i>
+                    </div>
 
-    </div>
-        <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+                    <div>
 
-    <script>
-        // KONFIGURASI SUPABASE
-        const SUPABASE_URL =
-            "https://nydapuhnswrbgbjkaxqa.supabase.co";
+                        <div class="brand-name">
+                            FLOWS<span>-PRO</span>
+                        </div>
 
-        const SUPABASE_PUBLISHABLE_KEY =
-            "sb_publishable_dypnRnjABFIf6GcshfrTIA_Q0zhuR0L";
+                        <div class="brand-caption">
+                            FLOOD MONITORING SYSTEM
+                        </div>
 
-        const supabaseClient = window.supabase.createClient(
-            SUPABASE_URL,
-            SUPABASE_PUBLISHABLE_KEY,
-            {
-                auth: {
-                    flowType: "implicit",
-                    persistSession: true,
-                    autoRefreshToken: true,
-                    detectSessionInUrl: true
-                }
+                    </div>
+
+                </div>
+
+
+                <div class="showcase-label">
+
+                    <i class="fa-solid fa-shield-halved"></i>
+
+                    SECURE AUTHENTICATION
+
+                </div>
+
+
+                <h1 class="showcase-title">
+
+                    Satu langkah lagi menuju
+                    <span>FLOWS-PRO.</span>
+
+                </h1>
+
+
+                <p class="showcase-description">
+
+                    Kami sedang memverifikasi
+                    autentikasi akunmu sebelum
+                    mengarahkanmu ke sistem
+                    pemantauan banjir.
+
+                </p>
+
+
+                <div class="showcase-features">
+
+                    <div class="feature-item">
+
+                        <div class="feature-icon">
+                            <i class="fa-solid fa-user-shield"></i>
+                        </div>
+
+                        <span>
+                            Autentikasi akun diverifikasi dengan aman
+                        </span>
+
+                    </div>
+
+
+                    <div class="feature-item">
+
+                        <div class="feature-icon">
+                            <i class="fa-solid fa-cloud"></i>
+                        </div>
+
+                        <span>
+                            Terhubung dengan sistem FLOWS-PRO
+                        </span>
+
+                    </div>
+
+
+                    <div class="feature-item">
+
+                        <div class="feature-icon">
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </div>
+
+                        <span>
+                            Setelah berhasil kamu akan masuk ke dashboard
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================
+             RIGHT PANEL
+        ================================== -->
+
+        <section class="callback-panel">
+
+            <div class="callback-inner">
+
+                <div class="callback-card">
+
+                    <div
+                        class="status-icon loading"
+                        id="statusIcon"
+                    >
+
+                        <i
+                            class="fa-solid fa-spinner"
+                            id="statusIconSymbol"
+                        ></i>
+
+                    </div>
+
+
+                    <div class="callback-eyebrow">
+                        AUTHENTICATION
+                    </div>
+
+
+                    <h2
+                        class="callback-title"
+                        id="callbackTitle"
+                    >
+                        Memverifikasi Akun
+                    </h2>
+
+
+                    <p
+                        class="callback-description"
+                        id="callbackDescription"
+                    >
+                        Tunggu sebentar. Kami sedang
+                        menyelesaikan proses autentikasi
+                        dan menyiapkan sesi akunmu.
+                    </p>
+
+
+                    <div
+                        class="callback-message"
+                        id="callbackMessage"
+                        role="alert"
+                        aria-live="polite"
+                    ></div>
+
+
+                    <div
+                        class="callback-action"
+                        id="callbackAction"
+                    >
+
+                        <a
+                            href="login.html"
+                            class="btn-callback"
+                            id="callbackButton"
+                        >
+
+                            <i class="fa-solid fa-arrow-left"></i>
+
+                            Kembali ke Login
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+                <div class="callback-footer">
+
+                    FLOWS-PRO · FLOOD MONITORING SYSTEM
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+   <script>
+/* =====================================
+   SUPABASE CONFIGURATION
+===================================== */
+
+const SUPABASE_URL =
+    "https://nydapuhnswrbgbjkaxqa.supabase.co";
+
+const SUPABASE_PUBLISHABLE_KEY =
+    "sb_publishable_dypnRnjABFIf6GcshfrTIA_Q0zhuR0L";
+
+
+const supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_PUBLISHABLE_KEY,
+        {
+            auth: {
+                persistSession: true,
+                autoRefreshToken: true,
+                detectSessionInUrl: true
             }
+        }
+    );
+
+
+/* =====================================
+   ELEMENT REFERENCES
+===================================== */
+
+const statusIcon =
+    document.getElementById("statusIcon");
+
+const statusIconSymbol =
+    document.getElementById("statusIconSymbol");
+
+const callbackTitle =
+    document.getElementById("callbackTitle");
+
+const callbackDescription =
+    document.getElementById(
+        "callbackDescription"
+    );
+
+const callbackMessage =
+    document.getElementById(
+        "callbackMessage"
+    );
+
+const callbackAction =
+    document.getElementById(
+        "callbackAction"
+    );
+
+
+/* =====================================
+   PAGE STATE
+===================================== */
+
+let redirectStarted = false;
+
+
+/* =====================================
+   SHOW STATUS
+===================================== */
+
+function showStatus(
+    type,
+    title,
+    description,
+    message = ""
+) {
+
+    if (callbackTitle) {
+
+        callbackTitle.textContent =
+            title;
+
+    }
+
+
+    if (callbackDescription) {
+
+        callbackDescription.textContent =
+            description;
+
+    }
+
+
+    if (statusIcon) {
+
+        statusIcon.classList.remove(
+            "loading"
         );
 
-        // ELEMEN HALAMAN
-        const titleElement = document.getElementById("title");
-        const descriptionElement = document.getElementById("description");
-        const statusElement = document.getElementById("statusMessage");
-        const loaderElement = document.getElementById("loader");
-        const backLink = document.getElementById("backLink");
-                // TAMPILKAN STATUS
-        function showStatus(message, isError = false) {
-            statusElement.textContent = message;
+        statusIcon.style.background =
+            "";
 
-            if (isError) {
-                statusElement.classList.add("error");
-                loaderElement.style.display = "none";
-                backLink.style.display = "inline-block";
+        statusIcon.style.color =
+            "";
 
-                titleElement.textContent = "Login Gagal";
+    }
 
-                descriptionElement.textContent =
-                    "Kami tidak dapat menyelesaikan proses login Anda.";
-            }
+
+    if (statusIconSymbol) {
+
+        statusIconSymbol.className =
+            "";
+
+    }
+
+
+    /* ---------------------------------
+       SUCCESS
+    --------------------------------- */
+
+    if (type === "success") {
+
+        statusIcon?.style.setProperty(
+            "background",
+            "#f0fdf4"
+        );
+
+        statusIcon?.style.setProperty(
+            "color",
+            "#16a34a"
+        );
+
+
+        if (statusIconSymbol) {
+
+            statusIconSymbol.className =
+                "fa-solid fa-circle-check";
+
         }
 
-        // PROSES CALLBACK GOOGLE
-        async function handleAuthCallback() {
-            try {
-                showStatus("Memverifikasi sesi login...");
+    }
 
-                const url = new URL(window.location.href);
 
-                const code = url.searchParams.get("code");
+    /* ---------------------------------
+       ERROR
+    --------------------------------- */
 
-                const authError =
-                    url.searchParams.get("error_description") ||
-                    url.searchParams.get("error");
+    if (type === "error") {
 
-                if (authError) {
-                    throw new Error(authError);
-                }
+        statusIcon?.style.setProperty(
+            "background",
+            "#fef2f2"
+        );
 
-                // Tukar kode OAuth menjadi sesi
-                if (code) {
-                    const { error } =
-                        await supabaseClient.auth.exchangeCodeForSession(code);
+        statusIcon?.style.setProperty(
+            "color",
+            "#dc2626"
+        );
 
-                    if (error) {
-                        throw error;
-                    }
-                }
 
-                // Periksa sesi login
-                const {
-                    data: { session },
-                    error
-                } = await supabaseClient.auth.getSession();
+        if (statusIconSymbol) {
 
-                if (error) {
-                    throw error;
-                }
+            statusIconSymbol.className =
+                "fa-solid fa-circle-exclamation";
 
-                if (!session) {
-                    throw new Error(
-                        "Sesi login tidak ditemukan. Silakan login kembali."
-                    );
-                }
-
-                // LOGIN BERHASIL
-                showStatus(
-                    "Login berhasil! Mengarahkan ke dashboard..."
-                );
-
-                titleElement.textContent = "Login Berhasil";
-
-                descriptionElement.textContent =
-                    "Selamat datang di sistem pemantauan FLOWS-PRO.";
-
-                // Bersihkan kode OAuth dari URL
-                window.history.replaceState(
-                    {},
-                    document.title,
-                    window.location.pathname
-                );
-
-                setTimeout(() => {
-                    window.location.replace("dashboard.html");
-                }, 1200);
-
-            } catch (error) {
-                console.error("Auth Callback Error:", error);
-
-                showStatus(
-                    error.message || "Terjadi kesalahan saat login.",
-                    true
-                );
-            }
         }
 
-        // JALANKAN PROSES CALLBACK
-        handleAuthCallback();
-    </script>
-    </body>
+    }
+
+
+    /* ---------------------------------
+       MESSAGE
+    --------------------------------- */
+
+    if (
+        callbackMessage &&
+        message
+    ) {
+
+        const icon =
+            type === "success"
+                ? "fa-circle-check"
+                : "fa-circle-exclamation";
+
+
+        callbackMessage.className =
+            `callback-message show ${type}`;
+
+
+        callbackMessage.innerHTML = `
+            <i class="fa-solid ${icon}"></i>
+            <span>${message}</span>
+        `;
+
+    }
+
+}
+
+
+/* =====================================
+   SHOW ERROR
+===================================== */
+
+function showError(
+    title,
+    description,
+    message
+) {
+
+    showStatus(
+        "error",
+        title,
+        description,
+        message
+    );
+
+
+    if (callbackAction) {
+
+        callbackAction.classList.add(
+            "show"
+        );
+
+    }
+
+}
+
+
+/* =====================================
+   FRIENDLY OAUTH ERROR
+===================================== */
+
+function getOAuthErrorMessage(
+    error
+) {
+
+    const message =
+        String(
+            error?.message ||
+            error?.error_description ||
+            ""
+        ).toLowerCase();
+
+
+    if (
+        message.includes("access_denied") ||
+        message.includes("denied")
+    ) {
+
+        return "Login Google dibatalkan. Silakan coba lagi jika ingin masuk ke FLOWS-PRO.";
+
+    }
+
+
+    if (
+        message.includes("network") ||
+        message.includes("fetch")
+    ) {
+
+        return "Koneksi internet bermasalah. Periksa koneksi lalu coba lagi.";
+
+    }
+
+
+    if (
+        message.includes("expired") ||
+        message.includes("invalid")
+    ) {
+
+        return "Sesi autentikasi sudah tidak valid. Silakan login kembali.";
+
+    }
+
+
+    return "Autentikasi Google gagal. Silakan kembali ke halaman login dan coba lagi.";
+
+}
+
+
+/* =====================================
+   REDIRECT TO DASHBOARD
+===================================== */
+
+function redirectToDashboard() {
+
+    if (redirectStarted) {
+
+        return;
+
+    }
+
+
+    redirectStarted = true;
+
+
+    showStatus(
+        "success",
+        "Login Berhasil",
+        "Autentikasi berhasil. Kamu akan diarahkan ke dashboard.",
+        "Sesi akun berhasil dibuat dan FLOWS-PRO siap digunakan."
+    );
+
+
+    setTimeout(() => {
+
+        window.location.replace(
+            "dashboard.html"
+        );
+
+    }, 900);
+
+}
+
+
+/* =====================================
+   PROCESS AUTH CALLBACK
+===================================== */
+
+async function processAuthCallback() {
+
+    try {
+
+        /*
+         * Supabase akan membaca token
+         * OAuth dari URL callback dan
+         * membuat session pengguna.
+         */
+
+        const {
+            data,
+            error
+        } =
+            await supabaseClient.auth
+                .getSession();
+
+
+        if (error) {
+
+            throw error;
+
+        }
+
+
+        const session =
+            data?.session;
+
+
+        /* ---------------------------------
+           SESSION FOUND
+        --------------------------------- */
+
+        if (session?.user) {
+
+            redirectToDashboard();
+
+            return;
+
+        }
+
+
+        /* ---------------------------------
+           NO SESSION
+        --------------------------------- */
+
+        showError(
+            "Autentikasi Tidak Selesai",
+            "Kami belum menemukan sesi login yang valid.",
+            "Silakan kembali ke halaman login dan ulangi proses login Google."
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "Auth callback error:",
+            error
+        );
+
+
+        showError(
+            "Login Gagal",
+            "Terjadi masalah saat memproses autentikasi.",
+            getOAuthErrorMessage(error)
+        );
+
+    }
+
+}
+
+
+/* =====================================
+   AUTH STATE LISTENER
+===================================== */
+
+supabaseClient.auth.onAuthStateChange(
+    (event, session) => {
+
+        console.log(
+            "Auth event:",
+            event
+        );
+
+
+        /*
+         * SIGNED_IN dipanggil ketika
+         * session OAuth berhasil dibuat.
+         */
+
+        if (
+            event === "SIGNED_IN" &&
+            session?.user
+        ) {
+
+            redirectToDashboard();
+
+        }
+
+
+        /*
+         * INITIAL_SESSION menangani
+         * kondisi ketika session sudah
+         * tersedia saat halaman dibuka.
+         */
+
+        if (
+            event === "INITIAL_SESSION" &&
+            session?.user
+        ) {
+
+            redirectToDashboard();
+
+        }
+
+    }
+);
+
+
+/* =====================================
+   HANDLE OAUTH URL ERRORS
+===================================== */
+
+function checkOAuthUrlError() {
+
+    const hash =
+        window.location.hash || "";
+
+    const search =
+        window.location.search || "";
+
+
+    const combined =
+        `${hash}&${search}`;
+
+
+    const params =
+        new URLSearchParams(
+            combined.replace(/^#/, "")
+        );
+
+
+    const error =
+        params.get("error");
+
+
+    const errorDescription =
+        params.get(
+            "error_description"
+        );
+
+
+    if (error) {
+
+        showError(
+            "Login Google Gagal",
+            "Proses autentikasi tidak dapat diselesaikan.",
+            errorDescription
+                ? decodeURIComponent(
+                    errorDescription
+                )
+                : "Silakan kembali ke halaman login dan coba lagi."
+        );
+
+
+        return true;
+
+    }
+
+
+    return false;
+
+}
+
+
+/* =====================================
+   INITIALIZE CALLBACK
+===================================== */
+
+(async function initializeCallback() {
+
+    const hasUrlError =
+        checkOAuthUrlError();
+
+
+    if (hasUrlError) {
+
+        return;
+
+    }
+
+
+    /*
+     * Beri Supabase sedikit waktu
+     * untuk menyelesaikan pertukaran
+     * OAuth sebelum membaca session.
+     */
+
+    await new Promise(
+        (resolve) =>
+            setTimeout(resolve, 300)
+    );
+
+
+    await processAuthCallback();
+
+})();
+
+
+/* =====================================
+   PAGE IDENTIFIER
+===================================== */
+
+document.documentElement.dataset.page =
+    "auth-callback";
+
+</script>
+
+
+<style>
+
+/* =====================================
+   FINAL CALLBACK POLISH
+===================================== */
+
+.callback-inner {
+
+    animation:
+        callbackFadeIn
+        0.45s ease both;
+
+}
+
+
+@keyframes callbackFadeIn {
+
+    from {
+
+        opacity: 0;
+
+        transform:
+            translateY(8px);
+
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform:
+            translateY(0);
+
+    }
+
+}
+
+
+/* =====================================
+   STATUS CARD
+===================================== */
+
+.callback-card {
+
+    animation:
+        cardAppear
+        0.5s ease both;
+
+}
+
+
+@keyframes cardAppear {
+
+    from {
+
+        opacity: 0;
+
+        transform:
+            scale(0.98);
+
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform:
+            scale(1);
+
+    }
+
+}
+
+
+/* =====================================
+   BUTTON FOCUS
+===================================== */
+
+.btn-callback:focus-visible {
+
+    outline:
+        2px solid
+        var(--primary);
+
+    outline-offset:
+        3px;
+
+}
+
+
+/* =====================================
+   MESSAGE ANIMATION
+===================================== */
+
+.callback-message.show {
+
+    animation:
+        callbackMessageIn
+        0.25s ease both;
+
+}
+
+
+@keyframes callbackMessageIn {
+
+    from {
+
+        opacity: 0;
+
+        transform:
+            translateY(-5px);
+
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform:
+            translateY(0);
+
+    }
+
+}
+
+
+/* =====================================
+   DESKTOP
+===================================== */
+
+@media (min-width: 821px) {
+
+    .callback-showcase {
+
+        position: sticky;
+
+        top: 0;
+
+        height: 100vh;
+
+    }
+
+
+    .callback-panel {
+
+        min-height: 100vh;
+
+    }
+
+}
+
+
+/* =====================================
+   TABLET
+===================================== */
+
+@media (max-width: 820px) {
+
+    .callback-page {
+
+        display:
+            block;
+
+    }
+
+
+    .callback-showcase {
+
+        position: relative;
+
+        min-height:
+            auto;
+
+        padding:
+            48px 32px;
+
+    }
+
+
+    .callback-panel {
+
+        min-height:
+            auto;
+
+    }
+
+
+    .callback-inner {
+
+        max-width:
+            620px;
+
+        margin:
+            0 auto;
+
+    }
+
+
+    .showcase-content {
+
+        max-width:
+            650px;
+
+    }
+
+
+    .showcase-features {
+
+        grid-template-columns:
+            repeat(3, 1fr);
+
+    }
+
+
+    .feature-item {
+
+        align-items:
+            flex-start;
+
+    }
+
+}
+
+
+/* =====================================
+   MOBILE
+===================================== */
+
+@media (max-width: 600px) {
+
+    .callback-showcase {
+
+        padding:
+            34px 22px 38px;
+
+    }
+
+
+    .brand {
+
+        margin-bottom:
+            34px;
+
+    }
+
+
+    .showcase-label {
+
+        font-size:
+            9px;
+
+    }
+
+
+    .showcase-title {
+
+        font-size:
+            32px;
+
+        letter-spacing:
+            -1.2px;
+
+    }
+
+
+    .showcase-description {
+
+        margin-top:
+            16px;
+
+        font-size:
+            13px;
+
+    }
+
+
+    .showcase-features {
+
+        grid-template-columns:
+            1fr;
+
+        gap:
+            11px;
+
+        margin-top:
+            27px;
+
+    }
+
+
+    .feature-item {
+
+        align-items:
+            center;
+
+    }
+
+
+    .feature-icon {
+
+        width:
+            32px;
+
+        height:
+            32px;
+
+    }
+
+
+    .callback-inner {
+
+        padding:
+            38px 22px 42px;
+
+    }
+
+
+    .callback-card {
+
+        padding:
+            30px 20px;
+
+        border-radius:
+            16px;
+
+    }
+
+
+    .status-icon {
+
+        width:
+            58px;
+
+        height:
+            58px;
+
+        margin-bottom:
+            18px;
+
+        border-radius:
+            16px;
+
+        font-size:
+            22px;
+
+    }
+
+
+    .callback-title {
+
+        font-size:
+            25px;
+
+    }
+
+
+    .callback-description {
+
+        font-size:
+            12px;
+
+    }
+
+
+    .callback-message {
+
+        font-size:
+            11px;
+
+    }
+
+}
+
+
+/* =====================================
+   SMALL MOBILE
+===================================== */
+
+@media (max-width: 380px) {
+
+    .callback-showcase {
+
+        padding-left:
+            18px;
+
+        padding-right:
+            18px;
+
+    }
+
+
+    .callback-inner {
+
+        padding-left:
+            18px;
+
+        padding-right:
+            18px;
+
+    }
+
+
+    .callback-card {
+
+        padding:
+            26px 17px;
+
+    }
+
+
+    .showcase-title {
+
+        font-size:
+            29px;
+
+    }
+
+
+    .callback-title {
+
+        font-size:
+            23px;
+
+    }
+
+}
+
+
+/* =====================================
+   REDUCED MOTION
+===================================== */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .callback-inner,
+    .callback-card,
+    .callback-message.show {
+
+        animation:
+            none;
+
+    }
+
+
+    .btn-callback {
+
+        transition:
+            none;
+
+    }
+
+}
+
+
+/* =====================================
+   PRINT
+===================================== */
+
+@media print {
+
+    .callback-showcase {
+
+        display:
+            none;
+
+    }
+
+
+    .callback-page {
+
+        display:
+            block;
+
+    }
+
+
+    .callback-panel {
+
+        min-height:
+            auto;
+
+    }
+
+}
+
+</style>
+
+
+<script>
+/* =====================================
+   FINAL CALLBACK INITIALIZATION
+===================================== */
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    /* ---------------------------------
+       Prevent accidental back navigation
+       while authentication is processing
+    --------------------------------- */
+
+    if (
+        window.history &&
+        window.history.replaceState
+    ) {
+
+        window.history.replaceState(
+            null,
+            document.title,
+            window.location.pathname
+        );
+
+    }
+
+
+    /* ---------------------------------
+       Keyboard accessibility
+    --------------------------------- */
+
+    const callbackButton =
+        document.getElementById(
+            "callbackButton"
+        );
+
+
+    callbackButton?.addEventListener(
+        "keydown",
+        (event) => {
+
+            if (event.key === "Enter") {
+
+                event.preventDefault();
+
+                callbackButton.click();
+
+            }
+
+        }
+    );
+
+
+    /* ---------------------------------
+       Page identifier
+    --------------------------------- */
+
+    document.documentElement.dataset.page =
+        "auth-callback";
+
+});
+</script>
+
+
+</body>
+</html>
+
+</body>
 </html>
