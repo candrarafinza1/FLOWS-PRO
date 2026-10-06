@@ -3,725 +3,1024 @@
 
 <head>
 
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
 
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-<title>FLOWS-PRO | Peta Banjir</title>
+    <title>
+        Peta Banjir | FLOWS-PRO
+    </title>
 
 
-<!-- =====================================================
-     FAVICON
-===================================================== -->
+    <!-- =====================================================
+         FONT
+         ===================================================== -->
 
-<link
-rel="icon"
-type="image/jpeg"
-href="LOGO.JPG">
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
 
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
 
-<!-- =====================================================
-     FONT AWESOME
-===================================================== -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
 
-<link
-rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
+    <!-- =====================================================
+         FONT AWESOME
+         ===================================================== -->
 
-<!-- =====================================================
-     LEAFLET CSS
-===================================================== -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
 
-<link
-rel="stylesheet"
-href="https://unpkg.com/leaflet/dist/leaflet.css">
 
+    <!-- =====================================================
+         LEAFLET
+         ===================================================== -->
 
-<!-- =====================================================
-     SUPABASE
-===================================================== -->
+    <link
+        rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIINfQ3r9k0q2F0jR6K2QvKk5J3k6r7pJvI="
+        crossorigin=""
+    >
 
-<script
-src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
-</script>
+    <script
+        src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+        crossorigin=""
+    ></script>
 
 
-<!-- =====================================================
-     LEAFLET JS
-===================================================== -->
+    <!-- =====================================================
+         SUPABASE
+         ===================================================== -->
 
-<script
-src="https://unpkg.com/leaflet/dist/leaflet.js">
-</script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 
-<style>
+    <!-- =====================================================
+         BASE STYLE
+         ===================================================== -->
 
-/* =====================================================
-   RESET
-===================================================== */
+    <style>
 
-*{
+        /* =================================================
+           ROOT
+           ================================================= */
 
-    margin:0;
+        :root {
 
-    padding:0;
+            --sidebar-width: 250px;
 
-    box-sizing:border-box;
+            --primary: #2563eb;
+            --primary-light: #eff6ff;
+            --primary-dark: #1d4ed8;
 
-    font-family:'Segoe UI',sans-serif;
+            --surface: #ffffff;
+            --surface-soft: #f8fafc;
+            --surface-muted: #f1f5f9;
 
-}
+            --border: #e2e8f0;
 
+            --text-primary: #0f172a;
+            --text-secondary: #64748b;
+            --text-muted: #94a3b8;
 
-body{
+            --success: #22c55e;
+            --warning: #f59e0b;
+            --danger: #ef4444;
 
-    background:#edf3f8;
+            --shadow:
+                0 8px 30px rgba(15, 23, 42, .06);
 
-    overflow-x:hidden;
+            --radius-lg: 18px;
+            --radius-md: 14px;
+            --radius-sm: 10px;
 
-}
+        }
 
 
-/* =====================================================
-   SIDEBAR
-===================================================== */
+        /* =================================================
+           DARK THEME
+           ================================================= */
 
-.sidebar{
+        [data-theme="dark"] {
 
-    position:fixed;
+            --surface: #0f172a;
+            --surface-soft: #111c2e;
+            --surface-muted: #1e293b;
 
-    left:0;
+            --border: #263449;
 
-    top:0;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
 
-    width:270px;
+            --primary-light:
+                rgba(37, 99, 235, .15);
 
-    height:100vh;
+            --shadow:
+                0 8px 30px rgba(0, 0, 0, .18);
 
-    background:
-    linear-gradient(
-        180deg,
-        #071b2f,
-        #0d2b45,
-        #12395c
-    );
+        }
 
-    padding:22px 18px;
 
-    color:white;
+        /* =================================================
+           RESET
+           ================================================= */
 
-    overflow-y:auto;
+        * {
 
-    z-index:1000;
+            margin: 0;
+            padding: 0;
 
-}
+            box-sizing: border-box;
 
+        }
 
-/* =====================================================
-   LOGO
-===================================================== */
 
-.logo{
+        html {
 
-    display:flex;
+            scroll-behavior: smooth;
 
-    align-items:center;
+        }
 
-    justify-content:flex-start;
 
-    padding-left:10px;
+        body {
 
-    margin-bottom:30px;
+            min-height: 100vh;
 
-}
+            background:
+                var(--surface-soft);
 
+            color:
+                var(--text-primary);
 
-.logo img{
+            font-family:
+                "Inter",
+                sans-serif;
 
-    width:200px;
+            font-size: 13px;
 
-    height:auto;
+            line-height: 1.5;
 
-    display:block;
+        }
 
-    object-fit:contain;
 
-}
+        button,
+        input,
+        select {
 
+            font-family: inherit;
 
-/* =====================================================
-   MENU
-===================================================== */
+        }
 
-.menu-item{
 
-    padding:16px 18px;
+        a {
 
-    border-radius:16px;
+            color: inherit;
 
-    display:flex;
+            text-decoration: none;
 
-    align-items:center;
+        }
 
-    gap:14px;
 
-    margin-bottom:12px;
+        /* =================================================
+           APP LAYOUT
+           ================================================= */
 
-    cursor:pointer;
+        .app-layout {
 
-    transition:0.3s;
+            min-height: 100vh;
 
-    font-weight:600;
+            display: flex;
 
-    text-decoration:none;
+        }
 
-    color:white;
 
-    width:100%;
+        /* =================================================
+           SIDEBAR
+           ================================================= */
 
-}
+        .sidebar {
 
+            position: fixed;
 
-.menu-item i{
+            top: 0;
+            left: 0;
 
-    width:22px;
+            width: 260px;
 
-    text-align:center;
+            height: 100vh;
 
-    font-size:18px;
+            padding:
+                24px 14px;
 
-}
+            background:
+                var(--surface);
 
+            border-right:
+                1px solid var(--border);
 
-.menu-item:hover{
+            display: flex;
 
-    background:
-    linear-gradient(
-        90deg,
-        #00c6ff,
-        #0072ff
-    );
+            flex-direction: column;
 
-    transform:translateX(4px);
+            overflow-x: hidden;
 
-}
+            overflow-y: auto;
 
+            z-index: 1000;
 
-.menu-item.active{
+        }
 
-    background:
-    linear-gradient(
-        90deg,
-        #00c6ff,
-        #0072ff
-    );
 
-}
+        .brand {
 
+            width: 100%;
 
-/* =====================================================
-   MAIN
-===================================================== */
+            display: flex;
 
-.main{
+            align-items: center;
 
-    margin-left:270px;
+            gap: 12px;
 
-    min-height:100vh;
+            padding:
+                0 10px 25px;
 
-}
+        }
 
 
-/* =====================================================
-   NAVBAR
-===================================================== */
+        .brand-logo {
 
-.navbar{
+            width: 43px;
+            height: 43px;
 
-    height:85px;
+            flex: 0 0 43px;
 
-    background:white;
+            border-radius: 14px;
 
-    display:flex;
+            background:
+                linear-gradient(
+                    135deg,
+                    #2563eb,
+                    #06b6d4
+                );
 
-    justify-content:space-between;
+            color: #ffffff;
 
-    align-items:center;
+            display: grid;
 
-    padding:0 35px;
+            place-items: center;
 
-    box-shadow:
-    0 2px 10px
-    rgba(0,0,0,0.06);
+            font-size: 19px;
 
-}
+            box-shadow:
+                0 8px 18px
+                rgba(37, 99, 235, .22);
 
+        }
 
-.nav-title{
 
-    font-size:24px;
+        .brand-name {
 
-    font-weight:800;
+            font-family:
+                "Plus Jakarta Sans",
+                sans-serif;
 
-    color:#12395c;
+            font-size: 17px;
 
-}
+            font-weight: 800;
 
+            letter-spacing: -.6px;
 
-/* =====================================================
-   PROFILE
-===================================================== */
+            white-space: nowrap;
 
-.profile{
+        }
 
-    display:flex;
 
-    align-items:center;
+        .brand-name span {
 
-    gap:12px;
+            color:
+                var(--primary);
 
-    padding:8px 14px;
+        }
 
-    border-radius:14px;
 
-    background:#f5f9ff;
+        .brand-caption {
 
-}
+            margin-top: 1px;
 
+            font-size: 9px;
 
-.profile img{
+            font-weight: 700;
 
-    width:50px;
+            letter-spacing: 1.3px;
 
-    height:50px;
+            color:
+                var(--text-muted);
 
-    border-radius:50%;
+            white-space: nowrap;
 
-    object-fit:cover;
+        }
 
-}
 
+        /* =================================================
+           NAVIGATION
+           ================================================= */
 
-.profile h4{
+        .nav-label {
 
-    color:#12395c;
+            font-size: 9px;
 
-    font-size:15px;
+            font-weight: 800;
 
-}
+            letter-spacing: 1.3px;
 
+            color:
+                var(--text-muted);
 
-.profile p{
+            padding:
+                0 12px;
 
-    font-size:12px;
+            margin:
+                18px 0 10px;
 
-    color:#888;
+        }
 
-}
 
+        .nav-menu {
 
-/* =====================================================
-   CONTENT
-===================================================== */
+            display: flex;
 
-.content{
+            flex-direction: column;
 
-    padding:28px;
+            gap: 5px;
 
-}
+        }
 
 
-/* =====================================================
-   GRID
-===================================================== */
+        .nav-item {
 
-.grid{
+            width: 100%;
 
-    display:grid;
+            min-height: 44px;
 
-    grid-template-columns:
-    repeat(3,1fr);
+            display: flex;
 
-    gap:20px;
+            align-items: center;
 
-}
+            gap: 12px;
 
+            padding:
+                0 13px;
 
-/* =====================================================
-   CARD
-===================================================== */
+            border-radius: 11px;
 
-.card{
+            color:
+                var(--text-secondary);
 
-    background:white;
+            font-size: 12px;
 
-    padding:24px;
+            font-weight: 600;
 
-    border-radius:22px;
+            overflow: hidden;
 
-    margin-bottom:20px;
+            transition:
+                background .18s ease,
+                color .18s ease;
 
-    box-shadow:
-    0 5px 20px
-    rgba(0,0,0,0.05);
+        }
 
-}
 
+        .nav-item i {
 
-.card-title{
+            width: 19px;
 
-    font-size:18px;
+            min-width: 19px;
 
-    font-weight:700;
+            text-align: center;
 
-    margin-bottom:16px;
+            font-size: 14px;
 
-    color:#12395c;
+        }
 
-}
 
+        .nav-item:hover {
 
-/* =====================================================
-   BIG NUMBER
-===================================================== */
+            background:
+                var(--surface-muted);
 
-.big{
+            color:
+                var(--primary);
 
-    font-size:42px;
+        }
 
-    font-weight:800;
 
-}
+        .nav-item.active {
 
+            background:
+                var(--primary-light);
 
-/* =====================================================
-   STATUS
-===================================================== */
+            color:
+                var(--primary);
 
-.safe{
+            font-weight: 800;
 
-    color:#27ae60;
+        }
 
-}
 
+        /* =================================================
+           SIDEBAR BOTTOM
+           ================================================= */
 
-.warning{
+        .sidebar-bottom {
 
-    color:#f1c40f;
+            margin-top: auto;
 
-}
+            padding-top: 20px;
 
+        }
 
-.danger{
 
-    color:#e74c3c;
+        .system-status {
 
-}
+            width: 100%;
 
+            background:
+                var(--surface-soft);
 
-/* =====================================================
-   LIVE BADGE
-===================================================== */
+            border:
+                1px solid var(--border);
 
-.live-badge{
+            border-radius: 15px;
 
-    display:inline-flex;
+            padding: 15px;
 
-    align-items:center;
+        }
 
-    gap:10px;
 
-    padding:12px 18px;
+        .system-status-top {
 
-    border-radius:40px;
+            display: flex;
 
-    background:#e8fff1;
+            align-items: center;
 
-    color:#27ae60;
+            gap: 8px;
 
-    font-weight:700;
+            font-size: 11px;
 
-    margin-bottom:20px;
+            font-weight: 800;
 
-}
+        }
 
 
-.live-dot{
+        .status-dot {
 
-    width:10px;
+            width: 8px;
+            height: 8px;
 
-    height:10px;
+            border-radius: 50%;
 
-    background:#27ae60;
+            background:
+                #22c55e;
 
-    border-radius:50%;
+            box-shadow:
+                0 0 0 4px
+                rgba(34, 197, 94, .10);
 
-    animation:blink 1s infinite;
+        }
 
-}
 
+        .system-status p {
 
-.live-badge.offline{
+            margin-top: 8px;
 
-    background:#fff0f0;
+            font-size: 10px;
 
-    color:#e74c3c;
+            line-height: 1.6;
 
-}
+            color:
+                var(--text-secondary);
 
+        }
 
-.live-badge.offline .live-dot{
 
-    background:#e74c3c;
+        .sidebar-version {
 
-    animation:none;
+            margin-top: 17px;
 
-}
+            text-align: center;
 
+            font-size: 9px;
 
-@keyframes blink{
+            color:
+                var(--text-muted);
 
-    0%{
-        opacity:1;
-    }
+        }
 
-    50%{
-        opacity:0.2;
-    }
 
-    100%{
-        opacity:1;
-    }
+        /* =================================================
+           MAIN CONTENT
+           ================================================= */
 
-}
+        .main-content {
 
+            width: 100%;
 
-/* =====================================================
-   PETA
-===================================================== */
+            min-width: 0;
 
-#floodMap{
+            margin-left:
+                var(--sidebar-width);
 
-    width:100%;
+            padding:
+                30px 36px 28px;
 
-    height:650px;
+        }
 
-    border-radius:20px;
 
-    overflow:hidden;
+        /* =================================================
+           TOPBAR
+           ================================================= */
 
-}
+        .topbar {
 
+            display: flex;
 
-.leaflet-container{
+            align-items: flex-start;
 
-    z-index:1;
+            justify-content: space-between;
 
-}
+            gap: 24px;
 
+            margin-bottom: 30px;
 
-/* =====================================================
-   LEGEND
-===================================================== */
+        }
 
-.legend{
 
-    display:flex;
+        .breadcrumb {
 
-    gap:25px;
+            margin-bottom: 7px;
 
-    margin-top:18px;
+            font-size: 9px;
 
-    flex-wrap:wrap;
+            font-weight: 800;
 
-}
+            letter-spacing: 1.2px;
 
+            color:
+                var(--text-muted);
 
-.legend-item{
+        }
 
-    display:flex;
 
-    align-items:center;
+        .page-title {
 
-    gap:9px;
+            font-family:
+                "Plus Jakarta Sans",
+                sans-serif;
 
-    font-weight:600;
+            font-size: 27px;
 
-}
+            line-height: 1.2;
 
+            font-weight: 800;
 
-.legend-color{
+            letter-spacing: -.8px;
 
-    width:18px;
+        }
 
-    height:18px;
 
-    border-radius:50%;
+        .page-subtitle {
 
-    border:2px solid white;
+            margin-top: 7px;
 
-    box-shadow:
-    0 1px 4px
-    rgba(0,0,0,0.3);
+            font-size: 12px;
 
-}
+            color:
+                var(--text-secondary);
 
+        }
 
-.legend-green{
 
-    background:#27ae60;
+        .topbar-actions {
 
-}
+            display: flex;
 
+            align-items: center;
 
-.legend-yellow{
+            gap: 14px;
 
-    background:#f1c40f;
+        }
 
-}
 
+        /* =================================================
+           NOTIFICATION
+           ================================================= */
 
-.legend-orange{
+        .icon-button {
 
-    background:#e67e22;
+            position: relative;
 
-}
+            width: 40px;
+            height: 40px;
 
+            border:
+                1px solid var(--border);
 
-.legend-red{
+            border-radius: 12px;
 
-    background:#e74c3c;
+            background:
+                var(--surface);
 
-}
+            color:
+                var(--text-secondary);
 
+            display: grid;
 
-/* =====================================================
-   INFO MAP
-===================================================== */
+            place-items: center;
 
-.map-info{
+            cursor: pointer;
 
-    margin-top:18px;
+            transition:
+                .18s ease;
 
-    padding:15px;
+        }
 
-    background:#f8fbff;
 
-    border-radius:14px;
+        .icon-button:hover {
 
-    color:#555;
+            color:
+                var(--primary);
 
-    line-height:1.6;
+            border-color:
+                rgba(37, 99, 235, .25);
 
-}
+        }
 
 
-.map-info strong{
+        .notification-dot {
 
-    color:#12395c;
+            position: absolute;
 
-}
+            top: 9px;
+            right: 9px;
 
+            width: 6px;
+            height: 6px;
 
-/* =====================================================
-   RESPONSIVE
-===================================================== */
+            border-radius: 50%;
 
-@media(max-width:1000px){
+            background:
+                var(--danger);
 
-    .grid{
+        }
 
-        grid-template-columns:1fr;
 
-    }
+        /* =================================================
+           PROFILE
+           ================================================= */
 
+        .profile {
 
-    .sidebar{
+            position: relative;
 
-        width:90px;
+        }
 
-    }
 
+        .profile-trigger {
 
-    .sidebar span{
+            border: 0;
 
-        display:none;
+            background: transparent;
 
-    }
+            display: flex;
 
+            align-items: center;
 
-    .logo{
+            gap: 10px;
 
-        justify-content:center;
+            cursor: pointer;
 
-        padding-left:0;
+            color:
+                var(--text-primary);
 
-    }
+        }
 
 
-    .logo img{
+        .avatar {
 
-        width:55px;
+            width: 38px;
+            height: 38px;
 
-    }
+            border-radius: 12px;
 
+            background:
+                var(--primary-light);
 
-    .main{
+            color:
+                var(--primary);
 
-        margin-left:90px;
+            display: grid;
 
-    }
+            place-items: center;
 
-}
+            font-size: 12px;
 
+            font-weight: 800;
 
-@media(max-width:600px){
+        }
 
-    .navbar{
 
-        padding:0 15px;
+        .profile-name {
 
-    }
+            display: block;
 
+            max-width: 170px;
 
-    .nav-title{
+            overflow: hidden;
 
-        font-size:18px;
+            text-overflow: ellipsis;
 
-    }
+            white-space: nowrap;
 
+            text-align: left;
 
-    .profile div{
+            font-size: 11px;
 
-        display:none;
+            font-weight: 800;
 
-    }
+        }
 
 
-    .content{
+        .profile-role {
 
-        padding:15px;
+            display: block;
 
-    }
+            margin-top: 1px;
 
+            text-align: left;
 
-    #floodMap{
+            font-size: 8px;
 
-        height:500px;
+            font-weight: 800;
 
-    }
+            letter-spacing: .8px;
 
-}
+            color:
+                var(--text-muted);
 
+        }
 
-/* =====================================================
-   END CSS
-===================================================== */
 
-</style>
+        .profile-trigger > i {
+
+            margin-left: 3px;
+
+            font-size: 10px;
+
+            color:
+                var(--text-muted);
+
+        }
+
+
+        /* =================================================
+           DROPDOWN
+           ================================================= */
+
+        .dropdown {
+
+            position: absolute;
+
+            top: calc(100% + 10px);
+
+            right: 0;
+
+            width: 205px;
+
+            padding: 7px;
+
+            background:
+                var(--surface);
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 14px;
+
+            box-shadow:
+                0 18px 45px
+                rgba(15, 23, 42, .12);
+
+            display: none;
+
+            z-index: 1100;
+
+        }
+
+
+        .dropdown.show,
+        .dropdown.open {
+
+            display: block;
+
+        }
+
+
+        .dropdown a,
+        .dropdown button {
+
+            width: 100%;
+
+            min-height: 39px;
+
+            padding:
+                0 11px;
+
+            border: 0;
+
+            border-radius: 9px;
+
+            background: transparent;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            color:
+                var(--text-secondary);
+
+            font-size: 11px;
+
+            font-weight: 600;
+
+            text-align: left;
+
+            cursor: pointer;
+
+        }
+
+
+        .dropdown a:hover,
+        .dropdown button:hover {
+
+            background:
+                var(--surface-soft);
+
+            color:
+                var(--primary);
+
+        }
+
+
+        .dropdown button {
+
+            color:
+                var(--danger);
+
+        }
+
+
+        /* =================================================
+           RESPONSIVE
+           ================================================= */
+
+        @media (max-width: 1250px) {
+
+            :root {
+
+                --sidebar-width: 250px;
+
+            }
+
+
+            .sidebar {
+
+                width: 250px;
+
+            }
+
+
+            .main-content {
+
+                margin-left: 250px;
+
+            }
+
+        }
+
+
+        @media (max-width: 950px) {
+
+            :root {
+
+                --sidebar-width: 215px;
+
+            }
+
+
+            .sidebar {
+
+                width: 215px;
+
+            }
+
+
+            .main-content {
+
+                margin-left: 215px;
+
+                padding:
+                    25px 24px;
+
+            }
+
+
+            .page-title {
+
+                font-size: 24px;
+
+            }
+
+        }
+
+
+        @media (max-width: 650px) {
+
+            .sidebar {
+
+                display: none;
+
+            }
+
+
+            .main-content {
+
+                margin-left: 0;
+
+                padding:
+                    20px 15px;
+
+            }
+
+
+            .topbar {
+
+                align-items: center;
+
+                margin-bottom: 24px;
+
+            }
+
+
+            .page-title {
+
+                font-size: 21px;
+
+            }
+
+
+            .page-subtitle {
+
+                font-size: 11px;
+
+            }
+
+
+            .profile-name,
+            .profile-role,
+            .profile-trigger > i {
+
+                display: none;
+
+            }
+
+
+            .profile-trigger {
+
+                gap: 0;
+
+            }
+
+        }
+
+    </style>
 
 </head>
 
@@ -729,128 +1028,902 @@ body{
 <body>
 
 
-<!-- =====================================================
-     SIDEBAR
-===================================================== -->
-
-<div class="sidebar">
+<div class="app-layout">
 
 
-    <div class="logo">
+    <!-- =====================================================
+         SIDEBAR
+         ===================================================== -->
 
-        <img
-        src="FLOWS-PRO-preview 1.png"
-        alt="FLOWS-PRO">
+    <aside class="sidebar">
 
-    </div>
+        <div class="brand">
 
+            <div class="brand-logo">
 
-    <a
-    class="menu-item"
-    href="dashboard.html">
+                <i class="fa-solid fa-water"></i>
 
-        <i class="fa-solid fa-chart-line"></i>
-
-        <span>Dashboard</span>
-
-    </a>
-
-
-    <a
-    class="menu-item"
-    href="live_sensor.html">
-
-        <i class="fa-solid fa-microchip"></i>
-
-        <span>Live Sensor</span>
-
-    </a>
-
-
-    <a
-    class="menu-item active"
-    href="peta_banjir.html">
-
-        <i class="fa-solid fa-map-location-dot"></i>
-
-        <span>Peta Banjir</span>
-
-    </a>
-
-
-    <a
-    class="menu-item"
-    href="weather.html">
-
-        <i class="fa-solid fa-cloud-rain"></i>
-
-        <span>Weather</span>
-
-    </a>
-
-
-    <a
-    class="menu-item"
-    href="reports.html">
-
-        <i class="fa-solid fa-file"></i>
-
-        <span>Reports</span>
-
-    </a>
-
-
-    <a
-    class="menu-item"
-    href="settings.html">
-
-        <i class="fa-solid fa-gear"></i>
-
-        <span>Settings</span>
-
-    </a>
-
-
-</div>
-
-
-<!-- =====================================================
-     MAIN
-===================================================== -->
-
-<div class="main">
-
-
-    <!-- =================================================
-         NAVBAR
-    ================================================== -->
-
-    <div class="navbar">
-
-
-        <div class="nav-title">
-
-            Peta Monitoring Banjir
-
-        </div>
-
-
-        <div class="profile">
-
-            <img
-            id="userPhoto"
-            src="https://i.pravatar.cc/150?img=12"
-            alt="Profile">
+            </div>
 
 
             <div>
 
-                <h4 id="userName">
-                    Loading...
-                </h4>
+                <div class="brand-name">
+
+                    FLOWS<span>-PRO</span>
+
+                </div>
+
+
+                <div class="brand-caption">
+
+                    FLOOD MONITORING SYSTEM
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="nav-label">
+
+            MENU UTAMA
+
+        </div>
+
+
+        <nav class="nav-menu">
+
+            <a
+                href="dashboard.html"
+                class="nav-item"
+            >
+
+                <i class="fa-solid fa-border-all"></i>
+
+                Dashboard
+
+            </a>
+
+
+            <a
+                href="live_sensor.html"
+                class="nav-item"
+            >
+
+                <i class="fa-solid fa-wave-square"></i>
+
+                Live Monitoring
+
+            </a>
+
+
+            <a
+                href="reports.html"
+                class="nav-item"
+            >
+
+                <i class="fa-solid fa-chart-line"></i>
+
+                Laporan Data
+
+            </a>
+
+
+            <a
+                href="peta_banjir.html"
+                class="nav-item active"
+            >
+
+                <i class="fa-solid fa-map-location-dot"></i>
+
+                Peta Banjir
+
+            </a>
+
+
+            <a
+                href="weather.html"
+                class="nav-item"
+            >
+
+                <i class="fa-solid fa-cloud-sun"></i>
+
+                Informasi Cuaca
+
+            </a>
+
+        </nav>
+
+
+        <div
+            class="nav-label"
+            style="margin-top: 27px;"
+        >
+
+            PREFERENSI
+
+        </div>
+
+
+        <nav class="nav-menu">
+
+            <a
+                href="profile.html"
+                class="nav-item"
+            >
+
+                <i class="fa-regular fa-user"></i>
+
+                Profil Saya
+
+            </a>
+
+
+            <a
+                href="settings.html"
+                class="nav-item"
+            >
+
+                <i class="fa-solid fa-sliders"></i>
+
+                Pengaturan
+
+            </a>
+
+        </nav>
+
+
+        <div class="sidebar-bottom">
+
+            <div class="system-status">
+
+                <div class="system-status-top">
+
+                    <span class="status-dot"></span>
+
+                    FLOWS-PRO SYSTEM
+
+                </div>
+
 
                 <p>
-                    Operator
+
+                    Sistem pemantauan banjir untuk
+                    mendukung kesiapsiagaan lingkungan.
+
+                </p>
+
+            </div>
+
+
+            <div class="sidebar-version">
+
+                FLOWS-PRO · VERSION 2.0
+
+            </div>
+
+        </div>
+
+    </aside>
+
+
+    <!-- =====================================================
+         MAIN CONTENT
+         ===================================================== -->
+
+    <main class="main-content">
+
+
+        <!-- =================================================
+             TOPBAR
+             ================================================= -->
+
+        <header class="topbar">
+
+            <div>
+
+                <div class="breadcrumb">
+
+                    PEMANTAUAN / PETA BANJIR
+
+                </div>
+
+
+                <h1 class="page-title">
+
+                    Peta Banjir
+
+                </h1>
+
+
+                <p class="page-subtitle">
+
+                    Pantau lokasi sensor dan kondisi
+                    ketinggian air secara geografis.
+
+                </p>
+
+            </div>
+
+
+            <div class="topbar-actions">
+
+
+                <button
+                    class="icon-button"
+                    id="notificationButton"
+                    type="button"
+                    aria-label="Notifikasi"
+                >
+
+                    <i class="fa-regular fa-bell"></i>
+
+                    <span class="notification-dot"></span>
+
+                </button>
+
+
+                <div class="profile">
+
+                    <button
+                        class="profile-trigger"
+                        id="profileTrigger"
+                        type="button"
+                        aria-expanded="false"
+                    >
+
+                        <span
+                            class="avatar"
+                            id="profileAvatar"
+                        >
+                            U
+                        </span>
+
+
+                        <span>
+
+                            <span
+                                class="profile-name"
+                                id="profileName"
+                            >
+                                Memuat pengguna...
+                            </span>
+
+
+                            <small
+                                class="profile-role"
+                                id="profileRole"
+                            >
+                                OPERATOR
+                            </small>
+
+                        </span>
+
+
+                        <i
+                            class="fa-solid fa-chevron-down"
+                        ></i>
+
+                    </button>
+
+
+                    <div
+                        class="dropdown"
+                        id="profileDropdown"
+                    >
+
+                        <a href="profile.html">
+
+                            <i
+                                class="fa-regular fa-user"
+                            ></i>
+
+                            Profil Saya
+
+                        </a>
+
+
+                        <a href="settings.html">
+
+                            <i
+                                class="fa-solid fa-gear"
+                            ></i>
+
+                            Pengaturan Akun
+
+                        </a>
+
+
+                        <button
+                            id="logoutButton"
+                            type="button"
+                        >
+
+                            <i
+                                class="fa-solid fa-right-from-bracket"
+                            ></i>
+
+                            Keluar dari Akun
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- =================================================
+             PART 2 DITEMPEL DI SINI
+             ================================================= -->
+             <!-- =========================================================
+     PART 2 — MAP CONTROL, SUMMARY & LEGEND
+     ========================================================= -->
+
+<section class="map-page">
+
+
+    <!-- =====================================================
+         SUMMARY
+         ===================================================== -->
+
+    <div class="map-summary-grid">
+
+
+        <div class="map-summary-card">
+
+            <div class="map-summary-icon blue">
+
+                <i class="fa-solid fa-location-dot"></i>
+
+            </div>
+
+
+            <div>
+
+                <span class="map-summary-label">
+                    LOKASI SENSOR
+                </span>
+
+                <strong
+                    id="totalLocations"
+                    class="map-summary-value"
+                >
+                    -
+                </strong>
+
+                <span
+                    id="locationSummary"
+                    class="map-summary-info"
+                >
+                    Memuat lokasi...
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="map-summary-card">
+
+            <div class="map-summary-icon green">
+
+                <i class="fa-solid fa-shield-halved"></i>
+
+            </div>
+
+
+            <div>
+
+                <span class="map-summary-label">
+                    KONDISI AMAN
+                </span>
+
+                <strong
+                    id="safeLocations"
+                    class="map-summary-value"
+                >
+                    -
+                </strong>
+
+                <span class="map-summary-info">
+                    Status AMAN
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="map-summary-card">
+
+            <div class="map-summary-icon orange">
+
+                <i class="fa-solid fa-triangle-exclamation"></i>
+
+            </div>
+
+
+            <div>
+
+                <span class="map-summary-label">
+                    PERLU PERHATIAN
+                </span>
+
+                <strong
+                    id="warningLocations"
+                    class="map-summary-value"
+                >
+                    -
+                </strong>
+
+                <span class="map-summary-info">
+                    SIAGA / WASPADA
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="map-summary-card">
+
+            <div class="map-summary-icon red">
+
+                <i class="fa-solid fa-circle-exclamation"></i>
+
+            </div>
+
+
+            <div>
+
+                <span class="map-summary-label">
+                    KONDISI KRITIS
+                </span>
+
+                <strong
+                    id="dangerLocations"
+                    class="map-summary-value"
+                >
+                    -
+                </strong>
+
+                <span class="map-summary-info">
+                    BAHAYA / DARURAT
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         MAP CARD
+         ===================================================== -->
+
+    <section class="map-card">
+
+
+        <div class="map-card-header">
+
+
+            <div>
+
+                <span class="section-eyebrow">
+                    PEMANTAUAN GEOGRAFIS
+                </span>
+
+                <h2>
+                    Sebaran Sensor Banjir
+                </h2>
+
+                <p>
+                    Lokasi ditampilkan berdasarkan koordinat
+                    GPS yang tersimpan pada data sensor.
+                </p>
+
+            </div>
+
+
+            <div class="map-header-actions">
+
+                <button
+                    type="button"
+                    class="map-secondary-button"
+                    id="locateMapButton"
+                >
+
+                    <i class="fa-solid fa-crosshairs"></i>
+
+                    Fokus Semua
+
+                </button>
+
+
+                <button
+                    type="button"
+                    class="map-primary-button"
+                    id="refreshMapButton"
+                >
+
+                    <i class="fa-solid fa-arrows-rotate"></i>
+
+                    Refresh
+
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             MAP TOOLBAR
+             ================================================= -->
+
+        <div class="map-toolbar">
+
+
+            <div class="map-search">
+
+                <i class="fa-solid fa-magnifying-glass"></i>
+
+                <input
+                    type="search"
+                    id="mapSearchInput"
+                    placeholder="Cari lokasi sensor..."
+                    autocomplete="off"
+                >
+
+            </div>
+
+
+            <div class="map-filter">
+
+                <label for="mapStatusFilter">
+                    Status
+                </label>
+
+                <select
+                    id="mapStatusFilter"
+                >
+
+                    <option value="all">
+                        Semua Status
+                    </option>
+
+                    <option value="AMAN">
+                        AMAN
+                    </option>
+
+                    <option value="SIAGA">
+                        SIAGA
+                    </option>
+
+                    <option value="WASPADA">
+                        WASPADA
+                    </option>
+
+                    <option value="BAHAYA">
+                        BAHAYA
+                    </option>
+
+                    <option value="DARURAT">
+                        DARURAT
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="map-data-status">
+
+                <span
+                    class="map-data-dot"
+                    id="mapDataDot"
+                ></span>
+
+                <span id="mapDataStatus">
+                    Memuat data...
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             MAP AREA
+             ================================================= -->
+
+        <div class="map-wrapper">
+
+            <div
+                id="floodMap"
+                class="flood-map"
+            ></div>
+
+
+            <!-- =============================================
+                 MAP LOADING
+                 ============================================= -->
+
+            <div
+                class="map-loading"
+                id="mapLoading"
+            >
+
+                <div class="map-loading-spinner"></div>
+
+                <span>
+                    Memuat peta dan lokasi sensor...
+                </span>
+
+            </div>
+
+
+            <!-- =============================================
+                 MAP EMPTY
+                 ============================================= -->
+
+            <div
+                class="map-empty"
+                id="mapEmpty"
+                hidden
+            >
+
+                <div class="map-empty-icon">
+
+                    <i class="fa-solid fa-map-location-dot"></i>
+
+                </div>
+
+                <strong>
+                    Lokasi sensor belum tersedia
+                </strong>
+
+                <span>
+                    Belum ditemukan data sensor dengan
+                    koordinat GPS yang valid.
+                </span>
+
+            </div>
+
+
+            <!-- =============================================
+                 MAP LEGEND
+                 ============================================= -->
+
+            <div class="map-legend">
+
+                <div class="map-legend-title">
+                    STATUS SENSOR
+                </div>
+
+
+                <div class="legend-item">
+
+                    <span
+                        class="legend-marker safe"
+                    ></span>
+
+                    <span>
+                        AMAN
+                    </span>
+
+                </div>
+
+
+                <div class="legend-item">
+
+                    <span
+                        class="legend-marker standby"
+                    ></span>
+
+                    <span>
+                        SIAGA
+                    </span>
+
+                </div>
+
+
+                <div class="legend-item">
+
+                    <span
+                        class="legend-marker warning"
+                    ></span>
+
+                    <span>
+                        WASPADA
+                    </span>
+
+                </div>
+
+
+                <div class="legend-item">
+
+                    <span
+                        class="legend-marker danger"
+                    ></span>
+
+                    <span>
+                        BAHAYA
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             SELECTED LOCATION
+             ================================================= -->
+
+        <div
+            class="selected-location"
+            id="selectedLocation"
+            hidden
+        >
+
+            <div class="selected-location-header">
+
+                <div>
+
+                    <span class="section-eyebrow">
+                        DETAIL LOKASI
+                    </span>
+
+                    <h3 id="selectedLocationName">
+                        -
+                    </h3>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    class="close-location-button"
+                    id="closeLocationButton"
+                    aria-label="Tutup detail lokasi"
+                >
+
+                    <i class="fa-solid fa-xmark"></i>
+
+                </button>
+
+            </div>
+
+
+            <div class="selected-location-grid">
+
+
+                <div class="location-detail">
+
+                    <span>
+                        STATUS
+                    </span>
+
+                    <strong
+                        id="selectedStatus"
+                    >
+                        -
+                    </strong>
+
+                </div>
+
+
+                <div class="location-detail">
+
+                    <span>
+                        KETINGGIAN AIR
+                    </span>
+
+                    <strong
+                        id="selectedWaterLevel"
+                    >
+                        -
+                    </strong>
+
+                </div>
+
+
+                <div class="location-detail">
+
+                    <span>
+                        WAKTU PEMBACAAN
+                    </span>
+
+                    <strong
+                        id="selectedTime"
+                    >
+                        -
+                    </strong>
+
+                </div>
+
+
+                <div class="location-detail">
+
+                    <span>
+                        KOORDINAT
+                    </span>
+
+                    <strong
+                        id="selectedCoordinates"
+                    >
+                        -
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="selected-location-footer">
+
+                <span
+                    id="selectedDataAge"
+                >
+                    -
+                </span>
+
+
+                <button
+                    type="button"
+                    class="location-detail-button"
+                    id="openLiveMonitoringButton"
+                >
+
+                    <i class="fa-solid fa-wave-square"></i>
+
+                    Live Monitoring
+
+                </button>
+
+            </div>
+
+        </div>
+
+
+    </section>
+
+
+    <!-- =====================================================
+         STATUS DETAIL
+         ===================================================== -->
+
+    <section class="map-information-grid">
+
+
+        <div class="map-information-card">
+
+            <div class="information-card-icon">
+
+                <i class="fa-solid fa-circle-info"></i>
+
+            </div>
+
+
+            <div>
+
+                <h3>
+                    Tentang Peta
+                </h3>
+
+                <p>
+                    Marker pada peta menggunakan koordinat
+                    latitude dan longitude yang dikirim
+                    bersama data sensor.
                 </p>
 
             </div>
@@ -858,2447 +1931,3740 @@ body{
         </div>
 
 
-    </div>
+        <div class="map-information-card">
+
+            <div class="information-card-icon">
+
+                <i class="fa-solid fa-clock"></i>
+
+            </div>
 
 
-<!-- =====================================================
-     PART 2 DIMULAI DI SINI
-===================================================== -->
-<!-- =====================================================
-     CONTENT PETA BANJIR
-===================================================== -->
+            <div>
 
-<div class="content">
+                <h3>
+                    Pembacaan Terakhir
+                </h3>
+
+                <p id="latestMapReading">
+                    Belum ada data pembacaan.
+                </p>
+
+            </div>
+
+        </div>
 
 
-    <!-- =================================================
-         STATUS KONEKSI
-    ================================================== -->
+    </section>
+
+
+    <!-- =====================================================
+         TOAST
+         ===================================================== -->
 
     <div
-    class="live-badge"
-    id="connectionStatus">
+        class="map-toast"
+        id="mapToast"
+        role="status"
+        aria-live="polite"
+    ></div>
 
-        <div
-        class="live-dot"
-        id="connectionDot">
-        </div>
 
-        <span id="connectionText">
-            Memeriksa koneksi Supabase...
-        </span>
+    <!-- =====================================================
+         PART 2 STYLE
+         ===================================================== -->
 
-    </div>
+    <style>
 
+        /* =================================================
+           MAP PAGE
+           ================================================= */
 
-    <!-- =================================================
-         RINGKASAN STATUS SENSOR
-    ================================================== -->
+        .map-page {
 
-    <div class="grid">
+            display: flex;
 
+            flex-direction: column;
 
-        <!-- =============================================
-             ZONA AMAN
-        ============================================== -->
+            gap: 20px;
 
-        <div class="card">
+        }
 
-            <div class="card-title">
 
-                <i
-                class="fa-solid fa-circle-check safe">
-                </i>
+        /* =================================================
+           SUMMARY
+           ================================================= */
 
-                Zona Aman
+        .map-summary-grid {
 
-            </div>
+            display: grid;
 
+            grid-template-columns:
+                repeat(4, minmax(0, 1fr));
 
-            <div
-            class="big safe"
-            id="countAman">
+            gap: 16px;
 
-                0
+        }
 
-            </div>
 
+        .map-summary-card {
 
-            <div class="map-info">
+            min-width: 0;
 
-                Sensor dengan status
-                <strong>AMAN</strong>.
+            padding: 20px;
 
-            </div>
+            background:
+                var(--surface);
 
-        </div>
+            border:
+                1px solid var(--border);
 
+            border-radius:
+                var(--radius-lg);
 
-        <!-- =============================================
-             ZONA SIAGA / WASPADA
-        ============================================== -->
+            box-shadow:
+                var(--shadow);
 
-        <div class="card">
+            display: flex;
 
-            <div class="card-title">
+            align-items: center;
 
-                <i
-                class="fa-solid fa-triangle-exclamation warning">
-                </i>
+            gap: 14px;
 
-                Zona Waspada
+        }
 
-            </div>
 
+        .map-summary-icon {
 
-            <div
-            class="big warning"
-            id="countWaspada">
+            width: 44px;
+            height: 44px;
 
-                0
+            flex: 0 0 44px;
 
-            </div>
+            border-radius: 13px;
 
+            display: grid;
 
-            <div class="map-info">
+            place-items: center;
 
-                Sensor dengan kondisi
-                <strong>SIAGA atau WASPADA</strong>.
+            font-size: 16px;
 
-            </div>
+        }
 
-        </div>
 
+        .map-summary-icon.blue {
 
-        <!-- =============================================
-             ZONA BAHAYA
-        ============================================== -->
+            background:
+                rgba(37, 99, 235, .10);
 
-        <div class="card">
+            color:
+                #2563eb;
 
-            <div class="card-title">
+        }
 
-                <i
-                class="fa-solid fa-circle-exclamation danger">
-                </i>
 
-                Zona Bahaya
+        .map-summary-icon.green {
 
-            </div>
+            background:
+                rgba(34, 197, 94, .11);
 
+            color:
+                #16a34a;
 
-            <div
-            class="big danger"
-            id="countBahaya">
+        }
 
-                0
 
-            </div>
+        .map-summary-icon.orange {
 
+            background:
+                rgba(245, 158, 11, .12);
 
-            <div class="map-info">
+            color:
+                #d97706;
 
-                Sensor dengan status
-                <strong>BAHAYA</strong>.
+        }
 
-            </div>
 
-        </div>
+        .map-summary-icon.red {
 
+            background:
+                rgba(239, 68, 68, .10);
 
-    </div>
+            color:
+                #dc2626;
 
+        }
 
-    <!-- =================================================
-         PETA
-    ================================================== -->
 
-    <div class="card">
+        .map-summary-label {
 
+            display: block;
 
-        <div class="card-title">
+            font-size: 9px;
 
-            <i
-            class="fa-solid fa-map-location-dot">
-            </i>
+            font-weight: 800;
 
-            Peta Monitoring Sensor FLOWS-PRO
+            letter-spacing: .9px;
 
-        </div>
+            color:
+                var(--text-muted);
 
+        }
 
-        <!-- PETA LEAFLET -->
 
-        <div
-        id="floodMap">
-        </div>
+        .map-summary-value {
 
+            display: block;
 
-        <!-- =================================================
-             LEGENDA
-        ================================================== -->
+            margin-top: 3px;
 
-        <div class="legend">
+            font-family:
+                "Plus Jakarta Sans",
+                sans-serif;
 
+            font-size: 21px;
 
-            <div class="legend-item">
+            line-height: 1.2;
 
-                <div
-                class="legend-color legend-green">
-                </div>
+            font-weight: 800;
 
-                Aman
+        }
 
-            </div>
 
+        .map-summary-info {
 
-            <div class="legend-item">
+            display: block;
 
-                <div
-                class="legend-color legend-yellow">
-                </div>
+            margin-top: 3px;
 
-                Siaga
+            font-size: 9px;
 
-            </div>
+            color:
+                var(--text-secondary);
 
+            white-space: nowrap;
 
-            <div class="legend-item">
+            overflow: hidden;
 
-                <div
-                class="legend-color legend-orange">
-                </div>
+            text-overflow: ellipsis;
 
-                Waspada
+            max-width: 180px;
 
-            </div>
+        }
 
 
-            <div class="legend-item">
+        /* =================================================
+           MAP CARD
+           ================================================= */
 
-                <div
-                class="legend-color legend-red">
-                </div>
+        .map-card {
 
-                Bahaya
+            position: relative;
 
-            </div>
+            background:
+                var(--surface);
 
+            border:
+                1px solid var(--border);
 
-        </div>
+            border-radius:
+                var(--radius-lg);
 
+            box-shadow:
+                var(--shadow);
 
-        <!-- =================================================
-             KETERANGAN PETA
-        ================================================== -->
+            padding: 22px;
 
-        <div class="map-info">
+        }
 
-            <strong>
-                Keterangan:
-            </strong>
 
-            Titik pada peta menunjukkan lokasi
-            sensor berdasarkan koordinat
-            <strong>latitude</strong> dan
-            <strong>longitude</strong> yang diterima
-            dari perangkat FLOWS-PRO.
+        .map-card-header {
 
-            <br><br>
+            display: flex;
 
-            Posisi sensor tidak dibuat secara acak.
-            Apabila koordinat GPS belum tersedia,
-            sensor tidak akan ditempatkan secara
-            sembarangan pada peta.
+            align-items: flex-start;
 
-        </div>
+            justify-content: space-between;
 
+            gap: 20px;
 
-    </div>
+            margin-bottom: 18px;
 
+        }
 
-    <!-- =================================================
-         DETAIL SENSOR TERBARU
-    ================================================== -->
 
-    <div class="card">
+        .section-eyebrow {
 
+            display: block;
 
-        <div class="card-title">
+            margin-bottom: 5px;
 
-            <i
-            class="fa-solid fa-satellite-dish">
-            </i>
+            font-size: 9px;
 
-            Data Sensor Terbaru
+            font-weight: 800;
 
-        </div>
+            letter-spacing: 1.1px;
 
+            color:
+                var(--primary);
 
-        <div class="table-wrapper">
+        }
 
 
-            <table>
+        .map-card-header h2 {
 
-                <thead>
+            font-family:
+                "Plus Jakarta Sans",
+                sans-serif;
 
-                    <tr>
+            font-size: 16px;
 
-                        <th>
-                            ID
-                        </th>
+            line-height: 1.3;
 
-                        <th>
-                            Lokasi
-                        </th>
+            font-weight: 800;
 
-                        <th>
-                            Tinggi Air
-                        </th>
+            letter-spacing: -.3px;
 
-                        <th>
-                            Water Level
-                        </th>
+        }
 
-                        <th>
-                            Status
-                        </th>
 
-                        <th>
-                            Latitude
-                        </th>
+        .map-card-header p {
 
-                        <th>
-                            Longitude
-                        </th>
+            margin-top: 5px;
 
-                        <th>
-                            Waktu
-                        </th>
+            font-size: 11px;
 
-                    </tr>
+            color:
+                var(--text-secondary);
 
-                </thead>
+        }
 
 
-                <tbody
-                id="mapSensorTable">
+        .map-header-actions {
 
+            display: flex;
 
-                    <tr>
+            align-items: center;
 
-                        <td
-                        colspan="8"
-                        class="empty-data">
+            gap: 8px;
 
-                            <i
-                            class="fa-solid fa-spinner">
-                            </i>
+            flex-shrink: 0;
 
-                            <br>
+        }
 
-                            Mengambil data sensor...
 
-                        </td>
+        .map-primary-button,
+        .map-secondary-button {
 
-                    </tr>
+            min-height: 39px;
 
+            padding:
+                0 14px;
 
-                </tbody>
+            border-radius: 10px;
 
-            </table>
+            display: inline-flex;
 
+            align-items: center;
 
-        </div>
+            justify-content: center;
 
+            gap: 8px;
 
-    </div>
+            font-size: 10px;
 
+            font-weight: 800;
 
-    <!-- =================================================
-         INFORMASI SENSOR TERAKHIR
-    ================================================== -->
+            cursor: pointer;
 
-    <div class="card">
+            white-space: nowrap;
 
+            transition:
+                .18s ease;
 
-        <div class="card-title">
+        }
 
-            <i
-            class="fa-solid fa-circle-info">
-            </i>
 
-            Informasi Sensor Terakhir
+        .map-primary-button {
 
-        </div>
+            border:
+                1px solid var(--primary);
 
+            background:
+                var(--primary);
 
-        <div class="grid">
+            color:
+                #ffffff;
 
+        }
 
-            <!-- =========================================
-                 ID
-            ========================================== -->
 
-            <div class="sensor-info">
+        .map-primary-button:hover {
 
-                <i
-                class="fa-solid fa-fingerprint">
-                </i>
+            background:
+                var(--primary-dark);
 
-                <div>
+            border-color:
+                var(--primary-dark);
 
-                    <strong>
-                        ID Data
-                    </strong>
+        }
 
-                    <p
-                    id="latestId"
-                    class="gps-text">
 
-                        --
+        .map-secondary-button {
 
-                    </p>
+            border:
+                1px solid var(--border);
 
-                </div>
+            background:
+                var(--surface);
 
-            </div>
+            color:
+                var(--text-secondary);
 
+        }
 
-            <!-- =========================================
-                 LOKASI
-            ========================================== -->
 
-            <div class="sensor-info">
+        .map-secondary-button:hover {
 
-                <i
-                class="fa-solid fa-location-dot">
-                </i>
+            color:
+                var(--primary);
 
-                <div>
+            border-color:
+                rgba(37, 99, 235, .30);
 
-                    <strong>
-                        Lokasi
-                    </strong>
+            background:
+                var(--primary-light);
 
-                    <p
-                    id="latestLokasi"
-                    class="gps-text">
+        }
 
-                        --
 
-                    </p>
+        /* =================================================
+           MAP TOOLBAR
+           ================================================= */
 
-                </div>
+        .map-toolbar {
 
-            </div>
+            display: flex;
 
+            align-items: center;
 
-            <!-- =========================================
-                 TINGGI AIR
-            ========================================== -->
+            gap: 12px;
 
-            <div class="sensor-info">
+            margin-bottom: 12px;
 
-                <i
-                class="fa-solid fa-water">
-                </i>
+            flex-wrap: wrap;
 
-                <div>
+        }
 
-                    <strong>
-                        Tinggi Air
-                    </strong>
 
-                    <p
-                    id="latestTinggiAir"
-                    class="gps-text">
+        .map-search {
 
-                        --
+            position: relative;
 
-                    </p>
+            flex: 1;
 
-                </div>
+            min-width: 220px;
 
-            </div>
+        }
 
 
-            <!-- =========================================
-                 STATUS
-            ========================================== -->
+        .map-search > i {
 
-            <div class="sensor-info">
+            position: absolute;
 
-                <i
-                class="fa-solid fa-shield-halved">
-                </i>
+            left: 12px;
 
-                <div>
+            top: 50%;
 
-                    <strong>
-                        Status
-                    </strong>
+            transform:
+                translateY(-50%);
 
-                    <p
-                    id="latestStatus"
-                    class="gps-text">
+            font-size: 11px;
 
-                        --
+            color:
+                var(--text-muted);
 
-                    </p>
+            pointer-events: none;
 
-                </div>
+        }
 
-            </div>
 
+        .map-search input {
 
-            <!-- =========================================
-                 WATER LEVEL
-            ========================================== -->
+            width: 100%;
 
-            <div class="sensor-info">
+            height: 40px;
 
-                <i
-                class="fa-solid fa-bars-staggered">
-                </i>
+            padding:
+                0 12px 0 34px;
 
-                <div>
+            border:
+                1px solid var(--border);
 
-                    <strong>
-                        Water Level
-                    </strong>
+            border-radius: 10px;
 
-                    <p
-                    id="latestWaterLevel"
-                    class="gps-text">
+            outline: none;
 
-                        --
+            background:
+                var(--surface-soft);
 
-                    </p>
+            color:
+                var(--text-primary);
 
-                </div>
+            font-size: 11px;
 
-            </div>
+        }
 
 
-            <!-- =========================================
-                 WAKTU
-            ========================================== -->
+        .map-search input:focus {
 
-            <div class="sensor-info">
+            border-color:
+                var(--primary);
 
-                <i
-                class="fa-solid fa-clock">
-                </i>
+            box-shadow:
+                0 0 0 3px
+                rgba(37, 99, 235, .08);
 
-                <div>
+        }
 
-                    <strong>
-                        Waktu Pengukuran
-                    </strong>
 
-                    <p
-                    id="latestTime"
-                    class="gps-text">
+        .map-filter {
 
-                        --
+            display: flex;
 
-                    </p>
+            align-items: center;
 
-                </div>
+            gap: 8px;
 
-            </div>
+        }
 
 
-        </div>
+        .map-filter label {
 
+            font-size: 10px;
 
-    </div>
+            font-weight: 700;
 
+            color:
+                var(--text-secondary);
 
-    <!-- =================================================
-         STATUS GPS
-    ================================================== -->
+        }
 
-    <div class="card">
 
+        .map-filter select {
 
-        <div class="card-title">
+            height: 40px;
 
-            <i
-            class="fa-solid fa-satellite">
-            </i>
+            min-width: 135px;
 
-            Informasi GPS
+            padding:
+                0 11px;
 
-        </div>
+            border:
+                1px solid var(--border);
 
+            border-radius: 10px;
 
-        <div class="grid">
+            outline: none;
 
+            background:
+                var(--surface-soft);
 
-            <div class="sensor-info">
+            color:
+                var(--text-primary);
 
-                <i
-                class="fa-solid fa-compass">
-                </i>
+            font-size: 10px;
 
-                <div>
+            cursor: pointer;
 
-                    <strong>
-                        Latitude
-                    </strong>
+        }
 
-                    <p
-                    id="latestLatitude"
-                    class="gps-text">
 
-                        --
+        .map-filter select:focus {
 
-                    </p>
+            border-color:
+                var(--primary);
 
-                </div>
+        }
 
-            </div>
 
+        .map-data-status {
 
-            <div class="sensor-info">
+            height: 40px;
 
-                <i
-                class="fa-solid fa-compass">
-                </i>
+            padding:
+                0 12px;
 
-                <div>
+            border:
+                1px solid var(--border);
 
-                    <strong>
-                        Longitude
-                    </strong>
+            border-radius: 10px;
 
-                    <p
-                    id="latestLongitude"
-                    class="gps-text">
+            display: flex;
 
-                        --
+            align-items: center;
 
-                    </p>
+            gap: 7px;
 
-                </div>
+            font-size: 9px;
 
-            </div>
+            font-weight: 700;
 
+            color:
+                var(--text-secondary);
 
-            <div class="sensor-info">
+            white-space: nowrap;
 
-                <i
-                class="fa-solid fa-satellite-dish">
-                </i>
+        }
 
-                <div>
 
-                    <strong>
-                        Status GPS
-                    </strong>
+        .map-data-dot {
 
-                    <p
-                    id="latestGPSStatus"
-                    class="gps-text">
+            width: 7px;
+            height: 7px;
 
-                        Menunggu...
+            border-radius: 50%;
 
-                    </p>
+            background:
+                var(--warning);
 
-                </div>
+        }
 
-            </div>
 
+        .map-data-dot.online {
 
-        </div>
+            background:
+                var(--success);
 
+            box-shadow:
+                0 0 0 3px
+                rgba(34, 197, 94, .10);
 
-    </div>
+        }
 
 
-    <!-- =================================================
-         STATUS SISTEM
-    ================================================== -->
+        .map-data-dot.offline {
 
-    <div class="card">
+            background:
+                var(--danger);
 
+        }
 
-        <div class="card-title">
 
-            <i
-            class="fa-solid fa-server">
-            </i>
+        /* =================================================
+           MAP
+           ================================================= */
 
-            Status Sistem Peta
+        .map-wrapper {
 
-        </div>
+            position: relative;
 
+            width: 100%;
 
-        <div class="table-wrapper">
+            height: 560px;
 
-            <table>
+            overflow: hidden;
 
-                <tbody>
+            border:
+                1px solid var(--border);
 
+            border-radius: 14px;
 
-                    <tr>
+            background:
+                var(--surface-soft);
 
-                        <td>
-                            Koneksi Internet
-                        </td>
+        }
 
-                        <td
-                        id="internetStatus">
 
-                            Memeriksa...
+        .flood-map {
 
-                        </td>
+            width: 100%;
 
-                    </tr>
+            height: 100%;
 
+            z-index: 1;
 
-                    <tr>
+        }
 
-                        <td>
-                            Database Supabase
-                        </td>
 
-                        <td
-                        id="databaseStatus">
+        .map-loading {
 
-                            Memeriksa...
+            position: absolute;
 
-                        </td>
+            inset: 0;
 
-                    </tr>
+            z-index: 500;
 
+            background:
+                rgba(
+                    248,
+                    250,
+                    252,
+                    .88
+                );
 
-                    <tr>
+            backdrop-filter:
+                blur(2px);
 
-                        <td>
-                            Jumlah Sensor
-                        </td>
+            display: flex;
 
-                        <td
-                        id="totalSensor">
+            flex-direction: column;
 
-                            0
+            align-items: center;
 
-                        </td>
+            justify-content: center;
 
-                    </tr>
+            gap: 10px;
 
+            color:
+                var(--text-secondary);
 
-                    <tr>
+            font-size: 10px;
 
-                        <td>
-                            Data Peta Terakhir
-                        </td>
+            font-weight: 700;
 
-                        <td
-                        id="lastMapUpdate">
+        }
 
-                            --
 
-                        </td>
+        [data-theme="dark"]
+        .map-loading {
 
-                    </tr>
+            background:
+                rgba(
+                    15,
+                    23,
+                    42,
+                    .88
+                );
 
+        }
 
-                </tbody>
 
-            </table>
+        .map-loading-spinner {
 
-        </div>
+            width: 25px;
+            height: 25px;
 
+            border:
+                3px solid
+                var(--border);
 
-    </div>
+            border-top-color:
+                var(--primary);
 
+            border-radius: 50%;
 
-</div>
+            animation:
+                mapSpin .7s linear infinite;
 
+        }
 
-<!-- =====================================================
-     AKHIR PART 2
-     
-     PART 3 = JAVASCRIPT PETA + SUPABASE
-===================================================== -->
-<!-- =====================================================
-     PART 3 — JAVASCRIPT PETA BANJIR
-===================================================== -->
+
+        @keyframes mapSpin {
+
+            to {
+
+                transform:
+                    rotate(360deg);
+
+            }
+
+        }
+
+
+        .map-empty {
+
+            position: absolute;
+
+            inset: 0;
+
+            z-index: 450;
+
+            background:
+                var(--surface);
+
+            display: flex;
+
+            flex-direction: column;
+
+            align-items: center;
+
+            justify-content: center;
+
+            text-align: center;
+
+            padding: 30px;
+
+        }
+
+
+        .map-empty-icon {
+
+            width: 50px;
+            height: 50px;
+
+            margin-bottom: 12px;
+
+            border-radius: 15px;
+
+            background:
+                var(--surface-soft);
+
+            color:
+                var(--text-muted);
+
+            display: grid;
+
+            place-items: center;
+
+            font-size: 18px;
+
+        }
+
+
+        .map-empty strong {
+
+            font-family:
+                "Plus Jakarta Sans",
+                sans-serif;
+
+            font-size: 14px;
+
+            font-weight: 800;
+
+        }
+
+
+        .map-empty span {
+
+            max-width: 400px;
+
+            margin-top: 5px;
+
+            font-size: 10px;
+
+            line-height: 1.6;
+
+            color:
+                var(--text-secondary);
+
+        }
+
+
+        /* =================================================
+           MAP LEGEND
+           ================================================= */
+
+        .map-legend {
+
+            position: absolute;
+
+            right: 14px;
+
+            bottom: 14px;
+
+            z-index: 500;
+
+            min-width: 145px;
+
+            padding: 12px;
+
+            border:
+                1px solid rgba(
+                    255,
+                    255,
+                    255,
+                    .75
+                );
+
+            border-radius: 11px;
+
+            background:
+                rgba(
+                    255,
+                    255,
+                    255,
+                    .94
+                );
+
+            box-shadow:
+                0 8px 25px
+                rgba(15, 23, 42, .12);
+
+            backdrop-filter:
+                blur(7px);
+
+        }
+
+
+        [data-theme="dark"]
+        .map-legend {
+
+            background:
+                rgba(
+                    15,
+                    23,
+                    42,
+                    .94
+                );
+
+            border-color:
+                var(--border);
+
+        }
+
+
+        .map-legend-title {
+
+            margin-bottom: 8px;
+
+            font-size: 8px;
+
+            font-weight: 800;
+
+            letter-spacing: 1px;
+
+            color:
+                var(--text-muted);
+
+        }
+
+
+        .legend-item {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            margin-top: 6px;
+
+            font-size: 9px;
+
+            font-weight: 700;
+
+            color:
+                var(--text-secondary);
+
+        }
+
+
+        .legend-marker {
+
+            width: 10px;
+            height: 10px;
+
+            border-radius: 50%;
+
+            border:
+                2px solid #ffffff;
+
+            box-shadow:
+                0 1px 5px
+                rgba(15, 23, 42, .25);
+
+        }
+
+
+        .legend-marker.safe {
+
+            background:
+                #22c55e;
+
+        }
+
+
+        .legend-marker.standby {
+
+            background:
+                #f59e0b;
+
+        }
+
+
+        .legend-marker.warning {
+
+            background:
+                #f97316;
+
+        }
+
+
+        .legend-marker.danger {
+
+            background:
+                #ef4444;
+
+        }
+
+
+        /* =================================================
+           SELECTED LOCATION
+           ================================================= */
+
+        .selected-location {
+
+            margin-top: 14px;
+
+            padding: 18px;
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 14px;
+
+            background:
+                var(--surface-soft);
+
+        }
+
+
+        .selected-location-header {
+
+            display: flex;
+
+            align-items: flex-start;
+
+            justify-content: space-between;
+
+            gap: 15px;
+
+            margin-bottom: 16px;
+
+        }
+
+
+        .selected-location-header h3 {
+
+            font-family:
+                "Plus Jakarta Sans",
+                sans-serif;
+
+            font-size: 15px;
+
+            font-weight: 800;
+
+        }
+
+
+        .close-location-button {
+
+            width: 32px;
+            height: 32px;
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 9px;
+
+            background:
+                var(--surface);
+
+            color:
+                var(--text-secondary);
+
+            cursor: pointer;
+
+        }
+
+
+        .close-location-button:hover {
+
+            color:
+                var(--danger);
+
+        }
+
+
+        .selected-location-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, minmax(0, 1fr));
+
+            gap: 12px;
+
+        }
+
+
+        .location-detail {
+
+            padding: 12px;
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 10px;
+
+            background:
+                var(--surface);
+
+        }
+
+
+        .location-detail span {
+
+            display: block;
+
+            font-size: 8px;
+
+            font-weight: 800;
+
+            letter-spacing: .7px;
+
+            color:
+                var(--text-muted);
+
+        }
+
+
+        .location-detail strong {
+
+            display: block;
+
+            margin-top: 4px;
+
+            font-size: 11px;
+
+            color:
+                var(--text-primary);
+
+        }
+
+
+        .selected-location-footer {
+
+            margin-top: 12px;
+
+            padding-top: 12px;
+
+            border-top:
+                1px solid var(--border);
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 15px;
+
+        }
+
+
+        #selectedDataAge {
+
+            font-size: 9px;
+
+            color:
+                var(--text-secondary);
+
+        }
+
+
+        .location-detail-button {
+
+            min-height: 34px;
+
+            padding:
+                0 12px;
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 9px;
+
+            background:
+                var(--surface);
+
+            color:
+                var(--primary);
+
+            font-size: 9px;
+
+            font-weight: 800;
+
+            cursor: pointer;
+
+        }
+
+
+        .location-detail-button:hover {
+
+            background:
+                var(--primary-light);
+
+        }
+
+
+        /* =================================================
+           INFORMATION
+           ================================================= */
+
+        .map-information-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, minmax(0, 1fr));
+
+            gap: 16px;
+
+        }
+
+
+        .map-information-card {
+
+            padding: 18px;
+
+            background:
+                var(--surface);
+
+            border:
+                1px solid var(--border);
+
+            border-radius:
+                var(--radius-lg);
+
+            box-shadow:
+                var(--shadow);
+
+            display: flex;
+
+            align-items: flex-start;
+
+            gap: 13px;
+
+        }
+
+
+        .information-card-icon {
+
+            width: 38px;
+            height: 38px;
+
+            flex: 0 0 38px;
+
+            border-radius: 11px;
+
+            background:
+                var(--primary-light);
+
+            color:
+                var(--primary);
+
+            display: grid;
+
+            place-items: center;
+
+            font-size: 14px;
+
+        }
+
+
+        .map-information-card h3 {
+
+            font-family:
+                "Plus Jakarta Sans",
+                sans-serif;
+
+            font-size: 12px;
+
+            font-weight: 800;
+
+        }
+
+
+        .map-information-card p {
+
+            margin-top: 4px;
+
+            font-size: 10px;
+
+            line-height: 1.6;
+
+            color:
+                var(--text-secondary);
+
+        }
+
+
+        /* =================================================
+           TOAST
+           ================================================= */
+
+        .map-toast {
+
+            position: fixed;
+
+            right: 25px;
+
+            bottom: 25px;
+
+            max-width: 340px;
+
+            padding:
+                12px 16px;
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 12px;
+
+            background:
+                var(--surface);
+
+            box-shadow:
+                0 15px 40px
+                rgba(15, 23, 42, .14);
+
+            color:
+                var(--text-primary);
+
+            font-size: 10px;
+
+            font-weight: 700;
+
+            opacity: 0;
+
+            visibility: hidden;
+
+            transform:
+                translateY(10px);
+
+            transition:
+                .2s ease;
+
+            z-index: 2000;
+
+        }
+
+
+        .map-toast.show {
+
+            opacity: 1;
+
+            visibility: visible;
+
+            transform:
+                translateY(0);
+
+        }
+
+
+        /* =================================================
+           RESPONSIVE
+           ================================================= */
+
+        @media (max-width: 1100px) {
+
+            .map-summary-grid {
+
+                grid-template-columns:
+                    repeat(2, minmax(0, 1fr));
+
+            }
+
+
+            .selected-location-grid {
+
+                grid-template-columns:
+                    repeat(2, minmax(0, 1fr));
+
+            }
+
+        }
+
+
+        @media (max-width: 800px) {
+
+            .map-card-header {
+
+                flex-direction: column;
+
+            }
+
+
+            .map-header-actions {
+
+                width: 100%;
+
+            }
+
+
+            .map-header-actions button {
+
+                flex: 1;
+
+            }
+
+
+            .map-wrapper {
+
+                height: 500px;
+
+            }
+
+
+            .map-information-grid {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+        }
+
+
+        @media (max-width: 650px) {
+
+            .map-summary-grid {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+
+            .map-toolbar {
+
+                align-items: stretch;
+
+                flex-direction: column;
+
+            }
+
+
+            .map-search {
+
+                width: 100%;
+
+                min-width: 0;
+
+            }
+
+
+            .map-filter {
+
+                width: 100%;
+
+            }
+
+
+            .map-filter label {
+
+                display: none;
+
+            }
+
+
+            .map-filter select {
+
+                width: 100%;
+
+            }
+
+
+            .map-data-status {
+
+                width: 100%;
+
+                justify-content: center;
+
+            }
+
+
+            .map-wrapper {
+
+                height: 440px;
+
+            }
+
+
+            .map-legend {
+
+                right: 8px;
+
+                bottom: 8px;
+
+                min-width: 125px;
+
+            }
+
+
+            .selected-location-grid {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+
+            .selected-location-footer {
+
+                align-items: stretch;
+
+                flex-direction: column;
+
+            }
+
+
+            .location-detail-button {
+
+                width: 100%;
+
+            }
+
+        }
+
+    </style>
+    <!-- =========================================================
+     PART 3 — LOGIC PETA BANJIR & SUPABASE
+     Paste langsung di bawah PART 2
+========================================================= -->
 
 <script>
+/* =========================================================
+   KONFIGURASI
+========================================================= */
 
-/* =====================================================
-   KONFIGURASI SUPABASE
-===================================================== */
+const SUPABASE_URL = "https://nydapuhnswrbgbjkaxqa.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_dypnRnjABFIf6GcshfrTIA_Q0zhuR0L";
 
-const SUPABASE_URL =
-    'https://nydapuhnswrbgbjkaxqa.supabase.co';
+const SENSOR_TIMEOUT_SECONDS = 30;
+const MAP_REFRESH_INTERVAL = 30000;
 
-const SUPABASE_ANON_KEY =
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im55ZGFwdWhuc3dyYmdiamtheHFhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA0MzI2NTEsImV4cCI6MjEwNjAwODY1MX0.hJG7hUTuRic3sJmCWDONNyL5Qay-vfdu2vLAMG6FzfI';
-
-
-/* =====================================================
-   CLIENT SUPABASE
-===================================================== */
-
-const supabaseClient =
-    window.supabase.createClient(
-        SUPABASE_URL,
-        SUPABASE_ANON_KEY
-    );
-
-
-/* =====================================================
-   CACHE
-===================================================== */
-
-const MAP_CACHE_KEY =
-    'flowspro_flood_map_data';
-
-
-/* =====================================================
-   PETA
-===================================================== */
-
-const floodMap =
-    L.map('floodMap');
-
-
-/*
- * Posisi awal peta.
- * Ini hanya posisi awal tampilan,
- * BUKAN posisi sensor.
- */
-
-floodMap.setView(
-    [-2.5489, 118.0149],
-    5
-);
-
-
-/* =====================================================
-   TILE OPENSTREETMAP
-===================================================== */
-
-L.tileLayer(
-    'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+const supabaseClient = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY,
     {
-        maxZoom:19,
-
-        attribution:
-        '&copy; OpenStreetMap contributors'
+        auth: {
+            persistSession: true,
+            autoRefreshToken: true,
+            detectSessionInUrl: true
+        }
     }
-).addTo(
-    floodMap
 );
 
 
-/* =====================================================
-   GROUP MARKER
-===================================================== */
+/* =========================================================
+   VARIABEL GLOBAL
+========================================================= */
 
-let markerLayer =
-    L.layerGroup().addTo(
-        floodMap
-    );
-
-
-/* =====================================================
-   PROFILE USER
-===================================================== */
-
-function loadUserProfile() {
-
-    try {
-
-        const loginData =
-            JSON.parse(
-                localStorage.getItem(
-                    'userLogin'
-                )
-            );
+let floodMap = null;
+let mapMarkersLayer = null;
+let mapLocations = [];
+let filteredMapLocations = [];
+let selectedMapLocation = null;
+let mapRefreshTimer = null;
+let mapInitialized = false;
 
 
-        if (
-            loginData &&
-            loginData.nama
-        ) {
+/* =========================================================
+   HELPER
+========================================================= */
 
-            const userName =
-                document.getElementById(
-                    'userName'
-                );
-
-
-            if (userName) {
-
-                userName.innerText =
-                    loginData.nama;
-
-            }
-
-        }
-
-    }
-
-    catch(error) {
-
-        console.log(
-            'Data user tidak tersedia.'
-        );
-
-    }
-
-
-    /* ================================================
-       FOTO PROFILE
-    ================================================= */
-
-    const savedAvatar =
-        localStorage.getItem(
-            'flowspro_avatar'
-        );
-
-
-    if (savedAvatar) {
-
-        const userPhoto =
-            document.getElementById(
-                'userPhoto'
-            );
-
-
-        if (userPhoto) {
-
-            userPhoto.src =
-                savedAvatar;
-
-        }
-
-    }
-
+function escapeHtml(value) {
+    return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
 }
 
 
-loadUserProfile();
+function formatWaterLevel(value) {
+    const number = Number(value);
 
-
-/* =====================================================
-   FORMAT WAKTU
-===================================================== */
-
-function formatWaktu(
-    timestamp
-) {
-
-    if (!timestamp) {
-
-        return '--';
-
+    if (!Number.isFinite(number)) {
+        return "-";
     }
 
-
-    const waktu =
-        new Date(
-            timestamp
-        );
+    return `${number.toFixed(1)} cm`;
+}
 
 
-    if (
-        isNaN(
-            waktu.getTime()
-        )
-    ) {
-
-        return '--';
-
+function formatDateTime(value) {
+    if (!value) {
+        return "-";
     }
 
+    const date = new Date(value);
 
-    return waktu.toLocaleString(
-        'id-ID',
+    if (Number.isNaN(date.getTime())) {
+        return "-";
+    }
+
+    return date.toLocaleString("id-ID", {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit"
+    });
+}
+
+
+function getAgeSeconds(value) {
+    if (!value) {
+        return Infinity;
+    }
+
+    const time = new Date(value).getTime();
+
+    if (!Number.isFinite(time)) {
+        return Infinity;
+    }
+
+    return Math.max(0, (Date.now() - time) / 1000);
+}
+
+
+function isSensorOnline(item) {
+    return getAgeSeconds(item.created_at) <= SENSOR_TIMEOUT_SECONDS;
+}
+
+
+function normalizeStatus(status) {
+    const value = String(status || "")
+        .trim()
+        .toUpperCase();
+
+    if (value.includes("BAHAYA") || value.includes("DARURAT")) {
+        return "BAHAYA";
+    }
+
+    if (value.includes("WASPADA")) {
+        return "WASPADA";
+    }
+
+    if (value.includes("SIAGA")) {
+        return "SIAGA";
+    }
+
+    if (value.includes("AMAN")) {
+        return "AMAN";
+    }
+
+    return "AMAN";
+}
+
+
+function getStatusLabel(item) {
+    if (!isSensorOnline(item)) {
+        return "OFFLINE";
+    }
+
+    return normalizeStatus(item.status);
+}
+
+
+function getStatusClass(item) {
+    if (!isSensorOnline(item)) {
+        return "offline";
+    }
+
+    return normalizeStatus(item.status).toLowerCase();
+}
+
+
+function getStatusIcon(item) {
+    const status = getStatusLabel(item);
+
+    if (status === "BAHAYA") {
+        return "fa-triangle-exclamation";
+    }
+
+    if (status === "WASPADA") {
+        return "fa-triangle-exclamation";
+    }
+
+    if (status === "SIAGA") {
+        return "fa-circle-exclamation";
+    }
+
+    if (status === "OFFLINE") {
+        return "fa-plug-circle-xmark";
+    }
+
+    return "fa-circle-check";
+}
+
+
+function showMapToast(message, type = "info") {
+    const toast = document.getElementById("mapToast");
+
+    if (!toast) {
+        return;
+    }
+
+    toast.textContent = message;
+    toast.className = `map-toast show ${type}`;
+
+    clearTimeout(window.mapToastTimer);
+
+    window.mapToastTimer = setTimeout(() => {
+        toast.classList.remove("show");
+    }, 3000);
+}
+
+
+/* =========================================================
+   INISIALISASI MAP
+========================================================= */
+
+function initializeFloodMap() {
+    if (mapInitialized) {
+        return;
+    }
+
+    const mapElement = document.getElementById("floodMap");
+
+    if (!mapElement) {
+        console.error("Element #floodMap tidak ditemukan.");
+        return;
+    }
+
+    if (typeof L === "undefined") {
+        console.error("Leaflet belum tersedia.");
+        showMapToast("Peta gagal dimuat. Library peta tidak tersedia.", "error");
+        return;
+    }
+
+    floodMap = L.map("floodMap", {
+        zoomControl: true,
+        attributionControl: true
+    }).setView([-2.5, 118], 5);
+
+    L.tileLayer(
+        "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
         {
-            day:'2-digit',
-            month:'2-digit',
-            year:'numeric',
-            hour:'2-digit',
-            minute:'2-digit',
-            second:'2-digit'
+            maxZoom: 19,
+            attribution: '&copy; OpenStreetMap contributors'
         }
-    );
+    ).addTo(floodMap);
 
+    mapMarkersLayer = L.layerGroup().addTo(floodMap);
+
+    mapInitialized = true;
+
+    setTimeout(() => {
+        floodMap.invalidateSize();
+    }, 300);
 }
 
 
-/* =====================================================
-   WARNA MARKER BERDASARKAN STATUS
-===================================================== */
+/* =========================================================
+   LOAD DATA DARI SUPABASE
+========================================================= */
 
-function getMarkerColor(
-    status
-) {
+async function loadMapData(showLoading = false) {
+    if (showLoading) {
+        const loading = document.getElementById("mapLoading");
 
-    const value =
-        String(
-            status || ''
-        ).toUpperCase();
-
-
-    if (
-        value === 'AMAN'
-    ) {
-
-        return '#27ae60';
-
+        if (loading) {
+            loading.classList.add("show");
+        }
     }
 
+    setMapDatabaseStatus("loading");
 
-    if (
-        value === 'SIAGA'
-    ) {
+    try {
+        const { data, error } = await supabaseClient
+            .from("data_air")
+            .select(`
+                id,
+                lokasi,
+                tinggi_air,
+                water_level,
+                status,
+                latitude,
+                longitude,
+                created_at
+            `)
+            .order("created_at", {
+                ascending: false
+            })
+            .limit(2000);
 
-        return '#f1c40f';
+        if (error) {
+            throw error;
+        }
 
+        const rows = Array.isArray(data) ? data : [];
+
+        mapLocations = buildLatestLocations(rows);
+
+        applyMapFilters();
+
+        updateMapSummary();
+        updateLatestMapReading();
+
+        setMapDatabaseStatus("online");
+
+        const empty = document.getElementById("mapEmpty");
+
+        if (empty) {
+            empty.classList.toggle("show", mapLocations.length === 0);
+        }
+
+    } catch (error) {
+        console.error("Gagal mengambil data peta:", error);
+
+        setMapDatabaseStatus("offline");
+
+        showMapToast(
+            "Data peta gagal dimuat dari database.",
+            "error"
+        );
+
+    } finally {
+        const loading = document.getElementById("mapLoading");
+
+        if (loading) {
+            loading.classList.remove("show");
+        }
     }
-
-
-    if (
-        value === 'WASPADA'
-    ) {
-
-        return '#e67e22';
-
-    }
-
-
-    if (
-        value === 'BAHAYA'
-    ) {
-
-        return '#e74c3c';
-
-    }
-
-
-    return '#777';
-
 }
 
 
-/* =====================================================
-   STATUS CLASS
-===================================================== */
+/* =========================================================
+   AMBIL DATA TERBARU PER LOKASI
+========================================================= */
 
-function getStatusClass(
-    status
-) {
+function buildLatestLocations(rows) {
+    const latestByLocation = new Map();
 
-    const value =
-        String(
-            status || ''
-        ).toUpperCase();
+    rows.forEach(row => {
+        const latitude = Number(row.latitude);
+        const longitude = Number(row.longitude);
 
+        if (!Number.isFinite(latitude) || !Number.isFinite(longitude)) {
+            return;
+        }
 
-    if (
-        value === 'AMAN'
-    ) {
+        if (latitude < -90 || latitude > 90) {
+            return;
+        }
 
-        return 'safe';
+        if (longitude < -180 || longitude > 180) {
+            return;
+        }
 
-    }
+        const locationName =
+            String(row.lokasi || "").trim() ||
+            `Lokasi ${row.id}`;
 
+        const key = locationName.toLowerCase();
 
-    if (
-        value === 'SIAGA' ||
-        value === 'WASPADA'
-    ) {
+        if (!latestByLocation.has(key)) {
+            latestByLocation.set(key, {
+                ...row,
+                lokasi: locationName,
+                latitude,
+                longitude
+            });
+        }
+    });
 
-        return 'warning';
-
-    }
-
-
-    if (
-        value === 'BAHAYA'
-    ) {
-
-        return 'danger';
-
-    }
-
-
-    return '';
-
+    return Array.from(latestByLocation.values());
 }
 
 
-/* =====================================================
-   UPDATE STATUS KONEKSI
-===================================================== */
+/* =========================================================
+   FILTER DATA
+========================================================= */
 
-function updateConnection(
-    online,
-    cache = false
-) {
+function applyMapFilters() {
+    const searchInput = document.getElementById("mapSearchInput");
+    const statusFilter = document.getElementById("mapStatusFilter");
 
-    const badge =
-        document.getElementById(
-            'connectionStatus'
-        );
+    const searchValue = String(
+        searchInput?.value || ""
+    ).trim().toLowerCase();
 
+    const selectedStatus = String(
+        statusFilter?.value || "ALL"
+    ).toUpperCase();
 
-    const dot =
-        document.getElementById(
-            'connectionDot'
-        );
+    filteredMapLocations = mapLocations.filter(item => {
 
+        const locationName = String(
+            item.lokasi || ""
+        ).toLowerCase();
 
-    const text =
-        document.getElementById(
-            'connectionText'
-        );
+        const status = getStatusLabel(item);
 
+        const matchesSearch =
+            !searchValue ||
+            locationName.includes(searchValue);
 
-    const internet =
-        document.getElementById(
-            'internetStatus'
-        );
+        const matchesStatus =
+            selectedStatus === "ALL" ||
+            status === selectedStatus;
 
+        return matchesSearch && matchesStatus;
+    });
 
-    const database =
-        document.getElementById(
-            'databaseStatus'
-        );
-
-
-    if (online) {
-
-        if (badge) {
-
-            badge.classList.remove(
-                'offline'
-            );
-
-        }
-
-
-        if (dot) {
-
-            dot.style.background =
-                '#27ae60';
-
-        }
-
-
-        if (text) {
-
-            text.innerText =
-                'FLOWS-PRO ONLINE';
-
-        }
-
-
-        if (internet) {
-
-            internet.innerHTML =
-                '<span class="safe">● Online</span>';
-
-        }
-
-
-        if (database) {
-
-            database.innerHTML =
-                '<span class="safe">● Terhubung</span>';
-
-        }
-
-    }
-
-    else {
-
-        if (badge) {
-
-            badge.classList.add(
-                'offline'
-            );
-
-        }
-
-
-        if (dot) {
-
-            dot.style.background =
-                '#e74c3c';
-
-        }
-
-
-        if (text) {
-
-            if (cache) {
-
-                text.innerText =
-                    'FLOWS-PRO OFFLINE — DATA TERAKHIR';
-
-            }
-
-            else {
-
-                text.innerText =
-                    'FLOWS-PRO OFFLINE';
-
-            }
-
-        }
-
-
-        if (internet) {
-
-            internet.innerHTML =
-                '<span class="danger">● Offline</span>';
-
-        }
-
-
-        if (database) {
-
-            database.innerHTML =
-                '<span class="danger">● Tidak terhubung</span>';
-
-        }
-
-    }
-
+    renderMapMarkers(filteredMapLocations);
 }
 
 
-/* =====================================================
-   SIMPAN CACHE
-===================================================== */
+/* =========================================================
+   RENDER MARKER
+========================================================= */
 
-function simpanCache(
-    data
-) {
-
-    if (
-        !data ||
-        data.length === 0
-    ) {
-
+function renderMapMarkers(locations) {
+    if (!floodMap || !mapMarkersLayer) {
         return;
-
     }
 
-
-    try {
-
-        localStorage.setItem(
-            MAP_CACHE_KEY,
-            JSON.stringify(data)
-        );
-
-
-        console.log(
-            'Data peta disimpan ke cache.'
-        );
-
-    }
-
-    catch(error) {
-
-        console.error(
-            'Gagal menyimpan cache:',
-            error
-        );
-
-    }
-
-}
-
-
-/* =====================================================
-   AMBIL CACHE
-===================================================== */
-
-function ambilCache() {
-
-    try {
-
-        const cache =
-            localStorage.getItem(
-                MAP_CACHE_KEY
-            );
-
-
-        if (!cache) {
-
-            return null;
-
-        }
-
-
-        const data =
-            JSON.parse(
-                cache
-            );
-
-
-        if (
-            !Array.isArray(data) ||
-            data.length === 0
-        ) {
-
-            return null;
-
-        }
-
-
-        return data;
-
-    }
-
-    catch(error) {
-
-        console.error(
-            'Gagal membaca cache:',
-            error
-        );
-
-        return null;
-
-    }
-
-}
-
-
-/* =====================================================
-   VALIDASI KOORDINAT
-===================================================== */
-
-function koordinatValid(
-    latitude,
-    longitude
-) {
-
-    const lat =
-        Number(
-            latitude
-        );
-
-
-    const lng =
-        Number(
-            longitude
-        );
-
-
-    /*
-     * 0,0 dianggap tidak valid
-     * karena Wemos mengirim 0 jika GPS
-     * belum mendapatkan koordinat.
-     */
-
-    if (
-        !Number.isFinite(lat) ||
-        !Number.isFinite(lng)
-    ) {
-
-        return false;
-
-    }
-
-
-    if (
-        lat === 0 &&
-        lng === 0
-    ) {
-
-        return false;
-
-    }
-
-
-    if (
-        lat < -90 ||
-        lat > 90
-    ) {
-
-        return false;
-
-    }
-
-
-    if (
-        lng < -180 ||
-        lng > 180
-    ) {
-
-        return false;
-
-    }
-
-
-    return true;
-
-}
-
-
-/* =====================================================
-   BUAT POPUP SENSOR
-===================================================== */
-
-function buatPopup(
-    item
-) {
-
-    const tinggi =
-        Number(
-            item.tinggi_air
-        );
-
-
-    const tinggiText =
-        Number.isFinite(
-            tinggi
-        )
-        ?
-        tinggi + ' cm'
-        :
-        '--';
-
-
-    const lokasi =
-        (
-            item.lokasi !== null &&
-            item.lokasi !== undefined &&
-            String(item.lokasi).trim() !== ''
-        )
-        ?
-        item.lokasi
-        :
-        'Lokasi belum tersedia';
-
-
-    const status =
-        String(
-            item.status ||
-            'UNKNOWN'
-        ).toUpperCase();
-
-
-    const latitude =
-        Number(
-            item.latitude
-        );
-
-
-    const longitude =
-        Number(
-            item.longitude
-        );
-
-
-    const latitudeText =
-        Number.isFinite(latitude)
-        ?
-        latitude.toFixed(6)
-        :
-        '--';
-
-
-    const longitudeText =
-        Number.isFinite(longitude)
-        ?
-        longitude.toFixed(6)
-        :
-        '--';
-
-
-    return `
-
-        <div
-        style="
-        min-width:220px;
-        line-height:1.7;
-        ">
-
-            <strong>
-                FLOWS-PRO SENSOR
-            </strong>
-
-            <hr>
-
-            <b>ID:</b>
-            ${item.id ?? '--'}
-
-            <br>
-
-            <b>Lokasi:</b>
-            ${lokasi}
-
-            <br>
-
-            <b>Tinggi Air:</b>
-            ${tinggiText}
-
-            <br>
-
-            <b>Water Level:</b>
-            ${item.water_level || '--'}
-
-            <br>
-
-            <b>Status:</b>
-            <span
-            style="
-            color:${getMarkerColor(status)};
-            font-weight:bold;
-            ">
-
-                ${status}
-
-            </span>
-
-            <br>
-
-            <b>Latitude:</b>
-            ${latitudeText}
-
-            <br>
-
-            <b>Longitude:</b>
-            ${longitudeText}
-
-            <br>
-
-            <b>Pengukuran:</b>
-            ${formatWaktu(item.created_at)}
-
-        </div>
-
-    `;
-
-}
-
-
-/* =====================================================
-   TAMPILKAN MARKER
-===================================================== */
-
-function tampilkanMarker(
-    data
-) {
-
-    /*
-     * Hapus marker lama terlebih dahulu.
-     */
-
-    markerLayer.clearLayers();
-
-
-    /*
-     * Menyimpan koordinat valid
-     * untuk menentukan posisi peta.
-     */
-
-    const validPoints = [];
-
-
-    data.forEach(
-        function(item) {
-
-            const latitude =
-                Number(
-                    item.latitude
-                );
-
-
-            const longitude =
-                Number(
-                    item.longitude
-                );
-
-
-            /*
-             * Jangan tampilkan marker
-             * jika GPS belum valid.
-             */
-
-            if (
-                !koordinatValid(
-                    latitude,
-                    longitude
-                )
-            ) {
-
-                return;
-
-            }
-
-
-            validPoints.push(
-                [
-                    latitude,
-                    longitude
-                ]
-            );
-
-
-            const status =
-                String(
-                    item.status ||
-                    'UNKNOWN'
-                ).toUpperCase();
-
-
-            const color =
-                getMarkerColor(
-                    status
-                );
-
-
-            /*
-             * Marker lingkaran.
-             */
-
-            const marker =
-                L.circleMarker(
-                    [
-                        latitude,
-                        longitude
-                    ],
-                    {
-
-                        radius:11,
-
-                        fillColor:color,
-
-                        color:'#ffffff',
-
-                        weight:3,
-
-                        fillOpacity:0.9
-
-                    }
-                );
-
-
-            marker
-                .addTo(markerLayer)
-                .bindPopup(
-                    buatPopup(item)
-                );
-
-        }
-    );
-
-
-    /*
-     * Jika ada koordinat valid,
-     * peta menyesuaikan lokasi sensor.
-     */
-
-    if (
-        validPoints.length === 1
-    ) {
-
-        floodMap.setView(
-            validPoints[0],
-            15
-        );
-
-    }
-
-
-    else if (
-        validPoints.length > 1
-    ) {
-
-        floodMap.fitBounds(
-            validPoints,
+    mapMarkersLayer.clearLayers();
+
+    locations.forEach(item => {
+        const status = getStatusLabel(item);
+        const statusClass = getStatusClass(item);
+        const iconClass = getStatusIcon(item);
+
+        const markerIcon = L.divIcon({
+            className: "flood-marker-wrapper",
+            html: `
+                <div
+                    class="flood-marker ${escapeHtml(statusClass)}"
+                    title="${escapeHtml(status)}"
+                >
+                    <i class="fa-solid ${escapeHtml(iconClass)}"></i>
+                </div>
+            `,
+            iconSize: [36, 36],
+            iconAnchor: [18, 18],
+            popupAnchor: [0, -20]
+        });
+
+        const marker = L.marker(
+            [item.latitude, item.longitude],
             {
-                padding:[40,40]
+                icon: markerIcon,
+                title: item.lokasi
             }
         );
 
-    }
+        marker.bindPopup(`
+            <div class="map-popup">
+                <div class="map-popup-title">
+                    ${escapeHtml(item.lokasi)}
+                </div>
 
+                <div class="map-popup-status ${escapeHtml(statusClass)}">
+                    <span></span>
+                    ${escapeHtml(status)}
+                </div>
 
-    console.log(
-        'Marker valid:',
-        validPoints.length
-    );
+                <div class="map-popup-row">
+                    <span>Ketinggian air</span>
+                    <strong>${escapeHtml(
+                        formatWaterLevel(
+                            item.water_level ?? item.tinggi_air
+                        )
+                    )}</strong>
+                </div>
 
+                <div class="map-popup-row">
+                    <span>Pembaruan</span>
+                    <strong>${escapeHtml(
+                        formatDateTime(item.created_at)
+                    )}</strong>
+                </div>
+
+                <button
+                    type="button"
+                    class="map-popup-button"
+                    data-location-key="${escapeHtml(
+                        String(item.lokasi).toLowerCase()
+                    )}"
+                >
+                    Lihat Detail
+                </button>
+            </div>
+        `);
+
+        marker.on("click", () => {
+            selectMapLocation(item);
+        });
+
+        mapMarkersLayer.addLayer(marker);
+    });
+
+    bindPopupDetailButtons();
 }
 
 
-/* =====================================================
-   HITUNG STATUS
-===================================================== */
+/* =========================================================
+   POPUP DETAIL BUTTON
+========================================================= */
 
-function hitungStatus(
-    data
-) {
+function bindPopupDetailButtons() {
+    document
+        .querySelectorAll(".map-popup-button")
+        .forEach(button => {
 
-    let aman = 0;
+            button.addEventListener("click", event => {
+                const key = event.currentTarget.dataset.locationKey;
 
-    let waspada = 0;
+                const location = mapLocations.find(item =>
+                    String(item.lokasi).toLowerCase() === key
+                );
 
-    let bahaya = 0;
-
-
-    data.forEach(
-        function(item) {
-
-            const status =
-                String(
-                    item.status ||
-                    ''
-                ).toUpperCase();
-
-
-            if (
-                status === 'AMAN'
-            ) {
-
-                aman++;
-
-            }
-
-
-            else if (
-                status === 'SIAGA' ||
-                status === 'WASPADA'
-            ) {
-
-                waspada++;
-
-            }
-
-
-            else if (
-                status === 'BAHAYA'
-            ) {
-
-                bahaya++;
-
-            }
-
-        }
-    );
-
-
-    document.getElementById(
-        'countAman'
-    ).innerText =
-        aman;
-
-
-    document.getElementById(
-        'countWaspada'
-    ).innerText =
-        waspada;
-
-
-    document.getElementById(
-        'countBahaya'
-    ).innerText =
-        bahaya;
-
-
-    document.getElementById(
-        'totalSensor'
-    ).innerText =
-        data.length;
-
+                if (location) {
+                    selectMapLocation(location);
+                }
+            });
+        });
 }
 
 
-/* =====================================================
-   TABEL SENSOR
-===================================================== */
+/* =========================================================
+   PILIH LOKASI
+========================================================= */
 
-function tampilkanTabel(
-    data
-) {
+function selectMapLocation(item) {
+    selectedMapLocation = item;
 
-    const table =
-        document.getElementById(
-            'mapSensorTable'
-        );
+    const panel = document.getElementById("selectedLocation");
 
-
-    if (!table) {
-
+    if (!panel) {
         return;
+    }
 
+    const status = getStatusLabel(item);
+    const statusClass = getStatusClass(item);
+
+    const selectedLocationName =
+        document.getElementById("selectedLocationName");
+
+    const selectedStatus =
+        document.getElementById("selectedStatus");
+
+    const selectedWaterLevel =
+        document.getElementById("selectedWaterLevel");
+
+    const selectedTime =
+        document.getElementById("selectedTime");
+
+    const selectedCoordinates =
+        document.getElementById("selectedCoordinates");
+
+    const selectedDataAge =
+        document.getElementById("selectedDataAge");
+
+
+    if (selectedLocationName) {
+        selectedLocationName.textContent =
+            item.lokasi || "Lokasi tidak diketahui";
     }
 
 
-    table.innerHTML =
-        '';
+    if (selectedStatus) {
+        selectedStatus.textContent = status;
+
+        selectedStatus.className =
+            `selected-status ${statusClass}`;
+    }
 
 
-    if (
-        !data ||
-        data.length === 0
-    ) {
+    if (selectedWaterLevel) {
+        selectedWaterLevel.textContent =
+            formatWaterLevel(
+                item.water_level ?? item.tinggi_air
+            );
+    }
 
-        table.innerHTML = `
 
-            <tr>
+    if (selectedTime) {
+        selectedTime.textContent =
+            formatDateTime(item.created_at);
+    }
 
-                <td
-                colspan="8"
-                class="empty-data">
 
-                    Tidak ada data sensor.
+    if (selectedCoordinates) {
+        selectedCoordinates.textContent =
+            `${item.latitude.toFixed(6)}, ${item.longitude.toFixed(6)}`;
+    }
 
-                </td>
 
-            </tr>
+    if (selectedDataAge) {
+        selectedDataAge.textContent =
+            formatDataAge(item.created_at);
+    }
 
+
+    panel.classList.add("show");
+
+
+    if (floodMap) {
+        floodMap.setView(
+            [item.latitude, item.longitude],
+            Math.max(floodMap.getZoom(), 14),
+            {
+                animate: true
+            }
+        );
+    }
+}
+
+
+/* =========================================================
+   FORMAT UMUR DATA
+========================================================= */
+
+function formatDataAge(createdAt) {
+    const age = getAgeSeconds(createdAt);
+
+    if (!Number.isFinite(age)) {
+        return "Tidak diketahui";
+    }
+
+    if (age < 60) {
+        return `${Math.floor(age)} detik lalu`;
+    }
+
+    if (age < 3600) {
+        return `${Math.floor(age / 60)} menit lalu`;
+    }
+
+    if (age < 86400) {
+        return `${Math.floor(age / 3600)} jam lalu`;
+    }
+
+    return `${Math.floor(age / 86400)} hari lalu`;
+}
+
+
+/* =========================================================
+   SUMMARY
+========================================================= */
+
+function updateMapSummary() {
+    const totalLocations =
+        document.getElementById("totalLocations");
+
+    const locationSummary =
+        document.getElementById("locationSummary");
+
+    const safeLocations =
+        document.getElementById("safeLocations");
+
+    const warningLocations =
+        document.getElementById("warningLocations");
+
+    const dangerLocations =
+        document.getElementById("dangerLocations");
+
+
+    const total = mapLocations.length;
+
+    let safe = 0;
+    let warning = 0;
+    let danger = 0;
+    let offline = 0;
+
+
+    mapLocations.forEach(item => {
+        const status = getStatusLabel(item);
+
+        if (status === "OFFLINE") {
+            offline++;
+            return;
+        }
+
+        if (status === "AMAN") {
+            safe++;
+        } else if (
+            status === "SIAGA" ||
+            status === "WASPADA"
+        ) {
+            warning++;
+        } else if (status === "BAHAYA") {
+            danger++;
+        }
+    });
+
+
+    if (totalLocations) {
+        totalLocations.textContent = total;
+    }
+
+
+    if (locationSummary) {
+        locationSummary.textContent =
+            `${total - offline} aktif · ${offline} offline`;
+    }
+
+
+    if (safeLocations) {
+        safeLocations.textContent = safe;
+    }
+
+
+    if (warningLocations) {
+        warningLocations.textContent = warning;
+    }
+
+
+    if (dangerLocations) {
+        dangerLocations.textContent = danger;
+    }
+}
+
+
+/* =========================================================
+   DATA TERBARU
+========================================================= */
+
+function updateLatestMapReading() {
+    const latestElement =
+        document.getElementById("latestMapReading");
+
+    if (!latestElement) {
+        return;
+    }
+
+    if (!mapLocations.length) {
+        latestElement.innerHTML = `
+            <div class="latest-empty">
+                Belum ada data lokasi yang memiliki koordinat.
+            </div>
         `;
 
         return;
-
     }
 
 
-    data.forEach(
-        function(item) {
-
-            const row =
-                document.createElement(
-                    'tr'
-                );
+    const latest = [...mapLocations].sort(
+        (a, b) =>
+            new Date(b.created_at || 0) -
+            new Date(a.created_at || 0)
+    )[0];
 
 
-            const tinggi =
-                Number(
-                    item.tinggi_air
-                );
+    const status = getStatusLabel(latest);
+    const statusClass = getStatusClass(latest);
 
 
-            const tinggiText =
-                Number.isFinite(
-                    tinggi
-                )
-                ?
-                tinggi + ' cm'
-                :
-                '--';
+    latestElement.innerHTML = `
+        <div class="latest-reading-content">
+
+            <div class="latest-reading-icon ${escapeHtml(statusClass)}">
+                <i class="fa-solid ${escapeHtml(
+                    getStatusIcon(latest)
+                )}"></i>
+            </div>
+
+            <div class="latest-reading-info">
+
+                <span class="latest-reading-label">
+                    DATA TERBARU
+                </span>
+
+                <strong>
+                    ${escapeHtml(
+                        latest.lokasi || "Lokasi tidak diketahui"
+                    )}
+                </strong>
+
+                <small>
+                    ${escapeHtml(
+                        formatDateTime(latest.created_at)
+                    )}
+                </small>
+
+            </div>
+
+            <div class="latest-reading-value">
+
+                <strong>
+                    ${escapeHtml(
+                        formatWaterLevel(
+                            latest.water_level ??
+                            latest.tinggi_air
+                        )
+                    )}
+                </strong>
+
+                <span class="${escapeHtml(statusClass)}">
+                    ${escapeHtml(status)}
+                </span>
+
+            </div>
+
+        </div>
+    `;
+}
 
 
-            const lokasi =
-                (
-                    item.lokasi !== null &&
-                    item.lokasi !== undefined &&
-                    String(item.lokasi).trim() !== ''
-                )
-                ?
-                item.lokasi
-                :
-                '--';
+/* =========================================================
+   STATUS DATABASE / API
+========================================================= */
 
+function setMapDatabaseStatus(state) {
+    const dot =
+        document.getElementById("mapDataDot");
+
+    const text =
+        document.getElementById("mapDataStatus");
+
+
+    if (!dot || !text) {
+        return;
+    }
+
+
+    dot.className = "map-data-dot";
+
+
+    if (state === "loading") {
+        dot.classList.add("loading");
+        text.textContent = "Memuat data...";
+        return;
+    }
+
+
+    if (state === "online") {
+        dot.classList.add("online");
+        text.textContent = "Database terhubung";
+        return;
+    }
+
+
+    dot.classList.add("offline");
+    text.textContent = "Database tidak terhubung";
+}
+
+
+/* =========================================================
+   LOKASI USER / GPS BROWSER
+========================================================= */
+
+function locateMapUser() {
+    if (!floodMap) {
+        return;
+    }
+
+    if (!navigator.geolocation) {
+        showMapToast(
+            "Browser tidak mendukung lokasi perangkat.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    showMapToast(
+        "Meminta lokasi perangkat...",
+        "info"
+    );
+
+
+    navigator.geolocation.getCurrentPosition(
+        position => {
 
             const latitude =
-                Number(
-                    item.latitude
-                );
-
+                position.coords.latitude;
 
             const longitude =
-                Number(
-                    item.longitude
-                );
+                position.coords.longitude;
 
 
-            const latitudeText =
-                Number.isFinite(
-                    latitude
-                )
-                ?
-                latitude.toFixed(6)
-                :
-                '--';
-
-
-            const longitudeText =
-                Number.isFinite(
-                    longitude
-                )
-                ?
-                longitude.toFixed(6)
-                :
-                '--';
-
-
-            const status =
-                String(
-                    item.status ||
-                    'UNKNOWN'
-                ).toUpperCase();
-
-
-            row.innerHTML = `
-
-                <td>
-                    ${item.id ?? '--'}
-                </td>
-
-                <td>
-                    ${lokasi}
-                </td>
-
-                <td>
-                    ${tinggiText}
-                </td>
-
-                <td>
-                    ${item.water_level || '--'}
-                </td>
-
-                <td>
-
-                    <span
-                    class="status-label ${getStatusClass(status)}">
-
-                        ${status}
-
-                    </span>
-
-                </td>
-
-                <td>
-                    ${latitudeText}
-                </td>
-
-                <td>
-                    ${longitudeText}
-                </td>
-
-                <td>
-                    ${formatWaktu(item.created_at)}
-                </td>
-
-            `;
-
-
-            table.appendChild(
-                row
+            floodMap.setView(
+                [latitude, longitude],
+                15,
+                {
+                    animate: true
+                }
             );
 
+
+            if (window.userLocationMarker) {
+                floodMap.removeLayer(
+                    window.userLocationMarker
+                );
+            }
+
+
+            window.userLocationMarker =
+                L.circleMarker(
+                    [latitude, longitude],
+                    {
+                        radius: 8,
+                        weight: 3,
+                        fillOpacity: 0.9
+                    }
+                )
+                .addTo(floodMap)
+                .bindPopup("Lokasi perangkat Anda");
+
+
+            showMapToast(
+                "Lokasi perangkat berhasil ditemukan.",
+                "success"
+            );
+        },
+
+        error => {
+
+            console.error(
+                "Geolocation error:",
+                error
+            );
+
+
+            let message =
+                "Lokasi perangkat tidak dapat ditemukan.";
+
+
+            if (error.code === 1) {
+                message =
+                    "Izin lokasi ditolak oleh browser.";
+            } else if (error.code === 2) {
+                message =
+                    "Lokasi perangkat tidak tersedia.";
+            } else if (error.code === 3) {
+                message =
+                    "Permintaan lokasi terlalu lama.";
+            }
+
+
+            showMapToast(
+                message,
+                "error"
+            );
+        },
+
+        {
+            enableHighAccuracy: true,
+            timeout: 10000,
+            maximumAge: 60000
+        }
+    );
+}
+
+
+/* =========================================================
+   REFRESH BUTTON
+========================================================= */
+
+async function refreshFloodMap() {
+    const button =
+        document.getElementById("refreshMapButton");
+
+    if (button) {
+        button.disabled = true;
+
+        const icon =
+            button.querySelector("i");
+
+        if (icon) {
+            icon.classList.add("fa-spin");
+        }
+    }
+
+
+    await loadMapData(true);
+
+
+    if (button) {
+        button.disabled = false;
+
+        const icon =
+            button.querySelector("i");
+
+        if (icon) {
+            icon.classList.remove("fa-spin");
+        }
+    }
+
+
+    showMapToast(
+        "Data peta berhasil diperbarui.",
+        "success"
+    );
+}
+
+
+/* =========================================================
+   CLOSE DETAIL
+========================================================= */
+
+function closeSelectedLocation() {
+    const panel =
+        document.getElementById("selectedLocation");
+
+    if (panel) {
+        panel.classList.remove("show");
+    }
+
+    selectedMapLocation = null;
+}
+
+
+/* =========================================================
+   EVENT FILTER
+========================================================= */
+
+function setupMapFilters() {
+
+    const searchInput =
+        document.getElementById("mapSearchInput");
+
+    const statusFilter =
+        document.getElementById("mapStatusFilter");
+
+
+    if (searchInput) {
+        searchInput.addEventListener(
+            "input",
+            applyMapFilters
+        );
+    }
+
+
+    if (statusFilter) {
+        statusFilter.addEventListener(
+            "change",
+            applyMapFilters
+        );
+    }
+}
+
+
+/* =========================================================
+   EVENT BUTTON
+========================================================= */
+
+function setupMapButtons() {
+
+    const locateButton =
+        document.getElementById("locateMapButton");
+
+    const refreshButton =
+        document.getElementById("refreshMapButton");
+
+    const closeButton =
+        document.getElementById("closeLocationButton");
+
+    const liveButton =
+        document.getElementById("openLiveMonitoringButton");
+
+
+    if (locateButton) {
+        locateButton.addEventListener(
+            "click",
+            locateMapUser
+        );
+    }
+
+
+    if (refreshButton) {
+        refreshButton.addEventListener(
+            "click",
+            refreshFloodMap
+        );
+    }
+
+
+    if (closeButton) {
+        closeButton.addEventListener(
+            "click",
+            closeSelectedLocation
+        );
+    }
+
+
+    if (liveButton) {
+        liveButton.addEventListener(
+            "click",
+            () => {
+                window.location.href =
+                    "live_sensor.html";
+            }
+        );
+    }
+}
+
+
+/* =========================================================
+   AUTO REFRESH
+========================================================= */
+
+function startMapAutoRefresh() {
+
+    clearInterval(mapRefreshTimer);
+
+    mapRefreshTimer =
+        setInterval(() => {
+
+            if (
+                document.visibilityState ===
+                "visible"
+            ) {
+                loadMapData(false);
+            }
+
+        }, MAP_REFRESH_INTERVAL);
+}
+
+
+/* =========================================================
+   UPDATE UMUR DATA TANPA QUERY ULANG
+========================================================= */
+
+function updateSelectedDataAge() {
+
+    if (!selectedMapLocation) {
+        return;
+    }
+
+
+    const element =
+        document.getElementById("selectedDataAge");
+
+
+    if (element) {
+        element.textContent =
+            formatDataAge(
+                selectedMapLocation.created_at
+            );
+    }
+}
+
+
+/* =========================================================
+   RESIZE MAP
+========================================================= */
+
+window.addEventListener(
+    "resize",
+    () => {
+
+        if (floodMap) {
+            setTimeout(() => {
+                floodMap.invalidateSize();
+            }, 150);
+        }
+
+    }
+);
+
+
+document.addEventListener(
+    "visibilitychange",
+    () => {
+
+        if (
+            document.visibilityState ===
+            "visible"
+        ) {
+
+            setTimeout(() => {
+
+                if (floodMap) {
+                    floodMap.invalidateSize();
+                }
+
+                loadMapData(false);
+
+            }, 300);
+        }
+
+    }
+);
+
+
+/* =========================================================
+   TIMER UMUR DATA
+========================================================= */
+
+setInterval(
+    updateSelectedDataAge,
+    1000
+);
+
+
+/* =========================================================
+   INISIALISASI HALAMAN PETA
+========================================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    async () => {
+
+        initializeFloodMap();
+
+        setupMapFilters();
+
+        setupMapButtons();
+
+        await loadMapData(true);
+
+        startMapAutoRefresh();
+
+    }
+);
+</script>
+<!-- =========================================================
+     PART 4 — THEME, PROFILE, AUTH & UI
+     Paste langsung di bawah PART 3
+========================================================= -->
+
+<script>
+/* =========================================================
+   THEME
+========================================================= */
+
+function applyTheme(theme) {
+    const validTheme =
+        theme === "dark" ? "dark" : "light";
+
+    document.documentElement.setAttribute(
+        "data-theme",
+        validTheme
+    );
+
+    localStorage.setItem(
+        "flowsTheme",
+        validTheme
+    );
+}
+
+
+function loadSavedTheme() {
+    const savedTheme =
+        localStorage.getItem("flowsTheme") || "light";
+
+    applyTheme(savedTheme);
+}
+
+
+/* =========================================================
+   PROFILE USER
+========================================================= */
+
+function getUserDisplayName(user) {
+    if (!user) {
+        return "Pengguna";
+    }
+
+    const metadata =
+        user.user_metadata || {};
+
+    return (
+        metadata.full_name ||
+        metadata.name ||
+        metadata.nama ||
+        user.email?.split("@")[0] ||
+        "Pengguna"
+    );
+}
+
+
+function getUserInitial(name) {
+    const cleanName =
+        String(name || "U").trim();
+
+    if (!cleanName) {
+        return "U";
+    }
+
+    return cleanName
+        .charAt(0)
+        .toUpperCase();
+}
+
+
+function renderUserProfile(user) {
+    const name =
+        getUserDisplayName(user);
+
+    const avatar =
+        document.getElementById("profileAvatar");
+
+    const profileName =
+        document.getElementById("profileName");
+
+    const profileRole =
+        document.getElementById("profileRole");
+
+
+    if (avatar) {
+        avatar.textContent =
+            getUserInitial(name);
+    }
+
+
+    if (profileName) {
+        profileName.textContent =
+            name;
+    }
+
+
+    if (profileRole) {
+        profileRole.textContent =
+            "OPERATOR";
+    }
+}
+
+
+/* =========================================================
+   PROFILE DROPDOWN
+========================================================= */
+
+function setupProfileDropdown() {
+    const trigger =
+        document.getElementById(
+            "profileTrigger"
+        );
+
+    const dropdown =
+        document.getElementById(
+            "profileDropdown"
+        );
+
+
+    if (!trigger || !dropdown) {
+        return;
+    }
+
+
+    trigger.addEventListener(
+        "click",
+        event => {
+
+            event.stopPropagation();
+
+            const isOpen =
+                dropdown.classList.contains(
+                    "show"
+                );
+
+            dropdown.classList.toggle(
+                "show",
+                !isOpen
+            );
+
+            trigger.setAttribute(
+                "aria-expanded",
+                String(!isOpen)
+            );
         }
     );
 
-}
 
+    document.addEventListener(
+        "click",
+        event => {
 
-/* =====================================================
-   INFORMASI SENSOR TERBARU
-===================================================== */
+            if (
+                !dropdown.contains(event.target) &&
+                !trigger.contains(event.target)
+            ) {
 
-function tampilkanDetail(
-    item
-) {
+                dropdown.classList.remove(
+                    "show"
+                );
 
-    if (!item) {
-
-        return;
-
-    }
-
-
-    const tinggi =
-        Number(
-            item.tinggi_air
-        );
-
-
-    /* ID */
-
-    document.getElementById(
-        'latestId'
-    ).innerText =
-        item.id ?? '--';
-
-
-    /* LOKASI */
-
-    document.getElementById(
-        'latestLokasi'
-    ).innerText =
-        (
-            item.lokasi !== null &&
-            item.lokasi !== undefined &&
-            String(item.lokasi).trim() !== ''
-        )
-        ?
-        item.lokasi
-        :
-        'Lokasi belum tersedia';
-
-
-    /* TINGGI AIR */
-
-    document.getElementById(
-        'latestTinggiAir'
-    ).innerText =
-        Number.isFinite(tinggi)
-        ?
-        tinggi + ' cm'
-        :
-        '--';
-
-
-    /* STATUS */
-
-    const status =
-        String(
-            item.status ||
-            'UNKNOWN'
-        ).toUpperCase();
-
-
-    document.getElementById(
-        'latestStatus'
-    ).innerHTML = `
-
-        <span
-        class="${getStatusClass(status)}">
-
-            ${status}
-
-        </span>
-
-    `;
-
-
-    /* WATER LEVEL */
-
-    document.getElementById(
-        'latestWaterLevel'
-    ).innerText =
-        item.water_level ||
-        '--';
-
-
-    /* WAKTU */
-
-    document.getElementById(
-        'latestTime'
-    ).innerText =
-        formatWaktu(
-            item.created_at
-        );
-
-
-    /* LATITUDE */
-
-    const latitude =
-        Number(
-            item.latitude
-        );
-
-
-    document.getElementById(
-        'latestLatitude'
-    ).innerText =
-        Number.isFinite(latitude)
-        ?
-        latitude.toFixed(6)
-        :
-        '--';
-
-
-    /* LONGITUDE */
-
-    const longitude =
-        Number(
-            item.longitude
-        );
-
-
-    document.getElementById(
-        'latestLongitude'
-    ).innerText =
-        Number.isFinite(longitude)
-        ?
-        longitude.toFixed(6)
-        :
-        '--';
-
-
-    /* GPS STATUS */
-
-    const gpsStatus =
-        document.getElementById(
-            'latestGPSStatus'
-        );
-
-
-    if (
-        koordinatValid(
-            latitude,
-            longitude
-        )
-    ) {
-
-        gpsStatus.innerHTML =
-            '<span class="safe">● GPS Aktif</span>';
-
-    }
-
-    else {
-
-        gpsStatus.innerHTML =
-            '<span class="warning">● Koordinat belum tersedia</span>';
-
-    }
-
-
-    /* WAKTU PETA */
-
-    document.getElementById(
-        'lastMapUpdate'
-    ).innerText =
-        formatWaktu(
-            item.created_at
-        );
-
-}
-
-
-/* =====================================================
-   LOAD DATA SUPABASE
-===================================================== */
-
-async function loadFloodMap() {
-
-    console.log(
-        'Mengambil data peta dari Supabase...'
+                trigger.setAttribute(
+                    "aria-expanded",
+                    "false"
+                );
+            }
+        }
     );
 
+
+    document.addEventListener(
+        "keydown",
+        event => {
+
+            if (event.key === "Escape") {
+
+                dropdown.classList.remove(
+                    "show"
+                );
+
+                trigger.setAttribute(
+                    "aria-expanded",
+                    "false"
+                );
+            }
+        }
+    );
+}
+
+
+/* =========================================================
+   LOGOUT
+========================================================= */
+
+async function logoutUser() {
+
+    const button =
+        document.getElementById(
+            "logoutButton"
+        );
+
+
+    if (button) {
+        button.disabled = true;
+    }
+
+
+    try {
+
+        const {
+            error
+        } = await supabaseClient
+            .auth
+            .signOut();
+
+
+        if (error) {
+            throw error;
+        }
+
+
+        window.location.replace(
+            "login.html"
+        );
+
+    } catch (error) {
+
+        console.error(
+            "Logout error:",
+            error
+        );
+
+
+        if (button) {
+            button.disabled = false;
+        }
+
+
+        showMapToast(
+            "Gagal keluar dari akun.",
+            "error"
+        );
+    }
+}
+
+
+/* =========================================================
+   AUTH GUARD
+========================================================= */
+
+async function initializeAuthentication() {
 
     try {
 
         const {
             data,
             error
-        } =
-            await supabaseClient
+        } = await supabaseClient
+            .auth
+            .getSession();
 
-            .from('data_air')
-
-            .select(
-                '*'
-            )
-
-            .order(
-                'id',
-                {
-                    ascending:false
-                }
-            )
-
-            .limit(
-                50
-            );
-
-
-        /* ==============================================
-           ERROR
-        ============================================== */
 
         if (error) {
-
-            console.error(
-                'Supabase Error:',
-                error
-            );
-
-
-            gunakanCachePeta();
-
-            return;
-
+            throw error;
         }
 
 
-        /* ==============================================
-           DATA KOSONG
-        ============================================== */
+        const session =
+            data?.session;
 
-        if (
-            !data ||
-            data.length === 0
-        ) {
 
-            console.log(
-                'Tidak ada data dari Supabase.'
+        if (!session?.user) {
+
+            window.location.replace(
+                "login.html"
             );
 
-
-            gunakanCachePeta();
-
-            return;
-
+            return null;
         }
 
 
-        /* ==============================================
-           DATA BERHASIL
-        ============================================== */
-
-        console.log(
-            'Data asli Supabase:',
-            data
+        renderUserProfile(
+            session.user
         );
 
 
-        /*
-         * Simpan data asli.
-         */
+        return session.user;
 
-        simpanCache(
-            data
-        );
-
-
-        /*
-         * Tampilkan.
-         */
-
-        tampilkanSemuaData(
-            data
-        );
-
-
-        /*
-         * ONLINE.
-         */
-
-        updateConnection(
-            true,
-            false
-        );
-
-    }
-
-
-    catch(error) {
+    } catch (error) {
 
         console.error(
-            'Kesalahan koneksi:',
+            "Authentication error:",
             error
         );
 
 
-        gunakanCachePeta();
+        window.location.replace(
+            "login.html"
+        );
 
+        return null;
     }
-
 }
 
 
-/* =====================================================
-   TAMPILKAN SEMUA DATA
-===================================================== */
+/* =========================================================
+   AUTH STATE LISTENER
+========================================================= */
 
-function tampilkanSemuaData(
-    data
-) {
+function setupAuthListener() {
 
-    if (
-        !data ||
-        data.length === 0
-    ) {
+    supabaseClient
+        .auth
+        .onAuthStateChange(
+            (event, session) => {
 
+                if (
+                    event === "SIGNED_OUT"
+                ) {
+
+                    window.location.replace(
+                        "login.html"
+                    );
+
+                    return;
+                }
+
+
+                if (
+                    session?.user
+                ) {
+
+                    renderUserProfile(
+                        session.user
+                    );
+                }
+            }
+        );
+}
+
+
+/* =========================================================
+   LOGOUT BUTTON EVENT
+========================================================= */
+
+function setupLogoutButton() {
+
+    const logoutButton =
+        document.getElementById(
+            "logoutButton"
+        );
+
+
+    if (!logoutButton) {
         return;
-
     }
 
 
-    /*
-     * Marker.
-     */
+    logoutButton.addEventListener(
+        "click",
+        async () => {
 
-    tampilkanMarker(
-        data
+            await logoutUser();
+
+        }
     );
-
-
-    /*
-     * Statistik.
-     */
-
-    hitungStatus(
-        data
-    );
-
-
-    /*
-     * Tabel.
-     */
-
-    tampilkanTabel(
-        data
-    );
-
-
-    /*
-     * Detail terbaru.
-     */
-
-    tampilkanDetail(
-        data[0]
-    );
-
 }
 
 
-/* =====================================================
-   CACHE SAAT OFFLINE
-===================================================== */
+/* =========================================================
+   NOTIFICATION BUTTON
+========================================================= */
 
-function gunakanCachePeta() {
+function setupNotificationButton() {
 
-    const cache =
-        ambilCache();
-
-
-    if (
-        cache &&
-        cache.length > 0
-    ) {
-
-        console.log(
-            'Supabase offline.'
+    const button =
+        document.getElementById(
+            "notificationButton"
         );
 
 
-        console.log(
-            'Menampilkan data peta terakhir.'
-        );
-
-
-        tampilkanSemuaData(
-            cache
-        );
-
-
-        updateConnection(
-            false,
-            true
-        );
-
-
+    if (!button) {
         return;
-
     }
 
 
-    updateConnection(
-        false,
-        false
-    );
+    button.addEventListener(
+        "click",
+        () => {
 
+            showMapToast(
+                "Notifikasi sistem akan tersedia saat ada peringatan baru.",
+                "info"
+            );
+
+        }
+    );
 }
 
 
-/* =====================================================
-   DATA CACHE SAAT HALAMAN DIBUKA
-===================================================== */
+/* =========================================================
+   BROWSER ONLINE / OFFLINE
+========================================================= */
 
-const cacheAwal =
-    ambilCache();
+function setupBrowserConnectionStatus() {
 
+    window.addEventListener(
+        "offline",
+        () => {
 
-if (
-    cacheAwal &&
-    cacheAwal.length > 0
-) {
-
-    tampilkanSemuaData(
-        cacheAwal
+            showMapToast(
+                "Koneksi internet perangkat terputus.",
+                "error"
+            );
+        }
     );
 
 
-    updateConnection(
-        false,
-        true
-    );
+    window.addEventListener(
+        "online",
+        () => {
 
+            showMapToast(
+                "Koneksi internet perangkat kembali.",
+                "success"
+            );
+
+
+            loadMapData(false);
+        }
+    );
 }
 
 
-/* =====================================================
-   LOAD PERTAMA
-===================================================== */
+/* =========================================================
+   TAMBAHAN STYLE MARKER & POPUP
+========================================================= */
 
-loadFloodMap();
+const mapExtraStyle =
+    document.createElement("style");
+
+mapExtraStyle.textContent = `
+
+/* =========================
+   FLOOD MARKER
+========================= */
+
+.flood-marker-wrapper {
+    background: transparent !important;
+    border: 0 !important;
+}
+
+.flood-marker {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 3px solid rgba(255,255,255,.95);
+    box-shadow:
+        0 4px 12px rgba(15,23,42,.22),
+        0 0 0 3px rgba(255,255,255,.18);
+    color: #fff;
+    font-size: 13px;
+    transition:
+        transform .18s ease,
+        box-shadow .18s ease;
+}
+
+.flood-marker:hover {
+    transform: scale(1.12);
+    box-shadow:
+        0 7px 18px rgba(15,23,42,.28),
+        0 0 0 4px rgba(255,255,255,.24);
+}
+
+.flood-marker.aman {
+    background: #16a34a;
+}
+
+.flood-marker.siaga {
+    background: #f59e0b;
+}
+
+.flood-marker.waspada {
+    background: #f97316;
+}
+
+.flood-marker.bahaya {
+    background: #dc2626;
+}
+
+.flood-marker.offline {
+    background: #64748b;
+}
 
 
-/* =====================================================
-   REFRESH SETIAP 5 DETIK
-===================================================== */
+/* =========================
+   MAP POPUP
+========================= */
 
-setInterval(
-    loadFloodMap,
-    5000
+.map-popup {
+    min-width: 220px;
+    font-family: "Plus Jakarta Sans", sans-serif;
+}
+
+.map-popup-title {
+    font-size: 13px;
+    font-weight: 800;
+    color: #0f172a;
+    margin-bottom: 8px;
+}
+
+.map-popup-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 9px;
+    border-radius: 999px;
+    font-size: 9px;
+    font-weight: 800;
+    margin-bottom: 10px;
+}
+
+.map-popup-status span {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    display: block;
+}
+
+.map-popup-status.aman {
+    color: #15803d;
+    background: #dcfce7;
+}
+
+.map-popup-status.aman span {
+    background: #16a34a;
+}
+
+.map-popup-status.siaga {
+    color: #b45309;
+    background: #fef3c7;
+}
+
+.map-popup-status.siaga span {
+    background: #f59e0b;
+}
+
+.map-popup-status.waspada {
+    color: #c2410c;
+    background: #ffedd5;
+}
+
+.map-popup-status.waspada span {
+    background: #f97316;
+}
+
+.map-popup-status.bahaya {
+    color: #b91c1c;
+    background: #fee2e2;
+}
+
+.map-popup-status.bahaya span {
+    background: #dc2626;
+}
+
+.map-popup-status.offline {
+    color: #475569;
+    background: #e2e8f0;
+}
+
+.map-popup-status.offline span {
+    background: #64748b;
+}
+
+.map-popup-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 14px;
+    padding: 7px 0;
+    border-top: 1px solid #e2e8f0;
+    font-size: 10px;
+}
+
+.map-popup-row span {
+    color: #64748b;
+}
+
+.map-popup-row strong {
+    color: #0f172a;
+    font-weight: 700;
+    text-align: right;
+}
+
+.map-popup-button {
+    width: 100%;
+    border: 0;
+    border-radius: 8px;
+    background: #2563eb;
+    color: #fff;
+    padding: 9px 10px;
+    margin-top: 8px;
+    font-family: inherit;
+    font-size: 10px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: .18s ease;
+}
+
+.map-popup-button:hover {
+    background: #1d4ed8;
+}
+
+
+/* =========================
+   LATEST READING
+========================= */
+
+.latest-reading-content {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.latest-reading-icon {
+    width: 42px;
+    height: 42px;
+    flex: 0 0 42px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.latest-reading-icon.aman {
+    color: #15803d;
+    background: #dcfce7;
+}
+
+.latest-reading-icon.siaga {
+    color: #b45309;
+    background: #fef3c7;
+}
+
+.latest-reading-icon.waspada {
+    color: #c2410c;
+    background: #ffedd5;
+}
+
+.latest-reading-icon.bahaya {
+    color: #b91c1c;
+    background: #fee2e2;
+}
+
+.latest-reading-icon.offline {
+    color: #475569;
+    background: #e2e8f0;
+}
+
+.latest-reading-info {
+    min-width: 0;
+    flex: 1;
+}
+
+.latest-reading-label {
+    display: block;
+    font-size: 8px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    color: #94a3b8;
+    margin-bottom: 3px;
+}
+
+.latest-reading-info strong {
+    display: block;
+    font-size: 12px;
+    color: #0f172a;
+    font-weight: 800;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.latest-reading-info small {
+    display: block;
+    margin-top: 3px;
+    font-size: 9px;
+    color: #64748b;
+}
+
+.latest-reading-value {
+    text-align: right;
+    flex-shrink: 0;
+}
+
+.latest-reading-value strong {
+    display: block;
+    font-size: 17px;
+    font-weight: 800;
+    color: #0f172a;
+}
+
+.latest-reading-value span {
+    display: inline-block;
+    margin-top: 4px;
+    font-size: 8px;
+    font-weight: 800;
+}
+
+.latest-reading-value span.aman {
+    color: #15803d;
+}
+
+.latest-reading-value span.siaga {
+    color: #b45309;
+}
+
+.latest-reading-value span.waspada {
+    color: #c2410c;
+}
+
+.latest-reading-value span.bahaya {
+    color: #b91c1c;
+}
+
+.latest-reading-value span.offline {
+    color: #64748b;
+}
+
+.latest-empty {
+    font-size: 10px;
+    color: #64748b;
+    padding: 4px 0;
+}
+
+
+/* =========================
+   MAP DATABASE STATUS
+========================= */
+
+.map-data-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+    background: #94a3b8;
+    box-shadow: 0 0 0 3px rgba(148,163,184,.12);
+}
+
+.map-data-dot.online {
+    background: #22c55e;
+    box-shadow: 0 0 0 3px rgba(34,197,94,.12);
+}
+
+.map-data-dot.offline {
+    background: #ef4444;
+    box-shadow: 0 0 0 3px rgba(239,68,68,.12);
+}
+
+.map-data-dot.loading {
+    background: #f59e0b;
+    box-shadow: 0 0 0 3px rgba(245,158,11,.12);
+}
+
+
+/* =========================
+   SELECTED STATUS
+========================= */
+
+.selected-status {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    padding: 5px 9px;
+    font-size: 9px;
+    font-weight: 800;
+}
+
+.selected-status.aman {
+    color: #15803d;
+    background: #dcfce7;
+}
+
+.selected-status.siaga {
+    color: #b45309;
+    background: #fef3c7;
+}
+
+.selected-status.waspada {
+    color: #c2410c;
+    background: #ffedd5;
+}
+
+.selected-status.bahaya {
+    color: #b91c1c;
+    background: #fee2e2;
+}
+
+.selected-status.offline {
+    color: #475569;
+    background: #e2e8f0;
+}
+
+
+/* =========================
+   DARK MODE
+========================= */
+
+[data-theme="dark"] .map-popup-title,
+[data-theme="dark"] .map-popup-row strong,
+[data-theme="dark"] .latest-reading-info strong,
+[data-theme="dark"] .latest-reading-value strong {
+    color: #f8fafc;
+}
+
+[data-theme="dark"] .map-popup-row {
+    border-color: #334155;
+}
+
+[data-theme="dark"] .map-popup-row span,
+[data-theme="dark"] .latest-reading-info small {
+    color: #94a3b8;
+}
+
+[data-theme="dark"] .latest-reading-label {
+    color: #64748b;
+}
+
+[data-theme="dark"] .latest-empty {
+    color: #94a3b8;
+}
+
+[data-theme="dark"] .leaflet-popup-content-wrapper,
+[data-theme="dark"] .leaflet-popup-tip {
+    background: #0f172a;
+    color: #f8fafc;
+}
+
+[data-theme="dark"] .leaflet-control-zoom a {
+    background: #0f172a;
+    color: #f8fafc;
+    border-color: #334155;
+}
+
+[data-theme="dark"] .leaflet-control-attribution {
+    background: rgba(15,23,42,.82);
+    color: #94a3b8;
+}
+
+[data-theme="dark"] .leaflet-control-attribution a {
+    color: #60a5fa;
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 700px) {
+
+    .latest-reading-content {
+        align-items: flex-start;
+    }
+
+    .latest-reading-value {
+        margin-left: auto;
+    }
+
+    .map-popup {
+        min-width: 190px;
+    }
+}
+
+`;
+
+document.head.appendChild(
+    mapExtraStyle
 );
 
 
-/* =====================================================
-   INTERNET KEMBALI
-===================================================== */
+/* =========================================================
+   INIT UI
+========================================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    async () => {
+
+        loadSavedTheme();
+
+        setupProfileDropdown();
+
+        setupLogoutButton();
+
+        setupNotificationButton();
+
+        setupBrowserConnectionStatus();
+
+        setupAuthListener();
+
+        await initializeAuthentication();
+
+    }
+);
+</script>
+<!-- =========================================================
+     PART 5 — FINALIZATION
+     Paste langsung di bawah PART 4
+========================================================= -->
+
+<script>
+/* =========================================================
+   FINAL UI BEHAVIOR
+========================================================= */
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    /* -----------------------------------------
+       CLOSE SELECTED LOCATION
+    ----------------------------------------- */
+
+    const closeLocationButton =
+        document.getElementById(
+            "closeLocationButton"
+        );
+
+    if (closeLocationButton) {
+        closeLocationButton.addEventListener(
+            "click",
+            () => {
+                closeSelectedLocation();
+            }
+        );
+    }
+
+
+    /* -----------------------------------------
+       OPEN LIVE MONITORING
+    ----------------------------------------- */
+
+    const openLiveMonitoringButton =
+        document.getElementById(
+            "openLiveMonitoringButton"
+        );
+
+    if (openLiveMonitoringButton) {
+        openLiveMonitoringButton.addEventListener(
+            "click",
+            () => {
+                window.location.href =
+                    "live_sensor.html";
+            }
+        );
+    }
+
+
+    /* -----------------------------------------
+       ENTER / SPACE UNTUK MARKER DETAIL
+    ----------------------------------------- */
+
+    document.addEventListener(
+        "keydown",
+        event => {
+
+            if (event.key === "Escape") {
+
+                const selectedLocation =
+                    document.getElementById(
+                        "selectedLocation"
+                    );
+
+                if (
+                    selectedLocation &&
+                    selectedLocation.classList.contains(
+                        "show"
+                    )
+                ) {
+                    closeSelectedLocation();
+                }
+            }
+
+        }
+    );
+
+
+    /* -----------------------------------------
+       INVALIDATE SIZE SETELAH LAYOUT SIAP
+    ----------------------------------------- */
+
+    setTimeout(() => {
+
+        if (floodMap) {
+            floodMap.invalidateSize();
+        }
+
+    }, 800);
+
+});
+
+
+/* =========================================================
+   SAFETY REFRESH
+========================================================= */
 
 window.addEventListener(
-    'online',
-    function() {
+    "pageshow",
+    () => {
 
-        console.log(
-            'Internet kembali online.'
-        );
-
-
-        loadFloodMap();
+        if (floodMap) {
+            setTimeout(() => {
+                floodMap.invalidateSize();
+            }, 200);
+        }
 
     }
 );
 
 
-/* =====================================================
-   INTERNET TERPUTUS
-===================================================== */
+/* =========================================================
+   CLEANUP SAAT HALAMAN DITINGGALKAN
+========================================================= */
 
 window.addEventListener(
-    'offline',
-    function() {
+    "pagehide",
+    () => {
 
-        console.log(
-            'Internet terputus.'
-        );
-
-
-        gunakanCachePeta();
+        if (mapRefreshTimer) {
+            clearInterval(mapRefreshTimer);
+            mapRefreshTimer = null;
+        }
 
     }
 );
-
-
-/* =====================================================
-   PART 3 SELESAI
-===================================================== */
 </script>
 
-</body>
 
-</html>
+<!-- =========================================================
+     END OF FLOWS-PRO PETA BANJIR
+========================================================= -->
+
+</div>
+
+</main>
+
+</div>
+
+</body>
+</html> 
