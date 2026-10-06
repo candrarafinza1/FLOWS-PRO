@@ -4762,1588 +4762,2106 @@
                     );
 
                 </script>
-                                <!-- =================================================
-                     PART 4 — RENDER DATA LENGKAP
-                     ================================================= -->
+                <!-- =========================================================
+     PART 4 — REALTIME STATUS & SENSOR LOGIC
+     ========================================================= -->
 
-                <script>
+<script>
 
-                    /* =================================================
-                       RENDER TABEL REALTIME
-                       ================================================= */
+    /* =========================================================
+       KONFIGURASI STATUS SENSOR
+       ========================================================= */
 
-                    function renderRealtimeTable(data) {
+    /*
+     * Jika tidak ada data baru selama 30 detik,
+     * perangkat dianggap OFFLINE.
+     *
+     * Sesuaikan angka ini dengan interval pengiriman
+     * data dari ESP8266/Wemos.
+     */
+    const SENSOR_TIMEOUT_SECONDS = 30;
 
-                        const table =
-                            getElement(
-                                "sensorRealtimeTable"
-                            );
 
+    let liveChart = null;
 
-                        if (!table) {
 
-                            return;
+    /* =========================================================
+       STATUS CLASS
+       ========================================================= */
 
-                        }
+    function getStatusClassName(status) {
 
+        const value =
+            String(status || "")
+                .trim()
+                .toUpperCase();
 
-                        table.innerHTML = "";
+        if (value === "AMAN") {
+            return "status-safe";
+        }
 
+        if (
+            value === "SIAGA" ||
+            value === "WASPADA"
+        ) {
+            return "status-warning";
+        }
 
-                        if (
-                            !Array.isArray(data) ||
-                            data.length === 0
-                        ) {
+        if (
+            value === "BAHAYA" ||
+            value === "DARURAT"
+        ) {
+            return "status-danger";
+        }
 
-                            table.innerHTML = `
+        return "status-neutral";
 
-                                <tr>
+    }
 
-                                    <td
-                                        colspan="8"
-                                        class="empty-data"
-                                    >
 
-                                        <i
-                                            class="fa-solid fa-database"
-                                        ></i>
+    /* =========================================================
+       ESCAPE HTML
+       ========================================================= */
 
-                                        <br>
+    function escapeHTML(value) {
 
-                                        Belum ada data sensor.
+        return String(value ?? "")
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
 
-                                    </td>
+    }
 
-                                </tr>
 
-                            `;
+    /* =========================================================
+       HITUNG UMUR DATA SENSOR
+       ========================================================= */
 
-                            return;
+    function getDataAgeSeconds(createdAt) {
 
-                        }
+        if (!createdAt) {
+            return Infinity;
+        }
 
 
-                        data.forEach(
-                            function(item) {
+        const timestamp =
+            new Date(createdAt).getTime();
 
-                                const row =
-                                    document.createElement(
-                                        "tr"
-                                    );
 
+        if (Number.isNaN(timestamp)) {
+            return Infinity;
+        }
 
-                                const height =
-                                    Number(
-                                        item.tinggi_air
-                                    );
 
+        return Math.max(
+            0,
+            (Date.now() - timestamp) / 1000
+        );
 
-                                const heightText =
-                                    Number.isFinite(height)
-                                        ? height + " cm"
-                                        : "--";
+    }
 
 
-                                const location =
-                                    item.lokasi !== null &&
-                                    item.lokasi !== undefined &&
-                                    String(
-                                        item.lokasi
-                                    ).trim() !== ""
-                                        ? item.lokasi
-                                        : "--";
+    /* =========================================================
+       CEK APAKAH DATA MASIH REALTIME
+       ========================================================= */
 
+    function isSensorOnline(createdAt) {
 
-                                const latitude =
-                                    Number(
-                                        item.latitude
-                                    );
+        const age =
+            getDataAgeSeconds(createdAt);
 
 
-                                const longitude =
-                                    Number(
-                                        item.longitude
-                                    );
+        return (
+            age <= SENSOR_TIMEOUT_SECONDS
+        );
 
+    }
 
-                                const latitudeText =
-                                    Number.isFinite(
-                                        latitude
-                                    )
-                                        ? latitude.toFixed(6)
-                                        : "--";
 
+    /* =========================================================
+       FORMAT WAKTU
+       ========================================================= */
 
-                                const longitudeText =
-                                    Number.isFinite(
-                                        longitude
-                                    )
-                                        ? longitude.toFixed(6)
-                                        : "--";
+    function formatDateTime(value) {
 
+        if (!value) {
+            return "-";
+        }
 
-                                const status =
-                                    normalizeStatus(
-                                        item.status
-                                    );
 
+        const date =
+            new Date(value);
 
-                                const statusClass =
-                                    getStatusClassName(
-                                        status
-                                    );
 
+        if (
+            Number.isNaN(
+                date.getTime()
+            )
+        ) {
+            return "-";
+        }
 
-                                row.innerHTML = `
 
-                                    <td>
-                                        ${escapeHTML(
-                                            item.id ?? "--"
-                                        )}
-                                    </td>
+        return date.toLocaleString(
+            "id-ID",
+            {
+                day: "2-digit",
+                month: "2-digit",
+                year: "numeric",
+                hour: "2-digit",
+                minute: "2-digit",
+                second: "2-digit"
+            }
+        );
 
-                                    <td>
-                                        ${escapeHTML(
-                                            location
-                                        )}
-                                    </td>
+    }
 
-                                    <td>
-                                        ${heightText}
-                                    </td>
 
-                                    <td>
-                                        ${escapeHTML(
-                                            item.water_level ?? "--"
-                                        )}
-                                    </td>
+    /* =========================================================
+       FORMAT UMUR DATA
+       ========================================================= */
 
-                                    <td>
+    function formatDataAge(createdAt) {
 
-                                        <span
-                                            class="status-label ${statusClass}"
-                                        >
+        const age =
+            getDataAgeSeconds(createdAt);
 
-                                            ${escapeHTML(
-                                                status
-                                            )}
 
-                                        </span>
+        if (!Number.isFinite(age)) {
+            return "Belum ada data";
+        }
 
-                                    </td>
 
-                                    <td>
-                                        ${latitudeText}
-                                    </td>
+        if (age < 5) {
+            return "Baru saja";
+        }
 
-                                    <td>
-                                        ${longitudeText}
-                                    </td>
 
-                                    <td>
-                                        ${formatDateTime(
-                                            item.created_at
-                                        )}
-                                    </td>
+        if (age < 60) {
 
-                                `;
+            return (
+                Math.floor(age) +
+                " detik yang lalu"
+            );
 
+        }
 
-                                table.appendChild(
-                                    row
-                                );
 
-                            }
-                        );
+        const minutes =
+            Math.floor(age / 60);
 
-                    }
 
+        if (minutes < 60) {
 
-                    /* =================================================
-                       STATUS CLASS UNTUK TABEL
-                       ================================================= */
+            return (
+                minutes +
+                " menit yang lalu"
+            );
 
-                    function getStatusClassName(
-                        status
-                    ) {
+        }
 
-                        const normalized =
-                            normalizeStatus(
-                                status
-                            );
 
+        const hours =
+            Math.floor(minutes / 60);
 
-                        if (
-                            normalized === "AMAN"
-                        ) {
 
-                            return "status-aman";
+        if (hours < 24) {
 
-                        }
+            return (
+                hours +
+                " jam yang lalu"
+            );
 
+        }
 
-                        if (
-                            normalized === "SIAGA"
-                        ) {
 
-                            return "status-siaga";
+        const days =
+            Math.floor(hours / 24);
 
-                        }
 
+        return (
+            days +
+            " hari yang lalu"
+        );
 
-                        if (
-                            normalized === "WASPADA"
-                        ) {
+    }
 
-                            return "status-waspada";
 
-                        }
+    /* =========================================================
+       UPDATE STATUS PERANGKAT
+       ========================================================= */
 
+    function updateDeviceStatus(
+        latestData
+    ) {
 
-                        if (
-                            normalized === "BAHAYA"
-                        ) {
-
-                            return "status-bahaya";
-
-                        }
-
-
-                        return "status-error";
-
-                    }
-
-
-                    /* =================================================
-                       ESCAPE HTML
-                       MENCEGAH DATA DATABASE MASUK SEBAGAI HTML
-                       ================================================= */
-
-                    function escapeHTML(value) {
-
-                        return String(
-                            value ?? ""
-                        )
-                        .replace(
-                            /&/g,
-                            "&amp;"
-                        )
-                        .replace(
-                            /</g,
-                            "&lt;"
-                        )
-                        .replace(
-                            />/g,
-                            "&gt;"
-                        )
-                        .replace(
-                            /"/g,
-                            "&quot;"
-                        )
-                        .replace(
-                            /'/g,
-                            "&#039;"
-                        );
-
-                    }
-
-
-                    /* =================================================
-                       DETAIL PENGUKURAN TERAKHIR
-                       ================================================= */
-
-                    function renderMeasurementDetail(
-                        item
-                    ) {
-
-                        if (!item) {
-
-                            return;
-
-                        }
-
-
-                        const detailId =
-                            getElement(
-                                "detailId"
-                            );
-
-
-                        const detailLocation =
-                            getElement(
-                                "detailLokasi"
-                            );
-
-
-                        const detailHeight =
-                            getElement(
-                                "detailTinggiAir"
-                            );
-
-
-                        const detailWaterLevel =
-                            getElement(
-                                "detailWaterLevel"
-                            );
-
-
-                        const detailStatus =
-                            getElement(
-                                "detailStatus"
-                            );
-
-
-                        const detailTime =
-                            getElement(
-                                "detailWaktu"
-                            );
-
-
-                        if (detailId) {
-
-                            detailId.textContent =
-                                item.id ?? "--";
-
-                        }
-
-
-                        if (detailLocation) {
-
-                            detailLocation.textContent =
-                                item.lokasi ||
-                                "Lokasi belum tersedia";
-
-                        }
-
-
-                        const height =
-                            Number(
-                                item.tinggi_air
-                            );
-
-
-                        if (detailHeight) {
-
-                            detailHeight.textContent =
-                                Number.isFinite(height)
-                                    ? height + " cm"
-                                    : "--";
-
-                        }
-
-
-                        if (detailWaterLevel) {
-
-                            detailWaterLevel.textContent =
-                                item.water_level ||
-                                "--";
-
-                        }
-
-
-                        const status =
-                            normalizeStatus(
-                                item.status
-                            );
-
-
-                        if (detailStatus) {
-
-                            detailStatus.innerHTML = `
-
-                                <span
-                                    class="status-label ${getStatusClassName(status)}"
-                                >
-
-                                    ${escapeHTML(status)}
-
-                                </span>
-
-                            `;
-
-                        }
-
-
-                        if (detailTime) {
-
-                            detailTime.textContent =
-                                formatDateTime(
-                                    item.created_at
-                                );
-
-                        }
-
-                    }
-
-
-                    /* =================================================
-                       GPS TERAKHIR
-                       ================================================= */
-
-                    function renderGPS(item) {
-
-                        const latitudeElement =
-                            getElement(
-                                "latitude"
-                            );
-
-
-                        const longitudeElement =
-                            getElement(
-                                "longitude"
-                            );
-
-
-                        const gpsStatus =
-                            getElement(
-                                "gpsStatus"
-                            );
-
-
-                        if (!item) {
-
-                            if (latitudeElement) {
-
-                                latitudeElement.textContent =
-                                    "--";
-
-                            }
-
-
-                            if (longitudeElement) {
-
-                                longitudeElement.textContent =
-                                    "--";
-
-                            }
-
-
-                            if (gpsStatus) {
-
-                                gpsStatus.textContent =
-                                    "Menunggu data GPS...";
-
-                            }
-
-
-                            return;
-
-                        }
-
-
-                        const latitude =
-                            Number(
-                                item.latitude
-                            );
-
-
-                        const longitude =
-                            Number(
-                                item.longitude
-                            );
-
-
-                        const validGPS =
-                            Number.isFinite(latitude) &&
-                            Number.isFinite(longitude) &&
-                            (
-                                latitude !== 0 ||
-                                longitude !== 0
-                            );
-
-
-                        if (validGPS) {
-
-                            if (latitudeElement) {
-
-                                latitudeElement.textContent =
-                                    latitude.toFixed(6);
-
-                            }
-
-
-                            if (longitudeElement) {
-
-                                longitudeElement.textContent =
-                                    longitude.toFixed(6);
-
-                            }
-
-
-                            if (gpsStatus) {
-
-                                gpsStatus.innerHTML = `
-
-                                    <span
-                                        class="safe"
-                                    >
-
-                                        ● GPS Aktif
-
-                                    </span>
-
-                                `;
-
-                            }
-
-                        }
-
-                        else {
-
-                            if (latitudeElement) {
-
-                                latitudeElement.textContent =
-                                    "--";
-
-                            }
-
-
-                            if (longitudeElement) {
-
-                                longitudeElement.textContent =
-                                    "--";
-
-                            }
-
-
-                            if (gpsStatus) {
-
-                                gpsStatus.innerHTML = `
-
-                                    <span
-                                        class="warning"
-                                    >
-
-                                        ● Koordinat belum tersedia
-
-                                    </span>
-
-                                `;
-
-                            }
-
-                        }
-
-                    }
-
-
-                    /* =================================================
-                       CHART
-                       ================================================= */
-
-                    let liveSensorChart =
-                        null;
-
-
-                    function initializeLiveChart() {
-
-                        const canvas =
-                            getElement(
-                                "sensorChart"
-                            );
-
-
-                        if (!canvas) {
-
-                            return;
-
-                        }
-
-
-                        if (
-                            typeof Chart ===
-                            "undefined"
-                        ) {
-
-                            console.warn(
-                                "Chart.js belum tersedia."
-                            );
-
-                            return;
-
-                        }
-
-
-                        liveSensorChart =
-                            new Chart(
-                                canvas,
-                                {
-
-                                    type: "line",
-
-
-                                    data: {
-
-                                        labels: [],
-
-
-                                        datasets: [
-
-                                            {
-
-                                                label:
-                                                    "Ketinggian Air (cm)",
-
-                                                data: [],
-
-                                                borderWidth: 3,
-
-                                                tension: 0.35,
-
-                                                fill: true,
-
-                                                pointRadius: 3,
-
-                                                pointHoverRadius: 5
-
-                                            }
-
-                                        ]
-
-                                    },
-
-
-                                    options: {
-
-                                        responsive: true,
-
-                                        maintainAspectRatio: false,
-
-
-                                        interaction: {
-
-                                            intersect: false,
-
-                                            mode: "index"
-
-                                        },
-
-
-                                        plugins: {
-
-                                            legend: {
-
-                                                display: true
-
-                                            }
-
-                                        },
-
-
-                                        scales: {
-
-                                            y: {
-
-                                                beginAtZero: true,
-
-                                                title: {
-
-                                                    display: true,
-
-                                                    text:
-                                                        "Ketinggian Air (cm)"
-
-                                                }
-
-                                            },
-
-
-                                            x: {
-
-                                                title: {
-
-                                                    display: true,
-
-                                                    text:
-                                                        "Waktu"
-
-                                                }
-
-                                            }
-
-                                        }
-
-                                    }
-
-                                }
-                            );
-
-                    }
-
-
-                    /* =================================================
-                       UPDATE CHART
-                       ================================================= */
-
-                    function updateLiveChart(
-                        data
-                    ) {
-
-                        if (
-                            !liveSensorChart
-                        ) {
-
-                            return;
-
-                        }
-
-
-                        if (
-                            !Array.isArray(data)
-                        ) {
-
-                            return;
-
-                        }
-
-
-                        const chartData =
-                            [...data]
-                                .reverse();
-
-
-                        liveSensorChart.data.labels =
-                            chartData.map(
-                                function(item) {
-
-                                    return formatTime(
-                                        item.created_at
-                                    );
-
-                                }
-                            );
-
-
-                        liveSensorChart
-                            .data
-                            .datasets[0]
-                            .data =
-                                chartData.map(
-                                    function(item) {
-
-                                        const value =
-                                            Number(
-                                                item.tinggi_air
-                                            );
-
-
-                                        return Number.isFinite(
-                                            value
-                                        )
-                                            ? value
-                                            : null;
-
-                                    }
-                                );
-
-
-                        liveSensorChart.update(
-                            "none"
-                        );
-
-                    }
-
-
-                    /* =================================================
-                       STATUS SISTEM
-                       ================================================= */
-
-                    function renderSystemStatus(
-                        data,
-                        connected
-                    ) {
-
-                        const systemStatus =
-                            getElement(
-                                "systemStatus"
-                            );
-
-
-                        const lastUpdate =
-                            getElement(
-                                "lastUpdate"
-                            );
-
-
-                        const refreshStatus =
-                            getElement(
-                                "refreshStatus"
-                            );
-
-
-                        if (systemStatus) {
-
-                            if (connected) {
-
-                                systemStatus.textContent =
-                                    "Online";
-
-                            }
-
-                            else if (
-                                data &&
-                                data.length > 0
-                            ) {
-
-                                systemStatus.textContent =
-                                    "Offline / Cache";
-
-                            }
-
-                            else {
-
-                                systemStatus.textContent =
-                                    "Offline";
-
-                            }
-
-                        }
-
-
-                        if (
-                            data &&
-                            data.length > 0
-                        ) {
-
-                            const latest =
-                                data[0];
-
-
-                            if (lastUpdate) {
-
-                                lastUpdate.textContent =
-                                    formatDateTime(
-                                        latest.created_at
-                                    );
-
-                            }
-
-
-                            if (refreshStatus) {
-
-                                refreshStatus.textContent =
-                                    connected
-                                        ? "Data diperbarui otomatis setiap 5 detik."
-                                        : "Menampilkan data terakhir yang tersimpan.";
-
-                            }
-
-                        }
-
-                    }
-
-
-                    /* =================================================
-                       DATA AGE
-                       ================================================= */
-
-                    function updateDataAge() {
-
-                        const element =
-                            getElement(
-                                "dataAge"
-                            );
-
-
-                        if (!element) {
-
-                            return;
-
-                        }
-
-
-                        const cache =
-                            loadSensorCache();
-
-
-                        if (
-                            !cache.length ||
-                            !cache[0].created_at
-                        ) {
-
-                            element.textContent =
-                                "--";
-
-                            return;
-
-                        }
-
-
-                        const date =
-                            new Date(
-                                cache[0].created_at
-                            );
-
-
-                        if (
-                            Number.isNaN(
-                                date.getTime()
-                            )
-                        ) {
-
-                            element.textContent =
-                                "--";
-
-                            return;
-
-                        }
-
-
-                        const seconds =
-                            Math.max(
-                                0,
-                                Math.floor(
-                                    (
-                                        Date.now() -
-                                        date.getTime()
-                                    ) / 1000
-                                )
-                            );
-
-
-                        if (
-                            seconds < 60
-                        ) {
-
-                            element.textContent =
-                                seconds +
-                                " detik yang lalu";
-
-                        }
-
-                        else if (
-                            seconds < 3600
-                        ) {
-
-                            element.textContent =
-                                Math.floor(
-                                    seconds / 60
-                                ) +
-                                " menit yang lalu";
-
-                        }
-
-                        else {
-
-                            element.textContent =
-                                Math.floor(
-                                    seconds / 3600
-                                ) +
-                                " jam yang lalu";
-
-                        }
-
-                    }
-
-
-                    /* =================================================
-                       GANTI RENDER SENSOR DATA
-                       ================================================= */
-
-                    const originalRenderSensorData =
-                        renderSensorData;
-
-
-                    renderSensorData =
-                        function(data) {
-
-                            originalRenderSensorData(
-                                data
-                            );
-
-
-                            renderRealtimeTable(
-                                data
-                            );
-
-
-                            if (
-                                data &&
-                                data.length > 0
-                            ) {
-
-                                const latest =
-                                    data[0];
-
-
-                                renderMeasurementDetail(
-                                    latest
-                                );
-
-
-                                renderGPS(
-                                    latest
-                                );
-
-
-                                updateLiveChart(
-                                    data
-                                );
-
-                            }
-
-
-                            renderSystemStatus(
-                                data,
-                                false
-                            );
-
-                        };
-
-
-                    /* =================================================
-                       OVERRIDE LOAD DATA
-                       ================================================= */
-
-                    const originalLoadSensorData =
-                        loadSensorData;
-
-
-                    loadSensorData =
-                        async function() {
-
-                            try {
-
-                                const response =
-                                    await supabaseClient
-                                        .from("data_air")
-                                        .select("*")
-                                        .order(
-                                            "id",
-                                            {
-                                                ascending: false
-                                            }
-                                        )
-                                        .limit(20);
-
-
-                                if (
-                                    response.error
-                                ) {
-
-                                    console.error(
-                                        "Supabase error:",
-                                        response.error
-                                    );
-
-
-                                    const cached =
-                                        loadSensorCache();
-
-
-                                    if (
-                                        cached.length > 0
-                                    ) {
-
-                                        renderSensorData(
-                                            cached
-                                        );
-
-
-                                        setConnectionStatus(
-                                            false,
-                                            true
-                                        );
-
-
-                                        renderSystemStatus(
-                                            cached,
-                                            false
-                                        );
-
-                                    }
-
-                                    else {
-
-                                        setConnectionStatus(
-                                            false,
-                                            false
-                                        );
-
-
-                                        renderSystemStatus(
-                                            [],
-                                            false
-                                        );
-
-                                    }
-
-
-                                    return;
-
-                                }
-
-
-                                const data =
-                                    response.data ||
-                                    [];
-
-
-                                if (
-                                    data.length > 0
-                                ) {
-
-                                    saveSensorCache(
-                                        data
-                                    );
-
-
-                                    renderSensorData(
-                                        data
-                                    );
-
-
-                                    setConnectionStatus(
-                                        true,
-                                        false
-                                    );
-
-
-                                    renderSystemStatus(
-                                        data,
-                                        true
-                                    );
-
-                                }
-
-                                else {
-
-                                    renderSensorData(
-                                        []
-                                    );
-
-
-                                    setConnectionStatus(
-                                        true,
-                                        false
-                                    );
-
-
-                                    renderSystemStatus(
-                                        [],
-                                        true
-                                    );
-
-                                }
-
-                            }
-
-                            catch(error) {
-
-                                console.error(
-                                    "Gagal memuat data sensor:",
-                                    error
-                                );
-
-
-                                const cached =
-                                    loadSensorCache();
-
-
-                                if (
-                                    cached.length > 0
-                                ) {
-
-                                    renderSensorData(
-                                        cached
-                                    );
-
-
-                                    setConnectionStatus(
-                                        false,
-                                        true
-                                    );
-
-
-                                    renderSystemStatus(
-                                        cached,
-                                        false
-                                    );
-
-                                }
-
-                                else {
-
-                                    setConnectionStatus(
-                                        false,
-                                        false
-                                    );
-
-
-                                    renderSystemStatus(
-                                        [],
-                                        false
-                                    );
-
-                                }
-
-                            }
-
-                        };
-
-
-                    /* =================================================
-                       INIT CHART
-                       ================================================= */
-
-                    document.addEventListener(
-                        "DOMContentLoaded",
-                        function() {
-
-                            initializeLiveChart();
-
-
-                            const cached =
-                                loadSensorCache();
-
-
-                            if (
-                                cached.length > 0
-                            ) {
-
-                                renderRealtimeTable(
-                                    cached
-                                );
-
-
-                                renderMeasurementDetail(
-                                    cached[0]
-                                );
-
-
-                                renderGPS(
-                                    cached[0]
-                                );
-
-
-                                updateLiveChart(
-                                    cached
-                                );
-
-                            }
-
-
-                            updateDataAge();
-
-                        }
-                    );
-
-
-                    /* =================================================
-                       UPDATE UMUR DATA
-                       ================================================= */
-
-                    setInterval(
-                        updateDataAge,
-                        1000
-                    );
-
-
-                    /* =================================================
-                       FINAL AUTO REFRESH
-                       ================================================= */
-
-                    setInterval(
-                        function() {
-
-                            loadSensorData();
-
-                        },
-                        5000
-                    );
-
-
-                </script>
-                                <!-- =================================================
-                     PART 5 — FINALIZATION
-                     ================================================= -->
-
-
-                <script>
-
-                    /* =================================================
-                       FINAL THEME CHECK
-                       ================================================= */
-
-                    function initializeFinalTheme() {
-
-                        const savedTheme =
-                            localStorage.getItem(
-                                "flowsTheme"
-                            );
-
-
-                        const theme =
-                            savedTheme === "dark"
-                                ? "dark"
-                                : "light";
-
-
-                        document.documentElement
-                            .setAttribute(
-                                "data-theme",
-                                theme
-                            );
-
-                    }
-
-
-                    /* =================================================
-                       FINAL AUTH CHECK
-                       ================================================= */
-
-                    async function finalAuthCheck() {
-
-                        try {
-
-                            const {
-                                data,
-                                error
-                            } =
-                                await supabaseClient
-                                    .auth.getSession();
-
-
-                            if (error) {
-
-                                console.error(
-                                    "Gagal memeriksa session:",
-                                    error
-                                );
-
-                                return;
-
-                            }
-
-
-                            if (
-                                !data ||
-                                !data.session ||
-                                !data.session.user
-                            ) {
-
-                                window.location.replace(
-                                    "login.html"
-                                );
-
-                                return;
-
-                            }
-
-
-                            await loadLiveUser();
-
-                        }
-
-                        catch(error) {
-
-                            console.error(
-                                "Auth check error:",
-                                error
-                            );
-
-                        }
-
-                    }
-
-
-                    /* =================================================
-                       FINAL PAGE INITIALIZATION
-                       ================================================= */
-
-                    document.addEventListener(
-                        "DOMContentLoaded",
-                        async function() {
-
-                            initializeFinalTheme();
-
-
-                            await finalAuthCheck();
-
-
-                            const cachedData =
-                                loadSensorCache();
-
-
-                            if (
-                                cachedData &&
-                                cachedData.length > 0
-                            ) {
-
-                                renderSensorData(
-                                    cachedData
-                                );
-
-
-                                updateLiveChart(
-                                    cachedData
-                                );
-
-
-                                updateDataAge();
-
-                            }
-
-
-                            /*
-                             * Ambil data terbaru setelah seluruh
-                             * halaman selesai dimuat.
-                             */
-
-                            await loadSensorData();
-
-                        }
-                    );
-
-
-                    /* =================================================
-                       REFRESH SAAT TAB KEMBALI AKTIF
-                       ================================================= */
-
-                    document.addEventListener(
-                        "visibilitychange",
-                        function() {
-
-                            if (
-                                document.visibilityState ===
-                                "visible"
-                            ) {
-
-                                loadSensorData();
-
-                            }
-
-                        }
-                    );
-
-
-                    /* =================================================
-                       REFRESH MANUAL DENGAN CTRL + R / F5
-                       ================================================= */
-
-                    window.addEventListener(
-                        "pageshow",
-                        function() {
-
-                            loadSensorData();
-
-                        }
-                    );
-
-
-                </script>
-
-
-            </div>
-            <!-- END monitoring-container -->
-
-
-        </section>
-        <!-- END page-content -->
-
-
-    </main>
-    <!-- END main-content -->
-
-
-    <!-- =====================================================
-         TOAST
-         ===================================================== -->
-
-    <div
-        class="toast"
-        id="toast"
-        role="status"
-        aria-live="polite"
-    ></div>
-
-
-    <!-- =====================================================
-         FINAL GLOBAL SCRIPT
-         ===================================================== -->
-
-    <script>
-
-        /* =================================================
-           NOTIFICATION BUTTON
-           ================================================= */
-
-        const finalNotificationButton =
+        const deviceElement =
             document.getElementById(
-                "notificationButton"
+                "deviceConnection"
             );
 
 
-        finalNotificationButton?.addEventListener(
-            "click",
-            function() {
+        const sensorElement =
+            document.getElementById(
+                "sensorConnection"
+            );
 
-                showLiveToast(
-                    "Sistem FLOWS-PRO sedang memantau data sensor."
+
+        const apiElement =
+            document.getElementById(
+                "apiConnection"
+            );
+
+
+        /*
+         * API ONLINE berarti halaman berhasil
+         * berkomunikasi dengan Supabase.
+         */
+        if (apiElement) {
+
+            apiElement.textContent =
+                "ONLINE";
+
+            apiElement.className =
+                "connection-value online";
+
+        }
+
+
+        /*
+         * Tidak ada data sensor sama sekali.
+         */
+        if (
+            !latestData ||
+            !latestData.created_at
+        ) {
+
+            setConnectionStatus(
+                deviceElement,
+                "OFFLINE"
+            );
+
+
+            setConnectionStatus(
+                sensorElement,
+                "OFFLINE"
+            );
+
+
+            return;
+
+        }
+
+
+        const online =
+            isSensorOnline(
+                latestData.created_at
+            );
+
+
+        if (online) {
+
+            setConnectionStatus(
+                deviceElement,
+                "ONLINE"
+            );
+
+
+            setConnectionStatus(
+                sensorElement,
+                "ONLINE"
+            );
+
+        }
+        else {
+
+            setConnectionStatus(
+                deviceElement,
+                "OFFLINE"
+            );
+
+
+            setConnectionStatus(
+                sensorElement,
+                "OFFLINE"
+            );
+
+        }
+
+    }
+
+
+    /* =========================================================
+       SET CONNECTION STATUS
+       ========================================================= */
+
+    function setConnectionStatus(
+        element,
+        status
+    ) {
+
+        if (!element) {
+            return;
+        }
+
+
+        element.textContent =
+            status;
+
+
+        element.className =
+            status === "ONLINE"
+                ? "connection-value online"
+                : "connection-value offline";
+
+    }
+
+
+    /* =========================================================
+       RENDER REALTIME TABLE
+       ========================================================= */
+
+    function renderRealtimeTable(
+        data
+    ) {
+
+        const table =
+            document.getElementById(
+                "sensorRealtimeTable"
+            );
+
+
+        if (!table) {
+            return;
+        }
+
+
+        if (
+            !data ||
+            data.length === 0
+        ) {
+
+            table.innerHTML = `
+                <tr>
+                    <td colspan="6"
+                        style="text-align:center;padding:24px;">
+                        Belum ada data sensor.
+                    </td>
+                </tr>
+            `;
+
+            return;
+
+        }
+
+
+        const rows =
+            data.slice(0, 10);
+
+
+        table.innerHTML =
+            rows.map(
+                item => {
+
+                    const online =
+                        isSensorOnline(
+                            item.created_at
+                        );
+
+
+                    const status =
+                        String(
+                            item.status || "-"
+                        ).toUpperCase();
+
+
+                    return `
+                        <tr>
+
+                            <td>
+                                ${escapeHTML(
+                                    item.id ?? "-"
+                                )}
+                            </td>
+
+                            <td>
+                                ${escapeHTML(
+                                    item.lokasi ?? "-"
+                                )}
+                            </td>
+
+                            <td>
+                                ${
+                                    item.tinggi_air ??
+                                    "-"
+                                } cm
+                            </td>
+
+                            <td>
+                                ${
+                                    item.water_level ??
+                                    "-"
+                                } cm
+                            </td>
+
+                            <td>
+                                <span class="
+                                    status-badge
+                                    ${getStatusClassName(
+                                        status
+                                    )}
+                                ">
+                                    ${escapeHTML(
+                                        status
+                                    )}
+                                </span>
+                            </td>
+
+                            <td>
+                                ${
+                                    online
+                                        ? "ONLINE"
+                                        : "OFFLINE"
+                                }
+                            </td>
+
+                        </tr>
+                    `;
+
+                }
+            )
+            .join("");
+
+    }
+
+
+    /* =========================================================
+       RENDER DETAIL PENGUKURAN
+       ========================================================= */
+
+    function renderMeasurementDetail(
+        latestData
+    ) {
+
+        if (!latestData) {
+            return;
+        }
+
+
+        const fields = {
+
+            detailId:
+                latestData.id ?? "-",
+
+            detailLokasi:
+                latestData.lokasi ?? "-",
+
+            detailTinggiAir:
+                latestData.tinggi_air ?? "-",
+
+            detailWaterLevel:
+                latestData.water_level ?? "-",
+
+            detailStatus:
+                latestData.status ?? "-",
+
+            detailWaktu:
+                formatDateTime(
+                    latestData.created_at
+                )
+
+        };
+
+
+        Object.entries(fields)
+            .forEach(
+                ([id, value]) => {
+
+                    const element =
+                        document.getElementById(
+                            id
+                        );
+
+
+                    if (element) {
+
+                        element.textContent =
+                            value;
+
+                    }
+
+                }
+            );
+
+    }
+
+
+    /* =========================================================
+       RENDER GPS
+       ========================================================= */
+
+    function renderGPS(
+        latestData
+    ) {
+
+        const latitude =
+            document.getElementById(
+                "latitude"
+            );
+
+
+        const longitude =
+            document.getElementById(
+                "longitude"
+            );
+
+
+        const gpsStatus =
+            document.getElementById(
+                "gpsStatus"
+            );
+
+
+        if (!latestData) {
+
+            if (latitude) {
+                latitude.textContent = "-";
+            }
+
+            if (longitude) {
+                longitude.textContent = "-";
+            }
+
+            if (gpsStatus) {
+                gpsStatus.textContent =
+                    "OFFLINE";
+            }
+
+            return;
+
+        }
+
+
+        if (latitude) {
+
+            latitude.textContent =
+                latestData.latitude ??
+                "-";
+
+        }
+
+
+        if (longitude) {
+
+            longitude.textContent =
+                latestData.longitude ??
+                "-";
+
+        }
+
+
+        const hasGPS =
+            latestData.latitude !== null &&
+            latestData.latitude !== undefined &&
+            latestData.longitude !== null &&
+            latestData.longitude !== undefined;
+
+
+        if (gpsStatus) {
+
+            gpsStatus.textContent =
+                hasGPS
+                    ? "TERSEDIA"
+                    : "TIDAK TERSEDIA";
+
+        }
+
+    }
+
+
+    /* =========================================================
+       RENDER SYSTEM STATUS
+       ========================================================= */
+
+    function renderSystemStatus(
+        latestData
+    ) {
+
+        const systemStatus =
+            document.getElementById(
+                "systemStatus"
+            );
+
+
+        const refreshStatus =
+            document.getElementById(
+                "refreshStatus"
+            );
+
+
+        const lastUpdate =
+            document.getElementById(
+                "lastUpdate"
+            );
+
+
+        const lastReading =
+            document.getElementById(
+                "lastReading"
+            );
+
+
+        if (!latestData) {
+
+            if (systemStatus) {
+                systemStatus.textContent =
+                    "MENUNGGU DATA";
+            }
+
+
+            if (refreshStatus) {
+                refreshStatus.textContent =
+                    "Belum ada data sensor";
+            }
+
+
+            if (lastUpdate) {
+                lastUpdate.textContent =
+                    "-";
+            }
+
+
+            if (lastReading) {
+                lastReading.textContent =
+                    "-";
+            }
+
+
+            return;
+
+        }
+
+
+        const online =
+            isSensorOnline(
+                latestData.created_at
+            );
+
+
+        if (systemStatus) {
+
+            systemStatus.textContent =
+                online
+                    ? "ONLINE"
+                    : "OFFLINE";
+
+        }
+
+
+        if (refreshStatus) {
+
+            refreshStatus.textContent =
+                online
+                    ? "Data sensor terbaru diterima"
+                    : "Tidak ada data sensor terbaru";
+
+        }
+
+
+        if (lastUpdate) {
+
+            lastUpdate.textContent =
+                formatDataAge(
+                    latestData.created_at
+                );
+
+        }
+
+
+        if (lastReading) {
+
+            lastReading.textContent =
+                formatDateTime(
+                    latestData.created_at
+                );
+
+        }
+
+    }
+
+
+    /* =========================================================
+       UPDATE DATA AGE SETIAP DETIK
+       ========================================================= */
+
+    function updateDataAge() {
+
+        const lastUpdate =
+            document.getElementById(
+                "lastUpdate"
+            );
+
+
+        if (!lastUpdate) {
+            return;
+        }
+
+
+        const cached =
+            loadSensorCache();
+
+
+        if (
+            !cached ||
+            cached.length === 0
+        ) {
+
+            lastUpdate.textContent =
+                "Belum ada data";
+
+            return;
+
+        }
+
+
+        const latest =
+            cached[0];
+
+
+        const age =
+            getDataAgeSeconds(
+                latest.created_at
+            );
+
+
+        lastUpdate.textContent =
+            formatDataAge(
+                latest.created_at
+            );
+
+
+        /*
+         * Jika data melewati timeout,
+         * status perangkat harus langsung
+         * berubah menjadi OFFLINE.
+         */
+        if (
+            age >
+            SENSOR_TIMEOUT_SECONDS
+        ) {
+
+            setConnectionStatus(
+                document.getElementById(
+                    "deviceConnection"
+                ),
+                "OFFLINE"
+            );
+
+
+            setConnectionStatus(
+                document.getElementById(
+                    "sensorConnection"
+                ),
+                "OFFLINE"
+            );
+
+
+            const systemStatus =
+                document.getElementById(
+                    "systemStatus"
+                );
+
+
+            if (systemStatus) {
+
+                systemStatus.textContent =
+                    "OFFLINE";
+
+            }
+
+
+            const refreshStatus =
+                document.getElementById(
+                    "refreshStatus"
+                );
+
+
+            if (refreshStatus) {
+
+                refreshStatus.textContent =
+                    "Data sensor tidak diperbarui";
+
+            }
+
+        }
+
+    }
+
+
+    /* =========================================================
+       CHART
+       ========================================================= */
+
+    function initializeLiveChart(
+        data = []
+    ) {
+
+        const canvas =
+            document.getElementById(
+                "liveChart"
+            );
+
+
+        if (
+            !canvas ||
+            typeof Chart === "undefined"
+        ) {
+            return;
+        }
+
+
+        const chartData =
+            [...data]
+                .reverse();
+
+
+        const labels =
+            chartData.map(
+                item =>
+                    new Date(
+                        item.created_at
+                    ).toLocaleTimeString(
+                        "id-ID",
+                        {
+                            hour: "2-digit",
+                            minute: "2-digit",
+                            second: "2-digit"
+                        }
+                    )
+            );
+
+
+        const values =
+            chartData.map(
+                item =>
+                    Number(
+                        item.water_level
+                    ) || 0
+            );
+
+
+        liveChart =
+            new Chart(
+                canvas,
+                {
+                    type: "line",
+
+                    data: {
+
+                        labels,
+
+                        datasets: [
+
+                            {
+                                label:
+                                    "Ketinggian Air",
+
+                                data:
+                                    values,
+
+                                tension:
+                                    0.35,
+
+                                fill:
+                                    false,
+
+                                borderWidth:
+                                    2,
+
+                                pointRadius:
+                                    3
+
+                            }
+
+                        ]
+
+                    },
+
+                    options: {
+
+                        responsive:
+                            true,
+
+                        maintainAspectRatio:
+                            false,
+
+                        interaction: {
+
+                            intersect:
+                                false,
+
+                            mode:
+                                "index"
+
+                        },
+
+                        plugins: {
+
+                            legend: {
+
+                                display:
+                                    true
+
+                            }
+
+                        },
+
+                        scales: {
+
+                            y: {
+
+                                beginAtZero:
+                                    true,
+
+                                title: {
+
+                                    display:
+                                        true,
+
+                                    text:
+                                        "cm"
+
+                                }
+
+                            }
+
+                        }
+
+                    }
+
+                }
+            );
+
+    }
+
+
+    /* =========================================================
+       UPDATE CHART
+       ========================================================= */
+
+    function updateLiveChart(
+        data = []
+    ) {
+
+        if (!liveChart) {
+            return;
+        }
+
+
+        const chartData =
+            [...data]
+                .reverse();
+
+
+        liveChart.data.labels =
+            chartData.map(
+                item =>
+                    new Date(
+                        item.created_at
+                    ).toLocaleTimeString(
+                        "id-ID",
+                        {
+                            hour: "2-digit",
+                            minute: "2-digit",
+                            second: "2-digit"
+                        }
+                    )
+            );
+
+
+        liveChart.data.datasets[0].data =
+            chartData.map(
+                item =>
+                    Number(
+                        item.water_level
+                    ) || 0
+            );
+
+
+        liveChart.update(
+            "none"
+        );
+
+    }
+
+
+    /* =========================================================
+       RENDER SENSOR DATA — FINAL
+       ========================================================= */
+
+    function renderSensorData(
+        data
+    ) {
+
+        if (
+            !data ||
+            data.length === 0
+        ) {
+
+            updateDeviceStatus(
+                null
+            );
+
+            renderSystemStatus(
+                null
+            );
+
+            return;
+
+        }
+
+
+        const latestData =
+            data[0];
+
+
+        /* ================================================
+           DATA UTAMA
+           ================================================ */
+
+        const waterLevel =
+            document.getElementById(
+                "waterLevel"
+            );
+
+
+        const waterStatus =
+            document.getElementById(
+                "waterStatus"
+            );
+
+
+        const waterStatusText =
+            document.getElementById(
+                "waterStatusText"
+            );
+
+
+        if (waterLevel) {
+
+            const level =
+                latestData.water_level ??
+                latestData.tinggi_air ??
+                0;
+
+
+            waterLevel.textContent =
+                Number(level).toFixed(1);
+
+        }
+
+
+        const status =
+            String(
+                latestData.status || "AMAN"
+            ).toUpperCase();
+
+
+        if (waterStatus) {
+
+            waterStatus.textContent =
+                status;
+
+            waterStatus.className =
+                "water-status " +
+                getStatusClassName(
+                    status
+                );
+
+        }
+
+
+        if (waterStatusText) {
+
+            const online =
+                isSensorOnline(
+                    latestData.created_at
+                );
+
+
+            if (!online) {
+
+                waterStatusText.textContent =
+                    "Data terakhir sudah tidak realtime";
+
+            }
+            else {
+
+                waterStatusText.textContent =
+                    "Status berdasarkan pembacaan sensor terbaru";
+
+            }
+
+        }
+
+
+        /* ================================================
+           STATUS PERANGKAT
+           ================================================ */
+
+        updateDeviceStatus(
+            latestData
+        );
+
+
+        /* ================================================
+           DETAIL
+           ================================================ */
+
+        renderMeasurementDetail(
+            latestData
+        );
+
+
+        /* ================================================
+           GPS
+           ================================================ */
+
+        renderGPS(
+            latestData
+        );
+
+
+        /* ================================================
+           SISTEM
+           ================================================ */
+
+        renderSystemStatus(
+            latestData
+        );
+
+
+        /* ================================================
+           TABLE
+           ================================================ */
+
+        renderRealtimeTable(
+            data
+        );
+
+
+        /* ================================================
+           CHART
+           ================================================ */
+
+        updateLiveChart(
+            data
+        );
+
+
+        /* ================================================
+           UPDATE COUNT
+           ================================================ */
+
+        const updateCount =
+            document.getElementById(
+                "updateCount"
+            );
+
+
+        if (updateCount) {
+
+            updateCount.textContent =
+                data.length;
+
+        }
+
+    }
+
+
+    /* =========================================================
+       OVERRIDE LOAD SENSOR DATA
+       ========================================================= */
+
+    async function loadSensorData() {
+
+        try {
+
+            const {
+                data,
+                error
+            } =
+                await supabaseClient
+                    .from("data_air")
+                    .select("*")
+                    .order(
+                        "id",
+                        {
+                            ascending:
+                                false
+                        }
+                    )
+                    .limit(20);
+
+
+            if (error) {
+
+                console.error(
+                    "Gagal mengambil data sensor:",
+                    error
+                );
+
+
+                setConnectionStatus(
+                    document.getElementById(
+                        "apiConnection"
+                    ),
+                    "OFFLINE"
+                );
+
+
+                return;
+
+            }
+
+
+            /* =========================================
+               API BERHASIL DIAKSES
+               ========================================= */
+
+            setConnectionStatus(
+                document.getElementById(
+                    "apiConnection"
+                ),
+                "ONLINE"
+            );
+
+
+            /* =========================================
+               TIDAK ADA DATA SENSOR
+               ========================================= */
+
+            if (
+                !data ||
+                data.length === 0
+            ) {
+
+                saveSensorCache(
+                    []
+                );
+
+
+                renderSensorData(
+                    []
+                );
+
+
+                return;
+
+            }
+
+
+            /* =========================================
+               SIMPAN DATA
+               ========================================= */
+
+            saveSensorCache(
+                data
+            );
+
+
+            /* =========================================
+               RENDER
+               ========================================= */
+
+            renderSensorData(
+                data
+            );
+
+
+            updateLiveChart(
+                data
+            );
+
+
+        }
+
+        catch(error) {
+
+            console.error(
+                "Sensor request error:",
+                error
+            );
+
+
+            setConnectionStatus(
+                document.getElementById(
+                    "apiConnection"
+                ),
+                "OFFLINE"
+            );
+
+        }
+
+    }
+
+
+    /* =========================================================
+       UPDATE STATUS SETIAP DETIK
+       ========================================================= */
+
+    setInterval(
+        function() {
+
+            updateDataAge();
+
+        },
+        1000
+    );
+
+
+    /* =========================================================
+       INITIALIZE CHART
+       ========================================================= */
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        function() {
+
+            const cached =
+                loadSensorCache();
+
+
+            if (
+                cached &&
+                cached.length > 0
+            ) {
+
+                initializeLiveChart(
+                    cached
+                );
+
+                renderSensorData(
+                    cached
                 );
 
             }
-        );
+            else {
 
-
-        /* =================================================
-           ESC KEY
-           ================================================= */
-
-        document.addEventListener(
-            "keydown",
-            function(event) {
-
-                if (
-                    event.key === "Escape"
-                ) {
-
-                    closeLiveDropdown();
-
-                }
+                initializeLiveChart(
+                    []
+                );
 
             }
+
+        }
+    );
+
+
+</script>
+
+
+<style>
+
+    /* =========================================================
+       STATUS CONNECTION
+       ========================================================= */
+
+    .connection-value {
+
+        font-weight: 800;
+        font-size: 11px;
+        letter-spacing: .4px;
+
+    }
+
+
+    .connection-value.online {
+
+        color: #22c55e;
+
+    }
+
+
+    .connection-value.offline {
+
+        color: #ef4444;
+
+    }
+
+
+    /* =========================================================
+       STATUS BADGE
+       ========================================================= */
+
+    .status-badge {
+
+        display: inline-flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        min-width: 70px;
+
+        padding:
+            5px
+            9px;
+
+        border-radius:
+            999px;
+
+        font-size:
+            10px;
+
+        font-weight:
+            800;
+
+    }
+
+
+    .status-safe {
+
+        background:
+            rgba(
+                34,
+                197,
+                94,
+                .12
+            );
+
+        color:
+            #16a34a;
+
+    }
+
+
+    .status-warning {
+
+        background:
+            rgba(
+                245,
+                158,
+                11,
+                .14
+            );
+
+        color:
+            #d97706;
+
+    }
+
+
+    .status-danger {
+
+        background:
+            rgba(
+                239,
+                68,
+                68,
+                .12
+            );
+
+        color:
+            #dc2626;
+
+    }
+
+
+    .status-neutral {
+
+        background:
+            rgba(
+                148,
+                163,
+                184,
+                .14
+            );
+
+        color:
+            #64748b;
+
+    }
+
+
+    /* =========================================================
+       OFFLINE SENSOR CARD
+       ========================================================= */
+
+    .sensor-card.offline {
+
+        border-color:
+            rgba(
+                239,
+                68,
+                68,
+                .35
+            );
+
+    }
+
+
+    /* =========================================================
+       CHART CONTAINER
+       ========================================================= */
+
+    .chart-container {
+
+        position:
+            relative;
+
+        width:
+            100%;
+
+        height:
+            300px;
+
+    }
+
+
+    /* =========================================================
+       DARK MODE
+       ========================================================= */
+
+    [data-theme="dark"]
+    .status-safe {
+
+        background:
+            rgba(
+                34,
+                197,
+                94,
+                .16
+            );
+
+        color:
+            #4ade80;
+
+    }
+
+
+    [data-theme="dark"]
+    .status-warning {
+
+        background:
+            rgba(
+                245,
+                158,
+                11,
+                .18
+            );
+
+        color:
+            #fbbf24;
+
+    }
+
+
+    [data-theme="dark"]
+    .status-danger {
+
+        background:
+            rgba(
+                239,
+                68,
+                68,
+                .18
+            );
+
+        color:
+            #f87171;
+
+    }
+
+
+    [data-theme="dark"]
+    .status-neutral {
+
+        background:
+            rgba(
+                148,
+                163,
+                184,
+                .15
+            );
+
+        color:
+            #cbd5e1;
+
+    }
+
+</style>
+<!-- =========================================================
+     PART 5 — FINAL PAGE INITIALIZATION & CLOSING
+     ========================================================= -->
+
+<script>
+
+    /* =========================================================
+       FINAL THEME
+       ========================================================= */
+
+    function applyFinalTheme() {
+
+        const savedTheme =
+            localStorage.getItem("flowsTheme");
+
+        const theme =
+            savedTheme === "dark"
+                ? "dark"
+                : "light";
+
+        document.documentElement.setAttribute(
+            "data-theme",
+            theme
         );
 
+    }
 
-        /* =================================================
-           PREVENT DOUBLE CLICK LOGOUT
-           ================================================= */
 
-        const finalLogoutButton =
+    /* =========================================================
+       PROFILE DROPDOWN
+       ========================================================= */
+
+    function closeLiveDropdown() {
+
+        const dropdown =
             document.getElementById(
-                "logoutButton"
+                "profileDropdown"
+            );
+
+        const trigger =
+            document.getElementById(
+                "profileTrigger"
             );
 
 
-        finalLogoutButton?.addEventListener(
-            "dblclick",
-            function(event) {
+        if (dropdown) {
 
-                event.preventDefault();
+            dropdown.classList.remove(
+                "open"
+            );
 
-            }
+        }
+
+
+        if (trigger) {
+
+            trigger.setAttribute(
+                "aria-expanded",
+                "false"
+            );
+
+        }
+
+    }
+
+
+    const finalProfileTrigger =
+        document.getElementById(
+            "profileTrigger"
         );
 
 
-        /* =================================================
-           PAGE READY
-           ================================================= */
-
-        window.addEventListener(
-            "load",
-            function() {
-
-                initializeFinalTheme();
-
-                updateDataAge();
-
-            }
+    const finalProfileDropdown =
+        document.getElementById(
+            "profileDropdown"
         );
 
-    </script>
+
+    finalProfileTrigger?.addEventListener(
+        "click",
+        function(event) {
+
+            event.stopPropagation();
+
+
+            if (!finalProfileDropdown) {
+                return;
+            }
+
+
+            const isOpen =
+                finalProfileDropdown.classList
+                    .contains("open");
+
+
+            closeLiveDropdown();
+
+
+            if (!isOpen) {
+
+                finalProfileDropdown.classList
+                    .add("open");
+
+
+                finalProfileTrigger.setAttribute(
+                    "aria-expanded",
+                    "true"
+                );
+
+            }
+
+        }
+    );
+
+
+    document.addEventListener(
+        "click",
+        function(event) {
+
+            if (
+                finalProfileDropdown &&
+                !finalProfileDropdown.contains(
+                    event.target
+                ) &&
+                finalProfileTrigger &&
+                !finalProfileTrigger.contains(
+                    event.target
+                )
+            ) {
+
+                closeLiveDropdown();
+
+            }
+
+        }
+    );
+
+
+    /* =========================================================
+       LOGOUT
+       ========================================================= */
+
+    const finalLogoutButton =
+        document.getElementById(
+            "logoutButton"
+        );
+
+
+    finalLogoutButton?.addEventListener(
+        "click",
+        async function() {
+
+            try {
+
+                finalLogoutButton.disabled =
+                    true;
+
+
+                const {
+                    error
+                } =
+                    await supabaseClient
+                        .auth.signOut();
+
+
+                if (error) {
+
+                    console.error(
+                        "Logout gagal:",
+                        error
+                    );
+
+
+                    finalLogoutButton.disabled =
+                        false;
+
+
+                    return;
+
+                }
+
+
+                window.location.replace(
+                    "login.html"
+                );
+
+            }
+
+            catch(error) {
+
+                console.error(
+                    "Logout error:",
+                    error
+                );
+
+
+                finalLogoutButton.disabled =
+                    false;
+
+            }
+
+        }
+    );
+
+
+    /* =========================================================
+       AUTH STATE
+       ========================================================= */
+
+    supabaseClient.auth.onAuthStateChange(
+        function(event, session) {
+
+            if (
+                event === "SIGNED_OUT"
+            ) {
+
+                window.location.replace(
+                    "login.html"
+                );
+
+            }
+
+        }
+    );
+
+
+    /* =========================================================
+       THEME CHANGE ANTAR HALAMAN
+       ========================================================= */
+
+    window.addEventListener(
+        "storage",
+        function(event) {
+
+            if (
+                event.key === "flowsTheme"
+            ) {
+
+                applyFinalTheme();
+
+            }
+
+        }
+    );
+
+
+    /* =========================================================
+       ONLINE / OFFLINE INTERNET
+       ========================================================= */
+
+    window.addEventListener(
+        "online",
+        function() {
+
+            const apiElement =
+                document.getElementById(
+                    "apiConnection"
+                );
+
+
+            if (apiElement) {
+
+                apiElement.textContent =
+                    "ONLINE";
+
+                apiElement.className =
+                    "connection-value online";
+
+            }
+
+
+            loadSensorData();
+
+        }
+    );
+
+
+    window.addEventListener(
+        "offline",
+        function() {
+
+            const apiElement =
+                document.getElementById(
+                    "apiConnection"
+                );
+
+
+            if (apiElement) {
+
+                apiElement.textContent =
+                    "OFFLINE";
+
+                apiElement.className =
+                    "connection-value offline";
+
+            }
+
+        }
+    );
+
+
+    /* =========================================================
+       KEYBOARD ESC
+       ========================================================= */
+
+    document.addEventListener(
+        "keydown",
+        function(event) {
+
+            if (
+                event.key === "Escape"
+            ) {
+
+                closeLiveDropdown();
+
+            }
+
+        }
+    );
+
+
+    /* =========================================================
+       FINAL INITIALIZATION
+       ========================================================= */
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        function() {
+
+            applyFinalTheme();
+
+
+            /*
+             * Chart hanya dibuat sekali.
+             * Jika Part 4 sudah membuat chart,
+             * bagian ini tidak akan membuat duplikat.
+             */
+
+            if (
+                !liveChart
+            ) {
+
+                const cachedData =
+                    loadSensorCache();
+
+
+                initializeLiveChart(
+                    cachedData || []
+                );
+
+            }
+
+
+            /*
+             * Jalankan pengecekan umur data
+             * setiap halaman selesai dimuat.
+             */
+
+            updateDataAge();
+
+        }
+    );
+
+
+</script>
+
+
+<style>
+
+    /* =========================================================
+       DROPDOWN SUPPORT
+       ========================================================= */
+
+    .dropdown.open {
+
+        display: block;
+
+        animation:
+            dropdownFadeIn
+            .16s
+            ease;
+
+    }
+
+
+    @keyframes dropdownFadeIn {
+
+        from {
+
+            opacity: 0;
+
+            transform:
+                translateY(-5px);
+
+        }
+
+        to {
+
+            opacity: 1;
+
+            transform:
+                translateY(0);
+
+        }
+
+    }
+
+
+    /* =========================================================
+       DISABLED BUTTON
+       ========================================================= */
+
+    button:disabled {
+
+        cursor:
+            not-allowed;
+
+        opacity:
+            .65;
+
+    }
+
+
+    /* =========================================================
+       RESPONSIVE CHART
+       ========================================================= */
+
+    @media (max-width: 700px) {
+
+        .chart-container {
+
+            height:
+                240px;
+
+        }
+
+    }
+
+
+    /* =========================================================
+       PRINT
+       ========================================================= */
+
+    @media print {
+
+        .sidebar,
+        .topbar-actions {
+
+            display:
+                none !important;
+
+        }
+
+
+        .main-content {
+
+            margin-left:
+                0 !important;
+
+        }
+
+    }
+
+</style>
+
+
+</div>
+<!-- END app-layout -->
 
 
 </body>
-
-</html>
+</html> 
