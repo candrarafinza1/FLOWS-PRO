@@ -2,20 +2,22 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Informasi Cuaca — FLOWS-PRO</title>
 
     <meta
-        name="description"
-        content="Prakiraan cuaca BMKG terintegrasi dengan sistem FLOWS-PRO."
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
     >
+
+    <title>Informasi Cuaca | FLOWS-PRO</title>
 
     <!-- =====================================================
          FONT
     ====================================================== -->
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
 
     <link
         rel="preconnect"
@@ -28,7 +30,6 @@
         rel="stylesheet"
     >
 
-
     <!-- =====================================================
          FONT AWESOME
     ====================================================== -->
@@ -37,7 +38,6 @@
         rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
     >
-
 
     <!-- =====================================================
          SUPABASE
@@ -49,111 +49,38 @@
     <style>
 
         /* =====================================================
-           ROOT
-        ====================================================== */
-
-        :root {
-
-            --sidebar-width: 250px;
-
-            --bg: #f8fafc;
-
-            --surface: #ffffff;
-
-            --surface-soft: #f1f5f9;
-
-            --border: #e2e8f0;
-
-            --primary: #2563eb;
-
-            --primary-light: #eff6ff;
-
-            --cyan: #06b6d4;
-
-            --text-primary: #0f172a;
-
-            --text-secondary: #64748b;
-
-            --text-muted: #94a3b8;
-
-            --success: #16a34a;
-
-            --warning: #f59e0b;
-
-            --danger: #dc2626;
-
-            --shadow:
-                0 8px 30px rgba(15, 23, 42, .06);
-
-            --radius: 16px;
-        }
-
-
-        /* =====================================================
-           DARK MODE
-        ====================================================== */
-
-        [data-theme="dark"] {
-
-            --bg: #020617;
-
-            --surface: #0f172a;
-
-            --surface-soft: #1e293b;
-
-            --border: #334155;
-
-            --primary: #3b82f6;
-
-            --primary-light:
-                rgba(59, 130, 246, .14);
-
-            --text-primary: #f8fafc;
-
-            --text-secondary: #cbd5e1;
-
-            --text-muted: #64748b;
-
-            --shadow:
-                0 8px 30px rgba(0, 0, 0, .22);
-        }
-
-
-        /* =====================================================
            RESET
         ====================================================== */
 
         * {
-            box-sizing: border-box;
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
         }
 
 
         html {
-            scroll-behavior: smooth;
+            width: 100%;
+            min-height: 100%;
+            overflow-x: hidden;
         }
 
 
         body {
-
+            width: 100%;
             min-height: 100vh;
-
-            background: var(--bg);
-
-            color: var(--text-primary);
 
             font-family:
                 "Plus Jakarta Sans",
                 sans-serif;
 
-            font-size: 13px;
+            background: #f7f9fc;
+
+            color: #0f172a;
+
+            overflow-x: hidden;
 
             -webkit-font-smoothing: antialiased;
-
-            transition:
-                background-color .2s ease,
-                color .2s ease;
         }
 
 
@@ -165,7 +92,7 @@
 
 
         button {
-            cursor: pointer;
+            border: 0;
         }
 
 
@@ -176,7 +103,63 @@
 
 
         /* =====================================================
+           THEME
+        ====================================================== */
+
+        :root {
+
+            --sidebar-width: 260px;
+
+            --primary: #2563eb;
+            --primary-light: #eff6ff;
+            --primary-soft: #dbeafe;
+
+            --cyan: #06b6d4;
+
+            --surface: #ffffff;
+            --surface-soft: #f8fafc;
+
+            --border: #e5e7eb;
+
+            --text-primary: #0f172a;
+            --text-secondary: #64748b;
+            --text-muted: #94a3b8;
+
+            --success: #22c55e;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+
+            --shadow:
+                0 10px 30px rgba(15, 23, 42, 0.05);
+        }
+
+
+        [data-theme="dark"] {
+
+            --surface: #111827;
+            --surface-soft: #1f2937;
+
+            --border: #273449;
+
+            --text-primary: #f8fafc;
+            --text-secondary: #cbd5e1;
+            --text-muted: #94a3b8;
+
+            --primary-light: #172554;
+
+            background: #0b1120;
+        }
+
+
+        body[data-theme="dark"] {
+            background: #0b1120;
+            color: var(--text-primary);
+        }
+
+
+        /* =====================================================
            SIDEBAR
+           SAMA DENGAN DASHBOARD
         ====================================================== */
 
         .sidebar {
@@ -186,18 +169,16 @@
             top: 0;
             left: 0;
 
-            width: 260px;
+            width: var(--sidebar-width);
             height: 100vh;
 
             padding: 24px 14px;
 
             background: var(--surface);
 
-            border-right:
-                1px solid var(--border);
+            border-right: 1px solid var(--border);
 
             display: flex;
-
             flex-direction: column;
 
             overflow-x: hidden;
@@ -206,8 +187,8 @@
             z-index: 1000;
 
             transition:
-                background-color .2s ease,
-                border-color .2s ease;
+                background 0.25s ease,
+                border-color 0.25s ease;
         }
 
 
@@ -220,7 +201,6 @@
             width: 100%;
 
             display: flex;
-
             align-items: center;
 
             gap: 12px;
@@ -249,14 +229,17 @@
             color: #ffffff;
 
             display: grid;
-
             place-items: center;
 
             font-size: 19px;
 
             box-shadow:
-                0 8px 20px
-                rgba(37, 99, 235, .22);
+                0 8px 20px rgba(
+                    37,
+                    99,
+                    235,
+                    0.22
+                );
         }
 
 
@@ -264,30 +247,36 @@
 
             font-size: 17px;
 
+            line-height: 1.1;
+
             font-weight: 800;
 
-            letter-spacing: -.6px;
+            letter-spacing: -0.6px;
+
+            color: var(--text-primary);
 
             white-space: nowrap;
         }
 
 
         .brand-name span {
-            color: #3b82f6;
+            color: var(--primary);
         }
 
 
         .brand-caption {
 
-            margin-top: 2px;
-
-            color: var(--text-muted);
+            margin-top: 5px;
 
             font-size: 9px;
+
+            line-height: 1;
 
             font-weight: 700;
 
             letter-spacing: 1.3px;
+
+            color: var(--text-muted);
 
             white-space: nowrap;
         }
@@ -304,13 +293,15 @@
             margin:
                 18px 0 10px;
 
-            color: var(--text-muted);
-
             font-size: 9px;
+
+            line-height: 1;
 
             font-weight: 800;
 
             letter-spacing: 1.3px;
+
+            color: var(--text-muted);
         }
 
 
@@ -327,11 +318,9 @@
         .nav-item {
 
             width: 100%;
-
             min-height: 44px;
 
             display: flex;
-
             align-items: center;
 
             gap: 12px;
@@ -349,15 +338,14 @@
             overflow: hidden;
 
             transition:
-                background-color .18s ease,
-                color .18s ease;
+                background 0.2s ease,
+                color 0.2s ease;
         }
 
 
         .nav-item i {
 
             width: 19px;
-
             min-width: 19px;
 
             text-align: center;
@@ -368,21 +356,17 @@
 
         .nav-item:hover {
 
-            background:
-                var(--surface-soft);
+            background: var(--surface-soft);
 
-            color:
-                var(--primary);
+            color: var(--primary);
         }
 
 
         .nav-item.active {
 
-            background:
-                var(--primary-light);
+            background: var(--primary-light);
 
-            color:
-                var(--primary);
+            color: var(--primary);
 
             font-weight: 800;
         }
@@ -406,11 +390,9 @@
 
             padding: 15px;
 
-            background:
-                var(--surface-soft);
+            background: var(--surface-soft);
 
-            border:
-                1px solid var(--border);
+            border: 1px solid var(--border);
 
             border-radius: 15px;
         }
@@ -419,7 +401,6 @@
         .system-status-top {
 
             display: flex;
-
             align-items: center;
 
             gap: 8px;
@@ -427,6 +408,8 @@
             font-size: 11px;
 
             font-weight: 800;
+
+            color: var(--text-primary);
         }
 
 
@@ -439,12 +422,15 @@
 
             border-radius: 50%;
 
-            background:
-                #22c55e;
+            background: #22c55e;
 
             box-shadow:
-                0 0 0 4px
-                rgba(34, 197, 94, .10);
+                0 0 0 4px rgba(
+                    34,
+                    197,
+                    94,
+                    0.10
+                );
         }
 
 
@@ -452,12 +438,11 @@
 
             margin-top: 8px;
 
-            color:
-                var(--text-secondary);
-
             font-size: 10px;
 
             line-height: 1.6;
+
+            color: var(--text-secondary);
         }
 
 
@@ -465,28 +450,36 @@
 
             margin-top: 17px;
 
-            color:
-                var(--text-muted);
-
             text-align: center;
 
             font-size: 9px;
+
+            color: var(--text-muted);
         }
 
 
         /* =====================================================
            MAIN CONTENT
+           PENTING:
+           WIDTH DIKUNCI AGAR TIDAK MASUK KE SIDEBAR
         ====================================================== */
 
         .main-content {
 
+            width: calc(
+                100% - var(--sidebar-width)
+            );
+
+            min-width: 0;
+
             min-height: 100vh;
 
-            margin-left:
-                var(--sidebar-width);
+            margin-left: var(--sidebar-width);
 
             padding:
                 30px 36px 28px;
+
+            overflow-x: hidden;
         }
 
 
@@ -496,13 +489,17 @@
 
         .topbar {
 
+            width: 100%;
+
+            min-width: 0;
+
             display: flex;
 
             align-items: flex-start;
 
             justify-content: space-between;
 
-            gap: 20px;
+            gap: 24px;
 
             margin-bottom: 28px;
         }
@@ -510,31 +507,29 @@
 
         .breadcrumb {
 
-            margin-bottom: 7px;
-
-            color:
-                var(--text-muted);
+            margin-bottom: 8px;
 
             font-size: 9px;
 
             font-weight: 800;
 
-            letter-spacing: 1.25px;
+            letter-spacing: 1.2px;
+
+            color: var(--text-muted);
         }
 
 
         .page-title {
 
-            color:
-                var(--text-primary);
-
-            font-size: 27px;
+            font-size: 26px;
 
             line-height: 1.2;
 
             font-weight: 800;
 
-            letter-spacing: -.7px;
+            letter-spacing: -0.8px;
+
+            color: var(--text-primary);
         }
 
 
@@ -542,12 +537,11 @@
 
             margin-top: 7px;
 
-            color:
-                var(--text-secondary);
-
-            font-size: 11px;
+            font-size: 12px;
 
             line-height: 1.6;
+
+            color: var(--text-secondary);
         }
 
 
@@ -562,6 +556,8 @@
             align-items: center;
 
             gap: 12px;
+
+            flex-shrink: 0;
         }
 
 
@@ -572,35 +568,30 @@
             width: 40px;
             height: 40px;
 
-            border:
-                1px solid var(--border);
-
             border-radius: 12px;
 
-            background:
-                var(--surface);
+            background: var(--surface);
 
-            color:
-                var(--text-secondary);
+            border: 1px solid var(--border);
+
+            color: var(--text-secondary);
 
             display: grid;
-
             place-items: center;
 
-            transition: .18s ease;
+            cursor: pointer;
+
+            transition:
+                background 0.2s ease,
+                color 0.2s ease;
         }
 
 
         .icon-button:hover {
 
-            color:
-                var(--primary);
+            background: var(--surface-soft);
 
-            border-color:
-                rgba(37, 99, 235, .25);
-
-            background:
-                var(--primary-light);
+            color: var(--primary);
         }
 
 
@@ -616,11 +607,9 @@
 
             border-radius: 50%;
 
-            background:
-                #ef4444;
+            background: var(--danger);
 
-            border:
-                2px solid var(--surface);
+            border: 1.5px solid var(--surface);
         }
 
 
@@ -637,29 +626,34 @@
 
             min-height: 42px;
 
-            border: 0;
-
-            background: transparent;
-
             display: flex;
-
             align-items: center;
 
             gap: 9px;
 
-            color:
-                var(--text-primary);
+            padding: 4px 8px 4px 5px;
 
-            text-align: left;
+            background: transparent;
+
+            color: var(--text-primary);
+
+            cursor: pointer;
+
+            border-radius: 12px;
+        }
+
+
+        .profile-trigger:hover {
+            background: var(--surface-soft);
         }
 
 
         .avatar {
 
-            width: 38px;
-            height: 38px;
+            width: 34px;
+            height: 34px;
 
-            border-radius: 12px;
+            border-radius: 11px;
 
             background:
                 linear-gradient(
@@ -671,7 +665,6 @@
             color: #ffffff;
 
             display: grid;
-
             place-items: center;
 
             font-size: 12px;
@@ -692,9 +685,13 @@
 
             white-space: nowrap;
 
+            text-align: left;
+
             font-size: 11px;
 
             font-weight: 800;
+
+            color: var(--text-primary);
         }
 
 
@@ -704,14 +701,15 @@
 
             margin-top: 2px;
 
-            color:
-                var(--text-muted);
+            text-align: left;
 
             font-size: 8px;
 
-            font-weight: 800;
+            font-weight: 700;
 
-            letter-spacing: 1px;
+            letter-spacing: 0.8px;
+
+            color: var(--text-muted);
         }
 
 
@@ -719,41 +717,41 @@
 
             margin-left: 2px;
 
-            color:
-                var(--text-muted);
+            font-size: 9px;
 
-            font-size: 10px;
+            color: var(--text-muted);
         }
 
 
         /* =====================================================
-           PROFILE DROPDOWN
+           DROPDOWN
         ====================================================== */
 
         .dropdown {
 
             position: absolute;
 
-            top:
-                calc(100% + 10px);
+            top: calc(100% + 8px);
 
             right: 0;
 
-            width: 205px;
+            width: 210px;
 
             padding: 7px;
 
-            background:
-                var(--surface);
+            background: var(--surface);
 
-            border:
-                1px solid var(--border);
+            border: 1px solid var(--border);
 
-            border-radius: 13px;
+            border-radius: 14px;
 
             box-shadow:
-                0 16px 35px
-                rgba(15, 23, 42, .13);
+                0 16px 40px rgba(
+                    15,
+                    23,
+                    42,
+                    0.12
+                );
 
             opacity: 0;
 
@@ -762,7 +760,10 @@
             transform:
                 translateY(-5px);
 
-            transition: .18s ease;
+            transition:
+                opacity 0.18s ease,
+                visibility 0.18s ease,
+                transform 0.18s ease;
 
             z-index: 1100;
         }
@@ -784,73 +785,71 @@
 
             width: 100%;
 
-            min-height: 38px;
+            min-height: 39px;
 
-            border: 0;
+            display: flex;
+            align-items: center;
+
+            gap: 10px;
+
+            padding: 0 11px;
 
             border-radius: 9px;
 
             background: transparent;
 
-            display: flex;
+            color: var(--text-secondary);
 
-            align-items: center;
-
-            gap: 10px;
-
-            padding: 0 10px;
-
-            color:
-                var(--text-secondary);
-
-            font-size: 10px;
+            font-size: 11px;
 
             font-weight: 600;
 
             text-align: left;
+
+            cursor: pointer;
         }
 
 
         .dropdown a:hover,
         .dropdown button:hover {
 
-            background:
-                var(--surface-soft);
+            background: var(--surface-soft);
 
-            color:
-                var(--primary);
+            color: var(--primary);
         }
 
 
         .dropdown i {
 
-            width: 15px;
+            width: 17px;
 
             text-align: center;
+
+            font-size: 12px;
         }
 
 
         /* =====================================================
-           WEATHER PAGE BASE
+           WEATHER PAGE
         ====================================================== */
 
         .weather-page {
 
             width: 100%;
 
-            display: flex;
-
-            flex-direction: column;
-
-            gap: 18px;
+            min-width: 0;
         }
 
 
         /* =====================================================
-           BMKG SOURCE BADGE
+           BMKG SOURCE
         ====================================================== */
 
         .bmkg-source {
+
+            width: fit-content;
+
+            max-width: 100%;
 
             display: inline-flex;
 
@@ -858,29 +857,21 @@
 
             gap: 8px;
 
-            width: fit-content;
+            margin-bottom: 18px;
 
             padding: 7px 11px;
 
-            border-radius: 999px;
+            border-radius: 9px;
 
-            background:
-                var(--primary-light);
+            background: var(--primary-light);
 
-            color:
-                var(--primary);
+            color: var(--primary);
 
             font-size: 9px;
 
             font-weight: 800;
 
-            letter-spacing: .2px;
-        }
-
-
-        .bmkg-source i {
-
-            font-size: 11px;
+            letter-spacing: 0.4px;
         }
 
 
@@ -890,8 +881,22 @@
 
         @media (max-width: 1250px) {
 
+            :root {
+                --sidebar-width: 250px;
+            }
+
+
             .main-content {
-                margin-left: 250px;
+
+                width: calc(
+                    100% - var(--sidebar-width)
+                );
+
+                margin-left:
+                    var(--sidebar-width);
+
+                padding:
+                    28px 30px 26px;
             }
         }
 
@@ -902,25 +907,29 @@
                 --sidebar-width: 215px;
             }
 
+
             .sidebar {
                 width: 215px;
             }
 
+
             .main-content {
+
+                width: calc(
+                    100% - 215px
+                );
 
                 margin-left: 215px;
 
-                padding-left: 25px;
-
-                padding-right: 25px;
+                padding:
+                    25px 24px;
             }
 
-            .brand-name {
-                font-size: 15px;
-            }
 
-            .brand-caption {
-                font-size: 8px;
+            .profile-name,
+            .profile-role,
+            .profile-trigger > i {
+                display: none;
             }
         }
 
@@ -931,7 +940,10 @@
                 display: none;
             }
 
+
             .main-content {
+
+                width: 100%;
 
                 margin-left: 0;
 
@@ -939,42 +951,76 @@
                     20px 15px 24px;
             }
 
+
+            .topbar {
+
+                align-items: flex-start;
+
+                gap: 12px;
+
+                margin-bottom: 22px;
+            }
+
+
             .page-title {
                 font-size: 21px;
             }
 
+
             .page-subtitle {
-                font-size: 10px;
+                font-size: 11px;
             }
 
-            .profile-name,
-            .profile-role,
-            .profile-trigger > i {
-                display: none;
-            }
-
-            .topbar {
-
-                align-items: center;
-            }
 
             .topbar-actions {
-                gap: 7px;
+                gap: 5px;
             }
+
 
             .icon-button {
 
-                width: 37px;
+                width: 36px;
+                height: 36px;
 
-                height: 37px;
+                border-radius: 10px;
             }
+
 
             .avatar {
 
-                width: 37px;
-
-                height: 37px;
+                width: 32px;
+                height: 32px;
             }
+
+
+            .profile-trigger {
+
+                padding-right: 2px;
+            }
+        }
+
+
+        /* =====================================================
+           DARK MODE SIDEBAR DETAILS
+        ====================================================== */
+
+        [data-theme="dark"] .nav-item:hover {
+            background: #1f2937;
+        }
+
+
+        [data-theme="dark"] .nav-item.active {
+            background: #172554;
+        }
+
+
+        [data-theme="dark"] .icon-button:hover {
+            background: #1f2937;
+        }
+
+
+        [data-theme="dark"] .profile-trigger:hover {
+            background: #1f2937;
         }
 
     </style>
@@ -983,38 +1029,26 @@
 
 <body>
 
-
     <!-- =====================================================
          SIDEBAR
     ====================================================== -->
 
     <aside class="sidebar">
 
-
-        <!-- BRAND -->
-
         <div class="brand">
 
             <div class="brand-logo">
-
                 <i class="fa-solid fa-water"></i>
-
             </div>
-
 
             <div>
 
                 <div class="brand-name">
-
                     FLOWS<span>-PRO</span>
-
                 </div>
 
-
                 <div class="brand-caption">
-
                     FLOOD MONITORING SYSTEM
-
                 </div>
 
             </div>
@@ -1022,29 +1056,19 @@
         </div>
 
 
-        <!-- MENU UTAMA -->
-
         <div class="nav-label">
-
             MENU UTAMA
-
         </div>
 
 
         <nav class="nav-menu">
 
-
             <a
                 href="dashboard.html"
                 class="nav-item"
             >
-
-                <i
-                    class="fa-solid fa-border-all"
-                ></i>
-
+                <i class="fa-solid fa-border-all"></i>
                 Dashboard
-
             </a>
 
 
@@ -1052,13 +1076,8 @@
                 href="live_sensor.html"
                 class="nav-item"
             >
-
-                <i
-                    class="fa-solid fa-wave-square"
-                ></i>
-
+                <i class="fa-solid fa-wave-square"></i>
                 Live Monitoring
-
             </a>
 
 
@@ -1066,13 +1085,8 @@
                 href="reports.html"
                 class="nav-item"
             >
-
-                <i
-                    class="fa-solid fa-chart-line"
-                ></i>
-
+                <i class="fa-solid fa-chart-line"></i>
                 Laporan Data
-
             </a>
 
 
@@ -1080,13 +1094,8 @@
                 href="peta_banjir.html"
                 class="nav-item"
             >
-
-                <i
-                    class="fa-solid fa-map-location-dot"
-                ></i>
-
+                <i class="fa-solid fa-map-location-dot"></i>
                 Peta Banjir
-
             </a>
 
 
@@ -1094,45 +1103,29 @@
                 href="weather.html"
                 class="nav-item active"
             >
-
-                <i
-                    class="fa-solid fa-cloud-sun"
-                ></i>
-
+                <i class="fa-solid fa-cloud-sun"></i>
                 Informasi Cuaca
-
             </a>
-
 
         </nav>
 
-
-        <!-- PREFERENSI -->
 
         <div
             class="nav-label"
             style="margin-top: 27px;"
         >
-
             PREFERENSI
-
         </div>
 
 
         <nav class="nav-menu">
 
-
             <a
                 href="profile.html"
                 class="nav-item"
             >
-
-                <i
-                    class="fa-regular fa-user"
-                ></i>
-
+                <i class="fa-regular fa-user"></i>
                 Profil Saya
-
             </a>
 
 
@@ -1140,26 +1133,16 @@
                 href="settings.html"
                 class="nav-item"
             >
-
-                <i
-                    class="fa-solid fa-sliders"
-                ></i>
-
+                <i class="fa-solid fa-sliders"></i>
                 Pengaturan
-
             </a>
-
 
         </nav>
 
 
-        <!-- SYSTEM STATUS -->
-
         <div class="sidebar-bottom">
 
-
             <div class="system-status">
-
 
                 <div class="system-status-top">
 
@@ -1171,25 +1154,18 @@
 
 
                 <p>
-
                     Sistem pemantauan banjir untuk
                     mendukung kesiapsiagaan lingkungan.
-
                 </p>
-
 
             </div>
 
 
             <div class="sidebar-version">
-
                 FLOWS-PRO · VERSION 2.0
-
             </div>
 
-
         </div>
-
 
     </aside>
 
@@ -1200,46 +1176,33 @@
 
     <main class="main-content">
 
-
         <!-- =================================================
              TOPBAR
         ================================================== -->
 
         <header class="topbar">
 
-
             <div>
 
-
                 <div class="breadcrumb">
-
                     INFORMASI / CUACA
-
                 </div>
 
 
                 <h1 class="page-title">
-
                     Informasi Cuaca
-
                 </h1>
 
 
                 <p class="page-subtitle">
-
-                    Pantau prakiraan cuaca BMKG untuk
-                    mendukung kesiapsiagaan banjir.
-
+                    Pantau prakiraan cuaca berdasarkan
+                    data resmi BMKG.
                 </p>
-
 
             </div>
 
 
-            <!-- TOPBAR ACTIONS -->
-
             <div class="topbar-actions">
-
 
                 <button
                     class="icon-button"
@@ -1248,10 +1211,7 @@
                     aria-label="Notifikasi"
                 >
 
-                    <i
-                        class="fa-regular fa-bell"
-                    ></i>
-
+                    <i class="fa-regular fa-bell"></i>
 
                     <span
                         class="notification-dot"
@@ -1260,10 +1220,7 @@
                 </button>
 
 
-                <!-- PROFILE -->
-
                 <div class="profile">
-
 
                     <button
                         class="profile-trigger"
@@ -1272,27 +1229,21 @@
                         aria-expanded="false"
                     >
 
-
                         <span
                             class="avatar"
                             id="profileAvatar"
                         >
-
                             U
-
                         </span>
 
 
                         <span>
 
-
                             <span
                                 class="profile-name"
                                 id="profileName"
                             >
-
                                 Memuat pengguna...
-
                             </span>
 
 
@@ -1300,11 +1251,8 @@
                                 class="profile-role"
                                 id="profileRole"
                             >
-
                                 OPERATOR
-
                             </small>
-
 
                         </span>
 
@@ -1313,17 +1261,13 @@
                             class="fa-solid fa-chevron-down"
                         ></i>
 
-
                     </button>
 
-
-                    <!-- DROPDOWN -->
 
                     <div
                         class="dropdown"
                         id="profileDropdown"
                     >
-
 
                         <a href="profile.html">
 
@@ -1360,30 +1304,24 @@
 
                         </button>
 
-
                     </div>
-
 
                 </div>
 
-
             </div>
-
 
         </header>
 
 
         <!-- =================================================
-             WEATHER CONTENT
-             
-             PART 2 AKAN DITEMPEL DI SINI
+             WEATHER PAGE
+             PART 2 DITEMPEL DI SINI
         ================================================== -->
 
         <section
             class="weather-page"
             id="weatherPage"
         >
-
 
             <div class="bmkg-source">
 
@@ -1393,43 +1331,37 @@
 
             </div>
 
-
             <!-- PART 2 -->
-
-        </section>
-
-
-    </main>
-    <!-- =========================================================
-     PART 2 — UI PRAKIRAAN CUACA BMKG
-     Paste langsung di bawah PART 1
+<!-- =========================================================
+     PART 2 — WEATHER CONTENT
+     Paste langsung setelah komentar PART 2 pada PART 1
 ========================================================= -->
 
 
 <!-- =====================================================
-     WEATHER CONTROL
-===================================================== -->
+     LOCATION + BMKG STATUS
+====================================================== -->
 
-<div class="weather-control-card">
+<div class="weather-toolbar">
 
-    <div class="weather-control-left">
+    <div class="weather-location">
 
-        <div class="control-icon">
+        <div class="location-icon">
             <i class="fa-solid fa-location-dot"></i>
         </div>
 
-        <div>
+        <div class="location-text">
 
-            <span class="control-label">
-                LOKASI PRAKIRAAN
+            <span class="location-label">
+                LOKASI PEMANTAUAN
             </span>
 
             <strong id="weatherLocationName">
-                Memuat lokasi...
+                Dumai Kota
             </strong>
 
             <small id="weatherLocationDetail">
-                Data prakiraan dari BMKG
+                Kota Dumai, Provinsi Riau
             </small>
 
         </div>
@@ -1437,31 +1369,48 @@
     </div>
 
 
-    <div class="weather-control-right">
+    <div class="weather-toolbar-actions">
 
-        <label
-            for="weatherLocationSelect"
-            class="sr-only"
-        >
-            Pilih lokasi
-        </label>
+        <div class="bmkg-status">
+
+            <span
+                class="bmkg-status-dot"
+                id="bmkgStatusDot"
+            ></span>
+
+            <div>
+
+                <strong id="bmkgStatusText">
+                    Menghubungkan ke BMKG...
+                </strong>
+
+                <small id="bmkgUpdateTime">
+                    Memuat data...
+                </small>
+
+            </div>
+
+        </div>
+
 
         <select
+            class="location-select"
             id="weatherLocationSelect"
-            class="weather-location-select"
+            aria-label="Pilih lokasi cuaca"
         >
 
-            <option value="">
-                Memuat wilayah...
+            <option value="14.72.06.1003">
+                Dumai Kota
             </option>
 
         </select>
 
 
         <button
-            type="button"
             class="weather-refresh-button"
             id="weatherRefreshButton"
+            type="button"
+            aria-label="Perbarui data cuaca"
         >
 
             <i class="fa-solid fa-rotate"></i>
@@ -1475,121 +1424,72 @@
 </div>
 
 
-<!-- =====================================================
-     BMKG CONNECTION STATUS
-===================================================== -->
-
-<div class="weather-status-bar">
-
-    <div class="weather-status-left">
-
-        <span
-            class="weather-status-dot loading"
-            id="bmkgStatusDot"
-        ></span>
-
-        <span id="bmkgStatusText">
-            Menghubungkan ke BMKG...
-        </span>
-
-    </div>
-
-
-    <div class="weather-update-time">
-
-        <i class="fa-regular fa-clock"></i>
-
-        <span>
-            Diperbarui:
-        </span>
-
-        <strong id="bmkgUpdateTime">
-            -
-        </strong>
-
-    </div>
-
-</div>
-
 
 <!-- =====================================================
-     CURRENT WEATHER
-===================================================== -->
+     CURRENT WEATHER HERO
+====================================================== -->
 
-<div class="current-weather-card">
-
+<section class="current-weather-card">
 
     <div class="current-weather-main">
 
-        <div class="current-weather-heading">
+        <div class="current-weather-copy">
 
-            <span class="section-eyebrow">
-                KONDISI CUACA
+            <span class="section-kicker">
+                KONDISI CUACA SAAT INI
             </span>
 
+
             <h2 id="currentWeatherDescription">
-                Memuat prakiraan...
+                Memuat cuaca...
             </h2>
 
+
             <p id="currentWeatherTime">
-                -
+                Memuat waktu pengamatan...
             </p>
 
         </div>
 
 
-        <div class="current-weather-temperature">
-
-            <span
-                class="weather-temperature"
-                id="currentTemperature"
-            >
-                --°
-            </span>
-
-            <span class="temperature-label">
-                Suhu udara
-            </span>
-
-        </div>
-
-    </div>
-
-
-    <div class="current-weather-icon">
-
         <div
-            class="weather-main-icon"
-            id="currentWeatherIcon"
+            class="current-weather-temperature"
+            id="currentTemperature"
         >
-
-            <i class="fa-solid fa-cloud-sun"></i>
-
+            --°
         </div>
 
     </div>
 
-</div>
+
+    <div
+        class="current-weather-icon"
+        id="currentWeatherIcon"
+    >
+
+        <i class="fa-solid fa-cloud-sun"></i>
+
+    </div>
+
+</section>
+
 
 
 <!-- =====================================================
      WEATHER METRICS
-===================================================== -->
+====================================================== -->
 
-<div class="weather-metrics-grid">
-
-
-    <!-- SUHU -->
+<section class="weather-metrics">
 
     <div class="weather-metric-card">
 
-        <div class="weather-metric-icon temperature">
+        <div class="metric-icon blue">
 
             <i class="fa-solid fa-temperature-half"></i>
 
         </div>
 
-        <div>
+        <div class="metric-content">
 
             <span>
                 SUHU
@@ -1600,7 +1500,7 @@
             </strong>
 
             <small>
-                Perkiraan BMKG
+                Suhu udara
             </small>
 
         </div>
@@ -1608,17 +1508,15 @@
     </div>
 
 
-    <!-- KELEMBAPAN -->
-
     <div class="weather-metric-card">
 
-        <div class="weather-metric-icon humidity">
+        <div class="metric-icon cyan">
 
             <i class="fa-solid fa-droplet"></i>
 
         </div>
 
-        <div>
+        <div class="metric-content">
 
             <span>
                 KELEMBAPAN
@@ -1637,17 +1535,15 @@
     </div>
 
 
-    <!-- ANGIN -->
-
     <div class="weather-metric-card">
 
-        <div class="weather-metric-icon wind">
+        <div class="metric-icon teal">
 
             <i class="fa-solid fa-wind"></i>
 
         </div>
 
-        <div>
+        <div class="metric-content">
 
             <span>
                 KECEPATAN ANGIN
@@ -1658,7 +1554,7 @@
             </strong>
 
             <small id="metricWindDirection">
-                Arah angin: -
+                Arah angin: --
             </small>
 
         </div>
@@ -1666,24 +1562,22 @@
     </div>
 
 
-    <!-- VISIBILITAS / CUACA -->
-
     <div class="weather-metric-card">
 
-        <div class="weather-metric-icon visibility">
+        <div class="metric-icon purple">
 
             <i class="fa-solid fa-eye"></i>
 
         </div>
 
-        <div>
+        <div class="metric-content">
 
             <span>
                 KONDISI
             </span>
 
             <strong id="metricCondition">
-                -
+                --
             </strong>
 
             <small>
@@ -1694,19 +1588,22 @@
 
     </div>
 
+</section>
 
-</div>
 
 
 <!-- =====================================================
-     RAIN / FLOOD WEATHER INDICATOR
-===================================================== -->
+     WEATHER ALERT
+====================================================== -->
 
-<div class="weather-alert-card" id="weatherAlertCard">
+<section
+    class="weather-alert-card"
+    id="weatherAlertCard"
+>
 
     <div class="weather-alert-icon">
 
-        <i class="fa-solid fa-cloud-rain"></i>
+        <i class="fa-solid fa-triangle-exclamation"></i>
 
     </div>
 
@@ -1714,16 +1611,16 @@
     <div class="weather-alert-content">
 
         <span>
-            INDIKATOR CUACA
+            INFORMASI KONDISI CUACA
         </span>
 
         <strong id="weatherAlertTitle">
-            Menunggu data BMKG
+            Kondisi cuaca normal
         </strong>
 
         <p id="weatherAlertDescription">
-            Sistem akan menampilkan informasi kondisi
-            cuaca berdasarkan prakiraan BMKG.
+            Belum terdapat indikasi cuaca signifikan
+            dari prakiraan BMKG.
         </p>
 
     </div>
@@ -1733,42 +1630,39 @@
         class="weather-alert-badge"
         id="weatherAlertBadge"
     >
-        -
+        NORMAL
     </div>
 
-</div>
+</section>
+
 
 
 <!-- =====================================================
      FORECAST SECTION
-===================================================== -->
+====================================================== -->
 
-<div class="forecast-section">
+<section class="forecast-section">
 
-
-    <div class="section-heading">
+    <div class="section-header">
 
         <div>
 
-            <span class="section-eyebrow">
-                PRAKIRAAN BMKG
+            <span class="section-kicker">
+                PRAKIRAAN CUACA
             </span>
 
             <h2>
-                Prakiraan Cuaca
+                Prakiraan BMKG
             </h2>
 
         </div>
 
 
-        <div class="forecast-period-label">
-
-            <i class="fa-regular fa-calendar"></i>
-
-            <span id="forecastPeriod">
-                Beberapa hari ke depan
-            </span>
-
+        <div
+            class="forecast-period"
+            id="forecastPeriod"
+        >
+            Beberapa periode berikutnya
         </div>
 
     </div>
@@ -1779,53 +1673,53 @@
         id="forecastGrid"
     >
 
-        <!-- FORECAST CARD AKAN DIISI PART 3 -->
+        <!-- Forecast cards dari BMKG akan dibuat melalui JavaScript -->
 
         <div class="forecast-loading">
 
-            <div class="loading-spinner"></div>
+            <i class="fa-solid fa-spinner fa-spin"></i>
 
             <span>
-                Mengambil prakiraan dari BMKG...
+                Memuat prakiraan cuaca BMKG...
             </span>
 
         </div>
 
     </div>
 
-</div>
+</section>
+
 
 
 <!-- =====================================================
      BMKG INFORMATION
-===================================================== -->
+====================================================== -->
 
-<div class="bmkg-information-card">
+<section class="bmkg-info-card">
 
+    <div class="bmkg-info-icon">
 
-    <div class="bmkg-information-icon">
-
-        <i class="fa-solid fa-circle-info"></i>
+        <i class="fa-solid fa-cloud-sun"></i>
 
     </div>
 
 
-    <div class="bmkg-information-content">
+    <div class="bmkg-info-content">
 
         <span>
-            SUMBER INFORMASI
+            SUMBER DATA RESMI
         </span>
 
         <h3>
             Badan Meteorologi, Klimatologi,
-            dan Geofisika (BMKG)
+            dan Geofisika
         </h3>
 
         <p>
-            Informasi cuaca pada halaman ini
-            bersumber dari prakiraan cuaca BMKG.
-            Waktu pembaruan mengikuti ketersediaan
-            data dari sumber resmi BMKG.
+            Informasi cuaca pada halaman ini menggunakan
+            data prakiraan cuaca dari BMKG dan ditampilkan
+            untuk mendukung pemantauan kondisi lingkungan
+            serta kesiapsiagaan terhadap potensi banjir.
         </p>
 
     </div>
@@ -1838,34 +1732,43 @@
         class="bmkg-link"
     >
 
-        BMKG
+        <span>
+            Situs BMKG
+        </span>
 
         <i class="fa-solid fa-arrow-up-right-from-square"></i>
 
     </a>
 
-</div>
+</section>
+
 
 
 <!-- =====================================================
      LOADING OVERLAY
-===================================================== -->
+====================================================== -->
 
 <div
-    class="weather-loading-overlay"
+    class="weather-loading"
     id="weatherLoading"
 >
 
     <div class="weather-loading-box">
 
-        <div class="loading-spinner"></div>
+        <div class="weather-spinner">
+
+            <i class="fa-solid fa-cloud-sun"></i>
+
+        </div>
+
 
         <strong>
-            Memuat data cuaca
+            Mengambil data BMKG
         </strong>
 
+
         <span>
-            Mengambil prakiraan dari BMKG...
+            Mohon tunggu sebentar...
         </span>
 
     </div>
@@ -1873,31 +1776,33 @@
 </div>
 
 
+
 <!-- =====================================================
-     EMPTY / ERROR STATE
-===================================================== -->
+     ERROR CARD
+====================================================== -->
 
 <div
-    class="weather-error-card"
+    class="weather-error"
     id="weatherError"
 >
 
     <div class="weather-error-icon">
 
-        <i class="fa-solid fa-cloud-exclamation"></i>
+        <i class="fa-solid fa-triangle-exclamation"></i>
 
     </div>
 
 
-    <div>
+    <div class="weather-error-content">
 
         <strong>
-            Data cuaca belum tersedia
+            Data cuaca tidak dapat dimuat
         </strong>
 
+
         <p id="weatherErrorMessage">
-            Sistem belum berhasil mendapatkan
-            prakiraan cuaca dari BMKG.
+            Terjadi masalah saat mengambil
+            data prakiraan BMKG.
         </p>
 
     </div>
@@ -1906,6 +1811,7 @@
     <button
         type="button"
         id="weatherRetryButton"
+        class="weather-retry-button"
     >
 
         <i class="fa-solid fa-rotate-right"></i>
@@ -1917,3564 +1823,3972 @@
 </div>
 
 
+
 <!-- =====================================================
      TOAST
-===================================================== -->
+====================================================== -->
 
 <div
     class="weather-toast"
     id="weatherToast"
+    role="status"
+    aria-live="polite"
 >
 
     <i class="fa-solid fa-circle-info"></i>
 
     <span id="weatherToastMessage">
-        -
+        Data cuaca diperbarui.
     </span>
 
 </div>
 
 
+
 <!-- =====================================================
-     PART 2 STYLE
-===================================================== -->
+     PART 2 CSS
+====================================================== -->
 
 <style>
 
+    /* =====================================================
+       WEATHER TOOLBAR
+    ====================================================== */
 
-/* =====================================================
-   SCREEN READER ONLY
-===================================================== */
+    .weather-toolbar {
 
-.sr-only {
+        width: 100%;
 
-    position: absolute;
+        display: flex;
 
-    width: 1px;
-    height: 1px;
+        align-items: center;
 
-    padding: 0;
-    margin: -1px;
+        justify-content: space-between;
 
-    overflow: hidden;
+        gap: 20px;
 
-    clip: rect(0, 0, 0, 0);
+        margin-bottom: 18px;
 
-    white-space: nowrap;
+        padding: 17px 18px;
 
-    border: 0;
-}
+        background: var(--surface);
 
+        border: 1px solid var(--border);
 
-/* =====================================================
-   WEATHER CONTROL
-===================================================== */
+        border-radius: 16px;
 
-.weather-control-card {
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: space-between;
-
-    gap: 20px;
-
-    padding: 18px 20px;
-
-    background:
-        var(--surface);
-
-    border:
-        1px solid var(--border);
-
-    border-radius:
-        var(--radius);
-
-    box-shadow:
-        var(--shadow);
-}
-
-
-.weather-control-left {
-
-    display: flex;
-
-    align-items: center;
-
-    gap: 13px;
-
-    min-width: 0;
-}
-
-
-.control-icon {
-
-    width: 43px;
-    height: 43px;
-
-    flex: 0 0 43px;
-
-    border-radius: 13px;
-
-    background:
-        var(--primary-light);
-
-    color:
-        var(--primary);
-
-    display: grid;
-
-    place-items: center;
-
-    font-size: 15px;
-}
-
-
-.weather-control-left > div:last-child {
-
-    min-width: 0;
-}
-
-
-.control-label {
-
-    display: block;
-
-    color:
-        var(--text-muted);
-
-    font-size: 8px;
-
-    font-weight: 800;
-
-    letter-spacing: 1px;
-
-    margin-bottom: 3px;
-}
-
-
-.weather-control-left strong {
-
-    display: block;
-
-    color:
-        var(--text-primary);
-
-    font-size: 13px;
-
-    font-weight: 800;
-}
-
-
-.weather-control-left small {
-
-    display: block;
-
-    margin-top: 3px;
-
-    color:
-        var(--text-secondary);
-
-    font-size: 9px;
-}
-
-
-.weather-control-right {
-
-    display: flex;
-
-    align-items: center;
-
-    gap: 8px;
-
-    flex-shrink: 0;
-}
-
-
-.weather-location-select {
-
-    min-width: 190px;
-
-    height: 38px;
-
-    padding:
-        0 34px 0 11px;
-
-    border:
-        1px solid var(--border);
-
-    border-radius: 10px;
-
-    background:
-        var(--surface);
-
-    color:
-        var(--text-primary);
-
-    font-size: 10px;
-
-    font-weight: 600;
-
-    outline: none;
-
-    cursor: pointer;
-}
-
-
-.weather-location-select:focus {
-
-    border-color:
-        var(--primary);
-
-    box-shadow:
-        0 0 0 3px
-        rgba(37, 99, 235, .10);
-}
-
-
-.weather-refresh-button {
-
-    height: 38px;
-
-    padding:
-        0 13px;
-
-    border: 0;
-
-    border-radius: 10px;
-
-    background:
-        var(--primary);
-
-    color: #ffffff;
-
-    display: flex;
-
-    align-items: center;
-
-    gap: 7px;
-
-    font-size: 9px;
-
-    font-weight: 800;
-
-    transition: .18s ease;
-}
-
-
-.weather-refresh-button:hover {
-
-    background:
-        #1d4ed8;
-
-    transform:
-        translateY(-1px);
-}
-
-
-.weather-refresh-button:disabled {
-
-    opacity: .6;
-
-    cursor: not-allowed;
-
-    transform: none;
-}
-
-
-/* =====================================================
-   BMKG STATUS
-===================================================== */
-
-.weather-status-bar {
-
-    min-height: 39px;
-
-    padding:
-        0 13px;
-
-    border:
-        1px solid var(--border);
-
-    border-radius: 11px;
-
-    background:
-        var(--surface-soft);
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: space-between;
-
-    gap: 15px;
-}
-
-
-.weather-status-left {
-
-    display: flex;
-
-    align-items: center;
-
-    gap: 8px;
-
-    color:
-        var(--text-secondary);
-
-    font-size: 9px;
-
-    font-weight: 700;
-}
-
-
-.weather-status-dot {
-
-    width: 7px;
-    height: 7px;
-
-    flex: 0 0 7px;
-
-    border-radius: 50%;
-
-    background:
-        var(--text-muted);
-}
-
-
-.weather-status-dot.online {
-
-    background:
-        #22c55e;
-
-    box-shadow:
-        0 0 0 4px
-        rgba(34,197,94,.10);
-}
-
-
-.weather-status-dot.offline {
-
-    background:
-        #ef4444;
-
-    box-shadow:
-        0 0 0 4px
-        rgba(239,68,68,.10);
-}
-
-
-.weather-status-dot.loading {
-
-    background:
-        #f59e0b;
-
-    animation:
-        weatherPulse 1.2s infinite;
-}
-
-
-.weather-update-time {
-
-    display: flex;
-
-    align-items: center;
-
-    gap: 5px;
-
-    color:
-        var(--text-muted);
-
-    font-size: 8px;
-}
-
-
-.weather-update-time strong {
-
-    color:
-        var(--text-secondary);
-
-    font-weight: 700;
-}
-
-
-/* =====================================================
-   CURRENT WEATHER
-===================================================== */
-
-.current-weather-card {
-
-    position: relative;
-
-    min-height: 190px;
-
-    overflow: hidden;
-
-    padding: 26px 28px;
-
-    border-radius: 20px;
-
-    background:
-        linear-gradient(
-            135deg,
-            #1d4ed8 0%,
-            #2563eb 50%,
-            #0891b2 100%
-        );
-
-    color: #ffffff;
-
-    box-shadow:
-        0 14px 35px
-        rgba(37,99,235,.20);
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: space-between;
-
-    gap: 30px;
-}
-
-
-.current-weather-card::before {
-
-    content: "";
-
-    position: absolute;
-
-    width: 260px;
-    height: 260px;
-
-    right: -90px;
-    top: -120px;
-
-    border-radius: 50%;
-
-    background:
-        rgba(255,255,255,.08);
-}
-
-
-.current-weather-card::after {
-
-    content: "";
-
-    position: absolute;
-
-    width: 180px;
-    height: 180px;
-
-    right: 100px;
-    bottom: -130px;
-
-    border-radius: 50%;
-
-    background:
-        rgba(255,255,255,.06);
-}
-
-
-.current-weather-main {
-
-    position: relative;
-
-    z-index: 2;
-
-    display: flex;
-
-    align-items: flex-end;
-
-    gap: 45px;
-
-    min-width: 0;
-}
-
-
-.current-weather-heading {
-
-    min-width: 0;
-}
-
-
-.section-eyebrow {
-
-    display: block;
-
-    color:
-        rgba(255,255,255,.68);
-
-    font-size: 8px;
-
-    font-weight: 800;
-
-    letter-spacing: 1.2px;
-
-    margin-bottom: 7px;
-}
-
-
-.current-weather-heading h2 {
-
-    font-size: 22px;
-
-    font-weight: 800;
-
-    letter-spacing: -.5px;
-
-    line-height: 1.25;
-
-    text-transform: capitalize;
-}
-
-
-.current-weather-heading p {
-
-    margin-top: 7px;
-
-    color:
-        rgba(255,255,255,.72);
-
-    font-size: 9px;
-}
-
-
-.current-weather-temperature {
-
-    display: flex;
-
-    flex-direction: column;
-
-    flex-shrink: 0;
-}
-
-
-.weather-temperature {
-
-    font-size: 48px;
-
-    line-height: .95;
-
-    font-weight: 800;
-
-    letter-spacing: -2px;
-}
-
-
-.temperature-label {
-
-    margin-top: 6px;
-
-    color:
-        rgba(255,255,255,.68);
-
-    font-size: 8px;
-
-    font-weight: 600;
-}
-
-
-.current-weather-icon {
-
-    position: relative;
-
-    z-index: 2;
-
-    padding-right: 25px;
-}
-
-
-.weather-main-icon {
-
-    width: 95px;
-    height: 95px;
-
-    border-radius: 28px;
-
-    background:
-        rgba(255,255,255,.13);
-
-    border:
-        1px solid
-        rgba(255,255,255,.15);
-
-    display: grid;
-
-    place-items: center;
-
-    font-size: 42px;
-
-    box-shadow:
-        inset 0 1px 0
-        rgba(255,255,255,.12);
-}
-
-
-/* =====================================================
-   METRICS
-===================================================== */
-
-.weather-metrics-grid {
-
-    display: grid;
-
-    grid-template-columns:
-        repeat(4, minmax(0, 1fr));
-
-    gap: 13px;
-}
-
-
-.weather-metric-card {
-
-    min-height: 100px;
-
-    padding: 17px;
-
-    background:
-        var(--surface);
-
-    border:
-        1px solid var(--border);
-
-    border-radius:
-        var(--radius);
-
-    box-shadow:
-        var(--shadow);
-
-    display: flex;
-
-    align-items: center;
-
-    gap: 12px;
-}
-
-
-.weather-metric-icon {
-
-    width: 39px;
-    height: 39px;
-
-    flex: 0 0 39px;
-
-    border-radius: 11px;
-
-    display: grid;
-
-    place-items: center;
-
-    font-size: 14px;
-}
-
-
-.weather-metric-icon.temperature {
-
-    color: #dc2626;
-
-    background:
-        #fee2e2;
-}
-
-
-.weather-metric-icon.humidity {
-
-    color: #2563eb;
-
-    background:
-        #dbeafe;
-}
-
-
-.weather-metric-icon.wind {
-
-    color: #0891b2;
-
-    background:
-        #cffafe;
-}
-
-
-.weather-metric-icon.visibility {
-
-    color: #7c3aed;
-
-    background:
-        #ede9fe;
-}
-
-
-.weather-metric-card > div:last-child {
-
-    min-width: 0;
-}
-
-
-.weather-metric-card span {
-
-    display: block;
-
-    color:
-        var(--text-muted);
-
-    font-size: 8px;
-
-    font-weight: 800;
-
-    letter-spacing: .8px;
-}
-
-
-.weather-metric-card strong {
-
-    display: block;
-
-    margin-top: 4px;
-
-    color:
-        var(--text-primary);
-
-    font-size: 15px;
-
-    font-weight: 800;
-
-    white-space: nowrap;
-}
-
-
-.weather-metric-card small {
-
-    display: block;
-
-    margin-top: 3px;
-
-    color:
-        var(--text-secondary);
-
-    font-size: 8px;
-
-    white-space: nowrap;
-
-    overflow: hidden;
-
-    text-overflow: ellipsis;
-}
-
-
-/* =====================================================
-   WEATHER ALERT
-===================================================== */
-
-.weather-alert-card {
-
-    display: flex;
-
-    align-items: center;
-
-    gap: 13px;
-
-    padding: 15px 17px;
-
-    background:
-        var(--surface);
-
-    border:
-        1px solid var(--border);
-
-    border-radius:
-        var(--radius);
-
-    box-shadow:
-        var(--shadow);
-}
-
-
-.weather-alert-icon {
-
-    width: 40px;
-    height: 40px;
-
-    flex: 0 0 40px;
-
-    border-radius: 12px;
-
-    background:
-        #dbeafe;
-
-    color:
-        #2563eb;
-
-    display: grid;
-
-    place-items: center;
-
-    font-size: 15px;
-}
-
-
-.weather-alert-content {
-
-    min-width: 0;
-
-    flex: 1;
-}
-
-
-.weather-alert-content span {
-
-    display: block;
-
-    color:
-        var(--text-muted);
-
-    font-size: 8px;
-
-    font-weight: 800;
-
-    letter-spacing: 1px;
-}
-
-
-.weather-alert-content strong {
-
-    display: block;
-
-    margin-top: 3px;
-
-    color:
-        var(--text-primary);
-
-    font-size: 11px;
-
-    font-weight: 800;
-}
-
-
-.weather-alert-content p {
-
-    margin-top: 3px;
-
-    color:
-        var(--text-secondary);
-
-    font-size: 9px;
-
-    line-height: 1.5;
-}
-
-
-.weather-alert-badge {
-
-    flex-shrink: 0;
-
-    padding: 6px 10px;
-
-    border-radius: 999px;
-
-    background:
-        var(--surface-soft);
-
-    color:
-        var(--text-secondary);
-
-    font-size: 8px;
-
-    font-weight: 800;
-}
-
-
-.weather-alert-badge.rain {
-
-    background:
-        #dbeafe;
-
-    color:
-        #1d4ed8;
-}
-
-
-.weather-alert-badge.storm {
-
-    background:
-        #fee2e2;
-
-    color:
-        #b91c1c;
-}
-
-
-.weather-alert-badge.safe {
-
-    background:
-        #dcfce7;
-
-    color:
-        #15803d;
-}
-
-
-/* =====================================================
-   FORECAST SECTION
-===================================================== */
-
-.forecast-section {
-
-    padding: 19px;
-
-    background:
-        var(--surface);
-
-    border:
-        1px solid var(--border);
-
-    border-radius:
-        var(--radius);
-
-    box-shadow:
-        var(--shadow);
-}
-
-
-.section-heading {
-
-    display: flex;
-
-    align-items: flex-end;
-
-    justify-content: space-between;
-
-    gap: 15px;
-
-    margin-bottom: 15px;
-}
-
-
-.section-heading .section-eyebrow {
-
-    color:
-        var(--text-muted);
-
-    margin-bottom: 4px;
-}
-
-
-.section-heading h2 {
-
-    color:
-        var(--text-primary);
-
-    font-size: 16px;
-
-    font-weight: 800;
-}
-
-
-.forecast-period-label {
-
-    display: flex;
-
-    align-items: center;
-
-    gap: 6px;
-
-    color:
-        var(--text-muted);
-
-    font-size: 9px;
-}
-
-
-.forecast-grid {
-
-    display: grid;
-
-    grid-template-columns:
-        repeat(6, minmax(0, 1fr));
-
-    gap: 10px;
-}
-
-
-.forecast-card {
-
-    padding: 13px 10px;
-
-    border:
-        1px solid var(--border);
-
-    border-radius: 13px;
-
-    background:
-        var(--surface);
-
-    text-align: center;
-
-    transition:
-        transform .18s ease,
-        border-color .18s ease,
-        box-shadow .18s ease;
-}
-
-
-.forecast-card:hover {
-
-    transform:
-        translateY(-2px);
-
-    border-color:
-        rgba(37,99,235,.25);
-
-    box-shadow:
-        0 8px 20px
-        rgba(15,23,42,.06);
-}
-
-
-.forecast-day {
-
-    color:
-        var(--text-primary);
-
-    font-size: 9px;
-
-    font-weight: 800;
-}
-
-
-.forecast-time {
-
-    margin-top: 3px;
-
-    color:
-        var(--text-muted);
-
-    font-size: 8px;
-}
-
-
-.forecast-icon {
-
-    width: 43px;
-    height: 43px;
-
-    margin:
-        12px auto 8px;
-
-    border-radius: 13px;
-
-    background:
-        var(--primary-light);
-
-    color:
-        var(--primary);
-
-    display: grid;
-
-    place-items: center;
-
-    font-size: 17px;
-}
-
-
-.forecast-description {
-
-    min-height: 27px;
-
-    color:
-        var(--text-secondary);
-
-    font-size: 8px;
-
-    line-height: 1.5;
-
-    text-transform: capitalize;
-}
-
-
-.forecast-temperature {
-
-    margin-top: 8px;
-
-    color:
-        var(--text-primary);
-
-    font-size: 16px;
-
-    font-weight: 800;
-}
-
-
-.forecast-humidity {
-
-    margin-top: 4px;
-
-    color:
-        var(--text-muted);
-
-    font-size: 8px;
-}
-
-
-.forecast-wind {
-
-    margin-top: 3px;
-
-    color:
-        var(--text-muted);
-
-    font-size: 8px;
-}
-
-
-.forecast-loading {
-
-    grid-column:
-        1 / -1;
-
-    min-height: 145px;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    flex-direction: column;
-
-    gap: 10px;
-
-    color:
-        var(--text-muted);
-
-    font-size: 9px;
-}
-
-
-.loading-spinner {
-
-    width: 25px;
-    height: 25px;
-
-    border:
-        3px solid var(--border);
-
-    border-top-color:
-        var(--primary);
-
-    border-radius: 50%;
-
-    animation:
-        weatherSpin .8s linear infinite;
-}
-
-
-/* =====================================================
-   BMKG INFORMATION
-===================================================== */
-
-.bmkg-information-card {
-
-    display: flex;
-
-    align-items: center;
-
-    gap: 14px;
-
-    padding: 16px 18px;
-
-    background:
-        var(--surface-soft);
-
-    border:
-        1px solid var(--border);
-
-    border-radius:
-        var(--radius);
-}
-
-
-.bmkg-information-icon {
-
-    width: 40px;
-    height: 40px;
-
-    flex: 0 0 40px;
-
-    border-radius: 12px;
-
-    background:
-        var(--primary-light);
-
-    color:
-        var(--primary);
-
-    display: grid;
-
-    place-items: center;
-}
-
-
-.bmkg-information-content {
-
-    flex: 1;
-
-    min-width: 0;
-}
-
-
-.bmkg-information-content span {
-
-    display: block;
-
-    color:
-        var(--text-muted);
-
-    font-size: 8px;
-
-    font-weight: 800;
-
-    letter-spacing: 1px;
-}
-
-
-.bmkg-information-content h3 {
-
-    margin-top: 3px;
-
-    color:
-        var(--text-primary);
-
-    font-size: 10px;
-
-    font-weight: 800;
-}
-
-
-.bmkg-information-content p {
-
-    margin-top: 4px;
-
-    color:
-        var(--text-secondary);
-
-    font-size: 8px;
-
-    line-height: 1.5;
-}
-
-
-.bmkg-link {
-
-    flex-shrink: 0;
-
-    display: flex;
-
-    align-items: center;
-
-    gap: 6px;
-
-    color:
-        var(--primary);
-
-    font-size: 9px;
-
-    font-weight: 800;
-}
-
-
-.bmkg-link:hover {
-    text-decoration: underline;
-}
-
-
-/* =====================================================
-   LOADING OVERLAY
-===================================================== */
-
-.weather-loading-overlay {
-
-    position: fixed;
-
-    inset: 0;
-
-    background:
-        rgba(248,250,252,.72);
-
-    backdrop-filter:
-        blur(3px);
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    opacity: 0;
-
-    visibility: hidden;
-
-    pointer-events: none;
-
-    transition: .2s ease;
-
-    z-index: 2000;
-}
-
-
-[data-theme="dark"]
-.weather-loading-overlay {
-
-    background:
-        rgba(2,6,23,.72);
-}
-
-
-.weather-loading-overlay.show {
-
-    opacity: 1;
-
-    visibility: visible;
-
-    pointer-events: auto;
-}
-
-
-.weather-loading-box {
-
-    min-width: 230px;
-
-    padding: 24px;
-
-    border:
-        1px solid var(--border);
-
-    border-radius: 16px;
-
-    background:
-        var(--surface);
-
-    box-shadow:
-        0 20px 50px
-        rgba(15,23,42,.15);
-
-    display: flex;
-
-    align-items: center;
-
-    flex-direction: column;
-
-    gap: 8px;
-
-    text-align: center;
-}
-
-
-.weather-loading-box strong {
-
-    color:
-        var(--text-primary);
-
-    font-size: 11px;
-}
-
-
-.weather-loading-box span {
-
-    color:
-        var(--text-secondary);
-
-    font-size: 9px;
-}
-
-
-/* =====================================================
-   ERROR CARD
-===================================================== */
-
-.weather-error-card {
-
-    display: none;
-
-    align-items: center;
-
-    gap: 13px;
-
-    padding: 16px;
-
-    border:
-        1px solid #fecaca;
-
-    border-radius:
-        var(--radius);
-
-    background:
-        #fef2f2;
-}
-
-
-.weather-error-card.show {
-
-    display: flex;
-}
-
-
-.weather-error-icon {
-
-    width: 40px;
-    height: 40px;
-
-    flex: 0 0 40px;
-
-    border-radius: 12px;
-
-    background:
-        #fee2e2;
-
-    color:
-        #dc2626;
-
-    display: grid;
-
-    place-items: center;
-}
-
-
-.weather-error-card > div:nth-child(2) {
-
-    flex: 1;
-}
-
-
-.weather-error-card strong {
-
-    display: block;
-
-    color:
-        #991b1b;
-
-    font-size: 10px;
-}
-
-
-.weather-error-card p {
-
-    margin-top: 3px;
-
-    color:
-        #b91c1c;
-
-    font-size: 8px;
-
-    line-height: 1.5;
-}
-
-
-.weather-error-card button {
-
-    height: 34px;
-
-    padding: 0 11px;
-
-    border: 0;
-
-    border-radius: 9px;
-
-    background:
-        #dc2626;
-
-    color: #ffffff;
-
-    display: flex;
-
-    align-items: center;
-
-    gap: 6px;
-
-    font-size: 8px;
-
-    font-weight: 800;
-}
-
-
-/* =====================================================
-   TOAST
-===================================================== */
-
-.weather-toast {
-
-    position: fixed;
-
-    right: 25px;
-
-    bottom: 25px;
-
-    max-width: 320px;
-
-    padding: 11px 14px;
-
-    border:
-        1px solid var(--border);
-
-    border-radius: 11px;
-
-    background:
-        var(--surface);
-
-    color:
-        var(--text-secondary);
-
-    box-shadow:
-        0 12px 30px
-        rgba(15,23,42,.14);
-
-    display: flex;
-
-    align-items: center;
-
-    gap: 8px;
-
-    font-size: 9px;
-
-    font-weight: 700;
-
-    opacity: 0;
-
-    visibility: hidden;
-
-    transform:
-        translateY(8px);
-
-    transition: .2s ease;
-
-    z-index: 2500;
-}
-
-
-.weather-toast.show {
-
-    opacity: 1;
-
-    visibility: visible;
-
-    transform:
-        translateY(0);
-}
-
-
-.weather-toast i {
-
-    color:
-        var(--primary);
-}
-
-
-/* =====================================================
-   ANIMATION
-===================================================== */
-
-@keyframes weatherSpin {
-
-    to {
-        transform:
-            rotate(360deg);
-    }
-}
-
-
-@keyframes weatherPulse {
-
-    0%,
-    100% {
-        opacity: .45;
-    }
-
-    50% {
-        opacity: 1;
-    }
-}
-
-
-/* =====================================================
-   RESPONSIVE WEATHER
-===================================================== */
-
-@media (max-width: 1100px) {
-
-    .weather-metrics-grid {
-
-        grid-template-columns:
-            repeat(2, minmax(0, 1fr));
+        box-shadow: var(--shadow);
     }
 
 
-    .forecast-grid {
+    .weather-location {
 
-        grid-template-columns:
-            repeat(3, minmax(0, 1fr));
+        min-width: 0;
+
+        display: flex;
+
+        align-items: center;
+
+        gap: 12px;
     }
-}
 
 
-@media (max-width: 750px) {
+    .location-icon {
 
-    .weather-control-card {
+        width: 40px;
+        height: 40px;
 
-        align-items: flex-start;
+        flex: 0 0 40px;
+
+        display: grid;
+
+        place-items: center;
+
+        border-radius: 12px;
+
+        background: var(--primary-light);
+
+        color: var(--primary);
+
+        font-size: 15px;
+    }
+
+
+    .location-text {
+
+        min-width: 0;
+
+        display: flex;
 
         flex-direction: column;
     }
 
 
-    .weather-control-right {
+    .location-label {
 
-        width: 100%;
+        font-size: 8px;
+
+        font-weight: 800;
+
+        letter-spacing: 1px;
+
+        color: var(--text-muted);
     }
 
 
-    .weather-location-select {
+    .location-text strong {
 
-        flex: 1;
+        margin-top: 3px;
 
-        min-width: 0;
+        font-size: 13px;
+
+        line-height: 1.3;
+
+        color: var(--text-primary);
     }
 
 
-    .weather-refresh-button span {
+    .location-text small {
 
-        display: none;
+        margin-top: 2px;
+
+        font-size: 9px;
+
+        color: var(--text-secondary);
+    }
+
+
+    .weather-toolbar-actions {
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: flex-end;
+
+        gap: 9px;
+
+        flex-shrink: 0;
+    }
+
+
+    .bmkg-status {
+
+        min-height: 40px;
+
+        display: flex;
+
+        align-items: center;
+
+        gap: 8px;
+
+        padding: 6px 10px;
+
+        border-radius: 11px;
+
+        background: var(--surface-soft);
+
+        border: 1px solid var(--border);
+    }
+
+
+    .bmkg-status-dot {
+
+        width: 8px;
+        height: 8px;
+
+        flex: 0 0 8px;
+
+        border-radius: 50%;
+
+        background: var(--warning);
+
+        box-shadow:
+            0 0 0 4px
+            rgba(245, 158, 11, 0.10);
+    }
+
+
+    .bmkg-status-dot.online {
+
+        background: var(--success);
+
+        box-shadow:
+            0 0 0 4px
+            rgba(34, 197, 94, 0.10);
+    }
+
+
+    .bmkg-status-dot.offline {
+
+        background: var(--danger);
+
+        box-shadow:
+            0 0 0 4px
+            rgba(239, 68, 68, 0.10);
+    }
+
+
+    .bmkg-status strong {
+
+        display: block;
+
+        font-size: 9px;
+
+        font-weight: 800;
+
+        color: var(--text-primary);
+    }
+
+
+    .bmkg-status small {
+
+        display: block;
+
+        margin-top: 2px;
+
+        font-size: 8px;
+
+        color: var(--text-muted);
+    }
+
+
+    .location-select {
+
+        height: 40px;
+
+        min-width: 135px;
+
+        padding: 0 30px 0 11px;
+
+        border-radius: 11px;
+
+        border: 1px solid var(--border);
+
+        background: var(--surface);
+
+        color: var(--text-primary);
+
+        font-size: 10px;
+
+        font-weight: 700;
+
+        outline: none;
+
+        cursor: pointer;
+    }
+
+
+    .location-select:focus {
+
+        border-color: var(--primary);
+
+        box-shadow:
+            0 0 0 3px
+            rgba(37, 99, 235, 0.10);
     }
 
 
     .weather-refresh-button {
 
-        width: 38px;
+        height: 40px;
 
-        padding: 0;
+        display: inline-flex;
+
+        align-items: center;
 
         justify-content: center;
+
+        gap: 7px;
+
+        padding: 0 13px;
+
+        border-radius: 11px;
+
+        background: var(--primary);
+
+        color: #ffffff;
+
+        font-size: 10px;
+
+        font-weight: 800;
+
+        cursor: pointer;
+
+        transition:
+            transform 0.2s ease,
+            opacity 0.2s ease;
     }
 
 
+    .weather-refresh-button:hover {
+
+        transform: translateY(-1px);
+
+        opacity: 0.92;
+    }
+
+
+    .weather-refresh-button.loading {
+
+        pointer-events: none;
+
+        opacity: 0.7;
+    }
+
+
+    .weather-refresh-button.loading i {
+
+        animation:
+            weatherSpin 0.8s linear infinite;
+    }
+
+
+    @keyframes weatherSpin {
+
+        from {
+            transform: rotate(0deg);
+        }
+
+        to {
+            transform: rotate(360deg);
+        }
+
+    }
+
+
+    /* =====================================================
+       CURRENT WEATHER
+    ====================================================== */
+
     .current-weather-card {
 
-        min-height: 175px;
+        position: relative;
 
-        padding: 22px 20px;
+        width: 100%;
+
+        min-height: 178px;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: space-between;
+
+        gap: 30px;
+
+        padding: 28px 32px;
+
+        overflow: hidden;
+
+        border-radius: 18px;
+
+        background:
+            linear-gradient(
+                135deg,
+                #2563eb 0%,
+                #285fe1 52%,
+                #0891b2 100%
+            );
+
+        color: #ffffff;
+
+        box-shadow:
+            0 16px 34px
+            rgba(37, 99, 235, 0.16);
+    }
+
+
+    .current-weather-card::before {
+
+        content: "";
+
+        position: absolute;
+
+        width: 190px;
+        height: 190px;
+
+        right: -45px;
+        top: -105px;
+
+        border-radius: 50%;
+
+        background:
+            rgba(255,255,255,0.08);
+    }
+
+
+    .current-weather-card::after {
+
+        content: "";
+
+        position: absolute;
+
+        width: 170px;
+        height: 170px;
+
+        right: 100px;
+        bottom: -125px;
+
+        border-radius: 50%;
+
+        background:
+            rgba(255,255,255,0.06);
     }
 
 
     .current-weather-main {
 
-        gap: 22px;
+        position: relative;
 
-        align-items: flex-start;
+        z-index: 2;
+
+        min-width: 0;
+    }
+
+
+    .current-weather-copy {
+
+        display: flex;
 
         flex-direction: column;
     }
 
 
-    .weather-temperature {
+    .section-kicker {
 
-        font-size: 40px;
+        display: block;
+
+        font-size: 8px;
+
+        line-height: 1;
+
+        font-weight: 800;
+
+        letter-spacing: 1.2px;
+
+        color: var(--text-muted);
+    }
+
+
+    .current-weather-card
+    .section-kicker {
+
+        color:
+            rgba(255,255,255,0.68);
+    }
+
+
+    .current-weather-copy h2 {
+
+        margin-top: 10px;
+
+        font-size: 25px;
+
+        line-height: 1.2;
+
+        font-weight: 800;
+
+        letter-spacing: -0.7px;
+
+        color: #ffffff;
+    }
+
+
+    .current-weather-copy p {
+
+        margin-top: 7px;
+
+        font-size: 10px;
+
+        color:
+            rgba(255,255,255,0.72);
+    }
+
+
+    .current-weather-temperature {
+
+        margin-top: 16px;
+
+        font-size: 43px;
+
+        line-height: 1;
+
+        font-weight: 800;
+
+        letter-spacing: -2px;
+
+        color: #ffffff;
     }
 
 
     .current-weather-icon {
 
-        position: absolute;
+        position: relative;
 
-        right: 15px;
+        z-index: 2;
 
-        bottom: 20px;
+        width: 96px;
+        height: 96px;
 
-        padding: 0;
+        flex: 0 0 96px;
+
+        display: grid;
+
+        place-items: center;
+
+        border-radius: 27px;
+
+        background:
+            rgba(255,255,255,0.12);
+
+        border:
+            1px solid
+            rgba(255,255,255,0.14);
+
+        color: #ffffff;
+
+        font-size: 42px;
+
+        box-shadow:
+            inset 0 1px 0
+            rgba(255,255,255,0.12);
     }
 
 
-    .weather-main-icon {
+    /* =====================================================
+       METRICS
+    ====================================================== */
 
-        width: 70px;
-        height: 70px;
+    .weather-metrics {
 
-        border-radius: 20px;
+        width: 100%;
 
-        font-size: 30px;
-    }
-
-
-    .forecast-grid {
+        display: grid;
 
         grid-template-columns:
-            repeat(2, minmax(0, 1fr));
+            repeat(4, minmax(0, 1fr));
+
+        gap: 14px;
+
+        margin-top: 14px;
     }
 
 
-    .bmkg-information-card {
+    .weather-metric-card {
 
-        align-items: flex-start;
+        min-width: 0;
 
-        flex-wrap: wrap;
+        min-height: 102px;
+
+        display: flex;
+
+        align-items: center;
+
+        gap: 12px;
+
+        padding: 16px;
+
+        background: var(--surface);
+
+        border: 1px solid var(--border);
+
+        border-radius: 15px;
+
+        box-shadow: var(--shadow);
     }
 
 
-    .bmkg-link {
+    .metric-icon {
 
-        margin-left: 54px;
+        width: 40px;
+        height: 40px;
+
+        flex: 0 0 40px;
+
+        display: grid;
+
+        place-items: center;
+
+        border-radius: 12px;
+
+        font-size: 15px;
     }
-}
 
 
-@media (max-width: 500px) {
+    .metric-icon.blue {
 
-    .weather-status-bar {
+        background: #dbeafe;
 
-        align-items: flex-start;
+        color: #2563eb;
+    }
+
+
+    .metric-icon.cyan {
+
+        background: #cffafe;
+
+        color: #0891b2;
+    }
+
+
+    .metric-icon.teal {
+
+        background: #ccfbf1;
+
+        color: #0d9488;
+    }
+
+
+    .metric-icon.purple {
+
+        background: #ede9fe;
+
+        color: #7c3aed;
+    }
+
+
+    .metric-content {
+
+        min-width: 0;
+
+        display: flex;
 
         flex-direction: column;
-
-        padding: 10px 12px;
-
-        gap: 7px;
     }
 
 
-    .weather-metrics-grid {
+    .metric-content span {
 
-        grid-template-columns:
-            1fr;
+        font-size: 8px;
+
+        font-weight: 800;
+
+        letter-spacing: 0.8px;
+
+        color: var(--text-muted);
     }
 
 
-    .forecast-grid {
+    .metric-content strong {
 
-        grid-template-columns:
-            repeat(2, minmax(0, 1fr));
+        margin-top: 5px;
+
+        overflow: hidden;
+
+        text-overflow: ellipsis;
+
+        white-space: nowrap;
+
+        font-size: 14px;
+
+        line-height: 1.2;
+
+        font-weight: 800;
+
+        color: var(--text-primary);
     }
 
 
-    .current-weather-heading h2 {
+    .metric-content small {
 
-        max-width: 190px;
+        margin-top: 3px;
 
-        font-size: 18px;
+        overflow: hidden;
+
+        text-overflow: ellipsis;
+
+        white-space: nowrap;
+
+        font-size: 8px;
+
+        color: var(--text-secondary);
     }
 
+
+    /* =====================================================
+       ALERT
+    ====================================================== */
 
     .weather-alert-card {
 
-        align-items: flex-start;
+        width: 100%;
+
+        min-height: 74px;
+
+        display: flex;
+
+        align-items: center;
+
+        gap: 13px;
+
+        margin-top: 14px;
+
+        padding: 14px 17px;
+
+        background: var(--surface);
+
+        border: 1px solid var(--border);
+
+        border-radius: 15px;
+
+        box-shadow: var(--shadow);
+    }
+
+
+    .weather-alert-icon {
+
+        width: 38px;
+        height: 38px;
+
+        flex: 0 0 38px;
+
+        display: grid;
+
+        place-items: center;
+
+        border-radius: 11px;
+
+        background: #fef3c7;
+
+        color: #d97706;
+
+        font-size: 14px;
+    }
+
+
+    .weather-alert-content {
+
+        min-width: 0;
+
+        flex: 1;
+    }
+
+
+    .weather-alert-content span {
+
+        display: block;
+
+        font-size: 8px;
+
+        font-weight: 800;
+
+        letter-spacing: 0.8px;
+
+        color: var(--text-muted);
+    }
+
+
+    .weather-alert-content strong {
+
+        display: block;
+
+        margin-top: 3px;
+
+        font-size: 11px;
+
+        font-weight: 800;
+
+        color: var(--text-primary);
+    }
+
+
+    .weather-alert-content p {
+
+        margin-top: 3px;
+
+        font-size: 9px;
+
+        line-height: 1.5;
+
+        color: var(--text-secondary);
     }
 
 
     .weather-alert-badge {
 
-        align-self: center;
+        flex-shrink: 0;
+
+        padding: 6px 10px;
+
+        border-radius: 999px;
+
+        background: #dcfce7;
+
+        color: #15803d;
+
+        font-size: 8px;
+
+        font-weight: 800;
     }
 
+
+    /* =====================================================
+       FORECAST
+    ====================================================== */
+
+    .forecast-section {
+
+        width: 100%;
+
+        margin-top: 22px;
+    }
+
+
+    .section-header {
+
+        display: flex;
+
+        align-items: flex-end;
+
+        justify-content: space-between;
+
+        gap: 15px;
+
+        margin-bottom: 12px;
+    }
+
+
+    .section-header h2 {
+
+        margin-top: 5px;
+
+        font-size: 16px;
+
+        line-height: 1.3;
+
+        font-weight: 800;
+
+        letter-spacing: -0.3px;
+
+        color: var(--text-primary);
+    }
+
+
+    .forecast-period {
+
+        padding-bottom: 2px;
+
+        font-size: 8px;
+
+        color: var(--text-muted);
+
+        white-space: nowrap;
+    }
+
+
+    .forecast-grid {
+
+        width: 100%;
+
+        display: grid;
+
+        grid-template-columns:
+            repeat(6, minmax(0, 1fr));
+
+        gap: 10px;
+
+        overflow: hidden;
+    }
+
+
+    .forecast-card {
+
+        min-width: 0;
+
+        min-height: 150px;
+
+        display: flex;
+
+        flex-direction: column;
+
+        align-items: center;
+
+        padding: 15px 9px;
+
+        background: var(--surface);
+
+        border: 1px solid var(--border);
+
+        border-radius: 14px;
+
+        text-align: center;
+
+        box-shadow:
+            0 7px 20px
+            rgba(15, 23, 42, 0.035);
+    }
+
+
+    .forecast-date {
+
+        font-size: 8px;
+
+        font-weight: 800;
+
+        color: var(--text-primary);
+    }
+
+
+    .forecast-time {
+
+        margin-top: 3px;
+
+        font-size: 8px;
+
+        color: var(--text-muted);
+    }
+
+
+    .forecast-icon {
+
+        width: 42px;
+        height: 42px;
+
+        margin-top: 11px;
+
+        display: grid;
+
+        place-items: center;
+
+        border-radius: 13px;
+
+        background: var(--primary-light);
+
+        color: var(--primary);
+
+        font-size: 17px;
+    }
+
+
+    .forecast-temperature {
+
+        margin-top: 9px;
+
+        font-size: 15px;
+
+        font-weight: 800;
+
+        color: var(--text-primary);
+    }
+
+
+    .forecast-description {
+
+        width: 100%;
+
+        margin-top: 3px;
+
+        overflow: hidden;
+
+        display: -webkit-box;
+
+        -webkit-line-clamp: 2;
+
+        -webkit-box-orient: vertical;
+
+        font-size: 8px;
+
+        line-height: 1.4;
+
+        color: var(--text-secondary);
+    }
+
+
+    .forecast-extra {
+
+        margin-top: auto;
+
+        padding-top: 7px;
+
+        font-size: 7px;
+
+        color: var(--text-muted);
+    }
+
+
+    .forecast-loading {
+
+        grid-column: 1 / -1;
+
+        min-height: 120px;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        gap: 8px;
+
+        background: var(--surface);
+
+        border: 1px solid var(--border);
+
+        border-radius: 14px;
+
+        color: var(--text-secondary);
+
+        font-size: 10px;
+    }
+
+
+    /* =====================================================
+       BMKG INFO
+    ====================================================== */
+
+    .bmkg-info-card {
+
+        width: 100%;
+
+        display: flex;
+
+        align-items: center;
+
+        gap: 14px;
+
+        margin-top: 18px;
+
+        padding: 17px;
+
+        background: var(--surface-soft);
+
+        border: 1px solid var(--border);
+
+        border-radius: 15px;
+    }
+
+
+    .bmkg-info-icon {
+
+        width: 42px;
+        height: 42px;
+
+        flex: 0 0 42px;
+
+        display: grid;
+
+        place-items: center;
+
+        border-radius: 12px;
+
+        background: var(--primary-light);
+
+        color: var(--primary);
+
+        font-size: 17px;
+    }
+
+
+    .bmkg-info-content {
+
+        min-width: 0;
+
+        flex: 1;
+    }
+
+
+    .bmkg-info-content span {
+
+        font-size: 8px;
+
+        font-weight: 800;
+
+        letter-spacing: 0.8px;
+
+        color: var(--text-muted);
+    }
+
+
+    .bmkg-info-content h3 {
+
+        margin-top: 4px;
+
+        font-size: 11px;
+
+        font-weight: 800;
+
+        color: var(--text-primary);
+    }
+
+
+    .bmkg-info-content p {
+
+        max-width: 760px;
+
+        margin-top: 4px;
+
+        font-size: 8px;
+
+        line-height: 1.6;
+
+        color: var(--text-secondary);
+    }
+
+
+    .bmkg-link {
+
+        flex-shrink: 0;
+
+        display: inline-flex;
+
+        align-items: center;
+
+        gap: 6px;
+
+        padding: 8px 10px;
+
+        border-radius: 9px;
+
+        background: var(--surface);
+
+        border: 1px solid var(--border);
+
+        color: var(--primary);
+
+        font-size: 9px;
+
+        font-weight: 800;
+    }
+
+
+    /* =====================================================
+       LOADING
+    ====================================================== */
+
+    .weather-loading {
+
+        position: fixed;
+
+        inset: 0;
+
+        z-index: 2000;
+
+        display: none;
+
+        align-items: center;
+
+        justify-content: center;
+
+        padding: 20px;
+
+        background:
+            rgba(15, 23, 42, 0.24);
+
+        backdrop-filter: blur(3px);
+    }
+
+
+    .weather-loading.show {
+
+        display: flex;
+    }
+
+
+    .weather-loading-box {
+
+        width: min(
+            310px,
+            100%
+        );
+
+        padding: 24px;
+
+        display: flex;
+
+        flex-direction: column;
+
+        align-items: center;
+
+        text-align: center;
+
+        background: var(--surface);
+
+        border: 1px solid var(--border);
+
+        border-radius: 17px;
+
+        box-shadow:
+            0 20px 50px
+            rgba(15, 23, 42, 0.16);
+    }
+
+
+    .weather-spinner {
+
+        width: 50px;
+        height: 50px;
+
+        display: grid;
+
+        place-items: center;
+
+        border-radius: 15px;
+
+        background: var(--primary-light);
+
+        color: var(--primary);
+
+        font-size: 20px;
+
+        animation:
+            weatherFloat 1.4s ease-in-out infinite;
+    }
+
+
+    @keyframes weatherFloat {
+
+        0%,
+        100% {
+            transform: translateY(0);
+        }
+
+        50% {
+            transform: translateY(-5px);
+        }
+
+    }
+
+
+    .weather-loading-box strong {
+
+        margin-top: 13px;
+
+        font-size: 12px;
+
+        color: var(--text-primary);
+    }
+
+
+    .weather-loading-box span {
+
+        margin-top: 5px;
+
+        font-size: 9px;
+
+        color: var(--text-secondary);
+    }
+
+
+    /* =====================================================
+       ERROR
+    ====================================================== */
+
+    .weather-error {
+
+        width: 100%;
+
+        display: none;
+
+        align-items: center;
+
+        gap: 13px;
+
+        margin-top: 15px;
+
+        padding: 14px 16px;
+
+        background: #fff7ed;
+
+        border: 1px solid #fed7aa;
+
+        border-radius: 14px;
+    }
+
+
+    .weather-error.show {
+
+        display: flex;
+    }
+
+
+    .weather-error-icon {
+
+        width: 38px;
+        height: 38px;
+
+        flex: 0 0 38px;
+
+        display: grid;
+
+        place-items: center;
+
+        border-radius: 11px;
+
+        background: #ffedd5;
+
+        color: #ea580c;
+    }
+
+
+    .weather-error-content {
+
+        min-width: 0;
+
+        flex: 1;
+    }
+
+
+    .weather-error-content strong {
+
+        display: block;
+
+        font-size: 10px;
+
+        font-weight: 800;
+
+        color: #9a3412;
+    }
+
+
+    .weather-error-content p {
+
+        margin-top: 3px;
+
+        font-size: 8px;
+
+        line-height: 1.5;
+
+        color: #c2410c;
+    }
+
+
+    .weather-retry-button {
+
+        flex-shrink: 0;
+
+        height: 34px;
+
+        display: inline-flex;
+
+        align-items: center;
+
+        gap: 6px;
+
+        padding: 0 11px;
+
+        border-radius: 9px;
+
+        background: #ea580c;
+
+        color: #ffffff;
+
+        font-size: 9px;
+
+        font-weight: 800;
+
+        cursor: pointer;
+    }
+
+
+    /* =====================================================
+       TOAST
+    ====================================================== */
 
     .weather-toast {
 
-        left: 15px;
+        position: fixed;
 
-        right: 15px;
+        right: 25px;
+        bottom: 25px;
 
-        bottom: 15px;
+        z-index: 2100;
 
-        max-width: none;
+        max-width: 320px;
+
+        display: flex;
+
+        align-items: center;
+
+        gap: 9px;
+
+        padding: 11px 14px;
+
+        border-radius: 11px;
+
+        background: var(--surface);
+
+        border: 1px solid var(--border);
+
+        box-shadow:
+            0 14px 35px
+            rgba(15, 23, 42, 0.12);
+
+        color: var(--text-primary);
+
+        font-size: 9px;
+
+        font-weight: 700;
+
+        opacity: 0;
+
+        visibility: hidden;
+
+        transform:
+            translateY(8px);
+
+        transition:
+            opacity 0.2s ease,
+            visibility 0.2s ease,
+            transform 0.2s ease;
     }
-}
 
+
+    .weather-toast.show {
+
+        opacity: 1;
+
+        visibility: visible;
+
+        transform:
+            translateY(0);
+    }
+
+
+    .weather-toast i {
+        color: var(--primary);
+    }
+
+
+    /* =====================================================
+       RESPONSIVE WEATHER
+    ====================================================== */
+
+    @media (max-width: 1100px) {
+
+        .weather-toolbar {
+
+            align-items: flex-start;
+
+            flex-direction: column;
+        }
+
+
+        .weather-toolbar-actions {
+
+            width: 100%;
+
+            justify-content: flex-start;
+
+            flex-wrap: wrap;
+        }
+
+
+        .forecast-grid {
+
+            grid-template-columns:
+                repeat(3, minmax(0, 1fr));
+        }
+
+    }
+
+
+    @media (max-width: 800px) {
+
+        .weather-metrics {
+
+            grid-template-columns:
+                repeat(2, minmax(0, 1fr));
+        }
+
+
+        .current-weather-card {
+
+            padding: 24px;
+        }
+
+
+        .current-weather-temperature {
+            font-size: 37px;
+        }
+
+
+        .current-weather-icon {
+
+            width: 80px;
+            height: 80px;
+
+            flex-basis: 80px;
+
+            font-size: 34px;
+        }
+
+
+        .forecast-grid {
+
+            grid-template-columns:
+                repeat(2, minmax(0, 1fr));
+        }
+
+    }
+
+
+    @media (max-width: 600px) {
+
+        .weather-toolbar {
+
+            padding: 14px;
+        }
+
+
+        .weather-toolbar-actions {
+
+            display: grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            width: 100%;
+        }
+
+
+        .bmkg-status {
+
+            grid-column: 1 / -1;
+
+            width: 100%;
+        }
+
+
+        .location-select,
+        .weather-refresh-button {
+
+            width: 100%;
+        }
+
+
+        .current-weather-card {
+
+            min-height: 165px;
+
+            padding: 22px;
+
+            gap: 15px;
+        }
+
+
+        .current-weather-copy h2 {
+
+            font-size: 21px;
+        }
+
+
+        .current-weather-temperature {
+
+            font-size: 32px;
+        }
+
+
+        .current-weather-icon {
+
+            width: 68px;
+            height: 68px;
+
+            flex-basis: 68px;
+
+            border-radius: 20px;
+
+            font-size: 28px;
+        }
+
+
+        .weather-metrics {
+
+            grid-template-columns: 1fr;
+        }
+
+
+        .weather-alert-card {
+
+            align-items: flex-start;
+        }
+
+
+        .weather-alert-badge {
+
+            align-self: flex-start;
+        }
+
+
+        .section-header {
+
+            align-items: flex-start;
+
+            flex-direction: column;
+        }
+
+
+        .forecast-period {
+
+            padding-bottom: 0;
+        }
+
+
+        .bmkg-info-card {
+
+            align-items: flex-start;
+
+            flex-wrap: wrap;
+        }
+
+
+        .bmkg-link {
+
+            margin-left: 56px;
+        }
+
+
+        .weather-error {
+
+            align-items: flex-start;
+
+            flex-wrap: wrap;
+        }
+
+
+        .weather-retry-button {
+
+            margin-left: 51px;
+        }
+
+
+        .weather-toast {
+
+            left: 15px;
+
+            right: 15px;
+
+            bottom: 15px;
+
+            max-width: none;
+        }
+
+    }
+
+
+    @media (max-width: 400px) {
+
+        .forecast-grid {
+
+            grid-template-columns: 1fr;
+        }
+
+
+        .weather-toolbar-actions {
+
+            grid-template-columns: 1fr;
+        }
+
+
+        .bmkg-status {
+
+            grid-column: auto;
+        }
+
+
+        .bmkg-link {
+
+            margin-left: 0;
+        }
+
+
+        .weather-retry-button {
+
+            margin-left: 0;
+        }
+
+    }
+
+
+    /* =====================================================
+       DARK MODE
+    ====================================================== */
+
+    [data-theme="dark"] .weather-alert-icon {
+
+        background: #422006;
+
+        color: #fbbf24;
+    }
+
+
+    [data-theme="dark"] .weather-alert-badge {
+
+        background: #052e16;
+
+        color: #86efac;
+    }
+
+
+    [data-theme="dark"] .weather-error {
+
+        background: #431407;
+
+        border-color: #7c2d12;
+    }
+
+
+    [data-theme="dark"] .weather-error-icon {
+
+        background: #7c2d12;
+
+        color: #fdba74;
+    }
+
+
+    [data-theme="dark"] .weather-error-content strong {
+
+        color: #fed7aa;
+    }
+
+
+    [data-theme="dark"] .weather-error-content p {
+
+        color: #fdba74;
+    }
 
 </style>
+
+
 <!-- =========================================================
-     PART 3 — INTEGRASI API PRAKIRAAN CUACA BMKG
+     END PART 2
+     PART 3 DITEMPEL DI BAWAH INI
+========================================================= -->
+<!-- =========================================================
+     PART 3 — BMKG API + WEATHER LOGIC
      Paste langsung di bawah PART 2
 ========================================================= -->
 
 <script>
 
-/* =========================================================
-   KONFIGURASI BMKG
-========================================================= */
+    /* =====================================================
+       SUPABASE
+    ====================================================== */
 
-const BMKG_API_BASE =
-    "https://api.bmkg.go.id/publik/prakiraan-cuaca";
+    const SUPABASE_URL =
+        "https://nydapuhnswrbgbjkaxqa.supabase.co";
 
-
-/*
- * Default:
- * Dumai Kota, Kota Dumai, Riau
- *
- * Kode adm4 berasal dari wilayah administrasi BMKG.
- */
-const DEFAULT_BMKG_LOCATION = {
-    adm4: "14.72.06.1003",
-    name: "Dumai Kota",
-    detail: "Kota Dumai, Provinsi Riau"
-};
+    const SUPABASE_PUBLISHABLE_KEY =
+        "sb_publishable_dypnRnjABFIf6GcshfrTIA_Q0zhuR0L";
 
 
-/*
- * Daftar lokasi BMKG.
- *
- * Untuk sekarang Dumai menjadi lokasi utama.
- * Struktur ini sengaja dibuat mudah ditambah
- * ketika nanti ingin memasukkan kelurahan/desa lain.
- */
-const BMKG_LOCATIONS = [
-    {
+    const supabaseClient =
+        window.supabase.createClient(
+            SUPABASE_URL,
+            SUPABASE_PUBLISHABLE_KEY,
+            {
+                auth: {
+                    persistSession: true,
+                    autoRefreshToken: true,
+                    detectSessionInUrl: true
+                }
+            }
+        );
+
+
+    /* =====================================================
+       BMKG API
+    ====================================================== */
+
+    const BMKG_API_BASE =
+        "https://api.bmkg.go.id/publik/prakiraan-cuaca";
+
+
+    /*
+     * Lokasi default FLOWS-PRO
+     * Dumai Kota
+     */
+
+    const DEFAULT_BMKG_LOCATION = {
+
         adm4: "14.72.06.1003",
+
         name: "Dumai Kota",
-        detail: "Kota Dumai, Provinsi Riau"
-    }
-];
+
+        detail:
+            "Kota Dumai, Provinsi Riau"
+
+    };
 
 
-let currentBMKGLocation =
-    DEFAULT_BMKG_LOCATION;
+    /*
+     * Daftar lokasi yang tersedia.
+     *
+     * Untuk saat ini kita kunci pada lokasi utama
+     * agar data yang ditampilkan benar-benar berasal
+     * dari wilayah yang sudah ditentukan.
+     */
 
-let bmkgForecastData = [];
+    const BMKG_LOCATIONS = [
 
-let bmkgLastUpdated = null;
-
-let bmkgRefreshTimer = null;
-
-
-/* =========================================================
-   ELEMENT HELPER
-========================================================= */
-
-function weatherElement(id) {
-
-    return document.getElementById(id);
-
-}
-
-
-/* =========================================================
-   ESCAPE HTML
-========================================================= */
-
-function weatherEscapeHtml(value) {
-
-    return String(value ?? "")
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
-
-}
-
-
-/* =========================================================
-   FORMAT ANGKA
-========================================================= */
-
-function formatWeatherNumber(value, decimals = 0) {
-
-    const number = Number(value);
-
-    if (!Number.isFinite(number)) {
-        return "-";
-    }
-
-    return number.toFixed(decimals);
-
-}
-
-
-/* =========================================================
-   FORMAT WAKTU BMKG
-========================================================= */
-
-function formatBMKGDateTime(value) {
-
-    if (!value) {
-        return "-";
-    }
-
-    const date = new Date(value);
-
-    if (Number.isNaN(date.getTime())) {
-        return value;
-    }
-
-    return date.toLocaleString(
-        "id-ID",
         {
-            weekday: "long",
-            day: "2-digit",
-            month: "long",
-            year: "numeric",
-            hour: "2-digit",
-            minute: "2-digit"
+            adm4: "14.72.06.1003",
+
+            name: "Dumai Kota",
+
+            detail:
+                "Kota Dumai, Provinsi Riau"
         }
-    );
 
-}
+    ];
 
 
-/* =========================================================
-   FORMAT JAM
-========================================================= */
+    let currentBMKGLocation =
+        DEFAULT_BMKG_LOCATION;
 
-function formatWeatherTime(value) {
 
-    if (!value) {
-        return "-";
+    let bmkgForecastData = [];
+
+    let bmkgLocationData = null;
+
+    let bmkgRefreshTimer = null;
+
+    let weatherToastTimer = null;
+
+
+    /* =====================================================
+       ELEMENT HELPER
+    ====================================================== */
+
+    function getElement(id) {
+
+        return document.getElementById(id);
+
     }
 
-    const date = new Date(value);
 
-    if (Number.isNaN(date.getTime())) {
-        return "-";
-    }
+    /* =====================================================
+       TEXT HELPER
+    ====================================================== */
 
-    return date.toLocaleTimeString(
-        "id-ID",
-        {
-            hour: "2-digit",
-            minute: "2-digit"
+    function safeText(value, fallback = "--") {
+
+        if (
+            value === null ||
+            value === undefined ||
+            value === ""
+        ) {
+
+            return fallback;
+
         }
-    );
 
-}
+        return String(value);
 
-
-/* =========================================================
-   FORMAT HARI
-========================================================= */
-
-function formatWeatherDay(value) {
-
-    if (!value) {
-        return "-";
     }
 
-    const date = new Date(value);
 
-    if (Number.isNaN(date.getTime())) {
-        return "-";
-    }
+    /* =====================================================
+       DATE HELPER
+    ====================================================== */
 
-    return date.toLocaleDateString(
-        "id-ID",
-        {
-            weekday: "short",
-            day: "2-digit",
-            month: "short"
+    function parseWeatherDate(value) {
+
+        if (!value) {
+            return null;
         }
-    );
-
-}
 
 
-/* =========================================================
-   STATUS BMKG
-========================================================= */
-
-function setBMKGStatus(
-    status,
-    message
-) {
-
-    const dot =
-        weatherElement("bmkgStatusDot");
-
-    const text =
-        weatherElement("bmkgStatusText");
+        const date =
+            new Date(value);
 
 
-    if (!dot || !text) {
-        return;
-    }
+        if (
+            Number.isNaN(
+                date.getTime()
+            )
+        ) {
+
+            return null;
+
+        }
 
 
-    dot.className =
-        "weather-status-dot";
-
-
-    if (status === "online") {
-
-        dot.classList.add("online");
-
-    } else if (status === "offline") {
-
-        dot.classList.add("offline");
-
-    } else {
-
-        dot.classList.add("loading");
+        return date;
 
     }
 
 
-    text.textContent =
-        message;
+    function formatDateTime(value) {
 
-}
+        const date =
+            parseWeatherDate(value);
 
 
-/* =========================================================
-   LOADING
-========================================================= */
+        if (!date) {
 
-function setWeatherLoading(
-    isLoading
-) {
+            return "--";
 
-    const overlay =
-        weatherElement("weatherLoading");
+        }
 
-    const refreshButton =
-        weatherElement(
-            "weatherRefreshButton"
+
+        return new Intl.DateTimeFormat(
+            "id-ID",
+            {
+                day: "2-digit",
+                month: "short",
+                year: "numeric",
+                hour: "2-digit",
+                minute: "2-digit",
+                hour12: false
+            }
+        ).format(date);
+
+    }
+
+
+    function formatDateOnly(value) {
+
+        const date =
+            parseWeatherDate(value);
+
+
+        if (!date) {
+
+            return "--";
+
+        }
+
+
+        return new Intl.DateTimeFormat(
+            "id-ID",
+            {
+                weekday: "short",
+                day: "2-digit",
+                month: "short"
+            }
+        ).format(date);
+
+    }
+
+
+    function formatTimeOnly(value) {
+
+        const date =
+            parseWeatherDate(value);
+
+
+        if (!date) {
+
+            return "--";
+
+        }
+
+
+        return new Intl.DateTimeFormat(
+            "id-ID",
+            {
+                hour: "2-digit",
+                minute: "2-digit",
+                hour12: false
+            }
+        ).format(date);
+
+    }
+
+
+    /* =====================================================
+       BMKG STATUS
+    ====================================================== */
+
+    function setBMKGStatus(
+        status,
+        message,
+        updateTime = null
+    ) {
+
+        const dot =
+            getElement(
+                "bmkgStatusDot"
+            );
+
+        const text =
+            getElement(
+                "bmkgStatusText"
+            );
+
+        const time =
+            getElement(
+                "bmkgUpdateTime"
+            );
+
+
+        if (dot) {
+
+            dot.classList.remove(
+                "online",
+                "offline"
+            );
+
+
+            if (status === "online") {
+
+                dot.classList.add(
+                    "online"
+                );
+
+            }
+
+
+            if (status === "offline") {
+
+                dot.classList.add(
+                    "offline"
+                );
+
+            }
+
+        }
+
+
+        if (text) {
+
+            text.textContent =
+                safeText(
+                    message,
+                    "Status BMKG"
+                );
+
+        }
+
+
+        if (time) {
+
+            if (updateTime) {
+
+                time.textContent =
+                    `Diperbarui ${formatDateTime(updateTime)}`;
+
+            } else {
+
+                time.textContent =
+                    "Menunggu data BMKG";
+
+            }
+
+        }
+
+    }
+
+
+    /* =====================================================
+       WEATHER TOAST
+    ====================================================== */
+
+    function showWeatherToast(
+        message
+    ) {
+
+        const toast =
+            getElement(
+                "weatherToast"
+            );
+
+        const toastMessage =
+            getElement(
+                "weatherToastMessage"
+            );
+
+
+        if (!toast) {
+            return;
+        }
+
+
+        if (toastMessage) {
+
+            toastMessage.textContent =
+                message;
+
+        }
+
+
+        toast.classList.add(
+            "show"
         );
 
 
-    if (overlay) {
-
-        overlay.classList.toggle(
-            "show",
-            isLoading
+        clearTimeout(
+            weatherToastTimer
         );
+
+
+        weatherToastTimer =
+            setTimeout(
+                () => {
+
+                    toast.classList.remove(
+                        "show"
+                    );
+
+                },
+                3500
+            );
 
     }
 
 
-    if (refreshButton) {
+    /* =====================================================
+       LOADING
+    ====================================================== */
 
-        refreshButton.disabled =
-            isLoading;
+    function setWeatherLoading(
+        loading
+    ) {
 
-        const icon =
-            refreshButton.querySelector("i");
+        const overlay =
+            getElement(
+                "weatherLoading"
+            );
 
-        if (icon) {
 
-            icon.classList.toggle(
-                "fa-spin",
-                isLoading
+        const button =
+            getElement(
+                "weatherRefreshButton"
+            );
+
+
+        if (overlay) {
+
+            overlay.classList.toggle(
+                "show",
+                loading
             );
 
         }
 
-    }
 
-}
+        if (button) {
 
-
-/* =========================================================
-   ERROR STATE
-========================================================= */
-
-function showWeatherError(
-    message
-) {
-
-    const errorCard =
-        weatherElement("weatherError");
-
-    const errorMessage =
-        weatherElement(
-            "weatherErrorMessage"
-        );
+            button.classList.toggle(
+                "loading",
+                loading
+            );
 
 
-    if (errorMessage) {
+            button.disabled =
+                loading;
 
-        errorMessage.textContent =
-            message;
+        }
 
     }
 
 
-    if (errorCard) {
+    /* =====================================================
+       ERROR
+    ====================================================== */
 
-        errorCard.classList.add(
-            "show"
-        );
+    function showWeatherError(
+        message
+    ) {
 
-    }
+        const error =
+            getElement(
+                "weatherError"
+            );
 
-}
-
-
-function hideWeatherError() {
-
-    const errorCard =
-        weatherElement("weatherError");
-
-    if (errorCard) {
-
-        errorCard.classList.remove(
-            "show"
-        );
-
-    }
-
-}
+        const errorMessage =
+            getElement(
+                "weatherErrorMessage"
+            );
 
 
-/* =========================================================
-   TOAST
-========================================================= */
+        if (errorMessage) {
 
-function showWeatherToast(
-    message
-) {
+            errorMessage.textContent =
+                safeText(
+                    message,
+                    "Data BMKG tidak dapat dimuat."
+                );
 
-    const toast =
-        weatherElement("weatherToast");
-
-    const toastMessage =
-        weatherElement(
-            "weatherToastMessage"
-        );
+        }
 
 
-    if (!toast || !toastMessage) {
-        return;
-    }
+        if (error) {
 
-
-    toastMessage.textContent =
-        message;
-
-
-    toast.classList.add(
-        "show"
-    );
-
-
-    clearTimeout(
-        window.weatherToastTimer
-    );
-
-
-    window.weatherToastTimer =
-        setTimeout(() => {
-
-            toast.classList.remove(
+            error.classList.add(
                 "show"
             );
 
-        }, 3200);
+        }
 
-}
-
-
-/* =========================================================
-   LOAD DAFTAR LOKASI
-========================================================= */
-
-function initializeBMKGLocations() {
-
-    const select =
-        weatherElement(
-            "weatherLocationSelect"
-        );
-
-
-    if (!select) {
-        return;
     }
 
 
-    select.innerHTML = "";
+    function hideWeatherError() {
+
+        const error =
+            getElement(
+                "weatherError"
+            );
 
 
-    BMKG_LOCATIONS.forEach(
-        location => {
+        if (error) {
 
-            const option =
-                document.createElement(
-                    "option"
-                );
-
-            option.value =
-                location.adm4;
-
-            option.textContent =
-                location.name;
-
-            select.appendChild(
-                option
+            error.classList.remove(
+                "show"
             );
 
         }
-    );
-
-
-    select.value =
-        currentBMKGLocation.adm4;
-
-
-    updateWeatherLocationHeader();
-
-}
-
-
-/* =========================================================
-   HEADER LOKASI
-========================================================= */
-
-function updateWeatherLocationHeader() {
-
-    const name =
-        weatherElement(
-            "weatherLocationName"
-        );
-
-    const detail =
-        weatherElement(
-            "weatherLocationDetail"
-        );
-
-
-    if (name) {
-
-        name.textContent =
-            currentBMKGLocation.name;
 
     }
 
 
-    if (detail) {
+    /* =====================================================
+       WEATHER ICON
+    ====================================================== */
 
-        detail.textContent =
-            currentBMKGLocation.detail;
-
-    }
-
-}
-
-
-/* =========================================================
-   FETCH BMKG
-========================================================= */
-
-async function fetchBMKGForecast(
-    location
-) {
-
-    const url =
-        `${BMKG_API_BASE}?adm4=${encodeURIComponent(
-            location.adm4
-        )}`;
-
-
-    const response =
-        await fetch(
-            url,
-            {
-                method: "GET",
-                headers: {
-                    "Accept": "application/json"
-                },
-                cache: "no-store"
-            }
-        );
-
-
-    if (!response.ok) {
-
-        throw new Error(
-            `BMKG HTTP ${response.status}`
-        );
-
-    }
-
-
-    const data =
-        await response.json();
-
-
-    if (
-        !data ||
-        !data.lokasi ||
-        !data.data
+    function getWeatherIcon(
+        weatherCode,
+        description
     ) {
 
-        throw new Error(
-            "Struktur data BMKG tidak valid."
-        );
-
-    }
-
-
-    return data;
-
-}
+        const text =
+            String(
+                description || ""
+            ).toLowerCase();
 
 
-/* =========================================================
-   FLATTEN DATA CUACA
-========================================================= */
+        /*
+         * Hujan
+         */
 
-function flattenBMKGForecast(
-    data
-) {
+        if (
+            text.includes("hujan") ||
+            text.includes("gerimis")
+        ) {
 
-    const result = [];
+            if (
+                text.includes("lebat") ||
+                text.includes("badai")
+            ) {
 
+                return "fa-cloud-showers-heavy";
 
-    const weatherGroups =
-        data?.data?.[0]?.cuaca;
-
-
-    if (!Array.isArray(weatherGroups)) {
-
-        return result;
-
-    }
-
-
-    weatherGroups.forEach(
-        dailyGroup => {
-
-            if (!Array.isArray(
-                dailyGroup
-            )) {
-                return;
             }
 
 
-            dailyGroup.forEach(
+            return "fa-cloud-rain";
+
+        }
+
+
+        /*
+         * Petir
+         */
+
+        if (
+            text.includes("petir") ||
+            text.includes("badai")
+        ) {
+
+            return "fa-cloud-bolt";
+
+        }
+
+
+        /*
+         * Kabut
+         */
+
+        if (
+            text.includes("kabut") ||
+            text.includes("asap")
+        ) {
+
+            return "fa-smog";
+
+        }
+
+
+        /*
+         * Cerah
+         */
+
+        if (
+            text.includes("cerah") &&
+            !text.includes("berawan")
+        ) {
+
+            return "fa-sun";
+
+        }
+
+
+        /*
+         * Berawan
+         */
+
+        if (
+            text.includes("berawan") ||
+            text.includes("awan")
+        ) {
+
+            return "fa-cloud-sun";
+
+        }
+
+
+        /*
+         * Fallback berdasarkan kode BMKG.
+         */
+
+        const code =
+            Number(
+                weatherCode
+            );
+
+
+        if (
+            code === 1
+        ) {
+
+            return "fa-sun";
+
+        }
+
+
+        if (
+            code >= 2 &&
+            code <= 4
+        ) {
+
+            return "fa-cloud-sun";
+
+        }
+
+
+        if (
+            code >= 5 &&
+            code <= 10
+        ) {
+
+            return "fa-cloud-rain";
+
+        }
+
+
+        if (
+            code >= 11 &&
+            code <= 14
+        ) {
+
+            return "fa-cloud-showers-heavy";
+
+        }
+
+
+        return "fa-cloud-sun";
+
+    }
+
+
+    /* =====================================================
+       WEATHER DESCRIPTION
+    ====================================================== */
+
+    function normalizeWeatherDescription(
+        value
+    ) {
+
+        if (!value) {
+
+            return "Informasi cuaca tidak tersedia";
+
+        }
+
+
+        return String(value)
+            .trim();
+
+    }
+
+
+    /* =====================================================
+       BMKG RESPONSE FLATTENER
+    ====================================================== */
+
+    function flattenBMKGForecast(
+        data
+    ) {
+
+        const result = [];
+
+
+        /*
+         * Struktur umum BMKG:
+         *
+         * data.data[]
+         *     └── cuaca[]
+         *          └── forecast[]
+         *
+         * Karena struktur dapat berupa array
+         * bertingkat, kita flatten secara aman.
+         */
+
+        if (
+            !data ||
+            !Array.isArray(data.data)
+        ) {
+
+            return result;
+
+        }
+
+
+        data.data.forEach(
+            locationBlock => {
+
+                if (
+                    !locationBlock
+                ) {
+
+                    return;
+
+                }
+
+
+                const weatherGroups =
+                    locationBlock.cuaca;
+
+
+                if (
+                    !Array.isArray(
+                        weatherGroups
+                    )
+                ) {
+
+                    return;
+
+                }
+
+
+                weatherGroups.forEach(
+                    group => {
+
+                        if (
+                            Array.isArray(group)
+                        ) {
+
+                            group.forEach(
+                                item => {
+
+                                    if (
+                                        item &&
+                                        typeof item === "object"
+                                    ) {
+
+                                        result.push(
+                                            item
+                                        );
+
+                                    }
+
+                                }
+                            );
+
+                        } else if (
+                            group &&
+                            typeof group === "object"
+                        ) {
+
+                            result.push(
+                                group
+                            );
+
+                        }
+
+                    }
+                );
+
+            }
+        );
+
+
+        /*
+         * Beberapa respons BMKG dapat memiliki
+         * array yang lebih dalam.
+         */
+
+        function deepFlatten(
+            value
+        ) {
+
+            const output = [];
+
+
+            if (
+                Array.isArray(value)
+            ) {
+
+                value.forEach(
+                    item => {
+
+                        output.push(
+                            ...deepFlatten(
+                                item
+                            )
+                        );
+
+                    }
+                );
+
+                return output;
+
+            }
+
+
+            if (
+                value &&
+                typeof value === "object"
+            ) {
+
+                output.push(
+                    value
+                );
+
+            }
+
+
+            return output;
+
+        }
+
+
+        /*
+         * Bila flatten awal tidak menemukan data,
+         * cari seluruh object forecast dari response.
+         */
+
+        if (
+            result.length === 0
+        ) {
+
+            const possible =
+                deepFlatten(
+                    data.data
+                );
+
+
+            possible.forEach(
                 item => {
 
-                    if (!item) {
-                        return;
+                    if (
+                        item &&
+                        (
+                            item.t !== undefined ||
+                            item.weather_desc !== undefined ||
+                            item.local_datetime !== undefined
+                        )
+                    ) {
+
+                        result.push(
+                            item
+                        );
+
                     }
-
-
-                    result.push(item);
 
                 }
             );
 
         }
-    );
 
 
-    return result;
+        /*
+         * Hilangkan duplikasi berdasarkan
+         * waktu forecast.
+         */
 
-}
+        const unique =
+            new Map();
 
 
-/* =========================================================
-   SORT DATA
-========================================================= */
-
-function sortForecastData(
-    forecast
-) {
-
-    return [...forecast].sort(
-        (a, b) => {
-
-            const dateA =
-                new Date(
-                    a.local_datetime ||
-                    a.datetime ||
-                    0
-                );
-
-            const dateB =
-                new Date(
-                    b.local_datetime ||
-                    b.datetime ||
-                    0
-                );
-
-            return dateA - dateB;
-
-        }
-    );
-
-}
-
-
-/* =========================================================
-   ICON CUACA
-========================================================= */
-
-function getWeatherIcon(
-    weatherCode,
-    description
-) {
-
-    const code =
-        Number(weatherCode);
-
-    const text =
-        String(
-            description || ""
-        ).toLowerCase();
-
-
-    /*
-     * BMKG menyediakan kode cuaca.
-     * Kita juga menggunakan deskripsi sebagai
-     * fallback agar ikon tetap sesuai.
-     */
-
-
-    if (
-        text.includes("badai") ||
-        text.includes("petir")
-    ) {
-
-        return "fa-cloud-bolt";
-
-    }
-
-
-    if (
-        text.includes("hujan lebat")
-    ) {
-
-        return "fa-cloud-showers-heavy";
-
-    }
-
-
-    if (
-        text.includes("hujan sedang")
-    ) {
-
-        return "fa-cloud-rain";
-
-    }
-
-
-    if (
-        text.includes("hujan ringan") ||
-        text.includes("hujan lokal")
-    ) {
-
-        return "fa-cloud-rain";
-
-    }
-
-
-    if (
-        text.includes("berawan tebal")
-    ) {
-
-        return "fa-cloud";
-
-    }
-
-
-    if (
-        text.includes("berawan")
-    ) {
-
-        return "fa-cloud";
-
-    }
-
-
-    if (
-        text.includes("cerah berawan")
-    ) {
-
-        return "fa-cloud-sun";
-
-    }
-
-
-    if (
-        text.includes("cerah")
-    ) {
-
-        return "fa-sun";
-
-    }
-
-
-    if (
-        text.includes("kabut")
-    ) {
-
-        return "fa-smog";
-
-    }
-
-
-    if (
-        text.includes("asap")
-    ) {
-
-        return "fa-smog";
-
-    }
-
-
-    /*
-     * Fallback berdasarkan kode BMKG.
-     */
-
-    if (
-        code === 95 ||
-        code === 96 ||
-        code === 99
-    ) {
-
-        return "fa-cloud-bolt";
-
-    }
-
-
-    if (
-        code >= 60 &&
-        code < 100
-    ) {
-
-        return "fa-cloud-rain";
-
-    }
-
-
-    if (code === 3) {
-
-        return "fa-cloud";
-
-    }
-
-
-    if (code === 2) {
-
-        return "fa-cloud-sun";
-
-    }
-
-
-    return "fa-sun";
-
-}
-
-
-/* =========================================================
-   CURRENT WEATHER
-========================================================= */
-
-function getCurrentForecast(
-    forecast
-) {
-
-    if (!forecast.length) {
-        return null;
-    }
-
-
-    const now =
-        Date.now();
-
-
-    let nearest =
-        forecast[0];
-
-
-    let smallestDifference =
-        Infinity;
-
-
-    forecast.forEach(
-        item => {
-
-            const value =
-                item.local_datetime ||
-                item.datetime;
-
-            const time =
-                new Date(value)
-                    .getTime();
-
-
-            if (!Number.isFinite(time)) {
-                return;
-            }
-
-
-            const difference =
-                Math.abs(
-                    time - now
-                );
-
-
-            if (
-                difference <
-                smallestDifference
-            ) {
-
-                smallestDifference =
-                    difference;
-
-                nearest =
-                    item;
-
-            }
-
-        }
-    );
-
-
-    return nearest;
-
-}
-
-
-/* =========================================================
-   RENDER CURRENT WEATHER
-========================================================= */
-
-function renderCurrentWeather(
-    item
-) {
-
-    if (!item) {
-        return;
-    }
-
-
-    const description =
-        item.weather_desc ||
-        "Informasi cuaca";
-
-
-    const temperature =
-        Number(item.t);
-
-
-    const humidity =
-        Number(item.hu);
-
-
-    const windSpeed =
-        Number(item.ws);
-
-
-    const windDirection =
-        item.wd ||
-        "-";
-
-
-    const icon =
-        getWeatherIcon(
-            item.weather,
-            description
-        );
-
-
-    const descriptionElement =
-        weatherElement(
-            "currentWeatherDescription"
-        );
-
-
-    const timeElement =
-        weatherElement(
-            "currentWeatherTime"
-        );
-
-
-    const temperatureElement =
-        weatherElement(
-            "currentTemperature"
-        );
-
-
-    const iconElement =
-        weatherElement(
-            "currentWeatherIcon"
-        );
-
-
-    if (descriptionElement) {
-
-        descriptionElement.textContent =
-            description;
-
-    }
-
-
-    if (timeElement) {
-
-        timeElement.textContent =
-            formatBMKGDateTime(
-                item.local_datetime
-            );
-
-    }
-
-
-    if (temperatureElement) {
-
-        temperatureElement.textContent =
-            Number.isFinite(temperature)
-                ? `${formatWeatherNumber(
-                    temperature
-                )}°`
-                : "--°";
-
-    }
-
-
-    if (iconElement) {
-
-        iconElement.innerHTML = `
-            <i class="fa-solid ${icon}"></i>
-        `;
-
-    }
-
-
-    const metricTemperature =
-        weatherElement(
-            "metricTemperature"
-        );
-
-
-    const metricHumidity =
-        weatherElement(
-            "metricHumidity"
-        );
-
-
-    const metricWind =
-        weatherElement(
-            "metricWind"
-        );
-
-
-    const metricWindDirection =
-        weatherElement(
-            "metricWindDirection"
-        );
-
-
-    const metricCondition =
-        weatherElement(
-            "metricCondition"
-        );
-
-
-    if (metricTemperature) {
-
-        metricTemperature.textContent =
-            Number.isFinite(temperature)
-                ? `${formatWeatherNumber(
-                    temperature,
-                    1
-                )} °C`
-                : "-- °C";
-
-    }
-
-
-    if (metricHumidity) {
-
-        metricHumidity.textContent =
-            Number.isFinite(humidity)
-                ? `${formatWeatherNumber(
-                    humidity
-                )} %`
-                : "-- %";
-
-    }
-
-
-    if (metricWind) {
-
-        metricWind.textContent =
-            Number.isFinite(windSpeed)
-                ? `${formatWeatherNumber(
-                    windSpeed,
-                    1
-                )} km/j`
-                : "-- km/j";
-
-    }
-
-
-    if (metricWindDirection) {
-
-        metricWindDirection.textContent =
-            `Arah angin: ${windDirection}`;
-
-    }
-
-
-    if (metricCondition) {
-
-        metricCondition.textContent =
-            description;
-
-    }
-
-
-    renderWeatherAlert(
-        item
-    );
-
-}
-
-
-/* =========================================================
-   WEATHER ALERT / HUJAN
-========================================================= */
-
-function renderWeatherAlert(
-    item
-) {
-
-    const description =
-        String(
-            item?.weather_desc || ""
-        ).toLowerCase();
-
-
-    const alertTitle =
-        weatherElement(
-            "weatherAlertTitle"
-        );
-
-
-    const alertDescription =
-        weatherElement(
-            "weatherAlertDescription"
-        );
-
-
-    const badge =
-        weatherElement(
-            "weatherAlertBadge"
-        );
-
-
-    const card =
-        weatherElement(
-            "weatherAlertCard"
-        );
-
-
-    if (
-        !alertTitle ||
-        !alertDescription ||
-        !badge
-    ) {
-        return;
-    }
-
-
-    badge.className =
-        "weather-alert-badge";
-
-
-    if (
-        description.includes("badai") ||
-        description.includes("petir") ||
-        description.includes("hujan lebat")
-    ) {
-
-        alertTitle.textContent =
-            "Potensi cuaca signifikan";
-
-        alertDescription.textContent =
-            "Prakiraan BMKG menunjukkan kondisi cuaca yang perlu diperhatikan.";
-
-        badge.textContent =
-            "PERHATIAN";
-
-        badge.classList.add(
-            "storm"
-        );
-
-    } else if (
-        description.includes("hujan")
-    ) {
-
-        alertTitle.textContent =
-            "Potensi hujan";
-
-        alertDescription.textContent =
-            `Prakiraan BMKG menunjukkan ${item.weather_desc.toLowerCase()} pada periode ini.`;
-
-        badge.textContent =
-            "HUJAN";
-
-        badge.classList.add(
-            "rain"
-        );
-
-    } else {
-
-        alertTitle.textContent =
-            "Kondisi relatif aman";
-
-        alertDescription.textContent =
-            `Prakiraan BMKG saat ini: ${item.weather_desc}.`;
-
-        badge.textContent =
-            "NORMAL";
-
-        badge.classList.add(
-            "safe"
-        );
-
-    }
-
-
-    if (card) {
-
-        card.dataset.weather =
-            description;
-
-    }
-
-}
-
-
-/* =========================================================
-   RENDER FORECAST
-========================================================= */
-
-function renderForecast(
-    forecast
-) {
-
-    const grid =
-        weatherElement(
-            "forecastGrid"
-        );
-
-
-    if (!grid) {
-        return;
-    }
-
-
-    if (!forecast.length) {
-
-        grid.innerHTML = `
-            <div class="forecast-loading">
-                Tidak ada data prakiraan BMKG.
-            </div>
-        `;
-
-        return;
-    }
-
-
-    /*
-     * Tampilkan maksimal 12 titik prakiraan.
-     * BMKG menyediakan prakiraan per 3 jam.
-     */
-
-    const items =
-        forecast.slice(0, 12);
-
-
-    grid.innerHTML =
-        items.map(
+        result.forEach(
             item => {
 
-                const description =
-                    item.weather_desc ||
-                    "-";
-
-
-                const icon =
-                    getWeatherIcon(
-                        item.weather,
-                        description
+                const key =
+                    item.local_datetime ||
+                    item.datetime ||
+                    item.utc_datetime ||
+                    JSON.stringify(
+                        item
                     );
 
 
-                const temperature =
-                    Number(item.t);
+                if (
+                    !unique.has(key)
+                ) {
 
+                    unique.set(
+                        key,
+                        item
+                    );
 
-                const humidity =
-                    Number(item.hu);
-
-
-                const wind =
-                    Number(item.ws);
-
-
-                return `
-                    <article class="forecast-card">
-
-                        <div class="forecast-day">
-                            ${weatherEscapeHtml(
-                                formatWeatherDay(
-                                    item.local_datetime
-                                )
-                            )}
-                        </div>
-
-                        <div class="forecast-time">
-                            ${weatherEscapeHtml(
-                                formatWeatherTime(
-                                    item.local_datetime
-                                )
-                            )}
-                        </div>
-
-                        <div class="forecast-icon">
-                            <i class="fa-solid ${icon}"></i>
-                        </div>
-
-                        <div class="forecast-description">
-                            ${weatherEscapeHtml(
-                                description
-                            )}
-                        </div>
-
-                        <div class="forecast-temperature">
-                            ${
-                                Number.isFinite(
-                                    temperature
-                                )
-                                    ? `${formatWeatherNumber(
-                                        temperature
-                                    )}°C`
-                                    : "-"
-                            }
-                        </div>
-
-                        <div class="forecast-humidity">
-                            <i class="fa-solid fa-droplet"></i>
-                            ${
-                                Number.isFinite(
-                                    humidity
-                                )
-                                    ? `${formatWeatherNumber(
-                                        humidity
-                                    )}%`
-                                    : "-"
-                            }
-                        </div>
-
-                        <div class="forecast-wind">
-                            <i class="fa-solid fa-wind"></i>
-                            ${
-                                Number.isFinite(
-                                    wind
-                                )
-                                    ? `${formatWeatherNumber(
-                                        wind,
-                                        1
-                                    )} km/j`
-                                    : "-"
-                            }
-                        </div>
-
-                    </article>
-                `;
+                }
 
             }
-        )
-        .join("");
-
-
-    const first =
-        items[0];
-
-    const last =
-        items[items.length - 1];
-
-
-    const period =
-        weatherElement(
-            "forecastPeriod"
         );
 
 
-    if (
-        period &&
-        first &&
-        last
+        return Array.from(
+            unique.values()
+        )
+        .sort(
+            (a, b) => {
+
+                const dateA =
+                    parseWeatherDate(
+                        a.local_datetime ||
+                        a.datetime ||
+                        a.utc_datetime
+                    );
+
+
+                const dateB =
+                    parseWeatherDate(
+                        b.local_datetime ||
+                        b.datetime ||
+                        b.utc_datetime
+                    );
+
+
+                if (
+                    !dateA &&
+                    !dateB
+                ) {
+
+                    return 0;
+
+                }
+
+
+                if (!dateA) {
+                    return 1;
+                }
+
+
+                if (!dateB) {
+                    return -1;
+                }
+
+
+                return (
+                    dateA.getTime() -
+                    dateB.getTime()
+                );
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       FETCH BMKG
+    ====================================================== */
+
+    async function fetchBMKGForecast(
+        location
     ) {
 
-        period.textContent =
-            `${formatWeatherDay(
-                first.local_datetime
-            )} – ${formatWeatherDay(
-                last.local_datetime
-            )}`;
-
-    }
-
-}
-
-
-/* =========================================================
-   RENDER BMKG LOCATION
-========================================================= */
-
-function renderBMKGLocation(
-    data
-) {
-
-    const location =
-        data?.lokasi;
-
-
-    if (!location) {
-        return;
-    }
-
-
-    const name =
-        weatherElement(
-            "weatherLocationName"
-        );
-
-
-    const detail =
-        weatherElement(
-            "weatherLocationDetail"
-        );
-
-
-    if (name) {
-
-        name.textContent =
-            location.desa ||
-            location.kecamatan ||
-            location.kotkab ||
-            currentBMKGLocation.name;
-
-    }
-
-
-    if (detail) {
-
-        const parts = [
-            location.kecamatan,
-            location.kotkab,
-            location.provinsi
-        ].filter(Boolean);
-
-
-        detail.textContent =
-            parts.join(", ");
-
-    }
-
-}
-
-
-/* =========================================================
-   ANALYSIS / TIMESTAMP BMKG
-========================================================= */
-
-function renderBMKGUpdateTime(
-    forecast
-) {
-
-    if (!forecast.length) {
-        return;
-    }
-
-
-    const analysisDates =
-        forecast
-            .map(
-                item =>
-                    item.analysis_date
-            )
-            .filter(Boolean);
-
-
-    if (!analysisDates.length) {
-        return;
-    }
-
-
-    const latest =
-        analysisDates
-            .sort()
-            .at(-1);
-
-
-    bmkgLastUpdated =
-        latest;
-
-
-    const element =
-        weatherElement(
-            "bmkgUpdateTime"
-        );
-
-
-    if (element) {
-
-        element.textContent =
-            formatBMKGDateTime(
-                latest
-            );
-
-    }
-
-}
-
-
-/* =========================================================
-   LOAD BMKG DATA
-========================================================= */
-
-async function loadBMKGWeather(
-    showLoading = true
-) {
-
-    if (showLoading) {
-
-        setWeatherLoading(
-            true
-        );
-
-    }
-
-
-    hideWeatherError();
-
-
-    setBMKGStatus(
-        "loading",
-        "Mengambil data prakiraan BMKG..."
-    );
-
-
-    try {
-
-        const data =
-            await fetchBMKGForecast(
-                currentBMKGLocation
-            );
-
-
-        const forecast =
-            sortForecastData(
-                flattenBMKGForecast(
-                    data
-                )
-            );
-
-
-        if (!forecast.length) {
+        if (
+            !location ||
+            !location.adm4
+        ) {
 
             throw new Error(
-                "BMKG tidak mengembalikan data prakiraan."
+                "Kode wilayah BMKG tidak tersedia."
             );
 
         }
 
 
-        bmkgForecastData =
-            forecast;
+        const endpoint =
+            `${BMKG_API_BASE}?adm4=${encodeURIComponent(
+                location.adm4
+            )}`;
 
 
-        renderBMKGLocation(
-            data
-        );
+        const response =
+            await fetch(
+                endpoint,
+                {
+                    method: "GET",
 
+                    headers: {
+                        "Accept":
+                            "application/json"
+                    },
 
-        renderBMKGUpdateTime(
-            forecast
-        );
-
-
-        const current =
-            getCurrentForecast(
-                forecast
+                    cache: "no-store"
+                }
             );
 
 
-        renderCurrentWeather(
-            current
+        if (
+            !response.ok
+        ) {
+
+            throw new Error(
+                `BMKG mengembalikan HTTP ${response.status}.`
+            );
+
+        }
+
+
+        const data =
+            await response.json();
+
+
+        if (
+            !data
+        ) {
+
+            throw new Error(
+                "Respons BMKG kosong."
+            );
+
+        }
+
+
+        /*
+         * Simpan informasi lokasi BMKG.
+         */
+
+        if (
+            data.lokasi
+        ) {
+
+            bmkgLocationData =
+                data.lokasi;
+
+        }
+
+
+        const forecasts =
+            flattenBMKGForecast(
+                data
+            );
+
+
+        if (
+            forecasts.length === 0
+        ) {
+
+            throw new Error(
+                "Data prakiraan BMKG tidak ditemukan untuk lokasi ini."
+            );
+
+        }
+
+
+        return {
+
+            raw: data,
+
+            location:
+                data.lokasi || null,
+
+            forecasts
+
+        };
+
+    }
+
+
+    /* =====================================================
+       GET NEAREST FORECAST
+    ====================================================== */
+
+    function getCurrentForecast(
+        forecasts
+    ) {
+
+        if (
+            !Array.isArray(
+                forecasts
+            ) ||
+            forecasts.length === 0
+        ) {
+
+            return null;
+
+        }
+
+
+        const now =
+            Date.now();
+
+
+        let nearest =
+            forecasts[0];
+
+
+        let nearestDifference =
+            Infinity;
+
+
+        forecasts.forEach(
+            item => {
+
+                const date =
+                    parseWeatherDate(
+                        item.local_datetime ||
+                        item.datetime ||
+                        item.utc_datetime
+                    );
+
+
+                if (!date) {
+                    return;
+                }
+
+
+                const difference =
+                    Math.abs(
+                        date.getTime() -
+                        now
+                    );
+
+
+                if (
+                    difference <
+                    nearestDifference
+                ) {
+
+                    nearest =
+                        item;
+
+                    nearestDifference =
+                        difference;
+
+                }
+
+            }
         );
 
 
-        renderForecast(
-            forecast
-        );
+        return nearest;
+
+    }
 
 
-        setBMKGStatus(
-            "online",
-            "Data BMKG berhasil diperbarui"
-        );
+    /* =====================================================
+       UPDATE LOCATION HEADER
+    ====================================================== */
+
+    function renderWeatherLocation(
+        locationData,
+        selectedLocation
+    ) {
+
+        const name =
+            getElement(
+                "weatherLocationName"
+            );
+
+        const detail =
+            getElement(
+                "weatherLocationDetail"
+            );
 
 
-        showWeatherToast(
-            "Prakiraan BMKG berhasil diperbarui."
-        );
+        let locationName =
+            selectedLocation.name;
 
 
-    } catch (error) {
-
-        console.error(
-            "BMKG forecast error:",
-            error
-        );
+        let locationDetail =
+            selectedLocation.detail;
 
 
-        setBMKGStatus(
-            "offline",
-            "Data BMKG tidak dapat diakses"
-        );
+        if (
+            locationData
+        ) {
+
+            const village =
+                locationData.desa ||
+                locationData.kelurahan ||
+                locationData.desa_kelurahan;
 
 
-        showWeatherError(
-            "Prakiraan BMKG belum dapat dimuat. Periksa koneksi internet atau coba beberapa saat lagi."
-        );
+            const district =
+                locationData.kecamatan;
 
 
-        showWeatherToast(
-            "Gagal mengambil data dari BMKG."
-        );
+            const city =
+                locationData.kotkab ||
+                locationData.kota ||
+                locationData.kab_kota;
 
 
-    } finally {
+            const province =
+                locationData.provinsi;
 
-        setWeatherLoading(
-            false
+
+            if (
+                village
+            ) {
+
+                locationName =
+                    village;
+
+            }
+
+
+            const parts = [];
+
+
+            if (
+                district
+            ) {
+
+                parts.push(
+                    `Kecamatan ${district}`
+                );
+
+            }
+
+
+            if (
+                city
+            ) {
+
+                parts.push(
+                    city
+                );
+
+            }
+
+
+            if (
+                province
+            ) {
+
+                parts.push(
+                    province
+                );
+
+            }
+
+
+            if (
+                parts.length
+            ) {
+
+                locationDetail =
+                    parts.join(
+                        ", "
+                    );
+
+            }
+
+        }
+
+
+        if (name) {
+
+            name.textContent =
+                safeText(
+                    locationName,
+                    selectedLocation.name
+                );
+
+        }
+
+
+        if (detail) {
+
+            detail.textContent =
+                safeText(
+                    locationDetail,
+                    selectedLocation.detail
+                );
+
+        }
+
+    }
+
+
+    /* =====================================================
+       RENDER CURRENT WEATHER
+    ====================================================== */
+
+    function renderCurrentWeather(
+        current
+    ) {
+
+        if (!current) {
+            return;
+        }
+
+
+        const description =
+            normalizeWeatherDescription(
+                current.weather_desc ||
+                current.weather ||
+                current.condition
+            );
+
+
+        const temperature =
+            current.t !== undefined
+                ? current.t
+                : current.temperature;
+
+
+        const humidity =
+            current.hu !== undefined
+                ? current.hu
+                : current.humidity;
+
+
+        const windSpeed =
+            current.ws !== undefined
+                ? current.ws
+                : current.wind_speed;
+
+
+        const windDirection =
+            current.wd !== undefined
+                ? current.wd
+                : current.wind_direction;
+
+
+        const weatherCode =
+            current.weather;
+
+
+        const forecastTime =
+            current.local_datetime ||
+            current.datetime ||
+            current.utc_datetime;
+
+
+        const descriptionElement =
+            getElement(
+                "currentWeatherDescription"
+            );
+
+
+        const timeElement =
+            getElement(
+                "currentWeatherTime"
+            );
+
+
+        const temperatureElement =
+            getElement(
+                "currentTemperature"
+            );
+
+
+        const iconElement =
+            getElement(
+                "currentWeatherIcon"
+            );
+
+
+        if (
+            descriptionElement
+        ) {
+
+            descriptionElement.textContent =
+                description;
+
+        }
+
+
+        if (timeElement) {
+
+            timeElement.textContent =
+                forecastTime
+                    ? `Prakiraan ${formatDateTime(forecastTime)}`
+                    : "Waktu prakiraan tidak tersedia";
+
+        }
+
+
+        if (
+            temperatureElement
+        ) {
+
+            temperatureElement.textContent =
+                temperature !== undefined
+                    ? `${temperature}°`
+                    : "--°";
+
+        }
+
+
+        if (iconElement) {
+
+            iconElement.innerHTML =
+                `<i class="fa-solid ${getWeatherIcon(
+                    weatherCode,
+                    description
+                )}"></i>`;
+
+        }
+
+
+        const metricTemperature =
+            getElement(
+                "metricTemperature"
+            );
+
+
+        const metricHumidity =
+            getElement(
+                "metricHumidity"
+            );
+
+
+        const metricWind =
+            getElement(
+                "metricWind"
+            );
+
+
+        const metricWindDirection =
+            getElement(
+                "metricWindDirection"
+            );
+
+
+        const metricCondition =
+            getElement(
+                "metricCondition"
+            );
+
+
+        if (
+            metricTemperature
+        ) {
+
+            metricTemperature.textContent =
+                temperature !== undefined
+                    ? `${temperature} °C`
+                    : "-- °C";
+
+        }
+
+
+        if (
+            metricHumidity
+        ) {
+
+            metricHumidity.textContent =
+                humidity !== undefined
+                    ? `${humidity} %`
+                    : "-- %";
+
+        }
+
+
+        if (
+            metricWind
+        ) {
+
+            metricWind.textContent =
+                windSpeed !== undefined
+                    ? `${windSpeed} km/j`
+                    : "-- km/j";
+
+        }
+
+
+        if (
+            metricWindDirection
+        ) {
+
+            metricWindDirection.textContent =
+                windDirection
+                    ? `Arah angin: ${windDirection}`
+                    : "Arah angin: --";
+
+        }
+
+
+        if (
+            metricCondition
+        ) {
+
+            metricCondition.textContent =
+                description;
+
+        }
+
+
+        renderWeatherAlert(
+            description
         );
 
     }
 
-}
+
+    /* =====================================================
+       WEATHER ALERT
+    ====================================================== */
+
+    function renderWeatherAlert(
+        description
+    ) {
+
+        const text =
+            String(
+                description || ""
+            ).toLowerCase();
 
 
-/* =========================================================
-   LOCATION SELECTOR
-========================================================= */
-
-function setupBMKGLocationSelector() {
-
-    const select =
-        weatherElement(
-            "weatherLocationSelect"
-        );
+        const title =
+            getElement(
+                "weatherAlertTitle"
+            );
 
 
-    if (!select) {
-        return;
+        const message =
+            getElement(
+                "weatherAlertDescription"
+            );
+
+
+        const badge =
+            getElement(
+                "weatherAlertBadge"
+            );
+
+
+        let level =
+            "NORMAL";
+
+
+        let alertTitle =
+            "Kondisi cuaca normal";
+
+
+        let alertMessage =
+            "Belum terdapat indikasi cuaca signifikan dari prakiraan BMKG.";
+
+
+        if (
+            text.includes("hujan lebat") ||
+            text.includes("hujan badai") ||
+            text.includes("petir") ||
+            text.includes("badai")
+        ) {
+
+            level =
+                "WASPADA";
+
+            alertTitle =
+                "Perhatikan kondisi cuaca";
+
+
+            alertMessage =
+                "Prakiraan BMKG menunjukkan kondisi cuaca yang perlu diperhatikan.";
+
+        }
+        else if (
+            text.includes("hujan sedang") ||
+            text.includes("hujan lokal")
+        ) {
+
+            level =
+                "PERHATIAN";
+
+            alertTitle =
+                "Potensi hujan";
+
+
+            alertMessage =
+                "Terdapat potensi hujan berdasarkan prakiraan BMKG.";
+
+        }
+
+
+        if (title) {
+
+            title.textContent =
+                alertTitle;
+
+        }
+
+
+        if (message) {
+
+            message.textContent =
+                alertMessage;
+
+        }
+
+
+        if (badge) {
+
+            badge.textContent =
+                level;
+
+
+            if (
+                level === "NORMAL"
+            ) {
+
+                badge.style.background =
+                    "#dcfce7";
+
+                badge.style.color =
+                    "#15803d";
+
+            }
+            else if (
+                level === "PERHATIAN"
+            ) {
+
+                badge.style.background =
+                    "#fef3c7";
+
+                badge.style.color =
+                    "#b45309";
+
+            }
+            else {
+
+                badge.style.background =
+                    "#fee2e2";
+
+                badge.style.color =
+                    "#b91c1c";
+
+            }
+
+        }
+
     }
 
 
-    select.addEventListener(
-        "change",
-        async event => {
+    /* =====================================================
+       RENDER FORECAST
+    ====================================================== */
 
-            const adm4 =
-                event.target.value;
+    function renderForecast(
+        forecasts
+    ) {
+
+        const container =
+            getElement(
+                "forecastGrid"
+            );
 
 
-            const location =
-                BMKG_LOCATIONS.find(
-                    item =>
-                        item.adm4 === adm4
+        const period =
+            getElement(
+                "forecastPeriod"
+            );
+
+
+        if (!container) {
+            return;
+        }
+
+
+        if (
+            !Array.isArray(
+                forecasts
+            ) ||
+            forecasts.length === 0
+        ) {
+
+            container.innerHTML = `
+
+                <div class="forecast-loading">
+
+                    <i class="fa-solid fa-cloud"></i>
+
+                    <span>
+                        Prakiraan belum tersedia.
+                    </span>
+
+                </div>
+
+            `;
+
+            return;
+
+        }
+
+
+        /*
+         * Tampilkan beberapa periode terdekat.
+         */
+
+        const items =
+            forecasts
+                .filter(
+                    item => {
+
+                        const date =
+                            parseWeatherDate(
+                                item.local_datetime ||
+                                item.datetime ||
+                                item.utc_datetime
+                            );
+
+
+                        return (
+                            !date ||
+                            date.getTime() >=
+                            Date.now() - 60 * 60 * 1000
+                        );
+
+                    }
+                )
+                .slice(
+                    0,
+                    6
                 );
 
 
-            if (!location) {
-                return;
+        container.innerHTML =
+            items.map(
+                item => {
+
+                    const dateValue =
+                        item.local_datetime ||
+                        item.datetime ||
+                        item.utc_datetime;
+
+
+                    const description =
+                        normalizeWeatherDescription(
+                            item.weather_desc ||
+                            item.weather ||
+                            item.condition
+                        );
+
+
+                    const temperature =
+                        item.t !== undefined
+                            ? item.t
+                            : item.temperature;
+
+
+                    const humidity =
+                        item.hu !== undefined
+                            ? item.hu
+                            : item.humidity;
+
+
+                    const icon =
+                        getWeatherIcon(
+                            item.weather,
+                            description
+                        );
+
+
+                    return `
+
+                        <article
+                            class="forecast-card"
+                        >
+
+                            <div class="forecast-date">
+
+                                ${formatDateOnly(
+                                    dateValue
+                                )}
+
+                            </div>
+
+
+                            <div class="forecast-time">
+
+                                ${formatTimeOnly(
+                                    dateValue
+                                )}
+
+                            </div>
+
+
+                            <div
+                                class="forecast-icon"
+                            >
+
+                                <i
+                                    class="fa-solid ${icon}"
+                                ></i>
+
+                            </div>
+
+
+                            <div
+                                class="forecast-temperature"
+                            >
+
+                                ${
+                                    temperature !== undefined
+                                        ? `${temperature}°C`
+                                        : "--°C"
+                                }
+
+                            </div>
+
+
+                            <div
+                                class="forecast-description"
+                                title="${description}"
+                            >
+
+                                ${description}
+
+                            </div>
+
+
+                            <div
+                                class="forecast-extra"
+                            >
+
+                                Kelembapan
+                                ${
+                                    humidity !== undefined
+                                        ? `${humidity}%`
+                                        : "--"
+                                }
+
+                            </div>
+
+                        </article>
+
+                    `;
+
+                }
+            )
+            .join("");
+
+
+        if (
+            period
+        ) {
+
+            if (
+                items.length > 0
+            ) {
+
+                const first =
+                    items[0];
+
+                const last =
+                    items[
+                        items.length - 1
+                    ];
+
+
+                const firstDate =
+                    first.local_datetime ||
+                    first.datetime ||
+                    first.utc_datetime;
+
+
+                const lastDate =
+                    last.local_datetime ||
+                    last.datetime ||
+                    last.utc_datetime;
+
+
+                period.textContent =
+                    `${formatDateOnly(
+                        firstDate
+                    )} – ${formatDateOnly(
+                        lastDate
+                    )}`;
+
+            } else {
+
+                period.textContent =
+                    "Data BMKG";
+
             }
+
+        }
+
+    }
+
+
+    /* =====================================================
+       UPDATE FORECAST DATA
+    ====================================================== */
+
+    async function loadBMKGWeather(
+        location = currentBMKGLocation,
+        options = {}
+    ) {
+
+        const showLoading =
+            options.showLoading !== false;
+
+
+        if (
+            showLoading
+        ) {
+
+            setWeatherLoading(
+                true
+            );
+
+        }
+
+
+        hideWeatherError();
+
+
+        try {
+
+            if (
+                !navigator.onLine
+            ) {
+
+                throw new Error(
+                    "Perangkat sedang offline. Periksa koneksi internet."
+                );
+
+            }
+
+
+            setBMKGStatus(
+                "loading",
+                "Menghubungkan ke BMKG..."
+            );
+
+
+            const result =
+                await fetchBMKGForecast(
+                    location
+                );
 
 
             currentBMKGLocation =
                 location;
 
 
-            updateWeatherLocationHeader();
+            bmkgForecastData =
+                result.forecasts;
 
 
-            await loadBMKGWeather(
-                true
+            bmkgLocationData =
+                result.location;
+
+
+            renderWeatherLocation(
+                result.location,
+                location
+            );
+
+
+            const current =
+                getCurrentForecast(
+                    bmkgForecastData
+                );
+
+
+            renderCurrentWeather(
+                current
+            );
+
+
+            renderForecast(
+                bmkgForecastData
+            );
+
+
+            const analysisDate =
+                result.raw?.data?.[0]?.analysis_date ||
+                result.raw?.analysis_date ||
+                null;
+
+
+            setBMKGStatus(
+                "online",
+                "Terhubung ke BMKG",
+                analysisDate
+            );
+
+
+            showWeatherToast(
+                "Data cuaca BMKG berhasil diperbarui."
+            );
+
+
+        }
+        catch (error) {
+
+            console.error(
+                "FLOWS-PRO BMKG:",
+                error
+            );
+
+
+            setBMKGStatus(
+                "offline",
+                "Data BMKG tidak tersedia"
+            );
+
+
+            showWeatherError(
+                error?.message ||
+                "Gagal mengambil data prakiraan BMKG."
+            );
+
+
+            showWeatherToast(
+                "Data cuaca belum dapat diperbarui."
             );
 
         }
-    );
+        finally {
 
-}
+            setWeatherLoading(
+                false
+            );
 
+        }
 
-/* =========================================================
-   REFRESH BUTTON
-========================================================= */
-
-function setupBMKGRefreshButton() {
-
-    const button =
-        weatherElement(
-            "weatherRefreshButton"
-        );
-
-
-    if (!button) {
-        return;
     }
 
 
-    button.addEventListener(
-        "click",
-        async () => {
+    /* =====================================================
+       LOCATION SELECT
+    ====================================================== */
 
-            await loadBMKGWeather(
-                true
+    function initializeLocationSelect() {
+
+        const select =
+            getElement(
+                "weatherLocationSelect"
             );
 
+
+        if (!select) {
+            return;
         }
-    );
-
-}
 
 
-/* =========================================================
-   RETRY BUTTON
-========================================================= */
+        select.innerHTML =
+            BMKG_LOCATIONS.map(
+                location => `
 
-function setupBMKGRetryButton() {
+                    <option
+                        value="${location.adm4}"
+                    >
+                        ${location.name}
+                    </option>
 
-    const button =
-        weatherElement(
-            "weatherRetryButton"
+                `
+            )
+            .join("");
+
+
+        select.value =
+            currentBMKGLocation.adm4;
+
+
+        select.addEventListener(
+            "change",
+            async event => {
+
+                const location =
+                    BMKG_LOCATIONS.find(
+                        item =>
+                            item.adm4 ===
+                            event.target.value
+                    );
+
+
+                if (!location) {
+                    return;
+                }
+
+
+                currentBMKGLocation =
+                    location;
+
+
+                await loadBMKGWeather(
+                    location
+                );
+
+            }
         );
 
-
-    if (!button) {
-        return;
     }
 
 
-    button.addEventListener(
-        "click",
-        async () => {
+    /* =====================================================
+       REFRESH BUTTON
+    ====================================================== */
 
-            await loadBMKGWeather(
-                true
+    function initializeWeatherControls() {
+
+        const refreshButton =
+            getElement(
+                "weatherRefreshButton"
             );
 
-        }
-    );
 
-}
-
-
-/* =========================================================
-   AUTO REFRESH
-========================================================= */
-
-function startBMKGAutoRefresh() {
-
-    clearInterval(
-        bmkgRefreshTimer
-    );
+        const retryButton =
+            getElement(
+                "weatherRetryButton"
+            );
 
 
-    /*
-     * BMKG memperbarui data prakiraan
-     * dua kali sehari.
-     *
-     * Kita tidak melakukan request setiap
-     * beberapa detik agar tidak membebani
-     * endpoint BMKG.
-     */
+        if (
+            refreshButton
+        ) {
 
-    bmkgRefreshTimer =
-        setInterval(
-            () => {
-
-                if (
-                    document.visibilityState ===
-                    "visible"
-                ) {
+            refreshButton.addEventListener(
+                "click",
+                () => {
 
                     loadBMKGWeather(
-                        false
+                        currentBMKGLocation
                     );
 
                 }
+            );
 
-            },
-            30 * 60 * 1000
-        );
+        }
 
-}
-
-
-/* =========================================================
-   VISIBILITY CHANGE
-========================================================= */
-
-document.addEventListener(
-    "visibilitychange",
-    () => {
 
         if (
-            document.visibilityState ===
-            "visible"
+            retryButton
         ) {
 
-            /*
-             * Tidak langsung request setiap kali
-             * tab kembali aktif jika data masih
-             * relatif baru.
-             */
+            retryButton.addEventListener(
+                "click",
+                () => {
+
+                    loadBMKGWeather(
+                        currentBMKGLocation
+                    );
+
+                }
+            );
+
+        }
+
+    }
+
+
+    /* =====================================================
+       AUTO REFRESH BMKG
+       30 MENIT
+    ====================================================== */
+
+    function startBMKGAutoRefresh() {
+
+        clearInterval(
+            bmkgRefreshTimer
+        );
+
+
+        bmkgRefreshTimer =
+            setInterval(
+                () => {
+
+                    if (
+                        document.visibilityState ===
+                        "visible" &&
+                        navigator.onLine
+                    ) {
+
+                        loadBMKGWeather(
+                            currentBMKGLocation,
+                            {
+                                showLoading: false
+                            }
+                        );
+
+                    }
+
+                },
+                30 * 60 * 1000
+            );
+
+    }
+
+
+    /* =====================================================
+       VISIBILITY CHANGE
+    ====================================================== */
+
+    document.addEventListener(
+        "visibilitychange",
+        () => {
 
             if (
-                !bmkgLastUpdated
+                document.visibilityState ===
+                "visible"
             ) {
 
                 loadBMKGWeather(
-                    false
+                    currentBMKGLocation,
+                    {
+                        showLoading: false
+                    }
                 );
 
             }
 
         }
-
-    }
-);
+    );
 
 
-/* =========================================================
-   INIT BMKG
-========================================================= */
+    /* =====================================================
+       INITIALIZE WEATHER
+    ====================================================== */
 
-document.addEventListener(
-    "DOMContentLoaded",
-    async () => {
+    document.addEventListener(
+        "DOMContentLoaded",
+        async () => {
 
-        initializeBMKGLocations();
+            initializeLocationSelect();
 
-        setupBMKGLocationSelector();
+            initializeWeatherControls();
 
-        setupBMKGRefreshButton();
+            /*
+             * Set lokasi awal.
+             */
 
-        setupBMKGRetryButton();
+            renderWeatherLocation(
+                null,
+                DEFAULT_BMKG_LOCATION
+            );
 
-        await loadBMKGWeather(
-            true
-        );
 
-        startBMKGAutoRefresh();
+            /*
+             * Ambil data BMKG asli.
+             */
 
-    }
-);
+            await loadBMKGWeather(
+                DEFAULT_BMKG_LOCATION
+            );
+
+
+            /*
+             * Aktifkan refresh otomatis.
+             */
+
+            startBMKGAutoRefresh();
+
+        }
+    );
 
 </script>
+
+
 <!-- =========================================================
-     PART 4 — THEME, PROFILE, AUTH & PENYEMPURNAAN UI
+     END PART 3
+     PART 4 DITEMPEL DI BAWAH INI
+========================================================= -->
+<!-- =========================================================
+     PART 4 — DASHBOARD UI + AUTH + THEME
      Paste langsung di bawah PART 3
 ========================================================= -->
 
@@ -5491,17 +5805,8 @@ function applyWeatherTheme(theme) {
             ? "dark"
             : "light";
 
-
-    document.documentElement.setAttribute(
-        "data-theme",
-        validTheme
-    );
-
-
-    localStorage.setItem(
-        "flowsTheme",
-        validTheme
-    );
+    document.body.dataset.theme =
+        validTheme;
 
 }
 
@@ -5511,21 +5816,23 @@ function loadWeatherTheme() {
     const savedTheme =
         localStorage.getItem(
             "flowsTheme"
-        ) || "light";
-
+        );
 
     applyWeatherTheme(
-        savedTheme
+        savedTheme === "dark"
+            ? "dark"
+            : "light"
     );
 
 }
 
 
 /* =========================================================
-   PROFILE USER
+   PROFILE NAME
+   SAMA DENGAN DASHBOARD
 ========================================================= */
 
-function getWeatherUserName(user) {
+function getDisplayName(user) {
 
     if (!user) {
         return "Pengguna";
@@ -5547,74 +5854,88 @@ function getWeatherUserName(user) {
 }
 
 
-function getWeatherUserInitial(
-    name
-) {
-
-    const cleanName =
-        String(
-            name || "U"
-        ).trim();
-
-
-    if (!cleanName) {
-        return "U";
-    }
-
-
-    return cleanName
-        .charAt(0)
-        .toUpperCase();
-
-}
-
-
 /* =========================================================
-   RENDER PROFILE
+   PROFILE UI
 ========================================================= */
 
-function renderWeatherProfile(
-    user
-) {
-
-    const name =
-        getWeatherUserName(
-            user
-        );
-
-
-    const avatar =
-        document.getElementById(
-            "profileAvatar"
-        );
-
+function renderProfile(user) {
 
     const profileName =
-        document.getElementById(
+        getElement(
             "profileName"
         );
 
 
+    const profileAvatar =
+        getElement(
+            "profileAvatar"
+        );
+
+
     const profileRole =
-        document.getElementById(
+        getElement(
             "profileRole"
         );
 
 
-    if (avatar) {
+    if (!user) {
 
-        avatar.textContent =
-            getWeatherUserInitial(
-                name
-            );
+        if (profileName) {
+
+            profileName.textContent =
+                "Pengguna";
+
+        }
+
+
+        if (profileAvatar) {
+
+            profileAvatar.textContent =
+                "U";
+
+        }
+
+
+        return;
 
     }
+
+
+    const displayName =
+        getDisplayName(
+            user
+        );
 
 
     if (profileName) {
 
         profileName.textContent =
-            name;
+            displayName;
+
+        profileName.title =
+            displayName;
+
+    }
+
+
+    if (profileAvatar) {
+
+        const initials =
+            displayName
+                .trim()
+                .split(/\s+/)
+                .slice(0, 2)
+                .map(
+                    word =>
+                        word
+                            .charAt(0)
+                            .toUpperCase()
+                )
+                .join("");
+
+
+        profileAvatar.textContent =
+            initials || "U";
 
     }
 
@@ -5633,22 +5954,27 @@ function renderWeatherProfile(
    PROFILE DROPDOWN
 ========================================================= */
 
-function setupWeatherProfileDropdown() {
+function initializeProfileDropdown() {
 
     const trigger =
-        document.getElementById(
+        getElement(
             "profileTrigger"
         );
 
 
     const dropdown =
-        document.getElementById(
+        getElement(
             "profileDropdown"
         );
 
 
-    if (!trigger || !dropdown) {
+    if (
+        !trigger ||
+        !dropdown
+    ) {
+
         return;
+
     }
 
 
@@ -5660,20 +5986,14 @@ function setupWeatherProfileDropdown() {
 
 
             const isOpen =
-                dropdown.classList.contains(
+                dropdown.classList.toggle(
                     "show"
                 );
 
 
-            dropdown.classList.toggle(
-                "show",
-                !isOpen
-            );
-
-
             trigger.setAttribute(
                 "aria-expanded",
-                String(!isOpen)
+                String(isOpen)
             );
 
         }
@@ -5708,30 +6028,6 @@ function setupWeatherProfileDropdown() {
         }
     );
 
-
-    document.addEventListener(
-        "keydown",
-        event => {
-
-            if (
-                event.key === "Escape"
-            ) {
-
-                dropdown.classList.remove(
-                    "show"
-                );
-
-
-                trigger.setAttribute(
-                    "aria-expanded",
-                    "false"
-                );
-
-            }
-
-        }
-    );
-
 }
 
 
@@ -5739,17 +6035,21 @@ function setupWeatherProfileDropdown() {
    LOGOUT
 ========================================================= */
 
-async function logoutWeatherUser() {
+async function logoutUser() {
 
-    const button =
-        document.getElementById(
+    const logoutButton =
+        getElement(
             "logoutButton"
         );
 
 
-    if (button) {
+    if (logoutButton) {
 
-        button.disabled = true;
+        logoutButton.disabled =
+            true;
+
+        logoutButton.style.opacity =
+            "0.6";
 
     }
 
@@ -5759,13 +6059,13 @@ async function logoutWeatherUser() {
         const {
             error
         } =
-            await supabaseClient
-                .auth
-                .signOut();
+            await supabaseClient.auth.signOut();
 
 
         if (error) {
+
             throw error;
+
         }
 
 
@@ -5773,8 +6073,8 @@ async function logoutWeatherUser() {
             "login.html"
         );
 
-
-    } catch (error) {
+    }
+    catch (error) {
 
         console.error(
             "Logout error:",
@@ -5782,10 +6082,13 @@ async function logoutWeatherUser() {
         );
 
 
-        if (button) {
+        if (logoutButton) {
 
-            button.disabled =
+            logoutButton.disabled =
                 false;
+
+            logoutButton.style.opacity =
+                "";
 
         }
 
@@ -5800,27 +6103,29 @@ async function logoutWeatherUser() {
 
 
 /* =========================================================
-   LOGOUT BUTTON
+   INITIALIZE LOGOUT
 ========================================================= */
 
-function setupWeatherLogout() {
+function initializeLogout() {
 
-    const button =
-        document.getElementById(
+    const logoutButton =
+        getElement(
             "logoutButton"
         );
 
 
-    if (!button) {
+    if (!logoutButton) {
         return;
     }
 
 
-    button.addEventListener(
+    logoutButton.addEventListener(
         "click",
-        async () => {
+        async event => {
 
-            await logoutWeatherUser();
+            event.preventDefault();
+
+            await logoutUser();
 
         }
     );
@@ -5829,10 +6134,10 @@ function setupWeatherLogout() {
 
 
 /* =========================================================
-   AUTH GUARD
+   AUTH SESSION
 ========================================================= */
 
-async function initializeWeatherAuth() {
+async function initializeAuth() {
 
     try {
 
@@ -5840,13 +6145,13 @@ async function initializeWeatherAuth() {
             data,
             error
         } =
-            await supabaseClient
-                .auth
-                .getSession();
+            await supabaseClient.auth.getSession();
 
 
         if (error) {
+
             throw error;
+
         }
 
 
@@ -5854,30 +6159,30 @@ async function initializeWeatherAuth() {
             data?.session;
 
 
-        if (!session?.user) {
+        if (
+            !session ||
+            !session.user
+        ) {
 
             window.location.replace(
                 "login.html"
             );
 
-
-            return null;
+            return;
 
         }
 
 
-        renderWeatherProfile(
+        renderProfile(
             session.user
         );
 
 
-        return session.user;
-
-
-    } catch (error) {
+    }
+    catch (error) {
 
         console.error(
-            "Weather authentication error:",
+            "Auth error:",
             error
         );
 
@@ -5886,67 +6191,61 @@ async function initializeWeatherAuth() {
             "login.html"
         );
 
-
-        return null;
-
     }
 
 }
 
 
 /* =========================================================
-   AUTH STATE
+   AUTH STATE LISTENER
 ========================================================= */
 
-function setupWeatherAuthListener() {
+function initializeAuthListener() {
 
-    supabaseClient
-        .auth
-        .onAuthStateChange(
-            (
-                event,
-                session
-            ) => {
+    supabaseClient.auth.onAuthStateChange(
+        (
+            event,
+            session
+        ) => {
 
-                if (
-                    event ===
-                    "SIGNED_OUT"
-                ) {
+            if (
+                event ===
+                "SIGNED_OUT"
+            ) {
 
-                    window.location.replace(
-                        "login.html"
-                    );
+                window.location.replace(
+                    "login.html"
+                );
 
-
-                    return;
-
-                }
-
-
-                if (
-                    session?.user
-                ) {
-
-                    renderWeatherProfile(
-                        session.user
-                    );
-
-                }
+                return;
 
             }
-        );
+
+
+            if (
+                session?.user
+            ) {
+
+                renderProfile(
+                    session.user
+                );
+
+            }
+
+        }
+    );
 
 }
 
 
 /* =========================================================
-   NOTIFICATION
+   NOTIFICATION BUTTON
 ========================================================= */
 
-function setupWeatherNotification() {
+function initializeNotification() {
 
     const button =
-        document.getElementById(
+        getElement(
             "notificationButton"
         );
 
@@ -5961,7 +6260,7 @@ function setupWeatherNotification() {
         () => {
 
             showWeatherToast(
-                "Belum ada notifikasi cuaca baru."
+                "Tidak ada notifikasi baru."
             );
 
         }
@@ -5971,274 +6270,139 @@ function setupWeatherNotification() {
 
 
 /* =========================================================
-   BROWSER CONNECTION
+   BROWSER CONNECTION STATUS
 ========================================================= */
 
-function setupWeatherConnection() {
+function updateBrowserConnection() {
 
-    window.addEventListener(
+    if (
+        navigator.onLine
+    ) {
+
+        /*
+         * Jangan langsung menyebut BMKG online.
+         * Ini hanya status koneksi perangkat/browser.
+         */
+
+        return;
+
+    }
+
+
+    setBMKGStatus(
         "offline",
-        () => {
-
-            setBMKGStatus(
-                "offline",
-                "Koneksi internet terputus"
-            );
-
-
-            showWeatherToast(
-                "Koneksi internet perangkat terputus."
-            );
-
-        }
+        "Perangkat offline"
     );
 
 
-    window.addEventListener(
-        "online",
-        async () => {
-
-            showWeatherToast(
-                "Koneksi internet kembali."
-            );
-
-
-            await loadBMKGWeather(
-                true
-            );
-
-        }
+    showWeatherToast(
+        "Koneksi internet terputus."
     );
 
 }
 
 
-/* =========================================================
-   TAMBAHAN STYLE
-========================================================= */
+window.addEventListener(
+    "online",
+    () => {
 
-const weatherExtraStyle =
-    document.createElement(
-        "style"
-    );
-
-
-weatherExtraStyle.textContent = `
-
-/* =====================================================
-   WEATHER DARK MODE
-===================================================== */
-
-[data-theme="dark"] .weather-error-card {
-
-    background:
-        rgba(127,29,29,.18);
-
-    border-color:
-        rgba(248,113,113,.25);
-}
+        showWeatherToast(
+            "Koneksi internet kembali."
+        );
 
 
-[data-theme="dark"]
-.weather-error-card strong {
+        loadBMKGWeather(
+            currentBMKGLocation,
+            {
+                showLoading: false
+            }
+        );
 
-    color:
-        #fca5a5;
-}
-
-
-[data-theme="dark"]
-.weather-error-card p {
-
-    color:
-        #fca5a5;
-}
-
-
-/* =====================================================
-   DISABLED BUTTON
-===================================================== */
-
-.weather-refresh-button:disabled {
-
-    opacity: .65;
-
-    cursor:
-        not-allowed;
-}
-
-
-/* =====================================================
-   CURRENT WEATHER ICON
-===================================================== */
-
-.weather-main-icon i {
-
-    transition:
-        transform .25s ease;
-}
-
-
-.weather-main-icon:hover i {
-
-    transform:
-        scale(1.08);
-}
-
-
-/* =====================================================
-   FORECAST SCROLL
-===================================================== */
-
-@media (max-width: 850px) {
-
-    .forecast-grid {
-
-        overflow-x: auto;
-
-        grid-template-columns:
-            repeat(6, 145px);
-
-        padding-bottom: 5px;
     }
+);
 
 
-    .forecast-grid::-webkit-scrollbar {
+window.addEventListener(
+    "offline",
+    () => {
 
-        height: 5px;
+        updateBrowserConnection();
+
     }
-
-
-    .forecast-grid::-webkit-scrollbar-track {
-
-        background:
-            var(--surface-soft);
-
-        border-radius: 10px;
-    }
-
-
-    .forecast-grid::-webkit-scrollbar-thumb {
-
-        background:
-            var(--border);
-
-        border-radius: 10px;
-    }
-
-}
-
-
-/* =====================================================
-   LOCATION SELECT DARK
-===================================================== */
-
-[data-theme="dark"]
-.weather-location-select {
-
-    color:
-        var(--text-primary);
-
-    background:
-        var(--surface);
-}
-
-
-/* =====================================================
-   BMKG SOURCE
-===================================================== */
-
-.bmkg-source {
-
-    user-select: none;
-}
-
-
-/* =====================================================
-   SMOOTH CARD TRANSITION
-===================================================== */
-
-.weather-control-card,
-.weather-status-bar,
-.current-weather-card,
-.weather-metric-card,
-.weather-alert-card,
-.forecast-section,
-.bmkg-information-card {
-
-    transition:
-        background-color .2s ease,
-        border-color .2s ease,
-        box-shadow .2s ease;
-}
-
-`;
-
-
-document.head.appendChild(
-    weatherExtraStyle
 );
 
 
 /* =========================================================
-   INITIALIZE WEATHER PAGE
+   KEYBOARD — PROFILE DROPDOWN
+========================================================= */
+
+document.addEventListener(
+    "keydown",
+    event => {
+
+        if (
+            event.key !==
+            "Escape"
+        ) {
+
+            return;
+
+        }
+
+
+        const dropdown =
+            getElement(
+                "profileDropdown"
+            );
+
+
+        const trigger =
+            getElement(
+                "profileTrigger"
+            );
+
+
+        if (dropdown) {
+
+            dropdown.classList.remove(
+                "show"
+            );
+
+        }
+
+
+        if (trigger) {
+
+            trigger.setAttribute(
+                "aria-expanded",
+                "false"
+            );
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   INITIALIZE DASHBOARD UI
 ========================================================= */
 
 document.addEventListener(
     "DOMContentLoaded",
-    async () => {
+    () => {
 
         loadWeatherTheme();
 
-        setupWeatherProfileDropdown();
+        initializeProfileDropdown();
 
-        setupWeatherLogout();
+        initializeLogout();
 
-        setupWeatherNotification();
+        initializeNotification();
 
-        setupWeatherConnection();
+        initializeAuthListener();
 
-        setupWeatherAuthListener();
-
-        await initializeWeatherAuth();
-
-    }
-);
-
-
-/* =========================================================
-   PAGE VISIBILITY
-========================================================= */
-
-document.addEventListener(
-    "visibilitychange",
-    () => {
-
-        if (
-            document.visibilityState ===
-            "visible"
-        ) {
-
-            const overlay =
-                document.getElementById(
-                    "weatherLoading"
-                );
-
-
-            /*
-             * Jangan menampilkan overlay lagi
-             * hanya karena tab kembali aktif.
-             */
-
-            if (overlay) {
-
-                overlay.classList.remove(
-                    "show"
-                );
-
-            }
-
-        }
+        updateBrowserConnection();
 
     }
 );
@@ -6252,13 +6416,16 @@ window.addEventListener(
     "pagehide",
     () => {
 
-        if (bmkgRefreshTimer) {
+        if (
+            bmkgRefreshTimer
+        ) {
 
             clearInterval(
                 bmkgRefreshTimer
             );
 
-            bmkgRefreshTimer = null;
+            bmkgRefreshTimer =
+                null;
 
         }
 
@@ -6266,6 +6433,12 @@ window.addEventListener(
 );
 
 </script>
+
+
+<!-- =========================================================
+     END PART 4
+     PART 5 DITEMPEL DI BAWAH INI
+========================================================= -->
 <!-- =========================================================
      PART 5 — FINALIZATION
      Paste langsung di bawah PART 4
@@ -6273,128 +6446,215 @@ window.addEventListener(
 
 <script>
 
-/* =========================================================
-   FINAL WEATHER SAFETY CHECK
-========================================================= */
+    /* =====================================================
+       FINAL INITIAL STATE
+    ====================================================== */
 
-document.addEventListener(
-    "DOMContentLoaded",
-    () => {
+    document.addEventListener(
+        "DOMContentLoaded",
+        () => {
 
-        /*
-         * Pastikan lokasi default selalu tersedia.
-         */
+            /*
+             * Pastikan lokasi default selalu benar.
+             */
+
+            if (
+                !currentBMKGLocation ||
+                !currentBMKGLocation.adm4
+            ) {
+
+                currentBMKGLocation =
+                    DEFAULT_BMKG_LOCATION;
+
+            }
+
+
+            /*
+             * Sinkronkan selector lokasi
+             * dengan lokasi aktif.
+             */
+
+            const locationSelect =
+                document.getElementById(
+                    "weatherLocationSelect"
+                );
+
+
+            if (
+                locationSelect
+            ) {
+
+                locationSelect.value =
+                    currentBMKGLocation.adm4;
+
+            }
+
+
+            /*
+             * Pastikan loading tidak tertinggal
+             * apabila request mengalami masalah.
+             */
+
+            setTimeout(
+                () => {
+
+                    const loading =
+                        document.getElementById(
+                            "weatherLoading"
+                        );
+
+
+                    if (
+                        loading &&
+                        !bmkgForecastData.length
+                    ) {
+
+                        loading.classList.remove(
+                            "show"
+                        );
+
+                    }
+
+                },
+                15000
+            );
+
+        }
+    );
+
+
+    /* =====================================================
+       REDUCED MOTION
+    ====================================================== */
+
+    const reducedMotion =
+        window.matchMedia(
+            "(prefers-reduced-motion: reduce)"
+        );
+
+
+    function applyReducedMotion() {
 
         if (
-            !currentBMKGLocation ||
-            !currentBMKGLocation.adm4
+            !reducedMotion.matches
         ) {
 
-            currentBMKGLocation =
-                DEFAULT_BMKG_LOCATION;
+            return;
 
         }
 
 
-        /*
-         * Pastikan selector lokasi mengikuti
-         * lokasi aktif.
-         */
-
-        const locationSelect =
-            document.getElementById(
-                "weatherLocationSelect"
+        const style =
+            document.createElement(
+                "style"
             );
 
 
-        if (
-            locationSelect &&
-            currentBMKGLocation
-        ) {
+        style.textContent = `
 
-            locationSelect.value =
-                currentBMKGLocation.adm4;
+            *,
+            *::before,
+            *::after {
 
-        }
+                animation-duration:
+                    0.01ms !important;
+
+                animation-iteration-count:
+                    1 !important;
+
+                transition-duration:
+                    0.01ms !important;
+
+                scroll-behavior:
+                    auto !important;
+            }
+
+        `;
 
 
-        /*
-         * Jika API BMKG belum menghasilkan data,
-         * jangan biarkan loading overlay tertinggal.
-         */
+        document.head.appendChild(
+            style
+        );
+
+    }
+
+
+    applyReducedMotion();
+
+
+    /* =====================================================
+       FINAL OFFLINE CHECK
+    ====================================================== */
+
+    if (
+        !navigator.onLine
+    ) {
 
         setTimeout(
             () => {
 
-                const loading =
-                    document.getElementById(
-                        "weatherLoading"
-                    );
-
-
-                if (
-                    loading &&
-                    !bmkgForecastData.length
-                ) {
-
-                    loading.classList.remove(
-                        "show"
-                    );
-
-                }
+                setBMKGStatus(
+                    "offline",
+                    "Perangkat sedang offline"
+                );
 
             },
-            15000
+            300
         );
 
     }
-);
 
 
-/* =========================================================
-   PREVENT STALE LOADING STATE
-========================================================= */
+    /* =====================================================
+       PAGE LOAD SAFETY
+    ====================================================== */
 
-window.addEventListener(
-    "load",
-    () => {
+    window.addEventListener(
+        "load",
+        () => {
 
-        const loading =
-            document.getElementById(
-                "weatherLoading"
-            );
+            const loading =
+                document.getElementById(
+                    "weatherLoading"
+                );
 
 
-        if (
-            loading &&
-            bmkgForecastData.length
-        ) {
+            /*
+             * Jika data sudah berhasil dimuat,
+             * pastikan overlay tidak tertinggal.
+             */
 
-            loading.classList.remove(
-                "show"
-            );
+            if (
+                loading &&
+                bmkgForecastData.length > 0
+            ) {
+
+                loading.classList.remove(
+                    "show"
+                );
+
+            }
 
         }
-
-    }
-);
+    );
 
 
-/* =========================================================
-   KEYBOARD ACCESSIBILITY
-========================================================= */
+    /* =====================================================
+       FINAL KEYBOARD ACCESSIBILITY
+    ====================================================== */
 
-document.addEventListener(
-    "keydown",
-    event => {
+    document.addEventListener(
+        "keydown",
+        event => {
 
-        /*
-         * ESC menutup toast.
-         */
+            if (
+                event.key !== "Escape"
+            ) {
 
-        if (
-            event.key === "Escape"
-        ) {
+                return;
+
+            }
+
 
             const toast =
                 document.getElementById(
@@ -6411,154 +6671,28 @@ document.addEventListener(
             }
 
         }
-
-    }
-);
-
-
-/* =========================================================
-   REDUCED MOTION
-========================================================= */
-
-const reducedMotionQuery =
-    window.matchMedia(
-        "(prefers-reduced-motion: reduce)"
     );
-
-
-function applyReducedMotion() {
-
-    if (
-        !reducedMotionQuery.matches
-    ) {
-        return;
-    }
-
-
-    const style =
-        document.createElement(
-            "style"
-        );
-
-
-    style.textContent = `
-
-        *,
-        *::before,
-        *::after {
-
-            animation-duration:
-                .01ms !important;
-
-            animation-iteration-count:
-                1 !important;
-
-            transition-duration:
-                .01ms !important;
-
-            scroll-behavior:
-                auto !important;
-        }
-
-    `;
-
-
-    document.head.appendChild(
-        style
-    );
-
-}
-
-
-applyReducedMotion();
-
-
-/* =========================================================
-   ONLINE / OFFLINE INITIAL STATE
-========================================================= */
-
-if (!navigator.onLine) {
-
-    setTimeout(
-        () => {
-
-            setBMKGStatus(
-                "offline",
-                "Perangkat sedang offline"
-            );
-
-        },
-        100
-    );
-
-}
-
-
-/* =========================================================
-   FINAL DOCUMENT READY CHECK
-========================================================= */
-
-document.addEventListener(
-    "DOMContentLoaded",
-    () => {
-
-        /*
-         * Pastikan halaman tidak menampilkan
-         * teks "Memuat pengguna..." terlalu lama
-         * jika auth belum tersedia.
-         */
-
-        const profileName =
-            document.getElementById(
-                "profileName"
-            );
-
-
-        if (
-            profileName &&
-            !profileName.textContent.trim()
-        ) {
-
-            profileName.textContent =
-                "Pengguna";
-
-        }
-
-
-        /*
-         * Pastikan status awal BMKG
-         * tetap konsisten.
-         */
-
-        const statusText =
-            document.getElementById(
-                "bmkgStatusText"
-            );
-
-
-        if (
-            statusText &&
-            !statusText.textContent.trim()
-        ) {
-
-            statusText.textContent =
-                "Menghubungkan ke BMKG...";
-
-        }
-
-    }
-);
 
 </script>
 
 
 <!-- =========================================================
-     END WEATHER PAGE
+     CLOSE WEATHER PAGE
 ========================================================= -->
 
 </section>
 
+
+<!-- =========================================================
+     CLOSE MAIN CONTENT
+========================================================= -->
+
 </main>
+
+
+<!-- =========================================================
+     END DOCUMENT
+========================================================= -->
 
 </body>
 
