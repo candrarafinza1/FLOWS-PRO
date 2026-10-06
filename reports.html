@@ -3,1107 +3,1015 @@
 
 <head>
 
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
 
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-<title>FLOWS-PRO | Reports</title>
+    <title>
+        Laporan Data | FLOWS-PRO
+    </title>
 
 
-<!-- =====================================================
-     FAVICON
-===================================================== -->
+    <!-- =====================================================
+         FONT
+         ===================================================== -->
 
-<link
-rel="icon"
-type="image/jpeg"
-href="LOGO.JPG">
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
 
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
 
-<!-- =====================================================
-     FONT AWESOME
-===================================================== -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
 
-<link
-rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
+    <!-- =====================================================
+         FONT AWESOME
+         ===================================================== -->
 
-<!-- =====================================================
-     SUPABASE
-===================================================== -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
 
-<script
-src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
-</script>
 
+    <!-- =====================================================
+         CHART.JS
+         ===================================================== -->
 
-<!-- =====================================================
-     SHEETJS
-     Untuk export Excel
-===================================================== -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-<script
-src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js">
-</script>
 
+    <!-- =====================================================
+         SUPABASE
+         ===================================================== -->
 
-<!-- =====================================================
-     JSPDF
-     Untuk export PDF
-===================================================== -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-<script
-src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js">
-</script>
 
+    <!-- =====================================================
+         BASE STYLE
+         ===================================================== -->
 
-<!-- =====================================================
-     AUTOTABLE
-     Untuk tabel PDF
-===================================================== -->
+    <style>
 
-<script
-src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js">
-</script>
+        /* =================================================
+           ROOT
+           ================================================= */
 
+        :root {
 
-<style>
+            --sidebar-width: 250px;
 
-/* =====================================================
-   RESET
-===================================================== */
+            --primary: #2563eb;
+            --primary-light: #eff6ff;
+            --primary-dark: #1d4ed8;
 
-*{
+            --surface: #ffffff;
+            --surface-soft: #f8fafc;
+            --surface-muted: #f1f5f9;
 
-    margin:0;
+            --border: #e2e8f0;
 
-    padding:0;
+            --text-primary: #0f172a;
+            --text-secondary: #64748b;
+            --text-muted: #94a3b8;
 
-    box-sizing:border-box;
+            --success: #22c55e;
+            --warning: #f59e0b;
+            --danger: #ef4444;
 
-    font-family:'Segoe UI',sans-serif;
+            --shadow:
+                0 8px 30px rgba(15, 23, 42, .06);
 
-}
+            --radius-lg: 18px;
+            --radius-md: 14px;
+            --radius-sm: 10px;
 
+        }
 
-body{
 
-    background:#edf3f8;
+        /* =================================================
+           DARK THEME
+           ================================================= */
 
-    overflow-x:hidden;
+        [data-theme="dark"] {
 
-}
+            --surface: #0f172a;
+            --surface-soft: #111c2e;
+            --surface-muted: #1e293b;
 
+            --border: #263449;
 
-/* =====================================================
-   SIDEBAR
-===================================================== */
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
 
-.sidebar{
+            --primary-light:
+                rgba(37, 99, 235, .15);
 
-    position:fixed;
+            --shadow:
+                0 8px 30px rgba(0, 0, 0, .18);
 
-    left:0;
+        }
 
-    top:0;
 
-    width:270px;
+        /* =================================================
+           RESET
+           ================================================= */
 
-    height:100vh;
+        * {
 
-    background:
-    linear-gradient(
-        180deg,
-        #071b2f,
-        #0d2b45,
-        #12395c
-    );
+            margin: 0;
+            padding: 0;
 
-    padding:22px 18px;
+            box-sizing: border-box;
 
-    color:white;
+        }
 
-    overflow-y:auto;
 
-    z-index:1000;
+        html {
 
-}
+            scroll-behavior: smooth;
 
+        }
 
-/* =====================================================
-   LOGO
-===================================================== */
 
-.logo{
+        body {
 
-    display:flex;
+            min-height: 100vh;
 
-    align-items:center;
+            background:
+                var(--surface-soft);
 
-    padding-left:10px;
+            color:
+                var(--text-primary);
 
-    margin-bottom:30px;
+            font-family:
+                "Inter",
+                sans-serif;
 
-}
+            font-size: 13px;
 
+            line-height: 1.5;
 
-.logo img{
+        }
 
-    width:200px;
 
-    height:auto;
+        button,
+        input,
+        select {
 
-    display:block;
+            font-family: inherit;
 
-    object-fit:contain;
+        }
 
-}
 
+        a {
 
-/* =====================================================
-   MENU
-===================================================== */
+            color: inherit;
 
-.menu-item{
+            text-decoration: none;
 
-    padding:16px 18px;
+        }
 
-    border-radius:16px;
 
-    display:flex;
+        /* =================================================
+           APP LAYOUT
+           ================================================= */
 
-    align-items:center;
+        .app-layout {
 
-    gap:14px;
+            min-height: 100vh;
 
-    margin-bottom:12px;
+            display: flex;
 
-    cursor:pointer;
+        }
 
-    transition:0.3s;
 
-    font-weight:600;
+        /* =================================================
+           SIDEBAR
+           ================================================= */
 
-    text-decoration:none;
+        .sidebar {
 
-    color:white;
+            position: fixed;
 
-}
+            top: 0;
+            left: 0;
 
+            width: 260px;
 
-.menu-item:hover{
+            height: 100vh;
 
-    background:
-    linear-gradient(
-        90deg,
-        #00c6ff,
-        #0072ff
-    );
+            padding:
+                24px 14px;
 
-    transform:translateX(4px);
+            background:
+                var(--surface);
 
-}
+            border-right:
+                1px solid var(--border);
 
+            display: flex;
 
-.menu-item.active{
+            flex-direction: column;
 
-    background:
-    linear-gradient(
-        90deg,
-        #00c6ff,
-        #0072ff
-    );
+            overflow-x: hidden;
 
-}
+            overflow-y: auto;
 
+            z-index: 1000;
 
-/* =====================================================
-   MAIN
-===================================================== */
+        }
 
-.main{
 
-    margin-left:270px;
+        .brand {
 
-    min-height:100vh;
+            width: 100%;
 
-}
+            display: flex;
 
+            align-items: center;
 
-/* =====================================================
-   NAVBAR
-===================================================== */
+            gap: 12px;
 
-.navbar{
+            padding:
+                0 10px 25px;
 
-    height:85px;
+        }
 
-    background:white;
 
-    display:flex;
+        .brand-logo {
 
-    justify-content:space-between;
+            width: 43px;
+            height: 43px;
 
-    align-items:center;
+            flex: 0 0 43px;
 
-    padding:0 35px;
+            border-radius: 14px;
 
-    box-shadow:
-    0 2px 10px
-    rgba(0,0,0,0.06);
+            background:
+                linear-gradient(
+                    135deg,
+                    #2563eb,
+                    #06b6d4
+                );
 
-}
+            color: #ffffff;
 
+            display: grid;
 
-.nav-title{
+            place-items: center;
 
-    font-size:24px;
+            font-size: 19px;
 
-    font-weight:800;
+            box-shadow:
+                0 8px 18px
+                rgba(37, 99, 235, .22);
 
-    color:#12395c;
+        }
 
-}
 
+        .brand-name {
 
-/* =====================================================
-   PROFILE
-===================================================== */
+            font-family:
+                "Plus Jakarta Sans",
+                sans-serif;
 
-.profile{
+            font-size: 17px;
 
-    display:flex;
+            font-weight: 800;
 
-    align-items:center;
+            letter-spacing: -.6px;
 
-    gap:12px;
+            white-space: nowrap;
 
-    padding:8px 14px;
+        }
 
-    border-radius:14px;
 
-    background:#f5f9ff;
+        .brand-name span {
 
-}
+            color:
+                var(--primary);
 
+        }
 
-.profile img{
 
-    width:50px;
+        .brand-caption {
 
-    height:50px;
+            margin-top: 1px;
 
-    border-radius:50%;
+            font-size: 9px;
 
-    object-fit:cover;
+            font-weight: 700;
 
-}
+            letter-spacing: 1.3px;
 
+            color:
+                var(--text-muted);
 
-.profile h4{
+            white-space: nowrap;
 
-    color:#12395c;
+        }
 
-    font-size:15px;
 
-}
+        /* =================================================
+           NAVIGATION
+           ================================================= */
 
+        .nav-label {
 
-.profile p{
+            font-size: 9px;
 
-    color:#888;
+            font-weight: 800;
 
-    font-size:12px;
+            letter-spacing: 1.3px;
 
-}
+            color:
+                var(--text-muted);
 
+            padding:
+                0 12px;
 
-/* =====================================================
-   CONTENT
-===================================================== */
+            margin:
+                18px 0 10px;
 
-.content{
+        }
 
-    padding:28px;
 
-}
+        .nav-menu {
 
+            display: flex;
 
-/* =====================================================
-   CARD
-===================================================== */
+            flex-direction: column;
 
-.card{
+            gap: 5px;
 
-    background:white;
+        }
 
-    padding:24px;
 
-    border-radius:22px;
+        .nav-item {
 
-    margin-bottom:20px;
+            width: 100%;
 
-    box-shadow:
-    0 5px 20px
-    rgba(0,0,0,0.05);
+            min-height: 44px;
 
-}
+            display: flex;
 
+            align-items: center;
 
-.card-title{
+            gap: 12px;
 
-    font-size:20px;
+            padding:
+                0 13px;
 
-    font-weight:700;
+            border-radius: 11px;
 
-    margin-bottom:20px;
+            color:
+                var(--text-secondary);
 
-    color:#12395c;
+            font-size: 12px;
 
-}
+            font-weight: 600;
 
+            overflow: hidden;
 
-/* =====================================================
-   FILTER GRID
-===================================================== */
+            transition:
+                background .18s ease,
+                color .18s ease;
 
-.filter-grid{
+        }
 
-    display:grid;
 
-    grid-template-columns:
-    repeat(4,1fr);
+        .nav-item i {
 
-    gap:20px;
+            width: 19px;
 
-}
+            min-width: 19px;
 
+            text-align: center;
 
-.filter-item{
+            font-size: 14px;
 
-    display:flex;
+        }
 
-    flex-direction:column;
 
-    gap:8px;
+        .nav-item:hover {
 
-}
+            background:
+                var(--surface-muted);
 
+            color:
+                var(--primary);
 
-.filter-item label{
+        }
 
-    font-size:13px;
 
-    font-weight:700;
+        .nav-item.active {
 
-    color:#555;
+            background:
+                var(--primary-light);
 
-}
+            color:
+                var(--primary);
 
+            font-weight: 800;
 
-input,
-select{
+        }
 
-    width:100%;
 
-    padding:14px;
+        /* =================================================
+           SIDEBAR BOTTOM
+           ================================================= */
 
-    border-radius:12px;
+        .sidebar-bottom {
 
-    border:1px solid #dce3ea;
+            margin-top: auto;
 
-    outline:none;
+            padding-top: 20px;
 
-    background:white;
+        }
 
-    font-size:14px;
 
-}
+        .system-status {
 
+            width: 100%;
 
-input:focus,
-select:focus{
+            background:
+                var(--surface-soft);
 
-    border-color:#0072ff;
+            border:
+                1px solid var(--border);
 
-    box-shadow:
-    0 0 0 3px
-    rgba(0,114,255,0.08);
+            border-radius: 15px;
 
-}
+            padding: 15px;
 
+        }
 
-/* =====================================================
-   BUTTON
-===================================================== */
 
-button{
+        .system-status-top {
 
-    padding:14px 20px;
+            display: flex;
 
-    border:none;
+            align-items: center;
 
-    border-radius:12px;
+            gap: 8px;
 
-    background:
-    linear-gradient(
-        90deg,
-        #00c6ff,
-        #0072ff
-    );
+            font-size: 11px;
 
-    color:white;
+            font-weight: 800;
 
-    font-weight:700;
+        }
 
-    cursor:pointer;
 
-    transition:0.3s;
+        .status-dot {
 
-}
+            width: 8px;
+            height: 8px;
 
+            border-radius: 50%;
 
-button:hover{
+            background:
+                #22c55e;
 
-    transform:translateY(-2px);
+            box-shadow:
+                0 0 0 4px
+                rgba(34, 197, 94, .10);
 
-    box-shadow:
-    0 5px 15px
-    rgba(0,114,255,0.2);
+        }
 
-}
 
+        .system-status p {
 
-button:disabled{
+            margin-top: 8px;
 
-    opacity:0.6;
+            font-size: 10px;
 
-    cursor:not-allowed;
+            line-height: 1.6;
 
-    transform:none;
+            color:
+                var(--text-secondary);
 
-}
+        }
 
 
-/* =====================================================
-   SECONDARY BUTTON
-===================================================== */
+        .sidebar-version {
 
-.btn-secondary{
+            margin-top: 17px;
 
-    background:#eef3f8;
+            text-align: center;
 
-    color:#12395c;
+            font-size: 9px;
 
-}
+            color:
+                var(--text-muted);
 
+        }
 
-.btn-secondary:hover{
 
-    background:#dfe8f1;
+        /* =================================================
+           MAIN CONTENT
+           ================================================= */
 
-}
+        .main-content {
 
+            width: 100%;
 
-/* =====================================================
-   EXPORT BUTTON
-===================================================== */
+            min-width: 0;
 
-.export-buttons{
+            margin-left:
+                var(--sidebar-width);
 
-    display:flex;
+            padding:
+                30px 36px 28px;
 
-    gap:12px;
+        }
 
-    margin-top:20px;
 
-    flex-wrap:wrap;
+        /* =================================================
+           TOPBAR
+           ================================================= */
 
-}
+        .topbar {
 
+            display: flex;
 
-.btn-csv{
+            align-items: flex-start;
 
-    background:
-    linear-gradient(
-        90deg,
-        #16a085,
-        #27ae60
-    );
+            justify-content: space-between;
 
-}
+            gap: 24px;
 
+            margin-bottom: 30px;
 
-.btn-excel{
+        }
 
-    background:
-    linear-gradient(
-        90deg,
-        #168f5b,
-        #21a366
-    );
 
-}
+        .breadcrumb {
 
+            margin-bottom: 7px;
 
-.btn-pdf{
+            font-size: 9px;
 
-    background:
-    linear-gradient(
-        90deg,
-        #e74c3c,
-        #c0392b
-    );
+            font-weight: 800;
 
-}
+            letter-spacing: 1.2px;
 
+            color:
+                var(--text-muted);
 
-/* =====================================================
-   TABLE WRAPPER
-===================================================== */
+        }
 
-.table-wrapper{
 
-    width:100%;
+        .page-title {
 
-    overflow-x:auto;
+            font-family:
+                "Plus Jakarta Sans",
+                sans-serif;
 
-}
+            font-size: 27px;
 
+            line-height: 1.2;
 
-/* =====================================================
-   TABLE
-===================================================== */
+            font-weight: 800;
 
-table{
+            letter-spacing: -.8px;
 
-    width:100%;
+        }
 
-    border-collapse:collapse;
 
-    min-width:900px;
+        .page-subtitle {
 
-}
+            margin-top: 7px;
 
+            font-size: 12px;
 
-th,
-td{
+            color:
+                var(--text-secondary);
 
-    padding:14px;
+        }
 
-    text-align:left;
 
-    border-bottom:
-    1px solid #eee;
+        .topbar-actions {
 
-    white-space:nowrap;
+            display: flex;
 
-}
+            align-items: center;
 
+            gap: 14px;
 
-th{
+        }
 
-    background:#f8fbff;
 
-    color:#12395c;
+        /* =================================================
+           NOTIFICATION
+           ================================================= */
 
-    font-size:13px;
+        .icon-button {
 
-}
+            position: relative;
 
+            width: 40px;
+            height: 40px;
 
-td{
+            border:
+                1px solid var(--border);
 
-    font-size:13px;
+            border-radius: 12px;
 
-    color:#444;
+            background:
+                var(--surface);
 
-}
+            color:
+                var(--text-secondary);
 
+            display: grid;
 
-tbody tr:hover{
+            place-items: center;
 
-    background:#f8fbff;
+            cursor: pointer;
 
-}
+            transition:
+                .18s ease;
 
+        }
 
-/* =====================================================
-   STATUS
-===================================================== */
 
-.safe{
+        .icon-button:hover {
 
-    color:#27ae60;
+            color:
+                var(--primary);
 
-    font-weight:bold;
+            border-color:
+                rgba(37, 99, 235, .25);
 
-}
+        }
 
 
-.warning{
+        .notification-dot {
 
-    color:#e67e22;
+            position: absolute;
 
-    font-weight:bold;
+            top: 9px;
+            right: 9px;
 
-}
+            width: 6px;
+            height: 6px;
 
+            border-radius: 50%;
 
-.danger{
+            background:
+                var(--danger);
 
-    color:#e74c3c;
+        }
 
-    font-weight:bold;
 
-}
+        /* =================================================
+           PROFILE
+           ================================================= */
 
+        .profile {
 
-.status-label{
+            position: relative;
 
-    display:inline-block;
+        }
 
-    padding:5px 10px;
 
-    border-radius:20px;
+        .profile-trigger {
 
-    font-size:11px;
+            border: 0;
 
-    font-weight:800;
+            background: transparent;
 
-}
+            display: flex;
 
+            align-items: center;
 
-.status-aman{
+            gap: 10px;
 
-    background:#e8fff1;
+            cursor: pointer;
 
-    color:#27ae60;
+            color:
+                var(--text-primary);
 
-}
+        }
 
 
-.status-siaga{
+        .avatar {
 
-    background:#fff8df;
+            width: 38px;
+            height: 38px;
 
-    color:#d89b00;
+            border-radius: 12px;
 
-}
+            background:
+                var(--primary-light);
 
+            color:
+                var(--primary);
 
-.status-waspada{
+            display: grid;
 
-    background:#fff0df;
+            place-items: center;
 
-    color:#e67e22;
+            font-size: 12px;
 
-}
+            font-weight: 800;
 
+        }
 
-.status-bahaya{
 
-    background:#ffe9e9;
+        .profile-name {
 
-    color:#e74c3c;
+            display: block;
 
-}
+            max-width: 170px;
 
+            overflow: hidden;
 
-.status-unknown{
+            text-overflow: ellipsis;
 
-    background:#eeeeee;
+            white-space: nowrap;
 
-    color:#777;
+            text-align: left;
 
-}
+            font-size: 11px;
 
+            font-weight: 800;
 
-/* =====================================================
-   PAGINATION
-===================================================== */
+        }
 
-.pagination{
 
-    display:flex;
+        .profile-role {
 
-    justify-content:center;
+            display: block;
 
-    align-items:center;
+            margin-top: 1px;
 
-    gap:8px;
+            text-align: left;
 
-    margin-top:20px;
+            font-size: 8px;
 
-    flex-wrap:wrap;
+            font-weight: 800;
 
-}
+            letter-spacing: .8px;
 
+            color:
+                var(--text-muted);
 
-.page-btn{
+        }
 
-    min-width:42px;
 
-    height:42px;
+        .profile-trigger > i {
 
-    padding:0 12px;
+            margin-left: 3px;
 
-    border-radius:10px;
+            font-size: 10px;
 
-    display:flex;
+            color:
+                var(--text-muted);
 
-    align-items:center;
+        }
 
-    justify-content:center;
 
-    background:white;
+        /* =================================================
+           PROFILE DROPDOWN
+           ================================================= */
 
-    border:
-    1px solid #e1e7ed;
+        .dropdown {
 
-    cursor:pointer;
+            position: absolute;
 
-    font-weight:bold;
+            top: calc(100% + 10px);
 
-    color:#12395c;
+            right: 0;
 
-}
+            width: 205px;
 
+            padding: 7px;
 
-.page-btn:hover{
+            background:
+                var(--surface);
 
-    background:#edf5ff;
+            border:
+                1px solid var(--border);
 
-}
+            border-radius: 14px;
 
+            box-shadow:
+                0 18px 45px
+                rgba(15, 23, 42, .12);
 
-.page-btn.active{
+            display: none;
 
-    background:#0072ff;
+            z-index: 1100;
 
-    color:white;
+        }
 
-    border-color:#0072ff;
 
-}
+        .dropdown.show,
+        .dropdown.open {
 
+            display: block;
 
-.page-btn.disabled{
+        }
 
-    opacity:0.4;
 
-    cursor:not-allowed;
+        .dropdown a,
+        .dropdown button {
 
-}
+            width: 100%;
 
+            min-height: 39px;
 
-/* =====================================================
-   SUMMARY
-===================================================== */
+            padding:
+                0 11px;
 
-.summary-grid{
+            border: 0;
 
-    display:grid;
+            border-radius: 9px;
 
-    grid-template-columns:
-    repeat(4,1fr);
+            background: transparent;
 
-    gap:15px;
+            display: flex;
 
-    margin-bottom:20px;
+            align-items: center;
 
-}
+            gap: 10px;
 
+            color:
+                var(--text-secondary);
 
-.summary-box{
+            font-size: 11px;
 
-    background:#f8fbff;
+            font-weight: 600;
 
-    padding:18px;
+            text-align: left;
 
-    border-radius:16px;
+            cursor: pointer;
 
-    border:
-    1px solid #edf2f7;
+        }
 
-}
 
+        .dropdown a:hover,
+        .dropdown button:hover {
 
-.summary-label{
+            background:
+                var(--surface-soft);
 
-    color:#777;
+            color:
+                var(--primary);
 
-    font-size:13px;
+        }
 
-    margin-bottom:8px;
 
-}
+        .dropdown button {
 
+            color:
+                var(--danger);
 
-.summary-value{
+        }
 
-    color:#12395c;
 
-    font-size:25px;
+        /* =================================================
+           RESPONSIVE
+           ================================================= */
 
-    font-weight:800;
+        @media (max-width: 1250px) {
 
-}
+            :root {
 
+                --sidebar-width: 250px;
 
-/* =====================================================
-   CONNECTION
-===================================================== */
+            }
 
-.live-badge{
 
-    display:inline-flex;
+            .sidebar {
 
-    align-items:center;
+                width: 250px;
 
-    gap:10px;
+            }
 
-    padding:12px 18px;
 
-    border-radius:40px;
+            .main-content {
 
-    background:#e8fff1;
+                margin-left:
+                    250px;
 
-    color:#27ae60;
+            }
 
-    font-weight:700;
+        }
 
-    margin-bottom:20px;
 
-}
+        @media (max-width: 950px) {
 
+            :root {
 
-.live-dot{
+                --sidebar-width: 215px;
 
-    width:10px;
+            }
 
-    height:10px;
 
-    background:#27ae60;
+            .sidebar {
 
-    border-radius:50%;
+                width: 215px;
 
-    animation:blink 1s infinite;
+            }
 
-}
 
+            .main-content {
 
-.live-badge.offline{
+                margin-left:
+                    215px;
 
-    background:#fff0f0;
+                padding:
+                    25px 24px;
 
-    color:#e74c3c;
+            }
 
-}
 
+            .page-title {
 
-.live-badge.offline .live-dot{
+                font-size: 24px;
 
-    background:#e74c3c;
+            }
 
-    animation:none;
+        }
 
-}
 
+        @media (max-width: 650px) {
 
-@keyframes blink{
+            .sidebar {
 
-    0%{
+                display: none;
 
-        opacity:1;
+            }
 
-    }
 
-    50%{
+            .main-content {
 
-        opacity:0.2;
+                margin-left: 0;
 
-    }
+                padding:
+                    20px 15px;
 
-    100%{
+            }
 
-        opacity:1;
 
-    }
+            .topbar {
 
-}
+                align-items: center;
 
+                margin-bottom: 24px;
 
-/* =====================================================
-   EMPTY DATA
-===================================================== */
+            }
 
-.empty-data{
 
-    text-align:center;
+            .page-title {
 
-    padding:50px;
+                font-size: 21px;
 
-    color:#888;
+            }
 
-}
 
+            .page-subtitle {
 
-.empty-data i{
+                font-size: 11px;
 
-    font-size:30px;
+            }
 
-    margin-bottom:12px;
 
-}
+            .profile-name,
+            .profile-role,
+            .profile-trigger > i {
 
+                display: none;
 
-/* =====================================================
-   INFO
-===================================================== */
+            }
 
-.info-box{
 
-    padding:16px;
+            .profile-trigger {
 
-    background:#f5f9ff;
+                gap: 0;
 
-    border-radius:14px;
+            }
 
-    color:#666;
+        }
 
-    line-height:1.6;
-
-    font-size:13px;
-
-}
-
-
-.info-box strong{
-
-    color:#12395c;
-
-}
-
-
-/* =====================================================
-   RESPONSIVE
-===================================================== */
-
-@media(max-width:1200px){
-
-    .filter-grid{
-
-        grid-template-columns:
-        repeat(2,1fr);
-
-    }
-
-
-    .summary-grid{
-
-        grid-template-columns:
-        repeat(2,1fr);
-
-    }
-
-}
-
-
-@media(max-width:1000px){
-
-    .sidebar{
-
-        width:90px;
-
-    }
-
-
-    .sidebar span{
-
-        display:none;
-
-    }
-
-
-    .logo{
-
-        justify-content:center;
-
-        padding-left:0;
-
-    }
-
-
-    .logo img{
-
-        width:55px;
-
-    }
-
-
-    .main{
-
-        margin-left:90px;
-
-    }
-
-}
-
-
-@media(max-width:700px){
-
-    .navbar{
-
-        padding:0 15px;
-
-    }
-
-
-    .nav-title{
-
-        font-size:18px;
-
-    }
-
-
-    .profile div{
-
-        display:none;
-
-    }
-
-
-    .content{
-
-        padding:15px;
-
-    }
-
-
-    .filter-grid{
-
-        grid-template-columns:1fr;
-
-    }
-
-
-    .summary-grid{
-
-        grid-template-columns:1fr;
-
-    }
-
-}
-
-
-/* =====================================================
-   END CSS
-===================================================== */
-
-</style>
+    </style>
 
 </head>
 
@@ -1111,437 +1019,519 @@ tbody tr:hover{
 <body>
 
 
-<!-- =====================================================
-     SIDEBAR
-===================================================== -->
-
-<div class="sidebar">
+<div class="app-layout">
 
 
-    <div class="logo">
+    <!-- =====================================================
+         SIDEBAR
+         ===================================================== -->
 
-        <img
-        src="FLOWS-PRO-preview 1.png"
-        alt="FLOWS-PRO">
+    <aside class="sidebar">
 
-    </div>
+        <div class="brand">
 
+            <div class="brand-logo">
 
-    <a
-    class="menu-item"
-    href="dashboard.html">
+                <i class="fa-solid fa-water"></i>
 
-        <i class="fa-solid fa-chart-line"></i>
-
-        <span>Dashboard</span>
-
-    </a>
-
-
-    <a
-    class="menu-item"
-    href="live_sensor.html">
-
-        <i class="fa-solid fa-microchip"></i>
-
-        <span>Live Sensor</span>
-
-    </a>
-
-
-    <a
-    class="menu-item"
-    href="peta_banjir.html">
-
-        <i class="fa-solid fa-map-location-dot"></i>
-
-        <span>Peta Banjir</span>
-
-    </a>
-
-
-    <a
-    class="menu-item"
-    href="weather.html">
-
-        <i class="fa-solid fa-cloud-rain"></i>
-
-        <span>Weather</span>
-
-    </a>
-
-
-    <a
-    class="menu-item active"
-    href="reports.html">
-
-        <i class="fa-solid fa-file"></i>
-
-        <span>Reports</span>
-
-    </a>
-
-
-    <a
-    class="menu-item"
-    href="settings.html">
-
-        <i class="fa-solid fa-gear"></i>
-
-        <span>Settings</span>
-
-    </a>
-
-
-</div>
-
-
-<!-- =====================================================
-     MAIN
-===================================================== -->
-
-<div class="main">
-
-
-    <!-- =================================================
-         NAVBAR
-    ================================================== -->
-
-    <div class="navbar">
-
-
-        <div class="nav-title">
-
-            Laporan & Riwayat Data
-
-        </div>
-
-
-        <div class="profile">
-
-            <img
-            id="userPhoto"
-            src="https://i.pravatar.cc/150?img=12"
-            alt="Profile">
+            </div>
 
 
             <div>
 
-                <h4 id="userName">
+                <div class="brand-name">
 
-                    Loading...
+                    FLOWS<span>-PRO</span>
 
-                </h4>
+                </div>
+
+
+                <div class="brand-caption">
+
+                    FLOOD MONITORING SYSTEM
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="nav-label">
+
+            MENU UTAMA
+
+        </div>
+
+
+        <nav class="nav-menu">
+
+            <a
+                href="dashboard.html"
+                class="nav-item"
+            >
+
+                <i class="fa-solid fa-border-all"></i>
+
+                Dashboard
+
+            </a>
+
+
+            <a
+                href="live_sensor.html"
+                class="nav-item"
+            >
+
+                <i class="fa-solid fa-wave-square"></i>
+
+                Live Monitoring
+
+            </a>
+
+
+            <a
+                href="reports.html"
+                class="nav-item active"
+            >
+
+                <i class="fa-solid fa-chart-line"></i>
+
+                Laporan Data
+
+            </a>
+
+
+            <a
+                href="peta_banjir.html"
+                class="nav-item"
+            >
+
+                <i class="fa-solid fa-map-location-dot"></i>
+
+                Peta Banjir
+
+            </a>
+
+
+            <a
+                href="weather.html"
+                class="nav-item"
+            >
+
+                <i class="fa-solid fa-cloud-sun"></i>
+
+                Informasi Cuaca
+
+            </a>
+
+        </nav>
+
+
+        <div
+            class="nav-label"
+            style="margin-top: 27px;"
+        >
+
+            PREFERENSI
+
+        </div>
+
+
+        <nav class="nav-menu">
+
+            <a
+                href="profile.html"
+                class="nav-item"
+            >
+
+                <i class="fa-regular fa-user"></i>
+
+                Profil Saya
+
+            </a>
+
+
+            <a
+                href="settings.html"
+                class="nav-item"
+            >
+
+                <i class="fa-solid fa-sliders"></i>
+
+                Pengaturan
+
+            </a>
+
+        </nav>
+
+
+        <div class="sidebar-bottom">
+
+            <div class="system-status">
+
+                <div class="system-status-top">
+
+                    <span class="status-dot"></span>
+
+                    FLOWS-PRO SYSTEM
+
+                </div>
 
 
                 <p>
 
-                    Operator
+                    Sistem pemantauan banjir untuk
+                    mendukung kesiapsiagaan lingkungan.
 
                 </p>
 
             </div>
 
+
+            <div class="sidebar-version">
+
+                FLOWS-PRO · VERSION 2.0
+
+            </div>
+
         </div>
 
-
-    </div>
-
-
-<!-- =====================================================
-     PART 2 DIMULAI DI SINI
-===================================================== -->
-<!-- =====================================================
-     PART 2 — FILTER, RINGKASAN & TABEL DATA
-===================================================== -->
+    </aside>
 
 
-<div class="content">
+    <!-- =====================================================
+         MAIN CONTENT
+         ===================================================== -->
+
+    <main class="main-content">
 
 
-    <!-- =================================================
-         STATUS KONEKSI
-    ================================================== -->
+        <!-- =================================================
+             TOPBAR
+             ================================================= -->
 
-    <div
-    class="live-badge"
-    id="connectionStatus">
+        <header class="topbar">
 
-        <div
-        class="live-dot"
-        id="connectionDot">
-        </div>
+            <div>
 
-        <span id="connectionText">
+                <div class="breadcrumb">
 
-            Menghubungkan ke Supabase...
+                    DATA & ANALISIS / LAPORAN DATA
 
-        </span>
-
-    </div>
+                </div>
 
 
+                <h1 class="page-title">
 
-    <!-- =================================================
-         RINGKASAN DATA
-    ================================================== -->
+                    Laporan Data
+
+                </h1>
+
+
+                <p class="page-subtitle">
+
+                    Tinjau dan analisis riwayat pembacaan
+                    sensor FLOWS-PRO.
+
+                </p>
+
+            </div>
+
+
+            <div class="topbar-actions">
+
+
+                <button
+                    class="icon-button"
+                    id="notificationButton"
+                    type="button"
+                    aria-label="Notifikasi"
+                >
+
+                    <i class="fa-regular fa-bell"></i>
+
+                    <span class="notification-dot"></span>
+
+                </button>
+
+
+                <div class="profile">
+
+                    <button
+                        class="profile-trigger"
+                        id="profileTrigger"
+                        type="button"
+                        aria-expanded="false"
+                    >
+
+                        <span
+                            class="avatar"
+                            id="profileAvatar"
+                        >
+                            U
+                        </span>
+
+
+                        <span>
+
+                            <span
+                                class="profile-name"
+                                id="profileName"
+                            >
+                                Memuat pengguna...
+                            </span>
+
+
+                            <small
+                                class="profile-role"
+                                id="profileRole"
+                            >
+                                OPERATOR
+                            </small>
+
+                        </span>
+
+
+                        <i
+                            class="fa-solid fa-chevron-down"
+                        ></i>
+
+                    </button>
+
+
+                    <div
+                        class="dropdown"
+                        id="profileDropdown"
+                    >
+
+                        <a href="profile.html">
+
+                            <i
+                                class="fa-regular fa-user"
+                            ></i>
+
+                            Profil Saya
+
+                        </a>
+
+
+                        <a href="settings.html">
+
+                            <i
+                                class="fa-solid fa-gear"
+                            ></i>
+
+                            Pengaturan Akun
+
+                        </a>
+
+
+                        <button
+                            id="logoutButton"
+                            type="button"
+                        >
+
+                            <i
+                                class="fa-solid fa-right-from-bracket"
+                            ></i>
+
+                            Keluar dari Akun
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- =================================================
+             PART 2 DITEMPEL DI SINI
+             ================================================= -->
+             <!-- =========================================================
+     PART 2 — RINGKASAN & FILTER LAPORAN
+     ========================================================= -->
+
+<section class="report-page">
+
+
+    <!-- =====================================================
+         SUMMARY CARDS
+         ===================================================== -->
 
     <div class="summary-grid">
 
 
-        <!-- TOTAL DATA -->
+        <div class="summary-card">
 
-        <div class="summary-box">
+            <div class="summary-icon blue">
 
-            <div class="summary-label">
-
-                Total Data
+                <i class="fa-solid fa-database"></i>
 
             </div>
 
-            <div
-            class="summary-value"
-            id="totalData">
 
-                0
+            <div class="summary-content">
 
-            </div>
+                <span class="summary-label">
+                    TOTAL PEMBACAAN
+                </span>
 
-        </div>
+                <strong
+                    id="totalReadings"
+                    class="summary-value"
+                >
+                    -
+                </strong>
 
-
-        <!-- AMAN -->
-
-        <div class="summary-box">
-
-            <div class="summary-label">
-
-                Data AMAN
-
-            </div>
-
-            <div
-            class="summary-value safe"
-            id="totalAman">
-
-                0
+                <span
+                    id="totalReadingsInfo"
+                    class="summary-info"
+                >
+                    Memuat data...
+                </span>
 
             </div>
 
         </div>
 
 
-        <!-- WASPADA -->
+        <div class="summary-card">
 
-        <div class="summary-box">
+            <div class="summary-icon cyan">
 
-            <div class="summary-label">
-
-                Data WASPADA
+                <i class="fa-solid fa-arrow-up"></i>
 
             </div>
 
-            <div
-            class="summary-value warning"
-            id="totalWaspada">
 
-                0
+            <div class="summary-content">
+
+                <span class="summary-label">
+                    KETINGGIAN TERTINGGI
+                </span>
+
+                <strong
+                    id="maxWaterLevel"
+                    class="summary-value"
+                >
+                    -
+                </strong>
+
+                <span class="summary-info">
+                    Nilai maksimum
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="summary-card">
+
+            <div class="summary-icon orange">
+
+                <i class="fa-solid fa-chart-simple"></i>
+
+            </div>
+
+
+            <div class="summary-content">
+
+                <span class="summary-label">
+                    RATA-RATA
+                </span>
+
+                <strong
+                    id="avgWaterLevel"
+                    class="summary-value"
+                >
+                    -
+                </strong>
+
+                <span class="summary-info">
+                    Rata-rata pembacaan
+                </span>
 
             </div>
 
         </div>
 
 
-        <!-- BAHAYA -->
+        <div class="summary-card">
 
-        <div class="summary-box">
+            <div class="summary-icon red">
 
-            <div class="summary-label">
-
-                Data BAHAYA
+                <i class="fa-solid fa-triangle-exclamation"></i>
 
             </div>
 
-            <div
-            class="summary-value danger"
-            id="totalBahaya">
 
-                0
+            <div class="summary-content">
+
+                <span class="summary-label">
+                    PERINGATAN
+                </span>
+
+                <strong
+                    id="warningCount"
+                    class="summary-value"
+                >
+                    -
+                </strong>
+
+                <span
+                    id="warningInfo"
+                    class="summary-info"
+                >
+                    SIAGA / WASPADA
+                </span>
 
             </div>
 
         </div>
-
 
     </div>
 
 
+    <!-- =====================================================
+         FILTER CARD
+         ===================================================== -->
 
-    <!-- =================================================
-         FILTER LAPORAN
-    ================================================== -->
-
-    <div class="card">
-
-
-        <div class="card-title">
-
-            <i class="fa-solid fa-filter"></i>
-
-            Filter Laporan
-
-        </div>
+    <section class="report-card filter-card">
 
 
-        <div class="filter-grid">
+        <div class="card-heading">
 
+            <div>
 
-            <!-- =========================================
-                 TANGGAL AWAL
-            ========================================== -->
+                <span class="section-eyebrow">
+                    FILTER DATA
+                </span>
 
-            <div class="filter-item">
+                <h2>
+                    Penyaringan Laporan
+                </h2>
 
-                <label
-                for="tanggalAwal">
-
-                    Tanggal Awal
-
-                </label>
-
-
-                <input
-                type="date"
-                id="tanggalAwal">
+                <p>
+                    Gunakan filter untuk menampilkan
+                    pembacaan sensor sesuai kebutuhan.
+                </p>
 
             </div>
 
-
-
-            <!-- =========================================
-                 TANGGAL AKHIR
-            ========================================== -->
-
-            <div class="filter-item">
-
-                <label
-                for="tanggalAkhir">
-
-                    Tanggal Akhir
-
-                </label>
-
-
-                <input
-                type="date"
-                id="tanggalAkhir">
-
-            </div>
-
-
-
-            <!-- =========================================
-                 STATUS
-            ========================================== -->
-
-            <div class="filter-item">
-
-                <label
-                for="statusFilter">
-
-                    Status Wilayah
-
-                </label>
-
-
-                <select
-                id="statusFilter">
-
-                    <option value="SEMUA">
-
-                        Semua Status
-
-                    </option>
-
-
-                    <option value="AMAN">
-
-                        AMAN
-
-                    </option>
-
-
-                    <option value="WASPADA">
-
-                        WASPADA
-
-                    </option>
-
-
-                    <option value="BAHAYA">
-
-                        BAHAYA
-
-                    </option>
-
-
-                    <option value="UNKNOWN">
-
-                        UNKNOWN
-
-                    </option>
-
-                </select>
-
-            </div>
-
-
-
-            <!-- =========================================
-                 TOMBOL FILTER
-            ========================================== -->
-
-            <div
-            class="filter-item"
-            style="justify-content:end;">
-
-                <button
-                id="filterButton"
-                onclick="applyFilter()">
-
-                    <i
-                    class="fa-solid fa-filter">
-                    </i>
-
-                    Filter Data
-
-                </button>
-
-            </div>
-
-
-        </div>
-
-
-
-        <!-- =============================================
-             TOMBOL RESET
-        ============================================== -->
-
-        <div
-        style="
-        display:flex;
-        justify-content:flex-end;
-        margin-top:15px;
-        ">
 
             <button
-            class="btn-secondary"
-            onclick="resetFilter()">
+                type="button"
+                class="secondary-button"
+                id="resetFilterButton"
+            >
 
-                <i
-                class="fa-solid fa-rotate-left">
-                </i>
+                <i class="fa-solid fa-rotate-left"></i>
 
                 Reset Filter
 
@@ -1550,2651 +1540,2506 @@ tbody tr:hover{
         </div>
 
 
-    </div>
+        <div class="filter-grid">
 
 
+            <div class="filter-field">
 
-    <!-- =================================================
-         INFORMASI FILTER
-    ================================================== -->
+                <label for="startDate">
+                    Tanggal Mulai
+                </label>
 
-    <div class="card">
+                <div class="input-wrapper">
+
+                    <i class="fa-regular fa-calendar"></i>
+
+                    <input
+                        type="date"
+                        id="startDate"
+                    >
+
+                </div>
+
+            </div>
 
 
-        <div class="info-box">
+            <div class="filter-field">
 
-            <strong>
-                Informasi:
-            </strong>
+                <label for="endDate">
+                    Tanggal Akhir
+                </label>
 
-            <br>
+                <div class="input-wrapper">
 
-            Data yang ditampilkan berasal langsung
-            dari tabel <strong>data_air</strong>
-            pada Supabase FLOWS-PRO.
+                    <i class="fa-regular fa-calendar"></i>
 
-            <br>
+                    <input
+                        type="date"
+                        id="endDate"
+                    >
 
-            Gunakan filter tanggal dan status untuk
-            mempersempit hasil pengukuran.
+                </div>
 
-            <br>
+            </div>
 
-            <span id="filterInfo">
 
-                Menampilkan data terbaru.
+            <div class="filter-field">
+
+                <label for="statusFilter">
+                    Status Air
+                </label>
+
+                <div class="input-wrapper">
+
+                    <i class="fa-solid fa-signal"></i>
+
+                    <select id="statusFilter">
+
+                        <option value="all">
+                            Semua Status
+                        </option>
+
+                        <option value="AMAN">
+                            AMAN
+                        </option>
+
+                        <option value="SIAGA">
+                            SIAGA
+                        </option>
+
+                        <option value="WASPADA">
+                            WASPADA
+                        </option>
+
+                        <option value="BAHAYA">
+                            BAHAYA
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <div class="filter-field">
+
+                <label for="locationFilter">
+                    Lokasi
+                </label>
+
+                <div class="input-wrapper">
+
+                    <i class="fa-solid fa-location-dot"></i>
+
+                    <select id="locationFilter">
+
+                        <option value="all">
+                            Semua Lokasi
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <div class="filter-field search-field">
+
+                <label for="searchInput">
+                    Pencarian
+                </label>
+
+                <div class="input-wrapper">
+
+                    <i class="fa-solid fa-magnifying-glass"></i>
+
+                    <input
+                        type="search"
+                        id="searchInput"
+                        placeholder="Cari lokasi atau status..."
+                        autocomplete="off"
+                    >
+
+                </div>
+
+            </div>
+
+
+            <div class="filter-action">
+
+                <button
+                    type="button"
+                    class="primary-button"
+                    id="applyFilterButton"
+                >
+
+                    <i class="fa-solid fa-filter"></i>
+
+                    Terapkan Filter
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         CHART CARD
+         ===================================================== -->
+
+    <section class="report-card chart-card">
+
+
+        <div class="card-heading">
+
+            <div>
+
+                <span class="section-eyebrow">
+                    ANALISIS DATA
+                </span>
+
+                <h2>
+                    Tren Ketinggian Air
+                </h2>
+
+                <p id="chartDescription">
+                    Perubahan ketinggian air berdasarkan
+                    data pembacaan sensor.
+                </p>
+
+            </div>
+
+
+            <div class="chart-status">
+
+                <span
+                    class="chart-status-dot"
+                    id="chartStatusDot"
+                ></span>
+
+                <span id="chartStatusText">
+                    Menunggu data
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="chart-wrapper">
+
+            <canvas
+                id="reportChart"
+            ></canvas>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         DATA TABLE CARD
+         ===================================================== -->
+
+    <section class="report-card table-card">
+
+
+        <div class="card-heading table-heading">
+
+            <div>
+
+                <span class="section-eyebrow">
+                    RIWAYAT PEMBACAAN
+                </span>
+
+                <h2>
+                    Data Sensor
+                </h2>
+
+                <p>
+                    Riwayat pembacaan yang tersimpan
+                    pada sistem FLOWS-PRO.
+                </p>
+
+            </div>
+
+
+            <div class="table-actions">
+
+                <button
+                    type="button"
+                    class="secondary-button"
+                    id="refreshReportButton"
+                >
+
+                    <i class="fa-solid fa-arrows-rotate"></i>
+
+                    Refresh
+
+                </button>
+
+
+                <button
+                    type="button"
+                    class="primary-button"
+                    id="exportButton"
+                >
+
+                    <i class="fa-solid fa-file-arrow-down"></i>
+
+                    Export
+
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <div class="table-meta">
+
+            <span id="tableResultInfo">
+                Memuat data...
+            </span>
+
+            <span
+                class="table-live-status"
+                id="tableLiveStatus"
+            >
+
+                <span class="live-dot"></span>
+
+                Sinkronisasi otomatis
 
             </span>
 
         </div>
 
 
-    </div>
+        <div class="table-container">
 
-
-
-    <!-- =================================================
-         TABEL RIWAYAT
-    ================================================== -->
-
-    <div class="card">
-
-
-        <div
-        style="
-        display:flex;
-        justify-content:space-between;
-        align-items:center;
-        gap:15px;
-        margin-bottom:20px;
-        flex-wrap:wrap;
-        ">
-
-
-            <div class="card-title"
-            style="margin-bottom:0;">
-
-                <i
-                class="fa-solid fa-database">
-                </i>
-
-                Riwayat Monitoring Banjir
-
-            </div>
-
-
-            <div
-            style="
-            font-size:13px;
-            color:#777;
-            ">
-
-                Data:
-
-                <strong
-                id="displayedData">
-
-                    0
-
-                </strong>
-
-                baris
-
-            </div>
-
-
-        </div>
-
-
-
-        <!-- =============================================
-             TABLE WRAPPER
-        ============================================== -->
-
-        <div class="table-wrapper">
-
-
-            <table>
-
+            <table class="data-table">
 
                 <thead>
 
                     <tr>
 
-
                         <th>
-
                             ID
-
                         </th>
-
 
                         <th>
-
-                            Lokasi
-
+                            WAKTU
                         </th>
-
 
                         <th>
-
-                            Tinggi Air
-
+                            LOKASI
                         </th>
-
 
                         <th>
-
-                            Water Level
-
+                            TINGGI AIR
                         </th>
-
 
                         <th>
-
-                            Status
-
+                            WATER LEVEL
                         </th>
-
 
                         <th>
-
-                            Latitude
-
+                            STATUS
                         </th>
-
 
                         <th>
-
-                            Longitude
-
+                            KOORDINAT
                         </th>
-
-
-                        <th>
-
-                            Waktu Pengukuran
-
-                        </th>
-
 
                     </tr>
 
                 </thead>
 
 
-
-                <tbody
-                id="reportTableBody">
-
+                <tbody id="reportTableBody">
 
                     <tr>
 
                         <td
-                        colspan="8"
-                        class="empty-data">
+                            colspan="7"
+                            class="table-loading"
+                        >
 
+                            <div class="loading-spinner"></div>
 
-                            <i
-                            class="fa-solid fa-spinner fa-spin">
-                            </i>
-
-
-                            <br>
-
-
-                            Mengambil data
-                            dari Supabase...
-
+                            <span>
+                                Mengambil data sensor...
+                            </span>
 
                         </td>
 
                     </tr>
 
-
                 </tbody>
-
 
             </table>
 
-
         </div>
 
 
-
-        <!-- =============================================
-             PAGINATION
-        ============================================== -->
+        <!-- =================================================
+             EMPTY STATE
+             ================================================= -->
 
         <div
-        class="pagination"
-        id="pagination">
+            class="empty-state"
+            id="emptyState"
+            hidden
+        >
 
+            <div class="empty-icon">
+
+                <i class="fa-solid fa-database"></i>
+
+            </div>
+
+
+            <h3>
+                Data tidak ditemukan
+            </h3>
+
+
+            <p>
+                Tidak ada pembacaan sensor yang
+                sesuai dengan filter yang dipilih.
+            </p>
+
+
+            <button
+                type="button"
+                class="secondary-button"
+                id="emptyResetButton"
+            >
+
+                <i class="fa-solid fa-rotate-left"></i>
+
+                Reset Filter
+
+            </button>
 
         </div>
 
 
+        <!-- =================================================
+             PAGINATION
+             ================================================= -->
 
-        <!-- =============================================
-             EXPORT
-        ============================================== -->
+        <div class="pagination-wrapper">
 
-        <div class="export-buttons">
-
-
-            <button
-            class="btn-csv"
-            onclick="exportCSV()">
-
-                <i
-                class="fa-solid fa-file-csv">
-                </i>
-
-                Download CSV
-
-            </button>
+            <div
+                class="pagination-info"
+                id="paginationInfo"
+            >
+                Halaman 1
+            </div>
 
 
+            <div class="pagination">
 
-            <button
-            class="btn-excel"
-            onclick="exportExcel()">
+                <button
+                    type="button"
+                    class="pagination-button"
+                    id="previousPageButton"
+                    aria-label="Halaman sebelumnya"
+                >
 
-                <i
-                class="fa-solid fa-file-excel">
-                </i>
+                    <i class="fa-solid fa-chevron-left"></i>
 
-                Download Excel
-
-            </button>
-
+                </button>
 
 
-            <button
-            class="btn-pdf"
-            onclick="exportPDF()">
+                <div
+                    class="pagination-pages"
+                    id="paginationPages"
+                ></div>
 
-                <i
-                class="fa-solid fa-file-pdf">
-                </i>
 
-                Download PDF
+                <button
+                    type="button"
+                    class="pagination-button"
+                    id="nextPageButton"
+                    aria-label="Halaman berikutnya"
+                >
 
-            </button>
+                    <i class="fa-solid fa-chevron-right"></i>
 
+                </button>
+
+            </div>
 
         </div>
 
+    </section>
 
 
-    </div>
+    <!-- =====================================================
+         TOAST
+         ===================================================== -->
+
+    <div
+        class="toast"
+        id="toast"
+        role="status"
+        aria-live="polite"
+    ></div>
 
 
+    <!-- =====================================================
+         PART 2 STYLE
+         ===================================================== -->
 
-    <!-- =================================================
-         KETERANGAN EXPORT
-    ================================================== -->
+    <style>
 
-    <div class="card">
+        /* =================================================
+           REPORT PAGE
+           ================================================= */
 
+        .report-page {
 
-        <div class="info-box">
+            display: flex;
 
+            flex-direction: column;
 
-            <strong>
+            gap: 20px;
 
-                <i
-                class="fa-solid fa-circle-info">
-                </i>
-
-                Keterangan Download Data
-
-            </strong>
-
-
-            <br><br>
+        }
 
 
-            <b>CSV</b>
+        /* =================================================
+           SUMMARY GRID
+           ================================================= */
 
-            digunakan untuk mendapatkan
-            data pengukuran dalam format tabel
-            yang ringan dan dapat dibuka menggunakan
-            Microsoft Excel.
+        .summary-grid {
 
+            display: grid;
 
-            <br><br>
+            grid-template-columns:
+                repeat(4, minmax(0, 1fr));
 
+            gap: 16px;
 
-            <b>Excel</b>
-
-            digunakan untuk mendapatkan
-            data pengukuran dalam format
-            Microsoft Excel (.xlsx).
+        }
 
 
-            <br><br>
+        .summary-card {
+
+            min-width: 0;
+
+            padding: 20px;
+
+            background:
+                var(--surface);
+
+            border:
+                1px solid var(--border);
+
+            border-radius:
+                var(--radius-lg);
+
+            box-shadow:
+                var(--shadow);
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 14px;
+
+        }
 
 
-            <b>PDF</b>
+        .summary-icon {
 
-            digunakan untuk membuat laporan
-            hasil pengukuran dalam format
-            dokumen PDF.
+            width: 44px;
+            height: 44px;
+
+            flex: 0 0 44px;
+
+            border-radius: 13px;
+
+            display: grid;
+
+            place-items: center;
+
+            font-size: 16px;
+
+        }
 
 
-        </div>
+        .summary-icon.blue {
+
+            background:
+                rgba(37, 99, 235, .10);
+
+            color:
+                #2563eb;
+
+        }
 
 
-    </div>
+        .summary-icon.cyan {
+
+            background:
+                rgba(6, 182, 212, .10);
+
+            color:
+                #0891b2;
+
+        }
 
 
-</div>
+        .summary-icon.orange {
+
+            background:
+                rgba(245, 158, 11, .12);
+
+            color:
+                #d97706;
+
+        }
 
 
-<!-- =====================================================
-     AKHIR PART 2
+        .summary-icon.red {
 
-     PART 3 = JAVASCRIPT SUPABASE
-===================================================== -->
-<!-- =====================================================
-     PART 3 — JAVASCRIPT SUPABASE, FILTER & PAGINATION
-===================================================== -->
+            background:
+                rgba(239, 68, 68, .10);
+
+            color:
+                #dc2626;
+
+        }
+
+
+        .summary-content {
+
+            min-width: 0;
+
+            display: flex;
+
+            flex-direction: column;
+
+        }
+
+
+        .summary-label {
+
+            font-size: 9px;
+
+            font-weight: 800;
+
+            letter-spacing: .9px;
+
+            color:
+                var(--text-muted);
+
+        }
+
+
+        .summary-value {
+
+            margin-top: 3px;
+
+            font-family:
+                "Plus Jakarta Sans",
+                sans-serif;
+
+            font-size: 21px;
+
+            line-height: 1.2;
+
+            font-weight: 800;
+
+            color:
+                var(--text-primary);
+
+        }
+
+
+        .summary-info {
+
+            margin-top: 3px;
+
+            font-size: 9px;
+
+            color:
+                var(--text-secondary);
+
+            white-space: nowrap;
+
+            overflow: hidden;
+
+            text-overflow: ellipsis;
+
+        }
+
+
+        /* =================================================
+           REPORT CARD
+           ================================================= */
+
+        .report-card {
+
+            background:
+                var(--surface);
+
+            border:
+                1px solid var(--border);
+
+            border-radius:
+                var(--radius-lg);
+
+            box-shadow:
+                var(--shadow);
+
+            padding: 22px;
+
+        }
+
+
+        /* =================================================
+           CARD HEADING
+           ================================================= */
+
+        .card-heading {
+
+            display: flex;
+
+            align-items: flex-start;
+
+            justify-content: space-between;
+
+            gap: 20px;
+
+            margin-bottom: 20px;
+
+        }
+
+
+        .section-eyebrow {
+
+            display: block;
+
+            margin-bottom: 5px;
+
+            font-size: 9px;
+
+            font-weight: 800;
+
+            letter-spacing: 1.1px;
+
+            color:
+                var(--primary);
+
+        }
+
+
+        .card-heading h2 {
+
+            font-family:
+                "Plus Jakarta Sans",
+                sans-serif;
+
+            font-size: 16px;
+
+            line-height: 1.3;
+
+            font-weight: 800;
+
+            letter-spacing: -.3px;
+
+        }
+
+
+        .card-heading p {
+
+            margin-top: 5px;
+
+            font-size: 11px;
+
+            color:
+                var(--text-secondary);
+
+        }
+
+
+        /* =================================================
+           BUTTONS
+           ================================================= */
+
+        .primary-button,
+        .secondary-button {
+
+            min-height: 39px;
+
+            padding:
+                0 14px;
+
+            border-radius:
+                10px;
+
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 8px;
+
+            font-size: 10px;
+
+            font-weight: 800;
+
+            cursor: pointer;
+
+            transition:
+                .18s ease;
+
+            white-space: nowrap;
+
+        }
+
+
+        .primary-button {
+
+            border:
+                1px solid var(--primary);
+
+            background:
+                var(--primary);
+
+            color:
+                #ffffff;
+
+        }
+
+
+        .primary-button:hover {
+
+            background:
+                var(--primary-dark);
+
+            border-color:
+                var(--primary-dark);
+
+        }
+
+
+        .secondary-button {
+
+            border:
+                1px solid var(--border);
+
+            background:
+                var(--surface);
+
+            color:
+                var(--text-secondary);
+
+        }
+
+
+        .secondary-button:hover {
+
+            color:
+                var(--primary);
+
+            border-color:
+                rgba(37, 99, 235, .30);
+
+            background:
+                var(--primary-light);
+
+        }
+
+
+        /* =================================================
+           FILTER
+           ================================================= */
+
+        .filter-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, minmax(0, 1fr));
+
+            gap: 15px;
+
+        }
+
+
+        .filter-field {
+
+            min-width: 0;
+
+        }
+
+
+        .filter-field label {
+
+            display: block;
+
+            margin-bottom: 7px;
+
+            font-size: 10px;
+
+            font-weight: 700;
+
+            color:
+                var(--text-secondary);
+
+        }
+
+
+        .input-wrapper {
+
+            position: relative;
+
+        }
+
+
+        .input-wrapper > i {
+
+            position: absolute;
+
+            left: 12px;
+
+            top: 50%;
+
+            transform:
+                translateY(-50%);
+
+            font-size: 11px;
+
+            color:
+                var(--text-muted);
+
+            pointer-events: none;
+
+        }
+
+
+        .input-wrapper input,
+        .input-wrapper select {
+
+            width: 100%;
+
+            height: 40px;
+
+            padding:
+                0 12px 0 34px;
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 10px;
+
+            outline: none;
+
+            background:
+                var(--surface-soft);
+
+            color:
+                var(--text-primary);
+
+            font-size: 11px;
+
+            transition:
+                border .18s ease,
+                box-shadow .18s ease;
+
+        }
+
+
+        .input-wrapper input:focus,
+        .input-wrapper select:focus {
+
+            border-color:
+                var(--primary);
+
+            box-shadow:
+                0 0 0 3px
+                rgba(37, 99, 235, .08);
+
+        }
+
+
+        .filter-action {
+
+            display: flex;
+
+            align-items: flex-end;
+
+        }
+
+
+        .filter-action
+        .primary-button {
+
+            width: 100%;
+
+        }
+
+
+        /* =================================================
+           CHART
+           ================================================= */
+
+        .chart-status {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 7px;
+
+            padding:
+                7px 10px;
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 999px;
+
+            font-size: 9px;
+
+            font-weight: 700;
+
+            color:
+                var(--text-secondary);
+
+        }
+
+
+        .chart-status-dot {
+
+            width: 7px;
+            height: 7px;
+
+            border-radius: 50%;
+
+            background:
+                var(--text-muted);
+
+        }
+
+
+        .chart-status-dot.active {
+
+            background:
+                var(--success);
+
+            box-shadow:
+                0 0 0 4px
+                rgba(34, 197, 94, .10);
+
+        }
+
+
+        .chart-wrapper {
+
+            position: relative;
+
+            width: 100%;
+
+            height: 310px;
+
+        }
+
+
+        /* =================================================
+           TABLE
+           ================================================= */
+
+        .table-heading {
+
+            align-items: center;
+
+        }
+
+
+        .table-actions {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+        }
+
+
+        .table-meta {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 15px;
+
+            padding:
+                10px 0;
+
+            border-top:
+                1px solid var(--border);
+
+            border-bottom:
+                1px solid var(--border);
+
+            margin-bottom: 12px;
+
+            font-size: 9px;
+
+            color:
+                var(--text-muted);
+
+        }
+
+
+        .table-live-status {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 6px;
+
+            color:
+                var(--text-secondary);
+
+        }
+
+
+        .live-dot {
+
+            width: 6px;
+            height: 6px;
+
+            border-radius: 50%;
+
+            background:
+                var(--success);
+
+            box-shadow:
+                0 0 0 3px
+                rgba(34, 197, 94, .10);
+
+        }
+
+
+        .table-container {
+
+            width: 100%;
+
+            overflow-x: auto;
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 12px;
+
+        }
+
+
+        .data-table {
+
+            width: 100%;
+
+            min-width: 850px;
+
+            border-collapse: collapse;
+
+        }
+
+
+        .data-table th {
+
+            padding:
+                12px 14px;
+
+            background:
+                var(--surface-soft);
+
+            color:
+                var(--text-muted);
+
+            font-size: 9px;
+
+            font-weight: 800;
+
+            letter-spacing: .7px;
+
+            text-align: left;
+
+            white-space: nowrap;
+
+            border-bottom:
+                1px solid var(--border);
+
+        }
+
+
+        .data-table td {
+
+            padding:
+                13px 14px;
+
+            border-bottom:
+                1px solid var(--border);
+
+            color:
+                var(--text-secondary);
+
+            font-size: 10px;
+
+            white-space: nowrap;
+
+        }
+
+
+        .data-table tbody tr:last-child td {
+
+            border-bottom: 0;
+
+        }
+
+
+        .data-table tbody tr:hover {
+
+            background:
+                var(--surface-soft);
+
+        }
+
+
+        .table-loading {
+
+            height: 130px;
+
+            text-align: center !important;
+
+        }
+
+
+        .table-loading > * {
+
+            margin: 0 5px;
+
+            vertical-align: middle;
+
+        }
+
+
+        .loading-spinner {
+
+            display: inline-block;
+
+            width: 16px;
+            height: 16px;
+
+            border:
+                2px solid var(--border);
+
+            border-top-color:
+                var(--primary);
+
+            border-radius: 50%;
+
+            animation:
+                reportSpin .7s linear infinite;
+
+        }
+
+
+        @keyframes reportSpin {
+
+            to {
+
+                transform:
+                    rotate(360deg);
+
+            }
+
+        }
+
+
+        /* =================================================
+           EMPTY STATE
+           ================================================= */
+
+        .empty-state {
+
+            padding:
+                45px 20px;
+
+            text-align: center;
+
+        }
+
+
+        .empty-icon {
+
+            width: 48px;
+            height: 48px;
+
+            margin:
+                0 auto 12px;
+
+            border-radius: 14px;
+
+            background:
+                var(--surface-soft);
+
+            color:
+                var(--text-muted);
+
+            display: grid;
+
+            place-items: center;
+
+            font-size: 17px;
+
+        }
+
+
+        .empty-state h3 {
+
+            font-family:
+                "Plus Jakarta Sans",
+                sans-serif;
+
+            font-size: 14px;
+
+            font-weight: 800;
+
+        }
+
+
+        .empty-state p {
+
+            max-width: 430px;
+
+            margin:
+                5px auto 15px;
+
+            font-size: 10px;
+
+            color:
+                var(--text-secondary);
+
+        }
+
+
+        /* =================================================
+           PAGINATION
+           ================================================= */
+
+        .pagination-wrapper {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 15px;
+
+            margin-top: 15px;
+
+        }
+
+
+        .pagination-info {
+
+            font-size: 9px;
+
+            color:
+                var(--text-muted);
+
+        }
+
+
+        .pagination {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 5px;
+
+        }
+
+
+        .pagination-pages {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 4px;
+
+        }
+
+
+        .pagination-button,
+        .page-number {
+
+            width: 31px;
+            height: 31px;
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 8px;
+
+            background:
+                var(--surface);
+
+            color:
+                var(--text-secondary);
+
+            display: grid;
+
+            place-items: center;
+
+            font-size: 10px;
+
+            font-weight: 700;
+
+            cursor: pointer;
+
+        }
+
+
+        .pagination-button:hover,
+        .page-number:hover {
+
+            border-color:
+                rgba(37, 99, 235, .30);
+
+            color:
+                var(--primary);
+
+        }
+
+
+        .page-number.active {
+
+            border-color:
+                var(--primary);
+
+            background:
+                var(--primary);
+
+            color:
+                #ffffff;
+
+        }
+
+
+        .pagination-button:disabled {
+
+            opacity: .4;
+
+            cursor:
+                not-allowed;
+
+        }
+
+
+        /* =================================================
+           TOAST
+           ================================================= */
+
+        .toast {
+
+            position: fixed;
+
+            right: 25px;
+
+            bottom: 25px;
+
+            max-width: 340px;
+
+            padding:
+                12px 16px;
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 12px;
+
+            background:
+                var(--surface);
+
+            box-shadow:
+                0 15px 40px
+                rgba(15, 23, 42, .14);
+
+            color:
+                var(--text-primary);
+
+            font-size: 10px;
+
+            font-weight: 700;
+
+            opacity: 0;
+
+            visibility: hidden;
+
+            transform:
+                translateY(10px);
+
+            transition:
+                .2s ease;
+
+            z-index: 2000;
+
+        }
+
+
+        .toast.show {
+
+            opacity: 1;
+
+            visibility: visible;
+
+            transform:
+                translateY(0);
+
+        }
+
+
+        /* =================================================
+           RESPONSIVE REPORT
+           ================================================= */
+
+        @media (max-width: 1100px) {
+
+            .summary-grid {
+
+                grid-template-columns:
+                    repeat(2, minmax(0, 1fr));
+
+            }
+
+
+            .filter-grid {
+
+                grid-template-columns:
+                    repeat(2, minmax(0, 1fr));
+
+            }
+
+
+            .filter-action {
+
+                grid-column:
+                    span 2;
+
+            }
+
+        }
+
+
+        @media (max-width: 700px) {
+
+            .summary-grid {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+
+            .filter-grid {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+
+            .filter-action {
+
+                grid-column:
+                    auto;
+
+            }
+
+
+            .card-heading,
+            .table-heading {
+
+                flex-direction: column;
+
+                align-items: stretch;
+
+            }
+
+
+            .table-actions {
+
+                width: 100%;
+
+            }
+
+
+            .table-actions
+            button {
+
+                flex: 1;
+
+            }
+
+
+            .chart-status {
+
+                align-self: flex-start;
+
+            }
+
+
+            .pagination-wrapper {
+
+                flex-direction: column;
+
+                align-items: stretch;
+
+            }
+
+
+            .pagination {
+
+                justify-content: center;
+
+            }
+
+        }
+
+
+        @media (max-width: 480px) {
+
+            .report-card {
+
+                padding: 16px;
+
+            }
+
+
+            .summary-card {
+
+                padding: 16px;
+
+            }
+
+
+            .table-meta {
+
+                align-items: flex-start;
+
+                flex-direction: column;
+
+            }
+
+        }
+
+    </style>
+    <!-- =========================================================
+     PART 3 — SUPABASE, DATA, FILTER, STATISTIK & CHART
+     ========================================================= -->
 
 <script>
 
-/* =====================================================
-   KONFIGURASI SUPABASE
-===================================================== */
-
-const SUPABASE_URL =
-    'https://nydapuhnswrbgbjkaxqa.supabase.co';
-
-const SUPABASE_ANON_KEY =
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im55ZGFwdWhuc3dyYmdiamtheHFhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA0MzI2NTEsImV4cCI6MjEwNjAwODY1MX0.hJG7hUTuRic3sJmCWDONNyL5Qay-vfdu2vLAMG6FzfI';
-
-
-/*
- * CATATAN:
- * Jika kode ANON KEY Anda berbeda dari yang
- * sekarang digunakan di halaman lain,
- * gunakan ANON KEY yang sama dengan
- * dashboard / live_sensor / peta_banjir.
- */
-
-
-/* =====================================================
-   CLIENT SUPABASE
-===================================================== */
-
-const supabaseClient =
-    window.supabase.createClient(
-        SUPABASE_URL,
-        SUPABASE_ANON_KEY
-    );
-
-
-/* =====================================================
-   VARIABEL DATA
-===================================================== */
-
-
-/*
- * Semua data asli yang berhasil
- * diambil dari Supabase.
- */
-
-let allReportData = [];
-
-
-/*
- * Data setelah filter.
- */
-
-let filteredReportData = [];
-
-
-/*
- * Data yang sedang ditampilkan
- * pada halaman aktif.
- */
-
-let currentPageData = [];
-
-
-/*
- * Jumlah data per halaman.
- */
-
-const rowsPerPage = 10;
-
-
-/*
- * Halaman aktif.
- */
-
-let currentPage = 1;
-
-
-/* =====================================================
-   CACHE
-===================================================== */
-
-const REPORT_CACHE_KEY =
-    'flowspro_reports_cache';
-
-
-/* =====================================================
-   USER LOGIN
-===================================================== */
-
-function loadUserProfile(){
-
-    try{
-
-        const loginData =
-            JSON.parse(
-                localStorage.getItem(
-                    'userLogin'
-                )
-            );
-
-
-        if(
-            loginData &&
-            loginData.nama
-        ){
-
-            const userName =
-                document.getElementById(
-                    'userName'
-                );
-
-
-            if(userName){
-
-                userName.innerText =
-                    loginData.nama;
-
-            }
-
-        }
-
-    }
-
-    catch(error){
-
-        console.log(
-            'Data login tidak tersedia.'
-        );
-
-    }
-
-
-    /* ================================================
-       FOTO PROFILE
-    ================================================= */
-
-    const savedAvatar =
-        localStorage.getItem(
-            'flowspro_avatar'
-        );
-
-
-    if(savedAvatar){
-
-        const userPhoto =
-            document.getElementById(
-                'userPhoto'
-            );
-
-
-        if(userPhoto){
-
-            userPhoto.src =
-                savedAvatar;
-
-        }
-
-    }
-
-}
-
-
-loadUserProfile();
-
-
-/* =====================================================
-   STATUS KONEKSI
-===================================================== */
-
-function setConnectionStatus(
-    online,
-    fromCache = false
-){
-
-    const badge =
-        document.getElementById(
-            'connectionStatus'
-        );
-
-
-    const dot =
-        document.getElementById(
-            'connectionDot'
-        );
-
-
-    const text =
-        document.getElementById(
-            'connectionText'
-        );
-
-
-    if(!badge || !dot || !text){
-
-        return;
-
-    }
-
-
-    if(online){
-
-        badge.classList.remove(
-            'offline'
-        );
-
-
-        dot.style.background =
-            '#27ae60';
-
-
-        text.innerText =
-            'FLOWS-PRO ONLINE — SUPABASE TERHUBUNG';
-
-    }
-
-    else{
-
-        badge.classList.add(
-            'offline'
-        );
-
-
-        dot.style.background =
-            '#e74c3c';
-
-
-        if(fromCache){
-
-            text.innerText =
-                'OFFLINE — MENAMPILKAN DATA TERAKHIR';
-
-        }
-
-        else{
-
-            text.innerText =
-                'SUPABASE TIDAK DAPAT DIAKSES';
-
-        }
-
-    }
-
-}
-
-
-/* =====================================================
-   FORMAT TANGGAL
-===================================================== */
-
-function formatDateTime(
-    value
-){
-
-    if(!value){
-
-        return '--';
-
-    }
-
-
-    const date =
-        new Date(
-            value
-        );
-
-
-    if(
-        isNaN(
-            date.getTime()
-        )
-    ){
-
-        return '--';
-
-    }
-
-
-    return date.toLocaleString(
-        'id-ID',
-        {
-
-            day:'2-digit',
-
-            month:'2-digit',
-
-            year:'numeric',
-
-            hour:'2-digit',
-
-            minute:'2-digit',
-
-            second:'2-digit'
-
-        }
-    );
-
-}
-
-
-/* =====================================================
-   FORMAT TANGGAL UNTUK FILE
-===================================================== */
-
-function formatDateFile(
-    value
-){
-
-    if(!value){
-
-        return '';
-
-    }
-
-
-    const date =
-        new Date(
-            value
-        );
-
-
-    if(
-        isNaN(
-            date.getTime()
-        )
-    ){
-
-        return '';
-
-    }
-
-
-    const year =
-        date.getFullYear();
-
-
-    const month =
-        String(
-            date.getMonth() + 1
-        ).padStart(
-            2,
-            '0'
-        );
-
-
-    const day =
-        String(
-            date.getDate()
-        ).padStart(
-            2,
-            '0'
-        );
-
-
-    return (
-        year +
-        '-' +
-        month +
-        '-' +
-        day
-    );
-
-}
-
-
-/* =====================================================
-   STATUS CLASS
-===================================================== */
-
-function getStatusClass(
-    status
-){
-
-    const value =
-        String(
-            status || ''
-        ).toUpperCase();
-
-
-    if(
-        value === 'AMAN'
-    ){
-
-        return 'status-aman';
-
-    }
-
-
-    if(
-        value === 'SIAGA'
-    ){
-
-        return 'status-siaga';
-
-    }
-
-
-    if(
-        value === 'WASPADA'
-    ){
-
-        return 'status-waspada';
-
-    }
-
-
-    if(
-        value === 'BAHAYA'
-    ){
-
-        return 'status-bahaya';
-
-    }
-
-
-    return 'status-unknown';
-
-}
-
-
-/* =====================================================
-   SIMPAN CACHE
-===================================================== */
-
-function saveReportCache(
-    data
-){
-
-    if(
-        !Array.isArray(data) ||
-        data.length === 0
-    ){
-
-        return;
-
-    }
-
-
-    try{
-
-        localStorage.setItem(
-            REPORT_CACHE_KEY,
-            JSON.stringify(
-                data
-            )
-        );
-
-
-        console.log(
-            'Cache laporan berhasil disimpan.'
-        );
-
-    }
-
-    catch(error){
-
-        console.error(
-            'Gagal menyimpan cache:',
-            error
-        );
-
-    }
-
-}
-
-
-/* =====================================================
-   BACA CACHE
-===================================================== */
-
-function getReportCache(){
-
-    try{
-
-        const cache =
-            localStorage.getItem(
-                REPORT_CACHE_KEY
-            );
-
-
-        if(!cache){
-
-            return null;
-
-        }
-
-
-        const data =
-            JSON.parse(
-                cache
-            );
-
-
-        if(
-            !Array.isArray(data) ||
-            data.length === 0
-        ){
-
-            return null;
-
-        }
-
-
-        return data;
-
-    }
-
-    catch(error){
-
-        console.error(
-            'Gagal membaca cache:',
-            error
-        );
-
-
-        return null;
-
-    }
-
-}
-
-
-/* =====================================================
-   LOAD DATA SUPABASE
-===================================================== */
-
-async function loadReports(){
-
-    console.log(
-        'Mengambil data laporan dari Supabase...'
-    );
-
-
-    try{
-
-        /*
-         * Kita mengambil data berdasarkan ID
-         * dari yang terbaru.
-         *
-         * LIMIT 1000 agar halaman tetap ringan.
-         */
-
-        const {
-            data,
-            error
-        } =
-            await supabaseClient
-
-            .from('data_air')
-
-            .select('*')
-
-            .order(
-                'id',
-                {
-                    ascending:false
+    /* =========================================================
+       SUPABASE CONFIGURATION
+       ========================================================= */
+
+    const SUPABASE_URL =
+        "https://nydapuhnswrbgbjkaxqa.supabase.co";
+
+    const SUPABASE_PUBLISHABLE_KEY =
+        "sb_publishable_dypnRnjABFIf6GcshfrTIA_Q0zhuR0L";
+
+
+    const supabaseClient =
+        window.supabase.createClient(
+            SUPABASE_URL,
+            SUPABASE_PUBLISHABLE_KEY,
+            {
+                auth: {
+                    persistSession: true,
+                    autoRefreshToken: true,
+                    detectSessionInUrl: true
                 }
-            )
-
-            .limit(
-                1000
-            );
+            }
+        );
 
 
-        /* =============================================
-           ERROR SUPABASE
-        ============================================== */
+    /* =========================================================
+       GLOBAL DATA
+       ========================================================= */
 
-        if(error){
+    let allReportData = [];
 
-            console.error(
-                'Supabase Error:',
-                error
-            );
+    let filteredReportData = [];
+
+    let currentPage = 1;
+
+    const rowsPerPage = 10;
+
+    let reportChart = null;
+
+    let reportRefreshTimer = null;
 
 
-            useCachedReports();
+    /* =========================================================
+       ELEMENT HELPER
+       ========================================================= */
 
+    function reportElement(id) {
+
+        return document.getElementById(id);
+
+    }
+
+
+    /* =========================================================
+       ESCAPE HTML
+       ========================================================= */
+
+    function escapeReportHTML(value) {
+
+        return String(value ?? "")
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+
+    }
+
+
+    /* =========================================================
+       TOAST
+       ========================================================= */
+
+    let toastTimer = null;
+
+
+    function showReportToast(
+        message
+    ) {
+
+        const toast =
+            reportElement("toast");
+
+
+        if (!toast) {
             return;
-
         }
 
 
-        /* =============================================
-           DATA KOSONG
-        ============================================== */
-
-        if(
-            !data ||
-            data.length === 0
-        ){
-
-            console.log(
-                'Supabase tidak mengembalikan data.'
-            );
+        toast.textContent =
+            message;
 
 
-            useCachedReports();
-
-            return;
-
-        }
-
-
-        /* =============================================
-           DATA ASLI
-        ============================================== */
-
-        console.log(
-            'Data asli Supabase:',
-            data
+        toast.classList.add(
+            "show"
         );
 
 
-        allReportData =
-            data;
-
-
-        /*
-         * Simpan data asli ke cache.
-         */
-
-        saveReportCache(
-            data
+        clearTimeout(
+            toastTimer
         );
 
 
-        /*
-         * Terapkan filter.
-         */
-
-        filteredReportData =
-            [...allReportData];
-
-
-        currentPage =
-            1;
-
-
-        /*
-         * Tampilkan.
-         */
-
-        updateReportDisplay();
-
-
-        /*
-         * Status ONLINE.
-         */
-
-        setConnectionStatus(
-            true
-        );
-
-    }
-
-    catch(error){
-
-        console.error(
-            'Koneksi Supabase gagal:',
-            error
-        );
-
-
-        useCachedReports();
-
-    }
-
-}
-
-
-/* =====================================================
-   GUNAKAN CACHE
-===================================================== */
-
-function useCachedReports(){
-
-    const cache =
-        getReportCache();
-
-
-    if(
-        cache &&
-        cache.length > 0
-    ){
-
-        console.log(
-            'Menampilkan data laporan terakhir.'
-        );
-
-
-        allReportData =
-            cache;
-
-
-        filteredReportData =
-            [...allReportData];
-
-
-        currentPage =
-            1;
-
-
-        updateReportDisplay();
-
-
-        setConnectionStatus(
-            false,
-            true
-        );
-
-
-        return;
-
-    }
-
-
-    allReportData =
-        [];
-
-
-    filteredReportData =
-        [];
-
-
-    currentPage =
-        1;
-
-
-    updateReportDisplay();
-
-
-    setConnectionStatus(
-        false,
-        false
-    );
-
-}
-
-
-/* =====================================================
-   UPDATE DISPLAY
-===================================================== */
-
-function updateReportDisplay(){
-
-    /*
-     * Hitung statistik berdasarkan
-     * DATA HASIL FILTER.
-     */
-
-    updateSummary(
-        filteredReportData
-    );
-
-
-    /*
-     * Tampilkan tabel halaman aktif.
-     */
-
-    renderTable();
-
-
-    /*
-     * Pagination.
-     */
-
-    renderPagination();
-
-
-    /*
-     * Informasi filter.
-     */
-
-    updateFilterInfo();
-
-}
-
-
-/* =====================================================
-   UPDATE RINGKASAN
-===================================================== */
-
-function updateSummary(
-    data
-){
-
-    let total =
-        data.length;
-
-
-    let aman =
-        0;
-
-
-    let waspada =
-        0;
-
-
-    let bahaya =
-        0;
-
-
-    data.forEach(
-        function(item){
-
-            const status =
-                String(
-                    item.status ||
-                    ''
-                ).toUpperCase();
-
-
-            if(
-                status === 'AMAN'
-            ){
-
-                aman++;
-
-            }
-
-
-            else if(
-                status === 'WASPADA' ||
-                status === 'SIAGA'
-            ){
-
-                waspada++;
-
-            }
-
-
-            else if(
-                status === 'BAHAYA'
-            ){
-
-                bahaya++;
-
-            }
-
-        }
-    );
-
-
-    document.getElementById(
-        'totalData'
-    ).innerText =
-        total;
-
-
-    document.getElementById(
-        'totalAman'
-    ).innerText =
-        aman;
-
-
-    document.getElementById(
-        'totalWaspada'
-    ).innerText =
-        waspada;
-
-
-    document.getElementById(
-        'totalBahaya'
-    ).innerText =
-        bahaya;
-
-}
-
-
-/* =====================================================
-   RENDER TABLE
-===================================================== */
-
-function renderTable(){
-
-    const tbody =
-        document.getElementById(
-            'reportTableBody'
-        );
-
-
-    if(!tbody){
-
-        return;
-
-    }
-
-
-    tbody.innerHTML =
-        '';
-
-
-    if(
-        filteredReportData.length === 0
-    ){
-
-        tbody.innerHTML = `
-
-            <tr>
-
-                <td
-                colspan="8"
-                class="empty-data">
-
-                    <i
-                    class="fa-solid fa-database">
-                    </i>
-
-                    <br><br>
-
-                    Tidak ada data
-                    pengukuran.
-
-                </td>
-
-            </tr>
-
-        `;
-
-
-        document.getElementById(
-            'displayedData'
-        ).innerText =
-            0;
-
-
-        return;
-
-    }
-
-
-    /*
-     * Tentukan index awal dan akhir.
-     */
-
-    const startIndex =
-        (
-            currentPage - 1
-        )
-        *
-        rowsPerPage;
-
-
-    const endIndex =
-        Math.min(
-            startIndex +
-            rowsPerPage,
-            filteredReportData.length
-        );
-
-
-    currentPageData =
-        filteredReportData.slice(
-            startIndex,
-            endIndex
-        );
-
-
-    /*
-     * Tampilkan setiap data.
-     */
-
-    currentPageData.forEach(
-        function(item){
-
-            const row =
-                document.createElement(
-                    'tr'
-                );
-
-
-            const status =
-                String(
-                    item.status ||
-                    'UNKNOWN'
-                ).toUpperCase();
-
-
-            const tinggiAir =
-                item.tinggi_air !== null &&
-                item.tinggi_air !== undefined
-                ?
-                item.tinggi_air + ' cm'
-                :
-                '--';
-
-
-            const lokasi =
-                item.lokasi !== null &&
-                item.lokasi !== undefined &&
-                String(item.lokasi).trim() !== ''
-                ?
-                item.lokasi
-                :
-                '--';
-
-
-            const waterLevel =
-                item.water_level !== null &&
-                item.water_level !== undefined
-                ?
-                item.water_level
-                :
-                '--';
-
-
-            const latitude =
-                Number(
-                    item.latitude
-                );
-
-
-            const longitude =
-                Number(
-                    item.longitude
-                );
-
-
-            const latText =
-                Number.isFinite(latitude)
-                ?
-                latitude.toFixed(6)
-                :
-                '--';
-
-
-            const lngText =
-                Number.isFinite(longitude)
-                ?
-                longitude.toFixed(6)
-                :
-                '--';
-
-
-            row.innerHTML = `
-
-                <td>
-
-                    ${item.id ?? '--'}
-
-                </td>
-
-
-                <td>
-
-                    ${escapeHTML(lokasi)}
-
-                </td>
-
-
-                <td>
-
-                    <strong>
-
-                        ${tinggiAir}
-
-                    </strong>
-
-                </td>
-
-
-                <td>
-
-                    ${escapeHTML(waterLevel)}
-
-                </td>
-
-
-                <td>
-
-                    <span
-                    class="status-label
-                    ${getStatusClass(status)}">
-
-                        ${escapeHTML(status)}
-
-                    </span>
-
-                </td>
-
-
-                <td>
-
-                    ${latText}
-
-                </td>
-
-
-                <td>
-
-                    ${lngText}
-
-                </td>
-
-
-                <td>
-
-                    ${formatDateTime(
-                        item.created_at
-                    )}
-
-                </td>
-
-            `;
-
-
-            tbody.appendChild(
-                row
-            );
-
-        }
-    );
-
-
-    document.getElementById(
-        'displayedData'
-    ).innerText =
-        currentPageData.length;
-
-}
-
-
-/* =====================================================
-   ESCAPE HTML
-===================================================== */
-
-function escapeHTML(
-    value
-){
-
-    const div =
-        document.createElement(
-            'div'
-        );
-
-
-    div.textContent =
-        value ?? '';
-
-
-    return div.innerHTML;
-
-}
-
-
-/* =====================================================
-   PAGINATION
-===================================================== */
-
-function renderPagination(){
-
-    const container =
-        document.getElementById(
-            'pagination'
-        );
-
-
-    if(!container){
-
-        return;
-
-    }
-
-
-    container.innerHTML =
-        '';
-
-
-    const totalPages =
-        Math.ceil(
-            filteredReportData.length /
-            rowsPerPage
-        );
-
-
-    if(
-        totalPages <= 1
-    ){
-
-        return;
-
-    }
-
-
-    /*
-     * Tombol Previous.
-     */
-
-    const prev =
-        document.createElement(
-            'div'
-        );
-
-
-    prev.className =
-        'page-btn';
-
-
-    if(
-        currentPage === 1
-    ){
-
-        prev.classList.add(
-            'disabled'
-        );
-
-    }
-
-
-    prev.innerHTML =
-        '<i class="fa-solid fa-chevron-left"></i>';
-
-
-    prev.onclick =
-        function(){
-
-            if(
-                currentPage > 1
-            ){
-
-                currentPage--;
-
-                renderTable();
-
-                renderPagination();
-
-            }
-
-        };
-
-
-    container.appendChild(
-        prev
-    );
-
-
-    /*
-     * Nomor halaman.
-     */
-
-    for(
-        let page = 1;
-        page <= totalPages;
-        page++
-    ){
-
-        /*
-         * Jangan menampilkan terlalu banyak
-         * tombol halaman.
-         */
-
-        if(
-            totalPages > 10 &&
-            page > 3 &&
-            page < totalPages - 2 &&
-            Math.abs(
-                page -
-                currentPage
-            ) > 1
-        ){
-
-            if(
-                page === 4
-            ){
-
-                const dots =
-                    document.createElement(
-                        'div'
+        toastTimer =
+            setTimeout(
+                function() {
+
+                    toast.classList.remove(
+                        "show"
                     );
 
-
-                dots.className =
-                    'page-btn';
-
-
-                dots.innerText =
-                    '...';
-
-
-                dots.style.cursor =
-                    'default';
-
-
-                container.appendChild(
-                    dots
-                );
-
-            }
-
-
-            continue;
-
-        }
-
-
-        const button =
-            document.createElement(
-                'div'
+                },
+                2800
             );
 
-
-        button.className =
-            'page-btn';
-
-
-        if(
-            page === currentPage
-        ){
-
-            button.classList.add(
-                'active'
-            );
-
-        }
-
-
-        button.innerText =
-            page;
-
-
-        button.onclick =
-            function(){
-
-                currentPage =
-                    page;
-
-
-                renderTable();
-
-                renderPagination();
-
-            };
-
-
-        container.appendChild(
-            button
-        );
-
     }
 
 
-    /*
-     * Tombol Next.
-     */
+    /* =========================================================
+       PROFILE
+       ========================================================= */
 
-    const next =
-        document.createElement(
-            'div'
-        );
+    async function loadReportUser() {
 
-
-    next.className =
-        'page-btn';
-
-
-    if(
-        currentPage === totalPages
-    ){
-
-        next.classList.add(
-            'disabled'
-        );
-
-    }
-
-
-    next.innerHTML =
-        '<i class="fa-solid fa-chevron-right"></i>';
-
-
-    next.onclick =
-        function(){
-
-            if(
-                currentPage <
-                totalPages
-            ){
-
-                currentPage++;
-
-                renderTable();
-
-                renderPagination();
-
-            }
-
-        };
-
-
-    container.appendChild(
-        next
-    );
-
-}
-
-
-/* =====================================================
-   FILTER DATA
-===================================================== */
-
-function applyFilter(){
-
-    const tanggalAwal =
-        document.getElementById(
-            'tanggalAwal'
-        ).value;
-
-
-    const tanggalAkhir =
-        document.getElementById(
-            'tanggalAkhir'
-        ).value;
-
-
-    const status =
-        document.getElementById(
-            'statusFilter'
-        ).value;
-
-
-    /*
-     * Validasi tanggal.
-     */
-
-    if(
-        tanggalAwal &&
-        tanggalAkhir &&
-        tanggalAwal >
-        tanggalAkhir
-    ){
-
-        alert(
-            'Tanggal awal tidak boleh lebih besar dari tanggal akhir.'
-        );
-
-
-        return;
-
-    }
-
-
-    filteredReportData =
-        allReportData.filter(
-            function(item){
-
-                /*
-                 * =====================================
-                 * FILTER TANGGAL
-                 * ===================================
-                 */
-
-                if(
-                    tanggalAwal ||
-                    tanggalAkhir
-                ){
-
-                    if(
-                        !item.created_at
-                    ){
-
-                        return false;
-
-                    }
-
-
-                    const itemDate =
-                        new Date(
-                            item.created_at
-                        );
-
-
-                    /*
-                     * Awal hari.
-                     */
-
-                    if(
-                        tanggalAwal
-                    ){
-
-                        const start =
-                            new Date(
-                                tanggalAwal +
-                                'T00:00:00'
-                            );
-
-
-                        if(
-                            itemDate <
-                            start
-                        ){
-
-                            return false;
-
-                        }
-
-                    }
-
-
-                    /*
-                     * Akhir hari.
-                     */
-
-                    if(
-                        tanggalAkhir
-                    ){
-
-                        const end =
-                            new Date(
-                                tanggalAkhir +
-                                'T23:59:59'
-                            );
-
-
-                        if(
-                            itemDate >
-                            end
-                        ){
-
-                            return false;
-
-                        }
-
-                    }
-
-                }
-
-
-                /*
-                 * =====================================
-                 * FILTER STATUS
-                 * ===================================
-                 */
-
-                if(
-                    status !==
-                    'SEMUA'
-                ){
-
-                    const itemStatus =
-                        String(
-                            item.status ||
-                            'UNKNOWN'
-                        ).toUpperCase();
-
-
-                    if(
-                        itemStatus !==
-                        status
-                    ){
-
-                        return false;
-
-                    }
-
-                }
-
-
-                return true;
-
-            }
-        );
-
-
-    currentPage =
-        1;
-
-
-    updateReportDisplay();
-
-}
-
-
-/* =====================================================
-   RESET FILTER
-===================================================== */
-
-function resetFilter(){
-
-    document.getElementById(
-        'tanggalAwal'
-    ).value =
-        '';
-
-
-    document.getElementById(
-        'tanggalAkhir'
-    ).value =
-        '';
-
-
-    document.getElementById(
-        'statusFilter'
-    ).value =
-        'SEMUA';
-
-
-    filteredReportData =
-        [...allReportData];
-
-
-    currentPage =
-        1;
-
-
-    updateReportDisplay();
-
-}
-
-
-/* =====================================================
-   INFORMASI FILTER
-===================================================== */
-
-function updateFilterInfo(){
-
-    const info =
-        document.getElementById(
-            'filterInfo'
-        );
-
-
-    if(!info){
-
-        return;
-
-    }
-
-
-    const tanggalAwal =
-        document.getElementById(
-            'tanggalAwal'
-        ).value;
-
-
-    const tanggalAkhir =
-        document.getElementById(
-            'tanggalAkhir'
-        ).value;
-
-
-    const status =
-        document.getElementById(
-            'statusFilter'
-        ).value;
-
-
-    let text =
-        'Menampilkan ' +
-        filteredReportData.length +
-        ' data.';
-
-
-    if(
-        tanggalAwal
-    ){
-
-        text +=
-            ' Mulai ' +
-            tanggalAwal +
-            '.';
-
-    }
-
-
-    if(
-        tanggalAkhir
-    ){
-
-        text +=
-            ' Sampai ' +
-            tanggalAkhir +
-            '.';
-
-    }
-
-
-    if(
-        status !==
-        'SEMUA'
-    ){
-
-        text +=
-            ' Status: ' +
-            status +
-            '.';
-
-    }
-
-
-    info.innerText =
-        text;
-
-}
-
-
-/* =====================================================
-   LOAD DATA PERTAMA
-===================================================== */
-
-const initialCache =
-    getReportCache();
-
-
-if(
-    initialCache &&
-    initialCache.length > 0
-){
-
-    allReportData =
-        initialCache;
-
-
-    filteredReportData =
-        [...allReportData];
-
-
-    updateReportDisplay();
-
-
-    setConnectionStatus(
-        false,
-        true
-    );
-
-}
-
-
-/* =====================================================
-   AMBIL DATA TERBARU
-===================================================== */
-
-loadReports();
-
-
-/* =====================================================
-   REFRESH OTOMATIS
-===================================================== */
-
-
-/*
- * Setiap 30 detik.
- *
- * Reports tidak perlu mengambil data
- * setiap 5 detik seperti Live Sensor.
- */
-
-setInterval(
-    loadReports,
-    30000
-);
-
-
-/* =====================================================
-   KETIKA INTERNET KEMBALI
-===================================================== */
-
-window.addEventListener(
-    'online',
-    function(){
-
-        console.log(
-            'Internet kembali.'
-        );
-
-
-        loadReports();
-
-    }
-);
-
-
-/* =====================================================
-   KETIKA INTERNET PUTUS
-===================================================== */
-
-window.addEventListener(
-    'offline',
-    function(){
-
-        console.log(
-            'Internet terputus.'
-        );
-
-
-        useCachedReports();
-
-    }
-);
-
-
-/* =====================================================
-   PART 3 SELESAI
-===================================================== */
-<!-- =====================================================
-     PART 4 — EXPORT CSV, EXCEL & PDF
-===================================================== -->
-
-<script>
-
-/* =====================================================
-   AMBIL SEMUA DATA SUPABASE
-===================================================== */
-
-/*
- * Reports yang ditampilkan di halaman dibatasi 1000 data.
- *
- * Tetapi untuk DOWNLOAD kita mengambil seluruh data
- * dari Supabase secara bertahap.
- *
- * Ini berguna karena ID data Anda sudah mencapai
- * ribuan record.
- */
-
-async function getAllDataForExport(){
-
-    const allData = [];
-
-    const batchSize = 1000;
-
-    let from = 0;
-
-    let finished = false;
-
-
-    try{
-
-        while(!finished){
-
-            console.log(
-                'Mengambil data export:',
-                from,
-                '-',
-                from + batchSize - 1
-            );
-
+        try {
 
             const {
                 data,
                 error
             } =
                 await supabaseClient
+                    .auth.getUser();
 
-                .from('data_air')
 
-                .select('*')
+            if (error) {
 
-                .order(
-                    'id',
-                    {
-                        ascending:false
-                    }
+                console.error(
+                    "Gagal mengambil user:",
+                    error
+                );
+
+                return null;
+
+            }
+
+
+            const user =
+                data?.user;
+
+
+            if (!user) {
+
+                window.location.replace(
+                    "login.html"
+                );
+
+                return null;
+
+            }
+
+
+            const metadata =
+                user.user_metadata || {};
+
+
+            const displayName =
+                metadata.full_name ||
+                metadata.name ||
+                metadata.nama ||
+                user.email?.split("@")[0] ||
+                "Pengguna";
+
+
+            const avatar =
+                reportElement(
+                    "profileAvatar"
+                );
+
+
+            const profileName =
+                reportElement(
+                    "profileName"
+                );
+
+
+            const profileRole =
+                reportElement(
+                    "profileRole"
+                );
+
+
+            if (profileName) {
+
+                profileName.textContent =
+                    displayName;
+
+            }
+
+
+            if (avatar) {
+
+                avatar.textContent =
+                    displayName
+                        .trim()
+                        .charAt(0)
+                        .toUpperCase() ||
+                    "U";
+
+            }
+
+
+            if (profileRole) {
+
+                profileRole.textContent =
+                    "OPERATOR";
+
+            }
+
+
+            return user;
+
+        }
+
+        catch(error) {
+
+            console.error(
+                "Profile error:",
+                error
+            );
+
+            return null;
+
+        }
+
+    }
+
+
+    /* =========================================================
+       FORMAT DATE
+       ========================================================= */
+
+    function formatReportDate(
+        value
+    ) {
+
+        if (!value) {
+            return "-";
+        }
+
+
+        const date =
+            new Date(value);
+
+
+        if (
+            Number.isNaN(
+                date.getTime()
+            )
+        ) {
+
+            return "-";
+
+        }
+
+
+        return date.toLocaleString(
+            "id-ID",
+            {
+                day: "2-digit",
+                month: "2-digit",
+                year: "numeric",
+                hour: "2-digit",
+                minute: "2-digit",
+                second: "2-digit"
+            }
+        );
+
+    }
+
+
+    /* =========================================================
+       NUMBER FORMAT
+       ========================================================= */
+
+    function formatNumber(
+        value,
+        decimals = 1
+    ) {
+
+        const number =
+            Number(value);
+
+
+        if (
+            !Number.isFinite(
+                number
+            )
+        ) {
+
+            return "-";
+
+        }
+
+
+        return number.toLocaleString(
+            "id-ID",
+            {
+                minimumFractionDigits:
+                    decimals,
+
+                maximumFractionDigits:
+                    decimals
+            }
+        );
+
+    }
+
+
+    /* =========================================================
+       NORMALIZE STATUS
+       ========================================================= */
+
+    function normalizeStatus(
+        status
+    ) {
+
+        return String(
+            status || ""
+        )
+            .trim()
+            .toUpperCase();
+
+    }
+
+
+    /* =========================================================
+       STATUS CLASS
+       ========================================================= */
+
+    function getReportStatusClass(
+        status
+    ) {
+
+        const value =
+            normalizeStatus(
+                status
+            );
+
+
+        if (
+            value === "AMAN"
+        ) {
+
+            return "report-status-safe";
+
+        }
+
+
+        if (
+            value === "SIAGA"
+        ) {
+
+            return "report-status-warning";
+
+        }
+
+
+        if (
+            value === "WASPADA"
+        ) {
+
+            return "report-status-alert";
+
+        }
+
+
+        if (
+            value === "BAHAYA" ||
+            value === "DARURAT"
+        ) {
+
+            return "report-status-danger";
+
+        }
+
+
+        return "report-status-neutral";
+
+    }
+
+
+    /* =========================================================
+       GET WATER LEVEL
+       ========================================================= */
+
+    function getWaterLevel(
+        item
+    ) {
+
+        const value =
+            item?.water_level ??
+            item?.tinggi_air;
+
+
+        const number =
+            Number(value);
+
+
+        return Number.isFinite(
+            number
+        )
+            ? number
+            : null;
+
+    }
+
+
+    /* =========================================================
+       LOAD DATA FROM SUPABASE
+       ========================================================= */
+
+    async function loadReportData(
+        showMessage = false
+    ) {
+
+        try {
+
+            const {
+                data,
+                error
+            } =
+                await supabaseClient
+                    .from("data_air")
+                    .select(
+                        "*"
+                    )
+                    .order(
+                        "id",
+                        {
+                            ascending:
+                                false
+                        }
+                    );
+
+
+            if (error) {
+
+                console.error(
+                    "Supabase report error:",
+                    error
+                );
+
+
+                updateTableLiveStatus(
+                    false
+                );
+
+
+                if (showMessage) {
+
+                    showReportToast(
+                        "Gagal mengambil data sensor."
+                    );
+
+                }
+
+
+                return;
+
+            }
+
+
+            allReportData =
+                Array.isArray(data)
+                    ? data
+                    : [];
+
+
+            populateLocationFilter();
+
+
+            applyReportFilters(
+                false
+            );
+
+
+            updateTableLiveStatus(
+                true
+            );
+
+
+            if (showMessage) {
+
+                showReportToast(
+                    "Data laporan berhasil diperbarui."
+                );
+
+            }
+
+        }
+
+        catch(error) {
+
+            console.error(
+                "Report data error:",
+                error
+            );
+
+
+            updateTableLiveStatus(
+                false
+            );
+
+
+            if (showMessage) {
+
+                showReportToast(
+                    "Koneksi ke database gagal."
+                );
+
+            }
+
+        }
+
+    }
+
+
+    /* =========================================================
+       LOCATION FILTER
+       ========================================================= */
+
+    function populateLocationFilter() {
+
+        const select =
+            reportElement(
+                "locationFilter"
+            );
+
+
+        if (!select) {
+            return;
+        }
+
+
+        const currentValue =
+            select.value;
+
+
+        const locations =
+            [
+                ...new Set(
+                    allReportData
+                        .map(
+                            item =>
+                                String(
+                                    item.lokasi ?? ""
+                                ).trim()
+                        )
+                        .filter(
+                            Boolean
+                        )
                 )
-
-                .range(
-                    from,
-                    from + batchSize - 1
-                );
-
-
-            if(error){
-
-                throw error;
-
-            }
-
-
-            if(
-                !data ||
-                data.length === 0
-            ){
-
-                finished = true;
-
-                break;
-
-            }
-
-
-            allData.push(
-                ...data
+            ]
+            .sort(
+                (a, b) =>
+                    a.localeCompare(
+                        b,
+                        "id"
+                    )
             );
 
 
-            /*
-             * Jika jumlah data kurang dari
-             * batchSize berarti sudah sampai
-             * data terakhir.
-             */
-
-            if(
-                data.length < batchSize
-            ){
-
-                finished = true;
-
-            }
+        select.innerHTML = `
+            <option value="all">
+                Semua Lokasi
+            </option>
+        `;
 
 
-            else{
+        locations.forEach(
+            function(location) {
 
-                from += batchSize;
-
-            }
-
-        }
-
-
-        console.log(
-            'Total data untuk export:',
-            allData.length
-        );
-
-
-        return allData;
-
-    }
-
-    catch(error){
-
-        console.error(
-            'Gagal mengambil seluruh data:',
-            error
-        );
-
-
-        throw error;
-
-    }
-
-}
-
-
-/* =====================================================
-   TERAPKAN FILTER KE DATA EXPORT
-===================================================== */
-
-function filterExportData(
-    data
-){
-
-    const tanggalAwal =
-        document.getElementById(
-            'tanggalAwal'
-        ).value;
-
-
-    const tanggalAkhir =
-        document.getElementById(
-            'tanggalAkhir'
-        ).value;
-
-
-    const status =
-        document.getElementById(
-            'statusFilter'
-        ).value;
-
-
-    return data.filter(
-        function(item){
-
-            /*
-             * =========================================
-             * FILTER TANGGAL AWAL
-             * =========================================
-             */
-
-            if(
-                tanggalAwal
-            ){
-
-                if(
-                    !item.created_at
-                ){
-
-                    return false;
-
-                }
-
-
-                const itemDate =
-                    new Date(
-                        item.created_at
+                const option =
+                    document.createElement(
+                        "option"
                     );
 
 
-                const startDate =
-                    new Date(
-                        tanggalAwal +
-                        'T00:00:00'
-                    );
+                option.value =
+                    location;
 
 
-                if(
-                    itemDate <
-                    startDate
-                ){
-
-                    return false;
-
-                }
-
-            }
+                option.textContent =
+                    location;
 
 
-            /*
-             * =========================================
-             * FILTER TANGGAL AKHIR
-             * =========================================
-             */
-
-            if(
-                tanggalAkhir
-            ){
-
-                if(
-                    !item.created_at
-                ){
-
-                    return false;
-
-                }
-
-
-                const itemDate =
-                    new Date(
-                        item.created_at
-                    );
-
-
-                const endDate =
-                    new Date(
-                        tanggalAkhir +
-                        'T23:59:59'
-                    );
-
-
-                if(
-                    itemDate >
-                    endDate
-                ){
-
-                    return false;
-
-                }
-
-            }
-
-
-            /*
-             * =========================================
-             * FILTER STATUS
-             * =========================================
-             */
-
-            if(
-                status &&
-                status !==
-                'SEMUA'
-            ){
-
-                const itemStatus =
-                    String(
-                        item.status ||
-                        'UNKNOWN'
-                    ).toUpperCase();
-
-
-                if(
-                    itemStatus !==
-                    status
-                ){
-
-                    return false;
-
-                }
-
-            }
-
-
-            return true;
-
-        }
-    );
-
-}
-
-
-/* =====================================================
-   BUAT NAMA FILE
-===================================================== */
-
-function getExportFileName(
-    extension
-){
-
-    const tanggalAwal =
-        document.getElementById(
-            'tanggalAwal'
-        ).value;
-
-
-    const tanggalAkhir =
-        document.getElementById(
-            'tanggalAkhir'
-        ).value;
-
-
-    let name =
-        'FLOWS-PRO_Data_Pengukuran';
-
-
-    if(
-        tanggalAwal &&
-        tanggalAkhir
-    ){
-
-        name +=
-            '_' +
-            tanggalAwal +
-            '_sampai_' +
-            tanggalAkhir;
-
-    }
-
-    else if(
-        tanggalAwal
-    ){
-
-        name +=
-            '_mulai_' +
-            tanggalAwal;
-
-    }
-
-    else if(
-        tanggalAkhir
-    ){
-
-        name +=
-            '_sampai_' +
-            tanggalAkhir;
-
-    }
-
-
-    return (
-        name +
-        extension
-    );
-
-}
-
-
-/* =====================================================
-   FORMAT DATA EXPORT
-===================================================== */
-
-function prepareExportData(
-    data
-){
-
-    return data.map(
-        function(item){
-
-            const latitude =
-                Number(
-                    item.latitude
+                select.appendChild(
+                    option
                 );
 
-
-            const longitude =
-                Number(
-                    item.longitude
-                );
-
-
-            return {
-
-                'ID':
-                    item.id ?? '',
-
-
-                'Lokasi':
-                    item.lokasi ?? '',
-
-
-                'Tinggi Air (cm)':
-                    item.tinggi_air ?? '',
-
-
-                'Water Level':
-                    item.water_level ?? '',
-
-
-                'Status':
-                    item.status ?? '',
-
-
-                'Latitude':
-                    Number.isFinite(
-                        latitude
-                    )
-                    ?
-                    latitude
-                    :
-                    '',
-
-
-                'Longitude':
-                    Number.isFinite(
-                        longitude
-                    )
-                    ?
-                    longitude
-                    :
-                    '',
-
-
-                'Waktu Pengukuran':
-                    formatDateTime(
-                        item.created_at
-                    )
-
-            };
-
-        }
-    );
-
-}
-
-
-/* =====================================================
-   TOMBOL LOADING
-===================================================== */
-
-function setExportButtonLoading(
-    loading
-){
-
-    const buttons =
-        document.querySelectorAll(
-            '.export-buttons button'
+            }
         );
 
 
-    buttons.forEach(
-        function(button){
+        if (
+            locations.includes(
+                currentValue
+            )
+        ) {
 
-            button.disabled =
-                loading;
+            select.value =
+                currentValue;
 
         }
-    );
 
-}
-
-
-/* =====================================================
-   DOWNLOAD CSV
-===================================================== */
-
-async function exportCSV(){
-
-    try{
-
-        setExportButtonLoading(
-            true
-        );
+    }
 
 
-        /*
-         * Ambil semua data.
-         */
+    /* =========================================================
+       APPLY FILTERS
+       ========================================================= */
 
-        const allData =
-            await getAllDataForExport();
+    function applyReportFilters(
+        resetPage = true
+    ) {
+
+        const startDate =
+            reportElement(
+                "startDate"
+            )?.value || "";
 
 
-        /*
-         * Terapkan filter.
-         */
+        const endDate =
+            reportElement(
+                "endDate"
+            )?.value || "";
 
-        const exportData =
-            filterExportData(
-                allData
+
+        const status =
+            reportElement(
+                "statusFilter"
+            )?.value || "all";
+
+
+        const location =
+            reportElement(
+                "locationFilter"
+            )?.value || "all";
+
+
+        const search =
+            (
+                reportElement(
+                    "searchInput"
+                )?.value || ""
+            )
+            .trim()
+            .toLowerCase();
+
+
+        if (resetPage) {
+
+            currentPage = 1;
+
+        }
+
+
+        filteredReportData =
+            allReportData.filter(
+                function(item) {
+
+                    /* =====================================
+                       DATE
+                       ===================================== */
+
+                    if (
+                        startDate ||
+                        endDate
+                    ) {
+
+                        const created =
+                            item.created_at;
+
+
+                        if (!created) {
+
+                            return false;
+
+                        }
+
+
+                        const itemDate =
+                            new Date(
+                                created
+                            );
+
+
+                        if (
+                            Number.isNaN(
+                                itemDate.getTime()
+                            )
+                        ) {
+
+                            return false;
+
+                        }
+
+
+                        const day =
+                            itemDate
+                                .toISOString()
+                                .slice(
+                                    0,
+                                    10
+                                );
+
+
+                        if (
+                            startDate &&
+                            day < startDate
+                        ) {
+
+                            return false;
+
+                        }
+
+
+                        if (
+                            endDate &&
+                            day > endDate
+                        ) {
+
+                            return false;
+
+                        }
+
+                    }
+
+
+                    /* =====================================
+                       STATUS
+                       ===================================== */
+
+                    if (
+                        status !== "all" &&
+                        normalizeStatus(
+                            item.status
+                        ) !== status
+                    ) {
+
+                        return false;
+
+                    }
+
+
+                    /* =====================================
+                       LOCATION
+                       ===================================== */
+
+                    if (
+                        location !== "all" &&
+                        String(
+                            item.lokasi ?? ""
+                        ) !== location
+                    ) {
+
+                        return false;
+
+                    }
+
+
+                    /* =====================================
+                       SEARCH
+                       ===================================== */
+
+                    if (search) {
+
+                        const searchable =
+                            [
+                                item.id,
+                                item.lokasi,
+                                item.status,
+                                item.water_level,
+                                item.tinggi_air
+                            ]
+                            .join(" ")
+                            .toLowerCase();
+
+
+                        if (
+                            !searchable.includes(
+                                search
+                            )
+                        ) {
+
+                            return false;
+
+                        }
+
+                    }
+
+
+                    return true;
+
+                }
             );
 
 
-        if(
-            exportData.length === 0
-        ){
+        renderReportTable();
 
-            alert(
-                'Tidak ada data yang sesuai dengan filter.'
+        updateReportStatistics();
+
+        updateReportChart();
+
+        updatePagination();
+
+    }
+
+
+    /* =========================================================
+       RENDER TABLE
+       ========================================================= */
+
+    function renderReportTable() {
+
+        const tbody =
+            reportElement(
+                "reportTableBody"
             );
+
+
+        const emptyState =
+            reportElement(
+                "emptyState"
+            );
+
+
+        if (!tbody) {
+            return;
+        }
+
+
+        const total =
+            filteredReportData.length;
+
+
+        const start =
+            (currentPage - 1) *
+            rowsPerPage;
+
+
+        const end =
+            start +
+            rowsPerPage;
+
+
+        const pageData =
+            filteredReportData.slice(
+                start,
+                end
+            );
+
+
+        if (
+            total === 0
+        ) {
+
+            tbody.innerHTML = "";
+
+
+            if (emptyState) {
+
+                emptyState.hidden =
+                    false;
+
+            }
 
 
             return;
@@ -4202,120 +4047,977 @@ async function exportCSV(){
         }
 
 
-        /*
-         * Header CSV.
-         */
+        if (emptyState) {
 
-        const headers = [
-
-            'ID',
-
-            'Lokasi',
-
-            'Tinggi Air (cm)',
-
-            'Water Level',
-
-            'Status',
-
-            'Latitude',
-
-            'Longitude',
-
-            'Waktu Pengukuran'
-
-        ];
-
-
-        /*
-         * Escape CSV.
-         */
-
-        function csvEscape(
-            value
-        ){
-
-            const text =
-                String(
-                    value ??
-                    ''
-                );
-
-
-            return '"' +
-                text
-                .replace(
-                    /"/g,
-                    '""'
-                ) +
-                '"';
+            emptyState.hidden =
+                true;
 
         }
 
 
-        /*
-         * Buat baris.
-         */
+        tbody.innerHTML =
+            pageData
+                .map(
+                    function(item) {
 
-        const rows =
-            exportData.map(
-                function(item){
+                        const waterLevel =
+                            getWaterLevel(
+                                item
+                            );
 
-                    return [
 
-                        item.id,
+                        const status =
+                            normalizeStatus(
+                                item.status
+                            ) ||
+                            "-";
 
-                        item.lokasi,
 
-                        item.tinggi_air,
+                        const latitude =
+                            item.latitude;
 
-                        item.water_level,
 
-                        item.status,
+                        const longitude =
+                            item.longitude;
 
-                        item.latitude,
 
-                        item.longitude,
+                        const coordinate =
+                            latitude !== null &&
+                            latitude !== undefined &&
+                            longitude !== null &&
+                            longitude !== undefined
+                                ? `${escapeReportHTML(
+                                    latitude
+                                )}, ${escapeReportHTML(
+                                    longitude
+                                )}`
+                                : "-";
 
-                        item.created_at
 
-                    ]
-                    .map(
-                        csvEscape
+                        return `
+                            <tr>
+
+                                <td>
+                                    <strong>
+                                        ${escapeReportHTML(
+                                            item.id ?? "-"
+                                        )}
+                                    </strong>
+                                </td>
+
+                                <td>
+                                    ${formatReportDate(
+                                        item.created_at
+                                    )}
+                                </td>
+
+                                <td>
+                                    ${escapeReportHTML(
+                                        item.lokasi ?? "-"
+                                    )}
+                                </td>
+
+                                <td>
+                                    ${
+                                        item.tinggi_air !==
+                                        null &&
+                                        item.tinggi_air !==
+                                        undefined
+                                            ? formatNumber(
+                                                item.tinggi_air
+                                            ) + " cm"
+                                            : "-"
+                                    }
+                                </td>
+
+                                <td>
+                                    ${
+                                        waterLevel !== null
+                                            ? formatNumber(
+                                                waterLevel
+                                            ) + " cm"
+                                            : "-"
+                                    }
+                                </td>
+
+                                <td>
+
+                                    <span
+                                        class="
+                                            report-status
+                                            ${getReportStatusClass(
+                                                status
+                                            )}
+                                        "
+                                    >
+
+                                        ${escapeReportHTML(
+                                            status
+                                        )}
+
+                                    </span>
+
+                                </td>
+
+                                <td>
+                                    ${coordinate}
+                                </td>
+
+                            </tr>
+                        `;
+
+                    }
+                )
+                .join("");
+
+
+        const tableInfo =
+            reportElement(
+                "tableResultInfo"
+            );
+
+
+        if (tableInfo) {
+
+            const first =
+                start + 1;
+
+
+            const last =
+                Math.min(
+                    end,
+                    total
+                );
+
+
+            tableInfo.textContent =
+                `Menampilkan ${first}–${last} dari ${total} data`;
+
+        }
+
+    }
+
+
+    /* =========================================================
+       UPDATE STATISTICS
+       ========================================================= */
+
+    function updateReportStatistics() {
+
+        const values =
+            filteredReportData
+                .map(
+                    item =>
+                        getWaterLevel(
+                            item
+                        )
+                )
+                .filter(
+                    value =>
+                        value !== null
+                );
+
+
+        const total =
+            filteredReportData.length;
+
+
+        const maximum =
+            values.length
+                ? Math.max(
+                    ...values
+                )
+                : null;
+
+
+        const average =
+            values.length
+                ? values.reduce(
+                    (sum, value) =>
+                        sum + value,
+                    0
+                ) / values.length
+                : null;
+
+
+        const warningStatuses =
+            [
+                "SIAGA",
+                "WASPADA",
+                "BAHAYA",
+                "DARURAT"
+            ];
+
+
+        const warningCount =
+            filteredReportData.filter(
+                item =>
+                    warningStatuses.includes(
+                        normalizeStatus(
+                            item.status
+                        )
                     )
-                    .join(',');
+            ).length;
+
+
+        const totalElement =
+            reportElement(
+                "totalReadings"
+            );
+
+
+        const totalInfo =
+            reportElement(
+                "totalReadingsInfo"
+            );
+
+
+        const maxElement =
+            reportElement(
+                "maxWaterLevel"
+            );
+
+
+        const avgElement =
+            reportElement(
+                "avgWaterLevel"
+            );
+
+
+        const warningElement =
+            reportElement(
+                "warningCount"
+            );
+
+
+        const warningInfo =
+            reportElement(
+                "warningInfo"
+            );
+
+
+        if (totalElement) {
+
+            totalElement.textContent =
+                total.toLocaleString(
+                    "id-ID"
+                );
+
+        }
+
+
+        if (totalInfo) {
+
+            totalInfo.textContent =
+                total === allReportData.length
+                    ? "Seluruh data tersimpan"
+                    : "Sesuai filter aktif";
+
+        }
+
+
+        if (maxElement) {
+
+            maxElement.textContent =
+                maximum === null
+                    ? "-"
+                    : formatNumber(
+                        maximum
+                    ) + " cm";
+
+        }
+
+
+        if (avgElement) {
+
+            avgElement.textContent =
+                average === null
+                    ? "-"
+                    : formatNumber(
+                        average
+                    ) + " cm";
+
+        }
+
+
+        if (warningElement) {
+
+            warningElement.textContent =
+                warningCount.toLocaleString(
+                    "id-ID"
+                );
+
+        }
+
+
+        if (warningInfo) {
+
+            warningInfo.textContent =
+                "SIAGA / WASPADA / BAHAYA";
+
+        }
+
+    }
+
+
+    /* =========================================================
+       CHART
+       ========================================================= */
+
+    function updateReportChart() {
+
+        const canvas =
+            reportElement(
+                "reportChart"
+            );
+
+
+        if (
+            !canvas ||
+            typeof Chart === "undefined"
+        ) {
+
+            return;
+
+        }
+
+
+        const chartData =
+            [...filteredReportData]
+                .reverse();
+
+
+        const labels =
+            chartData.map(
+                item => {
+
+                    const date =
+                        new Date(
+                            item.created_at
+                        );
+
+
+                    return Number.isNaN(
+                        date.getTime()
+                    )
+                        ? "-"
+                        : date.toLocaleTimeString(
+                            "id-ID",
+                            {
+                                hour:
+                                    "2-digit",
+
+                                minute:
+                                    "2-digit"
+                            }
+                        );
 
                 }
             );
 
 
-        /*
-         * Gabungkan CSV.
-         */
+        const values =
+            chartData.map(
+                item =>
+                    getWaterLevel(
+                        item
+                    ) ?? 0
+            );
 
-        const csvContent =
-            '\uFEFF' +
-            headers
+
+        if (
+            reportChart
+        ) {
+
+            reportChart.data.labels =
+                labels;
+
+
+            reportChart.data.datasets[0].data =
+                values;
+
+
+            reportChart.update(
+                "none"
+            );
+
+
+        }
+        else {
+
+            reportChart =
+                new Chart(
+                    canvas,
+                    {
+                        type: "line",
+
+                        data: {
+
+                            labels,
+
+                            datasets: [
+
+                                {
+                                    label:
+                                        "Ketinggian Air",
+
+                                    data:
+                                        values,
+
+                                    borderWidth:
+                                        2,
+
+                                    tension:
+                                        .35,
+
+                                    fill:
+                                        false,
+
+                                    pointRadius:
+                                        3
+
+                                }
+
+                            ]
+
+                        },
+
+                        options: {
+
+                            responsive:
+                                true,
+
+                            maintainAspectRatio:
+                                false,
+
+                            interaction: {
+
+                                mode:
+                                    "index",
+
+                                intersect:
+                                    false
+
+                            },
+
+                            plugins: {
+
+                                legend: {
+
+                                    display:
+                                        true
+
+                                }
+
+                            },
+
+                            scales: {
+
+                                x: {
+
+                                    ticks: {
+
+                                        maxTicksLimit:
+                                            10
+
+                                    }
+
+                                },
+
+                                y: {
+
+                                    beginAtZero:
+                                        true,
+
+                                    title: {
+
+                                        display:
+                                            true,
+
+                                        text:
+                                            "Ketinggian Air (cm)"
+
+                                    }
+
+                                }
+
+                            }
+
+                        }
+
+                    }
+                );
+
+        }
+
+
+        const chartStatusText =
+            reportElement(
+                "chartStatusText"
+            );
+
+
+        const chartStatusDot =
+            reportElement(
+                "chartStatusDot"
+            );
+
+
+        if (chartData.length > 0) {
+
+            if (chartStatusText) {
+
+                chartStatusText.textContent =
+                    `${chartData.length} pembacaan`;
+
+            }
+
+
+            if (chartStatusDot) {
+
+                chartStatusDot.classList.add(
+                    "active"
+                );
+
+            }
+
+        }
+        else {
+
+            if (chartStatusText) {
+
+                chartStatusText.textContent =
+                    "Tidak ada data";
+
+            }
+
+
+            if (chartStatusDot) {
+
+                chartStatusDot.classList.remove(
+                    "active"
+                );
+
+            }
+
+        }
+
+    }
+
+
+    /* =========================================================
+       PAGINATION
+       ========================================================= */
+
+    function updatePagination() {
+
+        const totalPages =
+            Math.max(
+                1,
+                Math.ceil(
+                    filteredReportData.length /
+                    rowsPerPage
+                )
+            );
+
+
+        if (
+            currentPage >
+            totalPages
+        ) {
+
+            currentPage =
+                totalPages;
+
+            renderReportTable();
+
+        }
+
+
+        const previous =
+            reportElement(
+                "previousPageButton"
+            );
+
+
+        const next =
+            reportElement(
+                "nextPageButton"
+            );
+
+
+        if (previous) {
+
+            previous.disabled =
+                currentPage <= 1;
+
+        }
+
+
+        if (next) {
+
+            next.disabled =
+                currentPage >=
+                totalPages;
+
+        }
+
+
+        const paginationPages =
+            reportElement(
+                "paginationPages"
+            );
+
+
+        if (!paginationPages) {
+            return;
+        }
+
+
+        paginationPages.innerHTML =
+            "";
+
+
+        const maxVisible =
+            5;
+
+
+        let startPage =
+            Math.max(
+                1,
+                currentPage -
+                Math.floor(
+                    maxVisible / 2
+                )
+            );
+
+
+        let endPage =
+            Math.min(
+                totalPages,
+                startPage +
+                maxVisible -
+                1
+            );
+
+
+        if (
+            endPage -
+            startPage +
+            1 <
+            maxVisible
+        ) {
+
+            startPage =
+                Math.max(
+                    1,
+                    endPage -
+                    maxVisible +
+                    1
+                );
+
+        }
+
+
+        for (
+            let page = startPage;
+            page <= endPage;
+            page++
+        ) {
+
+            const button =
+                document.createElement(
+                    "button"
+                );
+
+
+            button.type =
+                "button";
+
+
+            button.className =
+                "page-number" +
+                (
+                    page === currentPage
+                        ? " active"
+                        : ""
+                );
+
+
+            button.textContent =
+                page;
+
+
+            button.addEventListener(
+                "click",
+                function() {
+
+                    currentPage =
+                        page;
+
+
+                    renderReportTable();
+
+                    updatePagination();
+
+                    window.scrollTo(
+                        {
+                            top: 0,
+                            behavior: "smooth"
+                        }
+                    );
+
+                }
+            );
+
+
+            paginationPages.appendChild(
+                button
+            );
+
+        }
+
+
+        const paginationInfo =
+            reportElement(
+                "paginationInfo"
+            );
+
+
+        if (paginationInfo) {
+
+            paginationInfo.textContent =
+                `Halaman ${currentPage} dari ${totalPages}`;
+
+        }
+
+    }
+
+
+    /* =========================================================
+       TABLE LIVE STATUS
+       ========================================================= */
+
+    function updateTableLiveStatus(
+        online
+    ) {
+
+        const element =
+            reportElement(
+                "tableLiveStatus"
+            );
+
+
+        if (!element) {
+            return;
+        }
+
+
+        element.innerHTML =
+            online
+                ? `
+                    <span class="live-dot"></span>
+                    Data tersinkronisasi
+                `
+                : `
+                    <span
+                        class="live-dot"
+                        style="
+                            background:#ef4444;
+                            box-shadow:
+                            0 0 0 3px
+                            rgba(239,68,68,.10);
+                        "
+                    ></span>
+                    Koneksi database bermasalah
+                `;
+
+    }
+
+
+    /* =========================================================
+       RESET FILTERS
+       ========================================================= */
+
+    function resetReportFilters() {
+
+        const startDate =
+            reportElement(
+                "startDate"
+            );
+
+
+        const endDate =
+            reportElement(
+                "endDate"
+            );
+
+
+        const status =
+            reportElement(
+                "statusFilter"
+            );
+
+
+        const location =
+            reportElement(
+                "locationFilter"
+            );
+
+
+        const search =
+            reportElement(
+                "searchInput"
+            );
+
+
+        if (startDate) {
+
+            startDate.value =
+                "";
+
+        }
+
+
+        if (endDate) {
+
+            endDate.value =
+                "";
+
+        }
+
+
+        if (status) {
+
+            status.value =
+                "all";
+
+        }
+
+
+        if (location) {
+
+            location.value =
+                "all";
+
+        }
+
+
+        if (search) {
+
+            search.value =
+                "";
+
+        }
+
+
+        currentPage =
+            1;
+
+
+        applyReportFilters(
+            false
+        );
+
+
+        showReportToast(
+            "Filter telah direset."
+        );
+
+    }
+
+
+    /* =========================================================
+       EXPORT CSV
+       ========================================================= */
+
+    function exportReportCSV() {
+
+        if (
+            filteredReportData.length === 0
+        ) {
+
+            showReportToast(
+                "Tidak ada data untuk diekspor."
+            );
+
+            return;
+
+        }
+
+
+        const headers =
+            [
+                "ID",
+                "Waktu",
+                "Lokasi",
+                "Tinggi Air",
+                "Water Level",
+                "Status",
+                "Latitude",
+                "Longitude"
+            ];
+
+
+        const rows =
+            filteredReportData.map(
+                function(item) {
+
+                    return [
+
+                        item.id ?? "",
+
+                        item.created_at ?? "",
+
+                        item.lokasi ?? "",
+
+                        item.tinggi_air ?? "",
+
+                        item.water_level ?? "",
+
+                        item.status ?? "",
+
+                        item.latitude ?? "",
+
+                        item.longitude ?? ""
+
+                    ];
+
+                }
+            );
+
+
+        const csv =
+            [
+                headers,
+                ...rows
+            ]
             .map(
-                csvEscape
+                row =>
+                    row
+                        .map(
+                            value =>
+                                `"${String(
+                                    value
+                                ).replace(
+                                    /"/g,
+                                    '""'
+                                )}"`
+                        )
+                        .join(",")
             )
-            .join(',') +
-            '\n' +
-            rows.join('\n');
+            .join("\r\n");
 
-
-        /*
-         * Buat file.
-         */
 
         const blob =
             new Blob(
                 [
-                    csvContent
+                    "\uFEFF" +
+                    csv
                 ],
                 {
                     type:
-                    'text/csv;charset=utf-8;'
+                        "text/csv;charset=utf-8;"
                 }
             );
 
@@ -4328,7 +5030,7 @@ async function exportCSV(){
 
         const link =
             document.createElement(
-                'a'
+                "a"
             );
 
 
@@ -4336,10 +5038,17 @@ async function exportCSV(){
             url;
 
 
+        const date =
+            new Date()
+                .toISOString()
+                .slice(
+                    0,
+                    10
+                );
+
+
         link.download =
-            getExportFileName(
-                '.csv'
-            );
+            `FLOWS-PRO-Laporan-${date}.csv`;
 
 
         document.body.appendChild(
@@ -4350,9 +5059,7 @@ async function exportCSV(){
         link.click();
 
 
-        document.body.removeChild(
-            link
-        );
+        link.remove();
 
 
         URL.revokeObjectURL(
@@ -4360,706 +5067,1294 @@ async function exportCSV(){
         );
 
 
-        alert(
-            'Download CSV berhasil.\n\n' +
-            'Jumlah data: ' +
-            exportData.length
+        showReportToast(
+            "Laporan berhasil diekspor ke CSV."
         );
 
     }
 
-    catch(error){
 
-        console.error(
-            error
-        );
+    /* =========================================================
+       EVENTS
+       ========================================================= */
 
+    function initializeReportEvents() {
 
-        alert(
-            'Gagal membuat CSV.\n\n' +
-            error.message
-        );
-
-    }
-
-    finally{
-
-        setExportButtonLoading(
-            false
-        );
-
-    }
-
-}
-
-
-/* =====================================================
-   DOWNLOAD EXCEL
-===================================================== */
-
-async function exportExcel(){
-
-    try{
-
-        setExportButtonLoading(
-            true
-        );
-
-
-        /*
-         * Ambil seluruh data.
-         */
-
-        const allData =
-            await getAllDataForExport();
-
-
-        /*
-         * Terapkan filter.
-         */
-
-        const exportData =
-            filterExportData(
-                allData
+        const applyButton =
+            reportElement(
+                "applyFilterButton"
             );
 
 
-        if(
-            exportData.length === 0
-        ){
-
-            alert(
-                'Tidak ada data yang sesuai dengan filter.'
+        const resetButton =
+            reportElement(
+                "resetFilterButton"
             );
 
 
-            return;
+        const emptyResetButton =
+            reportElement(
+                "emptyResetButton"
+            );
+
+
+        const refreshButton =
+            reportElement(
+                "refreshReportButton"
+            );
+
+
+        const exportButton =
+            reportElement(
+                "exportButton"
+            );
+
+
+        const previousButton =
+            reportElement(
+                "previousPageButton"
+            );
+
+
+        const nextButton =
+            reportElement(
+                "nextPageButton"
+            );
+
+
+        const searchInput =
+            reportElement(
+                "searchInput"
+            );
+
+
+        applyButton?.addEventListener(
+            "click",
+            function() {
+
+                applyReportFilters(
+                    true
+                );
+
+            }
+        );
+
+
+        resetButton?.addEventListener(
+            "click",
+            resetReportFilters
+        );
+
+
+        emptyResetButton?.addEventListener(
+            "click",
+            resetReportFilters
+        );
+
+
+        refreshButton?.addEventListener(
+            "click",
+            async function() {
+
+                refreshButton.disabled =
+                    true;
+
+
+                const original =
+                    refreshButton.innerHTML;
+
+
+                refreshButton.innerHTML = `
+                    <i class="fa-solid fa-spinner fa-spin"></i>
+                    Memuat...
+                `;
+
+
+                await loadReportData(
+                    true
+                );
+
+
+                refreshButton.disabled =
+                    false;
+
+
+                refreshButton.innerHTML =
+                    original;
+
+            }
+        );
+
+
+        exportButton?.addEventListener(
+            "click",
+            exportReportCSV
+        );
+
+
+        previousButton?.addEventListener(
+            "click",
+            function() {
+
+                if (
+                    currentPage > 1
+                ) {
+
+                    currentPage--;
+
+                    renderReportTable();
+
+                    updatePagination();
+
+                }
+
+            }
+        );
+
+
+        nextButton?.addEventListener(
+            "click",
+            function() {
+
+                const totalPages =
+                    Math.ceil(
+                        filteredReportData.length /
+                        rowsPerPage
+                    );
+
+
+                if (
+                    currentPage <
+                    totalPages
+                ) {
+
+                    currentPage++;
+
+                    renderReportTable();
+
+                    updatePagination();
+
+                }
+
+            }
+        );
+
+
+        searchInput?.addEventListener(
+            "input",
+            function() {
+
+                clearTimeout(
+                    searchInput.reportTimer
+                );
+
+
+                searchInput.reportTimer =
+                    setTimeout(
+                        function() {
+
+                            applyReportFilters(
+                                true
+                            );
+
+                        },
+                        250
+                    );
+
+            }
+        );
+
+
+        [
+            "startDate",
+            "endDate",
+            "statusFilter",
+            "locationFilter"
+        ]
+        .forEach(
+            function(id) {
+
+                const element =
+                    reportElement(
+                        id
+                    );
+
+
+                element?.addEventListener(
+                    "change",
+                    function() {
+
+                        applyReportFilters(
+                            true
+                        );
+
+                    }
+                );
+
+            }
+        );
+
+    }
+
+
+    /* =========================================================
+       AUTO REFRESH
+       ========================================================= */
+
+    function startReportAutoRefresh() {
+
+        clearInterval(
+            reportRefreshTimer
+        );
+
+
+        reportRefreshTimer =
+            setInterval(
+                function() {
+
+                    loadReportData(
+                        false
+                    );
+
+                },
+                30000
+            );
+
+    }
+
+
+    /* =========================================================
+       AUTH STATE
+       ========================================================= */
+
+    supabaseClient.auth.onAuthStateChange(
+        function(
+            event,
+            session
+        ) {
+
+            if (
+                event ===
+                "SIGNED_OUT"
+            ) {
+
+                window.location.replace(
+                    "login.html"
+                );
+
+            }
+
+        }
+    );
+
+
+    /* =========================================================
+       INITIALIZATION
+       ========================================================= */
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        async function() {
+
+            const user =
+                await loadReportUser();
+
+
+            if (!user) {
+                return;
+            }
+
+
+            initializeReportEvents();
+
+
+            await loadReportData(
+                false
+            );
+
+
+            startReportAutoRefresh();
+
+        }
+    );
+
+</script>
+
+
+<style>
+
+    /* =========================================================
+       REPORT STATUS
+       ========================================================= */
+
+    .report-status {
+
+        display: inline-flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        min-width: 58px;
+
+        padding:
+            5px 9px;
+
+        border-radius:
+            999px;
+
+        font-size:
+            9px;
+
+        font-weight:
+            800;
+
+        letter-spacing:
+            .2px;
+
+    }
+
+
+    .report-status-safe {
+
+        background:
+            rgba(
+                34,
+                197,
+                94,
+                .12
+            );
+
+        color:
+            #16a34a;
+
+    }
+
+
+    .report-status-warning {
+
+        background:
+            rgba(
+                245,
+                158,
+                11,
+                .13
+            );
+
+        color:
+            #d97706;
+
+    }
+
+
+    .report-status-alert {
+
+        background:
+            rgba(
+                249,
+                115,
+                22,
+                .13
+            );
+
+        color:
+            #ea580c;
+
+    }
+
+
+    .report-status-danger {
+
+        background:
+            rgba(
+                239,
+                68,
+                68,
+                .12
+            );
+
+        color:
+            #dc2626;
+
+    }
+
+
+    .report-status-neutral {
+
+        background:
+            rgba(
+                148,
+                163,
+                184,
+                .14
+            );
+
+        color:
+            #64748b;
+
+    }
+
+
+    [data-theme="dark"]
+    .report-status-safe {
+
+        background:
+            rgba(
+                34,
+                197,
+                94,
+                .16
+            );
+
+        color:
+            #4ade80;
+
+    }
+
+
+    [data-theme="dark"]
+    .report-status-warning {
+
+        background:
+            rgba(
+                245,
+                158,
+                11,
+                .17
+            );
+
+        color:
+            #fbbf24;
+
+    }
+
+
+    [data-theme="dark"]
+    .report-status-alert {
+
+        background:
+            rgba(
+                249,
+                115,
+                22,
+                .17
+            );
+
+        color:
+            #fb923c;
+
+    }
+
+
+    [data-theme="dark"]
+    .report-status-danger {
+
+        background:
+            rgba(
+                239,
+                68,
+                68,
+                .16
+            );
+
+        color:
+            #f87171;
+
+    }
+
+
+    [data-theme="dark"]
+    .report-status-neutral {
+
+        background:
+            rgba(
+                148,
+                163,
+                184,
+                .16
+            );
+
+        color:
+            #cbd5e1;
+
+    }
+
+</style>
+<!-- =========================================================
+     PART 4 — PROFILE, THEME, LOGOUT & FINAL UI BEHAVIOR
+     ========================================================= -->
+
+<script>
+
+    /* =========================================================
+       THEME
+       ========================================================= */
+
+    function applyReportTheme() {
+
+        const savedTheme =
+            localStorage.getItem(
+                "flowsTheme"
+            );
+
+
+        const theme =
+            savedTheme === "dark"
+                ? "dark"
+                : "light";
+
+
+        document.documentElement
+            .setAttribute(
+                "data-theme",
+                theme
+            );
+
+    }
+
+
+    /* =========================================================
+       PROFILE DROPDOWN
+       ========================================================= */
+
+    const reportProfileTrigger =
+        document.getElementById(
+            "profileTrigger"
+        );
+
+
+    const reportProfileDropdown =
+        document.getElementById(
+            "profileDropdown"
+        );
+
+
+    function closeReportDropdown() {
+
+        if (reportProfileDropdown) {
+
+            reportProfileDropdown
+                .classList
+                .remove("open");
+
+            reportProfileDropdown
+                .classList
+                .remove("show");
 
         }
 
 
-        /*
-         * Format data.
-         */
+        if (reportProfileTrigger) {
 
-        const worksheetData =
-            prepareExportData(
-                exportData
-            );
+            reportProfileTrigger
+                .setAttribute(
+                    "aria-expanded",
+                    "false"
+                );
 
-
-        /*
-         * Buat worksheet.
-         */
-
-        const worksheet =
-            XLSX.utils.json_to_sheet(
-                worksheetData
-            );
-
-
-        /*
-         * Lebar kolom.
-         */
-
-        worksheet['!cols'] = [
-
-            {
-                wch:10
-            },
-
-            {
-                wch:25
-            },
-
-            {
-                wch:18
-            },
-
-            {
-                wch:18
-            },
-
-            {
-                wch:15
-            },
-
-            {
-                wch:15
-            },
-
-            {
-                wch:15
-            },
-
-            {
-                wch:25
-            }
-
-        ];
-
-
-        /*
-         * Buat workbook.
-         */
-
-        const workbook =
-            XLSX.utils.book_new();
-
-
-        /*
-         * Masukkan worksheet.
-         */
-
-        XLSX.utils.book_append_sheet(
-            workbook,
-            worksheet,
-            'Data Pengukuran'
-        );
-
-
-        /*
-         * Tambahkan sheet ringkasan.
-         */
-
-        const summaryData = [
-
-            {
-                'Keterangan':
-                    'Sistem',
-
-                'Nilai':
-                    'FLOWS-PRO'
-
-            },
-
-            {
-                'Keterangan':
-                    'Total Data',
-
-                'Nilai':
-                    exportData.length
-
-            },
-
-            {
-                'Keterangan':
-                    'Tanggal Awal',
-
-                'Nilai':
-                    document.getElementById(
-                        'tanggalAwal'
-                    ).value ||
-                    'Semua'
-
-            },
-
-            {
-                'Keterangan':
-                    'Tanggal Akhir',
-
-                'Nilai':
-                    document.getElementById(
-                        'tanggalAkhir'
-                    ).value ||
-                    'Semua'
-
-            },
-
-            {
-                'Keterangan':
-                    'Status',
-
-                'Nilai':
-                    document.getElementById(
-                        'statusFilter'
-                    ).value
-
-            },
-
-            {
-                'Keterangan':
-                    'Dibuat',
-
-                'Nilai':
-                    new Date()
-                    .toLocaleString(
-                        'id-ID'
-                    )
-
-            }
-
-        ];
-
-
-        const summarySheet =
-            XLSX.utils.json_to_sheet(
-                summaryData
-            );
-
-
-        summarySheet['!cols'] = [
-
-            {
-                wch:20
-            },
-
-            {
-                wch:35
-            }
-
-        ];
-
-
-        XLSX.utils.book_append_sheet(
-            workbook,
-            summarySheet,
-            'Ringkasan'
-        );
-
-
-        /*
-         * Download.
-         */
-
-        XLSX.writeFile(
-            workbook,
-            getExportFileName(
-                '.xlsx'
-            )
-        );
-
-
-        alert(
-            'Download Excel berhasil.\n\n' +
-            'Jumlah data: ' +
-            exportData.length
-        );
+        }
 
     }
 
-    catch(error){
 
-        console.error(
-            error
+    reportProfileTrigger?.addEventListener(
+        "click",
+        function(event) {
+
+            event.stopPropagation();
+
+
+            if (!reportProfileDropdown) {
+                return;
+            }
+
+
+            const isOpen =
+                reportProfileDropdown
+                    .classList
+                    .contains("open");
+
+
+            closeReportDropdown();
+
+
+            if (!isOpen) {
+
+                reportProfileDropdown
+                    .classList
+                    .add("open");
+
+
+                reportProfileTrigger
+                    .setAttribute(
+                        "aria-expanded",
+                        "true"
+                    );
+
+            }
+
+        }
+    );
+
+
+    document.addEventListener(
+        "click",
+        function(event) {
+
+            if (
+                reportProfileDropdown &&
+                !reportProfileDropdown
+                    .contains(event.target) &&
+                reportProfileTrigger &&
+                !reportProfileTrigger
+                    .contains(event.target)
+            ) {
+
+                closeReportDropdown();
+
+            }
+
+        }
+    );
+
+
+    /* =========================================================
+       LOGOUT
+       ========================================================= */
+
+    const reportLogoutButton =
+        document.getElementById(
+            "logoutButton"
         );
 
 
-        alert(
-            'Gagal membuat Excel.\n\n' +
-            error.message
+    reportLogoutButton?.addEventListener(
+        "click",
+        async function() {
+
+            try {
+
+                reportLogoutButton.disabled =
+                    true;
+
+
+                const originalHTML =
+                    reportLogoutButton.innerHTML;
+
+
+                reportLogoutButton.innerHTML = `
+                    <i class="fa-solid fa-spinner fa-spin"></i>
+                    Keluar...
+                `;
+
+
+                const {
+                    error
+                } =
+                    await supabaseClient
+                        .auth.signOut();
+
+
+                if (error) {
+
+                    console.error(
+                        "Logout gagal:",
+                        error
+                    );
+
+
+                    reportLogoutButton.disabled =
+                        false;
+
+
+                    reportLogoutButton.innerHTML =
+                        originalHTML;
+
+
+                    showReportToast(
+                        "Gagal keluar dari akun."
+                    );
+
+
+                    return;
+
+                }
+
+
+                window.location.replace(
+                    "login.html"
+                );
+
+            }
+
+            catch(error) {
+
+                console.error(
+                    "Logout error:",
+                    error
+                );
+
+
+                reportLogoutButton.disabled =
+                    false;
+
+
+                showReportToast(
+                    "Terjadi kesalahan saat keluar."
+                );
+
+            }
+
+        }
+    );
+
+
+    /* =========================================================
+       NOTIFICATION BUTTON
+       ========================================================= */
+
+    const reportNotificationButton =
+        document.getElementById(
+            "notificationButton"
         );
 
-    }
 
-    finally{
+    reportNotificationButton?.addEventListener(
+        "click",
+        function() {
 
-        setExportButtonLoading(
-            false
-        );
+            showReportToast(
+                "FLOWS-PRO sedang memantau data sensor."
+            );
 
-    }
-
-}
-
-
-/* =====================================================
-   DOWNLOAD PDF
-===================================================== */
-
-async function exportPDF(){
-
-    try{
-
-        setExportButtonLoading(
-            true
-        );
+        }
+    );
 
 
-        /*
-         * Ambil semua data.
-         */
+    /* =========================================================
+       ESCAPE KEY
+       ========================================================= */
 
-        const allData =
-            await getAllDataForExport();
+    document.addEventListener(
+        "keydown",
+        function(event) {
+
+            if (
+                event.key === "Escape"
+            ) {
+
+                closeReportDropdown();
+
+            }
+
+        }
+    );
 
 
-        /*
-         * Terapkan filter.
-         */
+    /* =========================================================
+       STORAGE THEME SYNC
+       ========================================================= */
 
-        const exportData =
-            filterExportData(
-                allData
+    window.addEventListener(
+        "storage",
+        function(event) {
+
+            if (
+                event.key === "flowsTheme"
+            ) {
+
+                applyReportTheme();
+
+            }
+
+        }
+    );
+
+
+    /* =========================================================
+       ONLINE / OFFLINE BROWSER
+       ========================================================= */
+
+    window.addEventListener(
+        "online",
+        function() {
+
+            updateTableLiveStatus(
+                true
             );
 
 
-        if(
-            exportData.length === 0
-        ){
-
-            alert(
-                'Tidak ada data yang sesuai dengan filter.'
+            loadReportData(
+                false
             );
 
 
-            return;
+            showReportToast(
+                "Koneksi internet kembali."
+            );
+
+        }
+    );
+
+
+    window.addEventListener(
+        "offline",
+        function() {
+
+            updateTableLiveStatus(
+                false
+            );
+
+
+            showReportToast(
+                "Koneksi internet terputus."
+            );
+
+        }
+    );
+
+
+    /* =========================================================
+       DATE VALIDATION
+       ========================================================= */
+
+    const reportStartDate =
+        document.getElementById(
+            "startDate"
+        );
+
+
+    const reportEndDate =
+        document.getElementById(
+            "endDate"
+        );
+
+
+    reportStartDate?.addEventListener(
+        "change",
+        function() {
+
+            if (
+                reportEndDate &&
+                reportStartDate.value
+            ) {
+
+                reportEndDate.min =
+                    reportStartDate.value;
+
+            }
+
+        }
+    );
+
+
+    reportEndDate?.addEventListener(
+        "change",
+        function() {
+
+            if (
+                reportStartDate &&
+                reportEndDate.value
+            ) {
+
+                reportStartDate.max =
+                    reportEndDate.value;
+
+            }
+
+        }
+    );
+
+
+    /* =========================================================
+       INITIAL THEME
+       ========================================================= */
+
+    applyReportTheme();
+
+
+    /* =========================================================
+       PERIODIC UI CHECK
+       ========================================================= */
+
+    setInterval(
+        function() {
+
+            /*
+             * Memastikan halaman tetap menggunakan
+             * tema yang sama seperti Dashboard.
+             */
+
+            applyReportTheme();
+
+        },
+        5000
+    );
+
+
+    /* =========================================================
+       BEFORE UNLOAD
+       ========================================================= */
+
+    window.addEventListener(
+        "beforeunload",
+        function() {
+
+            if (reportRefreshTimer) {
+
+                clearInterval(
+                    reportRefreshTimer
+                );
+
+            }
+
+        }
+    );
+
+
+</script>
+
+
+<style>
+
+    /* =========================================================
+       REPORT PAGE FINAL POLISH
+       ========================================================= */
+
+    .summary-card,
+    .report-card {
+
+        transition:
+            border-color .18s ease,
+            box-shadow .18s ease,
+            transform .18s ease;
+
+    }
+
+
+    .summary-card:hover {
+
+        border-color:
+            rgba(
+                37,
+                99,
+                235,
+                .18
+            );
+
+    }
+
+
+    /* =========================================================
+       BUTTON LOADING
+       ========================================================= */
+
+    .primary-button:disabled,
+    .secondary-button:disabled {
+
+        opacity:
+            .55;
+
+        cursor:
+            not-allowed;
+
+    }
+
+
+    /* =========================================================
+       SELECT ARROW
+       ========================================================= */
+
+    .input-wrapper select {
+
+        appearance:
+            auto;
+
+        cursor:
+            pointer;
+
+    }
+
+
+    /* =========================================================
+       DATE INPUT
+       ========================================================= */
+
+    .input-wrapper input[type="date"] {
+
+        color-scheme:
+            light;
+
+    }
+
+
+    [data-theme="dark"]
+    .input-wrapper input[type="date"] {
+
+        color-scheme:
+            dark;
+
+    }
+
+
+    /* =========================================================
+       TABLE STRONG TEXT
+       ========================================================= */
+
+    .data-table td strong {
+
+        color:
+            var(--text-primary);
+
+        font-weight:
+            700;
+
+    }
+
+
+    /* =========================================================
+       CHART CANVAS
+       ========================================================= */
+
+    #reportChart {
+
+        width:
+            100% !important;
+
+        height:
+            100% !important;
+
+    }
+
+
+    /* =========================================================
+       FOCUS ACCESSIBILITY
+       ========================================================= */
+
+    button:focus-visible,
+    input:focus-visible,
+    select:focus-visible,
+    a:focus-visible {
+
+        outline:
+            2px solid
+            var(--primary);
+
+        outline-offset:
+            2px;
+
+    }
+
+
+    /* =========================================================
+       MOBILE TABLE
+       ========================================================= */
+
+    @media (max-width: 650px) {
+
+        .table-actions {
+
+            flex-wrap:
+                wrap;
 
         }
 
 
-        /*
-         * Pastikan jsPDF tersedia.
-         */
+        .table-actions
+        button {
 
-        if(
-            !window.jspdf ||
-            !window.jspdf.jsPDF
-        ){
-
-            throw new Error(
-                'Library PDF belum berhasil dimuat.'
-            );
+            min-width:
+                120px;
 
         }
 
 
-        const {
-            jsPDF
-        } =
-            window.jspdf;
+        .summary-value {
 
+            font-size:
+                19px;
 
-        /*
-         * Buat dokumen landscape.
-         *
-         * Landscape dipakai karena tabel
-         * mempunyai banyak kolom.
-         */
+        }
 
-        const doc =
-            new jsPDF(
-                'landscape',
-                'mm',
-                'a4'
-            );
 
+        .chart-wrapper {
 
-        /*
-         * Judul.
-         */
+            height:
+                260px;
 
-        doc.setFontSize(
-            18
-        );
-
-
-        doc.text(
-            'FLOWS-PRO',
-            14,
-            15
-        );
-
-
-        doc.setFontSize(
-            13
-        );
-
-
-        doc.text(
-            'Laporan Data Pengukuran Air',
-            14,
-            23
-        );
-
-
-        /*
-         * Informasi laporan.
-         */
-
-        doc.setFontSize(
-            9
-        );
-
-
-        const tanggalAwal =
-            document.getElementById(
-                'tanggalAwal'
-            ).value ||
-            'Semua';
-
-
-        const tanggalAkhir =
-            document.getElementById(
-                'tanggalAkhir'
-            ).value ||
-            'Semua';
-
-
-        const status =
-            document.getElementById(
-                'statusFilter'
-            ).value;
-
-
-        doc.text(
-            'Tanggal Awal: ' +
-            tanggalAwal,
-            14,
-            31
-        );
-
-
-        doc.text(
-            'Tanggal Akhir: ' +
-            tanggalAkhir,
-            80,
-            31
-        );
-
-
-        doc.text(
-            'Status: ' +
-            status,
-            160,
-            31
-        );
-
-
-        doc.text(
-            'Jumlah Data: ' +
-            exportData.length,
-            220,
-            31
-        );
-
-
-        /*
-         * Header tabel.
-         */
-
-        const tableHead = [[
-
-            'ID',
-
-            'Lokasi',
-
-            'Tinggi Air',
-
-            'Water Level',
-
-            'Status',
-
-            'Latitude',
-
-            'Longitude',
-
-            'Waktu'
-
-        ]];
-
-
-        /*
-         * Isi tabel.
-         */
-
-        const tableBody =
-            exportData.map(
-                function(item){
-
-                    return [
-
-                        item.id,
-
-                        item.lokasi,
-
-                        item.tinggi_air,
-
-                        item.water_level,
-
-                        item.status,
-
-                        item.latitude,
-
-                        item.longitude,
-
-                        item.created_at
-
-                    ];
-
-                }
-            );
-
-
-        /*
-         * Buat tabel PDF.
-         */
-
-        doc.autoTable({
-
-            head:
-                tableHead,
-
-            body:
-                tableBody,
-
-            startY:
-                38,
-
-            theme:
-                'grid',
-
-            styles:{
-
-                fontSize:
-                    7,
-
-                cellPadding:
-                    2
-
-            },
-
-            headStyles:{
-
-                fontSize:
-                    7,
-
-                fontStyle:
-                    'bold'
-
-            },
-
-            columnStyles:{
-
-                0:{
-                    cellWidth:15
-                },
-
-                1:{
-                    cellWidth:35
-                },
-
-                2:{
-                    cellWidth:25
-                },
-
-                3:{
-                    cellWidth:25
-                },
-
-                4:{
-                    cellWidth:22
-                },
-
-                5:{
-                    cellWidth:25
-                },
-
-                6:{
-                    cellWidth:25
-                },
-
-                7:{
-                    cellWidth:45
-                }
-
-            },
-
-            didDrawPage:
-                function(data){
-
-                    /*
-                     * Nomor halaman.
-                     */
-
-                    const pageCount =
-                        doc.internal
-                        .getNumberOfPages();
-
-
-                    doc.setFontSize(
-                        8
-                    );
-
-
-                    doc.text(
-                        'Halaman ' +
-                        data.pageNumber +
-                        ' / ' +
-                        pageCount,
-
-                        doc.internal
-                        .pageSize
-                        .getWidth() -
-                        35,
-
-                        doc.internal
-                        .pageSize
-                        .getHeight() -
-                        8
-                    );
-
-
-                    /*
-                     * Sumber data.
-                     */
-
-                    doc.text(
-                        'FLOWS-PRO - Data pengukuran dari Supabase',
-
-                        14,
-
-                        doc.internal
-                        .pageSize
-                        .getHeight() -
-                        8
-                    );
-
-                }
-
-        });
-
-
-        /*
-         * Simpan PDF.
-         */
-
-        doc.save(
-            getExportFileName(
-                '.pdf'
-            )
-        );
-
-
-        alert(
-            'Download PDF berhasil.\n\n' +
-            'Jumlah data: ' +
-            exportData.length
-        );
+        }
 
     }
 
-    catch(error){
 
-        console.error(
-            error
-        );
+    /* =========================================================
+       REDUCED MOTION
+       ========================================================= */
 
+    @media (prefers-reduced-motion: reduce) {
 
-        alert(
-            'Gagal membuat PDF.\n\n' +
-            error.message
-        );
+        *,
+        *::before,
+        *::after {
+
+            scroll-behavior:
+                auto !important;
+
+            animation-duration:
+                .01ms !important;
+
+            animation-iteration-count:
+                1 !important;
+
+            transition-duration:
+                .01ms !important;
+
+        }
 
     }
 
-    finally{
+</style>
+<!-- =========================================================
+     PART 5 — FINALIZATION & CLOSING
+     ========================================================= -->
 
-        setExportButtonLoading(
-            false
-        );
+<script>
 
-    }
+    /* =========================================================
+       FINAL PAGE CHECK
+       ========================================================= */
 
-}
+    document.addEventListener(
+        "DOMContentLoaded",
+        async function() {
 
+            /*
+             * Pastikan tema sesuai dengan Dashboard.
+             */
+
+            applyReportTheme();
+
+
+            /*
+             * Pastikan user masih memiliki session.
+             */
+
+            try {
+
+                const {
+                    data,
+                    error
+                } =
+                    await supabaseClient
+                        .auth.getSession();
+
+
+                if (error) {
+
+                    console.error(
+                        "Session check error:",
+                        error
+                    );
+
+                    return;
+
+                }
+
+
+                if (
+                    !data ||
+                    !data.session ||
+                    !data.session.user
+                ) {
+
+                    window.location.replace(
+                        "login.html"
+                    );
+
+                    return;
+
+                }
+
+            }
+
+            catch(error) {
+
+                console.error(
+                    "Final session check error:",
+                    error
+                );
+
+            }
+
+        }
+    );
+
+
+    /* =========================================================
+       TAB / WINDOW KEMBALI AKTIF
+       ========================================================= */
+
+    document.addEventListener(
+        "visibilitychange",
+        function() {
+
+            if (
+                document.visibilityState ===
+                "visible"
+            ) {
+
+                /*
+                 * Refresh data ketika pengguna
+                 * kembali ke halaman laporan.
+                 */
+
+                loadReportData(
+                    false
+                );
+
+            }
+
+        }
+    );
+
+
+    /* =========================================================
+       ESC KEY FINAL
+       ========================================================= */
+
+    document.addEventListener(
+        "keydown",
+        function(event) {
+
+            if (
+                event.key === "Escape"
+            ) {
+
+                closeReportDropdown();
+
+            }
+
+        }
+    );
+
+
+</script>
+
+
+<!-- =========================================================
+     END MAIN CONTENT
+     ========================================================= -->
+
+</main>
+
+
+<!-- =========================================================
+     END APP LAYOUT
+     ========================================================= -->
+
+</div>
+
+
+</body>
+
+</html>
