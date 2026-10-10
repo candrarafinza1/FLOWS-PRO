@@ -5200,10 +5200,9 @@
                             </td>
 
                             <td>
-                                ${
-                                    item.water_level ??
-                                    "-"
-                                } cm
+                                ${escapeHTML(
+                                    item.water_level ?? "-"
+                                )}
                             </td>
 
                             <td>
@@ -5646,9 +5645,7 @@
         const values =
             chartData.map(
                 item =>
-                    Number(
-                        item.water_level
-                    ) || 0
+                    (parseWaterHeight(item.tinggi_air) ?? 0)
             );
 
 
@@ -5784,15 +5781,41 @@
         liveChart.data.datasets[0].data =
             chartData.map(
                 item =>
-                    Number(
-                        item.water_level
-                    ) || 0
+                    (parseWaterHeight(item.tinggi_air) ?? 0)
             );
 
 
         liveChart.update(
             "none"
         );
+
+    }
+
+
+    /* =========================================================
+       PARSE ANGKA SENSOR
+       ========================================================= */
+
+    function parseWaterHeight(value) {
+
+        if (
+            value === null ||
+            value === undefined ||
+            String(value).trim() === ""
+        ) {
+            return null;
+        }
+
+        const normalized =
+            typeof value === "string"
+                ? value.trim().replace(",", ".")
+                : value;
+
+        const number = Number(normalized);
+
+        return Number.isFinite(number)
+            ? number
+            : null;
 
     }
 
@@ -5810,13 +5833,22 @@
             data.length === 0
         ) {
 
-            updateDeviceStatus(
-                null
-            );
+            const waterLevel = document.getElementById("waterLevel");
+            const waterStatus = document.getElementById("waterStatus");
+            const waterStatusText = document.getElementById("waterStatusText");
 
-            renderSystemStatus(
-                null
-            );
+            if (waterLevel) waterLevel.textContent = "--";
+            if (waterStatus) {
+                waterStatus.textContent = "MENUNGGU";
+                waterStatus.className = "water-status status-waiting";
+            }
+            if (waterStatusText) {
+                waterStatusText.textContent = "Belum ada data tinggi air";
+            }
+
+            updateDeviceStatus(null);
+            renderSystemStatus(null);
+            renderRealtimeTable([]);
 
             return;
 
@@ -5849,16 +5881,16 @@
             );
 
 
+        const level =
+            parseWaterHeight(latestData.tinggi_air);
+
+
         if (waterLevel) {
 
-            const level =
-                latestData.water_level ??
-                latestData.tinggi_air ??
-                0;
-
-
             waterLevel.textContent =
-                Number(level).toFixed(1);
+                level !== null
+                    ? level.toFixed(1)
+                    : "--";
 
         }
 
@@ -5897,10 +5929,16 @@
                     "Data terakhir sudah tidak realtime";
 
             }
+            else if (level === null) {
+
+                waterStatusText.textContent =
+                    "Nilai tinggi air tidak valid atau belum tersedia";
+
+            }
             else {
 
                 waterStatusText.textContent =
-                    "Status berdasarkan pembacaan sensor terbaru";
+                    "Tinggi air dari dasar kolam berdasarkan pembacaan terbaru";
 
             }
 
