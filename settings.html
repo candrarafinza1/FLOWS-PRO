@@ -3074,7 +3074,7 @@
 
     const { data, error } = await state.client
       .from(TABLE_PROFILES)
-      .select("id, role, name, avatar")
+      .select("*")
       .eq("id", state.user.id)
       .maybeSingle();
 
@@ -3089,6 +3089,7 @@
 
     const displayName =
       data?.name ||
+      data?.full_name ||
       state.user.user_metadata?.full_name ||
       state.user.user_metadata?.name ||
       state.user.email ||
@@ -3115,7 +3116,7 @@
     }
 
     if (avatarElement) {
-      const avatarURL = data?.avatar;
+      const avatarURL = data?.avatar_url || data?.avatar;
 
       if (avatarURL) {
         let image = avatarElement.querySelector("img");
