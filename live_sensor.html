@@ -6901,5 +6901,141 @@
 <!-- END app-layout -->
 
 
+
+<!-- FLOWS-PRO LIVE SENSOR PATCH: baca tinggi_air langsung dari Supabase -->
+<script>
+(function () {
+    "use strict";
+
+    function setText(id, value) {
+        const el = document.getElementById(id);
+        if (el) el.textContent = value;
+    }
+
+    function parseHeight(value) {
+        if (value === null || value === undefined || String(value).trim() === "") {
+            return null;
+        }
+        const n = Number(typeof value === "string" ? value.trim().replace(",", ".") : value);
+        return Number.isFinite(n) ? n : null;
+    }
+
+    function statusClass(status) {
+        const s = String(status || "").toUpperCase();
+        if (s === "AMAN") return "status-safe";
+        if (s === "SIAGA" || s === "WASPADA") return "status-alert";
+        if (s === "BAHAYA" || s === "DARURAT") return "status-danger";
+        return "status-waiting";
+    }
+
+    async function refreshLiveWaterLevel() {
+        const valueEl = document.getElementById("waterLevel");
+        if (!valueEl) return;
+
+        try {
+            if (typeof supabaseClient === "undefined" || !supabaseClient) {
+                throw new Error("Klien Supabase tidak tersedia.");
+            }
+
+            const result = await supabaseClient
+                .from("data_air")
+                .select("id, tinggi_air, water_level, status, created_at")
+                .order("id", { ascending: false })
+                .limit(1)
+                .maybeSingle();
+
+            if (result.error) throw result.error;
+
+            const row = result.data;
+            if (!row) {
+                valueEl.textContent = "--";
+                setText("waterStatus", "MENUNGGU");
+                setText("waterStatusText", "Belum ada data sensor");
+                setText("liveBadgeText", "MENUNGGU");
+                return;
+            }
+
+            // Angka tinggi air selalu berasal dari kolom numerik tinggi_air.
+            // water_level adalah kategori teks, misalnya TINGGI, bukan angka.
+            const height = parseHeight(row.tinggi_air);
+            valueEl.textContent = height === null ? "--" : height.toFixed(1);
+
+            const status = String(row.status || "MENUNGGU").toUpperCase();
+            const statusEl = document.getElementById("waterStatus");
+            if (statusEl) {
+                statusEl.className = "water-status " + statusClass(status);
+                // Pertahankan struktur dot + teks bila ada.
+                const innerText = statusEl.querySelector("#waterStatusText");
+                if (innerText) innerText.textContent = status;
+                else statusEl.textContent = status;
+            }
+
+            if (height === null) {
+                setText("waterStatusText", status + " · NILAI TIDAK VALID");
+            } else {
+                setText("waterStatusText", status);
+            }
+
+            const now = new Date();
+            const readingDate = row.created_at ? new Date(row.created_at) : null;
+            const ageSeconds = readingDate && Number.isFinite(readingDate.getTime())
+                ? (now.getTime() - readingDate.getTime()) / 1000
+                : Infinity;
+            const online = ageSeconds >= 0 && ageSeconds <= 60;
+
+            const deviceEl = document.getElementById("deviceConnection");
+            const sensorEl = document.getElementById("sensorConnection");
+            const apiEl = document.getElementById("apiConnection");
+
+            if (apiEl) {
+                apiEl.textContent = "ONLINE";
+                apiEl.className = "connection-status connected";
+            }
+            [deviceEl, sensorEl].forEach(el => {
+                if (!el) return;
+                el.textContent = online ? "ONLINE" : "OFFLINE";
+                el.className = "connection-status " + (online ? "connected" : "disconnected");
+            });
+
+            const badge = document.getElementById("liveBadge");
+            if (badge) badge.className = "live-badge " + (online ? "connected" : "danger");
+            setText("liveBadgeText", online ? "LIVE" : "DATA TERAKHIR");
+            setText("lastReading", readingDate && Number.isFinite(readingDate.getTime())
+                ? readingDate.toLocaleString("id-ID")
+                : "--");
+            setText("lastUpdate", readingDate && Number.isFinite(readingDate.getTime())
+                ? readingDate.toLocaleString("id-ID")
+                : "Waktu data tidak tersedia");
+            setText("refreshStatus", height === null
+                ? "Data terbaru diterima, tetapi nilai tinggi_air tidak valid."
+                : "Data tinggi air diperbarui langsung dari Supabase.");
+            setText("systemStatus", online ? "ONLINE" : "OFFLINE");
+
+            // Catat sumber dan nilai yang sedang ditampilkan untuk debugging.
+            console.debug("[FLOWS-PRO] data live:", {
+                id: row.id,
+                tinggi_air: row.tinggi_air,
+                water_level: row.water_level,
+                status: row.status,
+                displayedHeight: valueEl.textContent
+            });
+        } catch (error) {
+            console.error("[FLOWS-PRO] Gagal memperbarui tinggi air:", error);
+            // Jangan biarkan tulisan NaN menetap jika permintaan gagal.
+            if (valueEl.textContent.trim() === "NaN") valueEl.textContent = "--";
+            setText("refreshStatus", "Gagal mengambil data live. Periksa Console dan akses Supabase.");
+        }
+    }
+
+    // Jalankan setelah elemen halaman tersedia, lalu perbarui berkala.
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", refreshLiveWaterLevel, { once: true });
+    } else {
+        refreshLiveWaterLevel();
+    }
+    window.setInterval(refreshLiveWaterLevel, 5000);
+})();
+</script>
+
 </body>
 </html> 
