@@ -2947,45 +2947,92 @@
     }
   }
 
-  function mapFormToDatabase() {
-    if (!window.FlowsSettingsForm ||
-        !window.FlowsThresholds) {
-      throw new Error(
-        "Formulir belum siap. Pastikan Part 2 dan Part 3 sudah dimuat."
-      );
-    }
 
-    const basic = window.FlowsSettingsForm.validate();
-    const thresholds = window.FlowsThresholds.validate();
-
-    if (!basic.valid) {
-      throw new Error(basic.errors.join(" "));
-    }
-
-    if (!thresholds.valid) {
-      throw new Error(thresholds.errors.join(" "));
-    }
-
-    const location = basic.value;
-    const threshold = thresholds.values;
-
-    return {
-      nama_lokasi: location.location,
-      latitude: location.latitude === ""
-        ? null : Number(location.latitude),
-      longitude: location.longitude === ""
-        ? null : Number(location.longitude),
-      kedalaman_parit: location.depth,
-      jarak_sensor_dari_bibir: location.offset,
-      satuan_pengukuran: location.unit,
-      threshold_siaga: threshold.siaga,
-      threshold_waspada: threshold.waspada,
-      threshold_banjir: threshold.banjir,
-      threshold_histeresis: threshold.hysteresis,
-      pembacaan_berturut_turut: threshold.consecutive,
-      updated_at: new Date().toISOString()
-    };
+function mapFormToDatabase() {
+  if (
+    !window.FlowsSettingsForm ||
+    !window.FlowsThresholds
+  ) {
+    throw new Error(
+      "Formulir belum siap. Pastikan Part 2 dan Part 3 sudah dimuat."
+    );
   }
+
+  const basic = window.FlowsSettingsForm.validate();
+  const thresholds = window.FlowsThresholds.validate();
+
+  if (!basic.valid) {
+    throw new Error(basic.errors.join(" "));
+  }
+
+  if (!thresholds.valid) {
+    throw new Error(thresholds.errors.join(" "));
+  }
+
+  const location = basic.value;
+  const threshold = thresholds.values;
+
+  const depth = Number(location.depth);
+  const siaga = Number(threshold.siaga);
+  const waspada = Number(threshold.waspada);
+  const banjir = Number(threshold.banjir);
+
+  // Pastikan seluruh nilai numerik valid.
+  if (
+    !Number.isFinite(depth) ||
+    !Number.isFinite(siaga) ||
+    !Number.isFinite(waspada) ||
+    !Number.isFinite(banjir)
+  ) {
+    throw new Error(
+      "Kedalaman dan ambang batas harus berupa angka yang valid."
+    );
+  }
+
+  // Samakan validasi dengan constraint Supabase.
+  if (depth <= 0) {
+    throw new Error("Kedalaman parit harus lebih dari 0 cm.");
+  }
+
+  if (siaga < 0) {
+    throw new Error("Ambang SIAGA tidak boleh negatif.");
+  }
+
+  if (waspada <= siaga) {
+    throw new Error(
+      "Ambang WASPADA harus lebih besar daripada SIAGA."
+    );
+  }
+
+  if (banjir <= waspada) {
+    throw new Error(
+      "Ambang BANJIR harus lebih besar daripada WASPADA."
+    );
+  }
+
+  if (banjir > depth) {
+    throw new Error(
+      "Ambang BANJIR tidak boleh melebihi kedalaman parit."
+    );
+  }
+
+  return {
+    nama_lokasi: location.location,
+    latitude: location.latitude === ""
+      ? null : Number(location.latitude),
+    longitude: location.longitude === ""
+      ? null : Number(location.longitude),
+    kedalaman_parit: depth,
+    jarak_sensor_dari_bibir: Number(location.offset),
+    satuan_pengukuran: location.unit,
+    threshold_siaga: siaga,
+    threshold_waspada: waspada,
+    threshold_banjir: banjir,
+    threshold_histeresis: Number(threshold.hysteresis),
+    pembacaan_berturut_turut: Number(threshold.consecutive),
+    updated_at: new Date().toISOString()
+  };
+}
 
   async function initializeClient() {
     if (state.client) return state.client;
