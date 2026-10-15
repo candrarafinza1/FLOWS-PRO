@@ -2947,92 +2947,45 @@
     }
   }
 
+  function mapFormToDatabase() {
+    if (!window.FlowsSettingsForm ||
+        !window.FlowsThresholds) {
+      throw new Error(
+        "Formulir belum siap. Pastikan Part 2 dan Part 3 sudah dimuat."
+      );
+    }
 
-function mapFormToDatabase() {
-  if (
-    !window.FlowsSettingsForm ||
-    !window.FlowsThresholds
-  ) {
-    throw new Error(
-      "Formulir belum siap. Pastikan Part 2 dan Part 3 sudah dimuat."
-    );
+    const basic = window.FlowsSettingsForm.validate();
+    const thresholds = window.FlowsThresholds.validate();
+
+    if (!basic.valid) {
+      throw new Error(basic.errors.join(" "));
+    }
+
+    if (!thresholds.valid) {
+      throw new Error(thresholds.errors.join(" "));
+    }
+
+    const location = basic.value;
+    const threshold = thresholds.values;
+
+    return {
+      nama_lokasi: location.location,
+      latitude: location.latitude === ""
+        ? null : Number(location.latitude),
+      longitude: location.longitude === ""
+        ? null : Number(location.longitude),
+      kedalaman_parit: location.depth,
+      jarak_sensor_dari_bibir: location.offset,
+      satuan_pengukuran: location.unit,
+      threshold_siaga: threshold.siaga,
+      threshold_waspada: threshold.waspada,
+      threshold_banjir: threshold.banjir,
+      threshold_histeresis: threshold.hysteresis,
+      pembacaan_berturut_turut: threshold.consecutive,
+      updated_at: new Date().toISOString()
+    };
   }
-
-  const basic = window.FlowsSettingsForm.validate();
-  const thresholds = window.FlowsThresholds.validate();
-
-  if (!basic.valid) {
-    throw new Error(basic.errors.join(" "));
-  }
-
-  if (!thresholds.valid) {
-    throw new Error(thresholds.errors.join(" "));
-  }
-
-  const location = basic.value;
-  const threshold = thresholds.values;
-
-  const depth = Number(location.depth);
-  const siaga = Number(threshold.siaga);
-  const waspada = Number(threshold.waspada);
-  const banjir = Number(threshold.banjir);
-
-  // Pastikan seluruh nilai numerik valid.
-  if (
-    !Number.isFinite(depth) ||
-    !Number.isFinite(siaga) ||
-    !Number.isFinite(waspada) ||
-    !Number.isFinite(banjir)
-  ) {
-    throw new Error(
-      "Kedalaman dan ambang batas harus berupa angka yang valid."
-    );
-  }
-
-  // Samakan validasi dengan constraint Supabase.
-  if (depth <= 0) {
-    throw new Error("Kedalaman parit harus lebih dari 0 cm.");
-  }
-
-  if (siaga < 0) {
-    throw new Error("Ambang SIAGA tidak boleh negatif.");
-  }
-
-  if (waspada <= siaga) {
-    throw new Error(
-      "Ambang WASPADA harus lebih besar daripada SIAGA."
-    );
-  }
-
-  if (banjir <= waspada) {
-    throw new Error(
-      "Ambang BANJIR harus lebih besar daripada WASPADA."
-    );
-  }
-
-  if (banjir > depth) {
-    throw new Error(
-      "Ambang BANJIR tidak boleh melebihi kedalaman parit."
-    );
-  }
-
-  return {
-    nama_lokasi: location.location,
-    latitude: location.latitude === ""
-      ? null : Number(location.latitude),
-    longitude: location.longitude === ""
-      ? null : Number(location.longitude),
-    kedalaman_parit: depth,
-    jarak_sensor_dari_bibir: Number(location.offset),
-    satuan_pengukuran: location.unit,
-    threshold_siaga: siaga,
-    threshold_waspada: waspada,
-    threshold_banjir: banjir,
-    threshold_histeresis: Number(threshold.hysteresis),
-    pembacaan_berturut_turut: Number(threshold.consecutive),
-    updated_at: new Date().toISOString()
-  };
-}
 
   async function initializeClient() {
     if (state.client) return state.client;
@@ -4217,6 +4170,194 @@ function mapFormToDatabase() {
   } else {
     finalizeSettingsPage();
   }
+})();
+</script>
+
+
+<!-- PART 7: PREFERENSI NOTIFIKASI FLOWS-PRO -->
+<style>
+  .flows-notify-card { margin-top: 22px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); overflow: hidden; }
+  .flows-notify-header { display:flex; align-items:flex-start; gap:13px; padding:20px 22px; border-bottom:1px solid var(--border); }
+  .flows-notify-icon { display:flex; align-items:center; justify-content:center; flex:0 0 42px; width:42px; height:42px; border-radius:12px; color:var(--primary); background:var(--primary-light); font-size:17px; }
+  .flows-notify-header h3 { margin:0; font-size:13px; font-weight:800; }
+  .flows-notify-header p { margin:5px 0 0; color:var(--text-secondary); font-size:11px; line-height:1.7; }
+  .flows-notify-body { padding:22px; }
+  .flows-notify-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
+  .flows-notify-option { display:flex; align-items:flex-start; gap:12px; padding:15px; border:1px solid var(--border); border-radius:12px; background:var(--surface-soft); }
+  .flows-notify-option input { width:17px; height:17px; margin-top:2px; accent-color:var(--primary); flex:0 0 auto; }
+  .flows-notify-option strong { display:block; font-size:12px; }
+  .flows-notify-option small { display:block; margin-top:4px; color:var(--text-secondary); font-size:10.5px; line-height:1.6; }
+  .flows-notify-field { margin-top:18px; }
+  .flows-notify-field label { display:block; margin-bottom:7px; font-size:11px; font-weight:700; }
+  .flows-notify-field input[type=text] { width:100%; max-width:460px; min-height:42px; padding:10px 12px; border:1px solid var(--border); border-radius:9px; background:var(--surface); color:var(--text); }
+  .flows-notify-actions { display:flex; align-items:center; flex-wrap:wrap; gap:10px; margin-top:20px; }
+  .flows-notify-status { margin-top:14px; padding:11px 13px; border-radius:9px; background:var(--surface-soft); color:var(--text-secondary); font-size:11px; }
+  .flows-notify-status[data-type=success] { background:rgba(22,163,74,.08); color:var(--success); }
+  .flows-notify-status[data-type=error] { background:rgba(220,38,38,.08); color:var(--danger); }
+  .flows-notify-note { margin-top:14px; color:var(--text-secondary); font-size:10.5px; line-height:1.7; }
+  @media(max-width:650px) { .flows-notify-grid { grid-template-columns:1fr; } .flows-notify-body { padding:16px; } .flows-notify-header { padding:17px; } }
+</style>
+
+<script>
+(function () {
+  "use strict";
+  if (window.FlowsNotificationSettingsUI) return;
+
+  const markup = `
+    <section class="flows-notify-card" id="flowsNotificationSettings" aria-labelledby="flowsNotificationTitle">
+      <div class="flows-notify-header">
+        <div class="flows-notify-icon"><i class="fa-solid fa-bell" aria-hidden="true"></i></div>
+        <div>
+          <h3 id="flowsNotificationTitle">Pengaturan Notifikasi Alarm</h3>
+          <p>Pilih kanal yang ingin digunakan untuk menerima peringatan FLOWS-PRO saat status berubah menjadi WASPADA atau BANJIR.</p>
+        </div>
+      </div>
+      <div class="flows-notify-body">
+        <div class="flows-notify-grid">
+          <label class="flows-notify-option"><input type="checkbox" id="flowsNotifyTelegram"><span><strong><i class="fa-brands fa-telegram"></i> Telegram</strong><small>Aktifkan peringatan Telegram setelah akun Telegram ditautkan dengan bot FLOWS-PRO.</small></span></label>
+          <label class="flows-notify-option"><input type="checkbox" id="flowsNotifyEmail" checked><span><strong><i class="fa-solid fa-envelope"></i> Email akun</strong><small>Peringatan dikirim ke email akun yang terverifikasi, jika layanan email backend sudah dikonfigurasi.</small></span></label>
+          <label class="flows-notify-option"><input type="checkbox" id="flowsNotifyBrowser"><span><strong><i class="fa-solid fa-desktop"></i> Browser</strong><small>Meminta izin notifikasi browser pada perangkat ini.</small></span></label>
+          <label class="flows-notify-option"><input type="checkbox" id="flowsNotifyWaspada" checked><span><strong>Status WASPADA</strong><small>Kirim peringatan saat sistem memasuki status WASPADA.</small></span></label>
+          <label class="flows-notify-option"><input type="checkbox" id="flowsNotifyBanjir" checked><span><strong>Status BANJIR</strong><small>Kirim peringatan prioritas tinggi saat sistem memasuki status BANJIR.</small></span></label>
+        </div>
+        <div class="flows-notify-field">
+          <label for="flowsTelegramChatId">Telegram Chat ID (jika sudah ditautkan)</label>
+          <input type="text" id="flowsTelegramChatId" inputmode="numeric" autocomplete="off" placeholder="Contoh: 123456789" maxlength="32">
+          <div class="flows-notify-note">Jangan masukkan token bot Telegram atau kata sandi. Kolom ini hanya menyimpan Chat ID. Proses penautan akun dan pengiriman pesan tetap perlu diaktifkan di backend.</div>
+        </div>
+        <div class="flows-notify-actions">
+          <button class="button button-primary" id="flowsSaveNotificationSettings" type="button"><i class="fa-solid fa-floppy-disk"></i> Simpan Preferensi</button>
+          <button class="button button-secondary" id="flowsTestBrowserNotification" type="button"><i class="fa-regular fa-bell"></i> Tes Notifikasi Browser</button>
+        </div>
+        <div class="flows-notify-status" id="flowsNotificationStatus" role="status" aria-live="polite">Memuat preferensi notifikasi...</div>
+        <p class="flows-notify-note"><strong>Catatan:</strong> preferensi ini disimpan per akun. Pengiriman Telegram dan email otomatis membutuhkan Edge Function serta konfigurasi layanan di backend. Browser push saat website ditutup membutuhkan service worker, push subscription, dan VAPID keys. Tombol tes hanya menguji notifikasi lokal browser, bukan mengirim alarm eksternal.</p>
+      </div>
+    </section>`;
+
+  function $(id) { return document.getElementById(id); }
+  function status(message, type) {
+    const el = $("flowsNotificationStatus");
+    if (!el) return;
+    el.textContent = message;
+    el.dataset.type = type || "";
+  }
+  function readForm() {
+    return {
+      telegram_enabled: $("flowsNotifyTelegram").checked,
+      email_enabled: $("flowsNotifyEmail").checked,
+      browser_enabled: $("flowsNotifyBrowser").checked,
+      notify_waspada: $("flowsNotifyWaspada").checked,
+      notify_banjir: $("flowsNotifyBanjir").checked,
+      telegram_chat_id: $("flowsTelegramChatId").value.trim() || null,
+      updated_at: new Date().toISOString()
+    };
+  }
+  function populate(row) {
+    $("flowsNotifyTelegram").checked = !!row?.telegram_enabled;
+    $("flowsNotifyEmail").checked = row?.email_enabled ?? true;
+    $("flowsNotifyBrowser").checked = !!row?.browser_enabled;
+    $("flowsNotifyWaspada").checked = row?.notify_waspada ?? true;
+    $("flowsNotifyBanjir").checked = row?.notify_banjir ?? true;
+    $("flowsTelegramChatId").value = row?.telegram_chat_id || "";
+  }
+  async function init() {
+    const api = window.FlowsSupabaseIntegration;
+    if (!api || typeof api.initialize !== "function") {
+      status("Integrasi akun belum siap. Muat ulang halaman setelah login.", "error");
+      return;
+    }
+    try {
+      await api.initialize();
+      const client = api.client;
+      const user = api.user;
+      if (!client || !user) {
+        status("Silakan login untuk memuat dan menyimpan preferensi notifikasi.", "error");
+        return;
+      }
+      const { data, error } = await client.from("notification_preferences")
+        .select("user_id, telegram_enabled, email_enabled, browser_enabled, notify_waspada, notify_banjir, telegram_chat_id")
+        .eq("user_id", user.id).maybeSingle();
+      if (error) throw error;
+      populate(data);
+      status("Preferensi dimuat untuk akun " + (user.email || "yang sedang login") + ".", "success");
+    } catch (error) {
+      console.error("[FLOWS] Gagal memuat preferensi notifikasi:", error);
+      status("Belum dapat memuat preferensi. Pastikan SQL migrasi notification_preferences sudah dijalankan. " + (error.message || ""), "error");
+    }
+  }
+  async function save() {
+    const button = $("flowsSaveNotificationSettings");
+    const api = window.FlowsSupabaseIntegration;
+    if (!api || !api.client || !api.user) {
+      status("Silakan login terlebih dahulu.", "error");
+      return;
+    }
+    const payload = readForm();
+    if (payload.telegram_chat_id && !/^-?\d{5,20}$/.test(payload.telegram_chat_id)) {
+      status("Chat ID Telegram harus berupa angka. Jangan masukkan token bot.", "error");
+      return;
+    }
+    if (payload.browser_enabled && !('Notification' in window)) {
+      status("Browser ini tidak mendukung notifikasi web.", "error");
+      return;
+    }
+    button.disabled = true;
+    try {
+      if (payload.browser_enabled && Notification.permission === "default") {
+        const permission = await Notification.requestPermission();
+        if (permission !== "granted") {
+          payload.browser_enabled = false;
+          $("flowsNotifyBrowser").checked = false;
+          status("Izin browser tidak diberikan. Preferensi kanal lain tetap akan disimpan.", "");
+        }
+      } else if (payload.browser_enabled && Notification.permission === "denied") {
+        payload.browser_enabled = false;
+        $("flowsNotifyBrowser").checked = false;
+        status("Izin notifikasi browser diblokir di pengaturan browser.", "");
+      }
+      const { error } = await api.client.from("notification_preferences")
+        .upsert({ user_id: api.user.id, ...payload }, { onConflict: "user_id" });
+      if (error) throw error;
+      status("Preferensi notifikasi berhasil disimpan untuk akun ini. Pengiriman eksternal aktif setelah backend notifikasi dikonfigurasi.", "success");
+    } catch (error) {
+      console.error("[FLOWS] Gagal menyimpan preferensi notifikasi:", error);
+      status("Gagal menyimpan preferensi. Jalankan SQL migrasi dan periksa RLS: " + (error.message || ""), "error");
+    } finally {
+      button.disabled = false;
+    }
+  }
+  function testBrowser() {
+    if (!('Notification' in window)) {
+      status("Browser ini tidak mendukung Web Notifications.", "error");
+      return;
+    }
+    if (Notification.permission === "granted") {
+      new Notification("FLOWS-PRO — Tes Notifikasi", {
+        body: "Notifikasi browser pada perangkat ini berfungsi.",
+        icon: "LOGO_FLOWS-PRO-removebg-preview.png",
+        tag: "flows-pro-browser-test"
+      });
+      status("Tes notifikasi browser dijalankan pada perangkat ini.", "success");
+    } else if (Notification.permission === "default") {
+      Notification.requestPermission().then(permission => {
+        if (permission === "granted") testBrowser();
+        else status("Izin notifikasi tidak diberikan.", "error");
+      });
+    } else {
+      status("Izin notifikasi diblokir. Aktifkan izin website dari pengaturan browser.", "error");
+    }
+  }
+  function mount() {
+    const root = $("settingsContent");
+    if (!root || $("flowsNotificationSettings")) return;
+    root.insertAdjacentHTML("beforeend", markup);
+    $("flowsSaveNotificationSettings").addEventListener("click", save);
+    $("flowsTestBrowserNotification").addEventListener("click", testBrowser);
+    init();
+  }
+  window.FlowsNotificationSettingsUI = { init, save, testBrowser };
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", mount, { once: true });
+  else mount();
 })();
 </script>
 
