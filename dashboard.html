@@ -3392,7 +3392,7 @@
 
                                 <span class="threshold-color safe"></span>
 
-                                <span>
+                                <span id="legendSafe">
                                     AMAN
                                 </span>
 
@@ -3403,7 +3403,7 @@
 
                                 <span class="threshold-color warning"></span>
 
-                                <span>
+                                <span id="legendSiaga">
                                     SIAGA
                                 </span>
 
@@ -3414,12 +3414,16 @@
 
                                 <span class="threshold-color danger"></span>
 
-                                <span>
+                                <span id="legendWaspada">
                                     WASPADA
                                 </span>
 
                             </div>
 
+                            <div class="threshold-item">
+                                <span class="threshold-color danger"></span>
+                                <span id="legendBanjir">BANJIR</span>
+                            </div>
 
                         </div>
 
@@ -6528,94 +6532,182 @@
 
                     function getWaterStatus(level) {
 
-                        if (
-                            level === null ||
-                            !Number.isFinite(level)
-                        ) {
-
+                        if (level === null || !Number.isFinite(level)) {
                             return {
-
                                 key: "neutral",
-
                                 label: "MEMERIKSA",
-
-                                title:
-                                    "Data belum tersedia",
-
-                                description:
-                                    "Belum ada pembacaan ketinggian air yang dapat digunakan."
-
+                                title: "Data belum tersedia",
+                                description: "Belum ada pembacaan ketinggian air yang dapat digunakan."
                             };
-
                         }
 
-
-                        /*
-                           Threshold dashboard:
-
-                           < 100 cm
-                           = AMAN
-
-                           100–<150 cm
-                           = SIAGA
-
-                           >= 150 cm
-                           = WASPADA
-                        */
-
-
-                        if (level < 100) {
-
+                        if (!siteSettingsLoaded) {
                             return {
-
-                                key: "safe",
-
-                                label: "AMAN",
-
-                                title:
-                                    "Kondisi aman",
-
-                                description:
-                                    "Ketinggian air masih berada pada zona aman."
-
+                                key: "neutral",
+                                label: "SETTINGS ERROR",
+                                title: "Threshold belum tersedia",
+                                description: "Dashboard belum berhasil membaca pengaturan dari site_settings. Status belum dapat dipastikan."
                             };
-
                         }
 
+                        const siaga = Number(siteSettings.threshold_siaga);
+                        const waspada = Number(siteSettings.threshold_waspada);
+                        const banjir = Number(siteSettings.threshold_banjir);
 
-                        if (level < 150) {
-
+                        // Jangan gunakan threshold bawaan jika pengaturan gagal dimuat.
+                        if (
+                            !Number.isFinite(siaga) ||
+                            !Number.isFinite(waspada) ||
+                            !Number.isFinite(banjir) ||
+                            siaga < 0 ||
+                            waspada <= siaga ||
+                            banjir <= waspada
+                        ) {
                             return {
+                                key: "neutral",
+                                label: "PENGATURAN ERROR",
+                                title: "Threshold tidak valid",
+                                description: "Periksa nilai threshold_siaga, threshold_waspada, dan threshold_banjir di tabel site_settings."
+                            };
+                        }
 
+                        if (level >= banjir) {
+                            return {
+                                key: "danger",
+                                label: "BANJIR",
+                                title: "Status banjir",
+                                description: `Tinggi air mencapai ${level.toFixed(1)} cm, sama dengan atau melebihi ambang banjir ${banjir} cm.`
+                            };
+                        }
+
+                        if (level >= waspada) {
+                            return {
+                                key: "danger",
+                                label: "WASPADA",
+                                title: "Status waspada",
+                                description: `Tinggi air mencapai ambang waspada ${waspada} cm. Pantau kondisi secara ketat.`
+                            };
+                        }
+
+                        if (level >= siaga) {
+                            return {
                                 key: "warning",
-
                                 label: "SIAGA",
-
-                                title:
-                                    "Status siaga",
-
-                                description:
-                                    "Ketinggian air mulai meningkat. Perlu dilakukan pemantauan lebih lanjut."
-
+                                title: "Status siaga",
+                                description: `Tinggi air mencapai ambang siaga ${siaga} cm. Lanjutkan pemantauan.`
                             };
-
                         }
-
 
                         return {
-
-                            key: "danger",
-
-                            label: "WASPADA",
-
-                            title:
-                                "Status waspada",
-
-                            description:
-                                "Ketinggian air telah mencapai zona waspada."
-
+                            key: "safe",
+                            label: "AMAN",
+                            title: "Kondisi aman",
+                            description: `Tinggi air masih di bawah ambang siaga ${siaga} cm.`
                         };
+                    }
 
+
+                    /*
+                     * Threshold dibaca langsung dari site_settings.
+                     * Nilai ini hanya nilai awal sementara; status tidak boleh
+                     * dianggap final sebelum data pengaturan berhasil dimuat.
+                     */
+                    let siteSettings = {
+                        nama_lokasi: "Lokasi FLOWS-PRO",
+                        kedalaman_parit: 200,
+                        threshold_siaga: 50,
+                        threshold_waspada: 80,
+                        threshold_banjir: 100
+                    };
+
+                    let siteSettingsLoaded = false;
+
+
+                    async function loadSiteSettings() {
+                        const { data, error } = await supabaseClient
+                            .from("site_settings")
+                            .select("nama_lokasi,kedalaman_parit,threshold_siaga,threshold_waspada,threshold_banjir,updated_at")
+                            .eq("id", 1)
+                            .maybeSingle();
+
+                        if (error) {
+                            siteSettingsLoaded = false;
+                            console.error("Gagal memuat threshold dari site_settings:", error);
+                            const statusText = $("liveInfoText");
+                            if (statusText) {
+                                statusText.textContent = "Pengaturan threshold gagal dimuat. Periksa akses Supabase dan tabel site_settings.";
+                            }
+                            throw error;
+                        }
+
+                        if (!data) {
+                            siteSettingsLoaded = false;
+                            throw new Error("Baris site_settings dengan id = 1 tidak ditemukan.");
+                        }
+
+                        const depth = Number(data.kedalaman_parit);
+                        const siaga = Number(data.threshold_siaga);
+                        const waspada = Number(data.threshold_waspada);
+                        const banjir = Number(data.threshold_banjir);
+
+                        if (
+                            !Number.isFinite(depth) || depth <= 0 ||
+                            !Number.isFinite(siaga) || siaga < 0 ||
+                            !Number.isFinite(waspada) || waspada <= siaga ||
+                            !Number.isFinite(banjir) || banjir <= waspada ||
+                            banjir > depth
+                        ) {
+                            siteSettingsLoaded = false;
+                            throw new Error("Nilai threshold di site_settings tidak valid atau melebihi kedalaman parit.");
+                        }
+
+                        siteSettings = {
+                            ...data,
+                            kedalaman_parit: depth,
+                            threshold_siaga: siaga,
+                            threshold_waspada: waspada,
+                            threshold_banjir: banjir
+                        };
+                        siteSettingsLoaded = true;
+
+                        // Perbarui skala alat ukur agar mengikuti kedalaman parit.
+                        const scale = document.querySelector(".water-meter-scale");
+                        if (scale) {
+                            const values = [
+                                depth,
+                                depth * 0.75,
+                                depth * 0.5,
+                                depth * 0.25,
+                                0
+                            ];
+                            scale.innerHTML = values.map(value =>
+                                `<span>${Number(value.toFixed(1))} cm</span>`
+                            ).join("");
+                        }
+
+                        const legendSiaga = $("legendSiaga");
+                        const legendWaspada = $("legendWaspada");
+                        const legendBanjir = $("legendBanjir");
+                        if (legendSiaga) legendSiaga.textContent = `SIAGA ≥ ${siaga} cm`;
+                        if (legendWaspada) legendWaspada.textContent = `WASPADA ≥ ${waspada} cm`;
+                        if (legendBanjir) legendBanjir.textContent = `BANJIR ≥ ${banjir} cm`;
+
+                        const location = $("liveInfoText");
+                        if (location) {
+                            location.textContent =
+                                `Threshold aktif: Siaga ${siaga} cm · Waspada ${waspada} cm · Banjir ${banjir} cm.`;
+                        }
+
+                        // Render ulang data terakhir dengan threshold yang baru dimuat.
+                        if (latestSensorData) {
+                            const level = getWaterLevel(latestSensorData);
+                            updateWaterLevel(level);
+                            updateWarningStatus(level);
+                        }
+
+                        console.info("Threshold FLOWS-PRO dimuat:", {
+                            depth, siaga, waspada, banjir
+                        });
                     }
 
 
@@ -7086,23 +7178,19 @@
 
 
                         /*
-                           Meter dibatasi 0–200 cm.
+                           Skala meter mengikuti kedalaman parit dari settings.
                         */
 
-                        const clamped =
-                            Math.max(
-                                0,
-                                Math.min(
-                                    200,
-                                    value
-                                )
-                            );
+                        const maxDepth =
+                            Number(siteSettings.kedalaman_parit) > 0
+                                ? Number(siteSettings.kedalaman_parit)
+                                : 200;
 
+                        const clamped =
+                            Math.max(0, Math.min(maxDepth, value));
 
                         const percentage =
-                            (
-                                clamped / 200
-                            ) * 100;
+                            (clamped / maxDepth) * 100;
 
 
                         if (meterFill) {
@@ -8045,6 +8133,16 @@
 
 
                         try {
+
+                            // Selalu ambil threshold terbaru sebelum menghitung status.
+                            try {
+                                await loadSiteSettings();
+                            } catch (settingsError) {
+                                console.error("Dashboard berjalan tanpa threshold terbaru:", settingsError);
+                                if ($("warningStatusValue")) {
+                                    $("warningStatusValue").textContent = "SETTINGS ERROR";
+                                }
+                            }
 
                             if (databaseStatus) {
 
