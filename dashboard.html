@@ -6297,74 +6297,58 @@
                     ================================================== */
 
                     function getWaterLevel(row) {
+                        if (!row) return null;
 
-                        if (!row) {
+                        // Sumber utama: tinggi_air adalah tinggi air dalam cm,
+                        // sedangkan water_level pada skema FLOWS-PRO adalah label/status.
+                        const numeric = value => {
+                            if (value === null || value === undefined || String(value).trim() === "") return null;
+                            const n = Number(String(value).trim().replace(",", "."));
+                            return Number.isFinite(n) ? n : null;
+                        };
 
-                            return null;
+                        const depth = numeric(siteSettings?.kedalaman_parit);
 
-                        }
-
-
-                        const possibleFields = [
-
-                            "water_level",
-
-                            "waterLevel",
-
-                            "ketinggian_air",
-
-                            "ketinggian",
-
-                            "tinggi_air",
-
-                            "level",
-
-                            "distance",
-
-                            "jarak"
-
-                        ];
-
-
-                        for (
-                            const field
-                            of possibleFields
-                        ) {
-
-                            if (
-                                row[field] !==
-                                undefined &&
-                                row[field] !==
-                                null &&
-                                row[field] !==
-                                ""
-                            ) {
-
-                                const value =
-                                    Number(
-                                        row[field]
-                                    );
-
-
-                                if (
-                                    Number.isFinite(
-                                        value
-                                    )
-                                ) {
-
-                                    return value;
-
+                        // Jika firmware mengirim jarak mentah secara eksplisit,
+                        // konversi menjadi tinggi air memakai kedalaman di Pengaturan.
+                        const distanceFields = ["jarak_sensor_ke_air", "jarak_sensor", "distance_cm", "distance", "jarak"];
+                        for (const field of distanceFields) {
+                            const distance = numeric(row[field]);
+                            if (distance !== null) {
+                                if (depth === null || depth <= 0 || distance < 0 || distance > depth) {
+                                    console.warn("Pembacaan jarak sensor di luar rentang kedalaman:", { field, distance, depth, row });
+                                    return null;
                                 }
-
+                                return Math.max(0, Math.min(depth, depth - distance));
                             }
-
                         }
 
+                        // Kolom kanonis tinggi_air diperlakukan sebagai tinggi air hasil hitung firmware.
+                        const heightFields = ["tinggi_air", "ketinggian_air", "ketinggian", "level"];
+                        for (const field of heightFields) {
+                            const height = numeric(row[field]);
+                            if (height !== null) {
+                                if (depth !== null && depth > 0 && (height < 0 || height > depth)) {
+                                    console.warn("Nilai tinggi_air melebihi kedalaman yang dikonfigurasi:", { height, depth, row });
+                                    return null;
+                                }
+                                return height;
+                            }
+                        }
+
+                        // water_level biasanya label kategori. Jika ternyata berisi angka,
+                        // anggap sebagai jarak mentah agar tidak salah menampilkannya sebagai tinggi air.
+                        const waterLevel = numeric(row.water_level ?? row.waterLevel);
+                        if (waterLevel !== null) {
+                            if (depth === null || depth <= 0 || waterLevel < 0 || waterLevel > depth) {
+                                console.warn("water_level numerik tidak valid sebagai jarak sensor:", { waterLevel, depth, row });
+                                return null;
+                            }
+                            return Math.max(0, Math.min(depth, depth - waterLevel));
+                        }
 
                         return null;
-
                     }
-
 
 
                     /* =================================================
@@ -6626,7 +6610,7 @@
                     async function loadSiteSettings() {
                         const { data, error } = await supabaseClient
                             .from("site_settings")
-                            .select("nama_lokasi,kedalaman_parit,threshold_siaga,threshold_waspada,threshold_banjir,updated_at")
+                            .select("nama_lokasi,kedalaman_parit,jarak_sensor_dari_bibir,threshold_siaga,threshold_waspada,threshold_banjir,updated_at")
                             .eq("id", 1)
                             .maybeSingle();
 
