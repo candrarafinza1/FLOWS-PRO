@@ -6317,14 +6317,20 @@
                          * water_level adalah teks kategori (KERING/RENDAH/SEDANG/TINGGI),
                          * bukan angka pengukuran.
                          */
+                        // PRIORITAS: hitung dari jarak mentah sensor + konfigurasi terbaru website.
+                        const depth = numeric(siteSettings?.kedalaman_parit);
+                        const offset = numeric(siteSettings?.jarak_sensor_dari_bibir) ?? 0;
+                        const rawDistance = numeric(row.jarak_sensor_ke_air ?? row.jarak_sensor ?? row.distance_cm);
+                        if (siteSettingsLoaded && depth !== null && depth > 0 && rawDistance !== null && rawDistance >= 0 && offset >= 0) {
+                            const calculated = (depth + offset) - rawDistance;
+                            return Math.max(0, Math.min(depth, calculated));
+                        }
+
+                        // Kompatibilitas data lama: firmware lama hanya mengirim tinggi_air.
                         const height = numeric(row.tinggi_air);
                         if (height !== null && height >= 0) {
-                            const depth = numeric(siteSettings?.kedalaman_parit);
                             if (depth !== null && depth > 0 && height > depth) {
-                                console.warn(
-                                    "Nilai tinggi_air dari firmware melebihi kedalaman site_settings. Ditampilkan apa adanya; sinkronkan kedalaman EEPROM Wemos dengan Pengaturan.",
-                                    { height, depth, row }
-                                );
+                                console.warn("Data lama tinggi_air melebihi kedalaman pada Pengaturan. Nilai mentah ditampilkan karena jarak sensor belum tersedia.", { height, depth, row });
                             }
                             return height;
                         }
@@ -6336,8 +6342,7 @@
                         }
 
                         // Hanya konversi jarak mentah jika memang kolom jarak tersedia.
-                        const depth = numeric(siteSettings?.kedalaman_parit);
-                        for (const field of ["jarak_sensor_ke_air", "jarak_sensor", "distance_cm", "distance", "jarak"]) {
+                        for (const field of ["distance", "jarak"]) {
                             const distance = numeric(row[field]);
                             if (distance !== null && depth !== null && depth > 0 && distance >= 0 && distance <= depth) {
                                 return Math.max(0, Math.min(depth, depth - distance));
