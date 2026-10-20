@@ -49,7 +49,7 @@
 <section class="map-card">
   <div class="map-card-header"><div><span class="eyebrow">PEMANTAUAN GEOGRAFIS</span><h2>Sebaran Sensor Banjir</h2><p>Marker utama FLOWS-PRO berubah warna mengikuti status ketinggian air berdasarkan nilai threshold pada tabel <code>site_settings</code>.</p></div><div class="actions"><button type="button" class="map-button secondary-button" id="focusMapButton"><i class="fa-solid fa-crosshairs"></i>Fokus FLOWS-PRO</button><button type="button" class="map-button primary-button" id="refreshMapButton"><i class="fa-solid fa-arrows-rotate"></i>Refresh</button></div></div>
   <div class="toolbar"><div class="search"><i class="fa-solid fa-magnifying-glass"></i><input type="search" id="mapSearchInput" placeholder="Cari lokasi sensor..." autocomplete="off"></div><div class="filter"><select id="mapStatusFilter" aria-label="Filter status"><option value="ALL">Semua Status</option><option value="AMAN">AMAN</option><option value="SIAGA">SIAGA</option><option value="WASPADA">WASPADA</option><option value="BAHAYA">BAHAYA</option><option value="OFFLINE">OFFLINE</option></select></div><div class="db-status"><span class="db-dot" id="mapDataDot"></span><span id="mapDataStatus">Memuat data...</span></div></div>
-  <div class="map-wrapper"><div id="floodMap" class="flood-map"></div><div class="map-loading" id="mapLoading"><div class="spinner"></div><span>Memuat peta dan lokasi FLOWS-PRO...</span></div><div class="map-empty" id="mapEmpty" hidden><i class="fa-solid fa-map-location-dot" style="font-size:28px"></i><strong>Koordinat FLOWS-PRO belum tersedia</strong><span>Isi latitude dan longitude di halaman Pengaturan, atau pastikan koordinat tersimpan pada data sensor.</span></div>
+  <div class="map-wrapper"><div id="floodMap" class="flood-map"></div><div class="map-loading" id="mapLoading"><div class="spinner"></div><span>Memuat peta dan lokasi FLOWS-PRO...</span></div><div class="map-empty" id="mapEmpty" hidden><i class="fa-solid fa-map-location-dot" style="font-size:28px"></i><strong>Koordinat FLOWS-PRO belum tersedia</strong><span>Isi dan simpan latitude serta longitude di halaman Pengaturan. Peta tidak lagi memakai koordinat GPS dari alat.</span></div>
   <div class="map-legend"><div class="legend-title">STATUS KETINGGIAN AIR</div><div class="legend-item"><span class="legend-dot safe"></span>AMAN</div><div class="legend-item"><span class="legend-dot standby"></span>SIAGA</div><div class="legend-item"><span class="legend-dot warning"></span>WASPADA</div><div class="legend-item"><span class="legend-dot danger"></span>BAHAYA / BANJIR</div><div class="legend-item"><span class="legend-dot offline"></span>OFFLINE</div></div></div>
   <section class="selected-location" id="selectedLocation" hidden><div class="selected-head"><div><span class="eyebrow">DETAIL LOKASI</span><h3 id="selectedLocationName">FLOWS-PRO</h3></div><button type="button" class="close-button" id="closeLocationButton" aria-label="Tutup detail"><i class="fa-solid fa-xmark"></i></button></div><div class="detail-grid"><div class="detail"><span>STATUS</span><strong id="selectedStatus">-</strong></div><div class="detail"><span>KETINGGIAN AIR</span><strong id="selectedWaterLevel">-</strong></div><div class="detail"><span>PEMBACAAN TERAKHIR</span><strong id="selectedTime">-</strong></div><div class="detail"><span>KOORDINAT</span><strong id="selectedCoordinates">-</strong></div></div><p id="selectedDataAge" style="margin-top:12px;color:var(--text-secondary);font-size:10px">-</p></section>
 </section>
@@ -62,7 +62,7 @@
 "use strict";
 /* FLOWS-PRO: gunakan konfigurasi Supabase yang sama dengan dashboard.html */
 const SUPABASE_URL = "https://nydapuhnswrbgbjkaxqa.supabase.co";
-const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_dypnRnjABFIf6GcshfrTIA_Q0zhuR0L";
+const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_dypnRnjABIf6GcshfrTIA_Q0zhuR0L";
 const SENSOR_TIMEOUT_SECONDS = 30;
 const MAP_REFRESH_INTERVAL = 30000;
 const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, {
@@ -154,20 +154,22 @@ async function loadSensorRows() {
 }
 function validCoords(lat,lng) { return lat!==null && lng!==null && lat>=-90 && lat<=90 && lng>=-180 && lng<=180 && !(lat===0&&lng===0); }
 function buildLocation(rows) {
-  // data_air terbaru menjadi sumber status/angka; koordinat bisa fallback ke site_settings.
-  const latest=rows.find(r=>getWaterLevel(r)!==null || r.status || r.created_at) || rows[0] || null;
-  let lat=null,lng=null;
-  for (const row of rows) {
-    const a=toNumber(row.latitude), b=toNumber(row.longitude);
-    if(validCoords(a,b)){lat=a;lng=b;break;}
-  }
-  if(!validCoords(lat,lng) && validCoords(settings?.latitude,settings?.longitude)) { lat=settings.latitude; lng=settings.longitude; }
-  if(!validCoords(lat,lng)) return [];
-  const row=latest || {id:"site-settings",tinggi_air:null,status:"TIDAK DIKETAHUI",created_at:null};
+  // KOORDINAT PETA SELALU berasal dari settings.html / site_settings.
+  // GPS pada perangkat dan koordinat di data_air sengaja tidak dipakai.
+  const lat = toNumber(settings?.latitude);
+  const lng = toNumber(settings?.longitude);
+  if (!validCoords(lat, lng)) return [];
+
+  // Angka/status tetap berasal dari pembacaan sensor terbaru di data_air.
+  const latest = rows.find(r => getWaterLevel(r) !== null || r.status || r.created_at)
+    || rows[0]
+    || { id: "site-settings", tinggi_air: null, status: "TIDAK DIKETAHUI", created_at: null };
+
   return [{
-    ...row,
+    ...latest,
     lokasi: String(settings?.nama_lokasi || "Lokasi FLOWS-PRO").trim() || "Lokasi FLOWS-PRO",
-    latitude:lat, longitude:lng
+    latitude: lat,
+    longitude: lng
   }];
 }
 function createMarkerIcon(item) {
@@ -202,7 +204,7 @@ function updateSummary() {
   if(mapLocations.length){
     const item=mapLocations[0], level=getWaterLevel(item);
     $("latestMapReading").textContent=`${item.lokasi}: ${formatWaterLevel(level)} · status ${getStatus(item)} · data ${formatDate(item.created_at)}.`;
-  } else $("latestMapReading").textContent="Belum ada koordinat valid di data_air maupun site_settings.";
+  } else $("latestMapReading").textContent="Belum ada koordinat valid di site_settings. Isi latitude dan longitude pada halaman Pengaturan.";
 }
 function selectLocation(item) {
   selectedLocation=item;
